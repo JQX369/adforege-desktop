@@ -292,7 +292,7 @@ export default function Home() {
             <div className="rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 bg-white/60 dark:bg-white/5 backdrop-blur-sm border border-white/20 shadow-lg" data-spotlight="true">
               <div className="flex-1 text-center md:text-left">
                 <p className="text-xl md:text-2xl text-muted-foreground italic">
-                  "Spend more time with them — not searching for them."
+                  &quot;Spend more time with them — not searching for them.&quot;
                 </p>
               </div>
               <div className="w-full md:w-64">

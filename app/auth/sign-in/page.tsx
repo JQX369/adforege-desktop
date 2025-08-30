@@ -214,7 +214,7 @@ export default function SignInPage() {
             <div className="text-center space-y-2">
               {mode === 'sign-in' && (
                 <>
-                  <p className="text-purple-200 text-sm">Don't have an account? Switch to Create Account.</p>
+                  <p className="text-purple-200 text-sm">Don&apos;t have an account? Switch to Create Account.</p>
                   <button 
                     className="text-purple-300 hover:text-white text-sm underline transition-colors"
                     onClick={() => { setMode('reset'); setError(''); setSuccess('') }}

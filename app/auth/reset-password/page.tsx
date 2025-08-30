@@ -108,7 +108,7 @@ export default function ResetPasswordPage() {
                 className="bg-white/10 border-white/20 text-white placeholder:text-white/60 focus:border-purple-400"
               />
               {!passwordsMatch && confirmPassword.length > 0 && (
-                <p className="text-xs text-red-300">Passwords don't match</p>
+                <p className="text-xs text-red-300">Passwords don&apos;t match</p>
               )}
             </div>
             
