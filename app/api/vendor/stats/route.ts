@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 const prisma = new PrismaClient()
 
