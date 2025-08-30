@@ -11,7 +11,7 @@ export function SiteHeader() {
   const supabase = createSupabaseBrowserClient()
 
   useEffect(() => {
-    supabase.auth.getUser().then((res) => {
+    supabase.auth.getUser().then((res: any) => {
       setUser(res.data.user)
     })
 
