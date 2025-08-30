@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Slightly darker, cooler base */
+    --background: 260 20% 95%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 98%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 98%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 265 84% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 265 24% 96%;
+    --secondary-foreground: 265 40% 28%;
+    --muted: 260 20% 94%;
+    --muted-foreground: 260 16% 38%;
+    --accent: 330 85% 96%;
+    --accent-foreground: 330 55% 32%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 260 16% 84%;
+    --input: 260 16% 84%;
+    --ring: 265 84% 58%;
+    --chart-1: 330 85% 60%;
+    --chart-2: 265 82% 58%;
+    --chart-3: 45 96% 58%;
+    --chart-4: 168 74% 45%;
+    --chart-5: 210 92% 55%;
+    --radius: 0.5rem;
+    --brand-1: 330 85% 60%;
+    --brand-2: 265 82% 58%;
+    --brand-3: 45 96% 58%;
+  }
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 0 0% 100%;
+    --card: 222 47% 11%;
+    --card-foreground: 0 0% 100%;
+    --popover: 222 47% 11%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 265 84% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 265 24% 18%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 260 24% 20%;
+    --muted-foreground: 260 5% 65%;
+    --accent: 330 30% 18%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 260 24% 22%;
+    --input: 260 24% 22%;
+    --ring: 265 84% 58%;
+    --chart-1: 330 85% 60%;
+    --chart-2: 265 82% 58%;
+    --chart-3: 45 96% 58%;
+    --chart-4: 168 74% 45%;
+    --chart-5: 210 92% 55%
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+    background-image: radial-gradient(1200px 600px at 10% -10%, rgba(255, 99, 132, 0.08), transparent),
+      radial-gradient(800px 400px at 90% 0%, rgba(99, 102, 241, 0.08), transparent),
+      radial-gradient(900px 500px at 50% 120%, rgba(251, 191, 36, 0.06), transparent);
+    background-attachment: fixed;
+  }
+} 
+
+/* Subtle animated gradient overlay for main; pauses on hover */
+.bg-animated { position: relative; }
+.bg-animated::before {
+  content: "";
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit;
+  background-image:
+    radial-gradient(1100px 520px at 12% -12%, rgba(255, 99, 132, 0.06), transparent),
+    radial-gradient(760px 380px at 88% 2%, rgba(99, 102, 241, 0.06), transparent),
+    radial-gradient(880px 480px at 50% 118%, rgba(251, 191, 36, 0.04), transparent);
+  background-attachment: fixed;
+  will-change: transform;
+  animation: bg-float 36s ease-in-out infinite alternate;
+}
+.bg-animated:hover::before { animation-play-state: paused; }
+
+@keyframes bg-float {
+  0% { transform: translate3d(0%, 0%, 0) scale(1.0); }
+  50% { transform: translate3d(1.2%, -0.8%, 0) scale(1.02); }
+  100% { transform: translate3d(-0.8%, 1.2%, 0) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-animated::before { animation: none; }
+}
+
+@keyframes chest-glow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.06);
+    opacity: 1;
+  }
+}
+
+.animate-chest-glow {
+  animation: chest-glow 4.5s ease-in-out infinite;
+}
+
+/* Glass panel utility - refined */
+.glass-panel {
+  background-color: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.30);
+}
+
+/* Animated glowing edge around cards */
+.glow-ring { position: relative; z-index: 0; }
+.glow-ring::before {
+  content: "";
+  position: absolute; inset: -6px; border-radius: inherit; pointer-events: none;
+  background: conic-gradient(from 0deg, hsl(var(--brand-1)) 0%, hsl(var(--brand-2)) 40%, hsl(var(--brand-3)) 70%, hsl(var(--brand-1)) 100%);
+  filter: blur(14px);
+  opacity: 0.55;
+  /* Stop spinning per request: keep static glow */
+  animation: none;
+  z-index: -1;
+}
+@keyframes spin-slow { from { transform: rotate(0deg);} to { transform: rotate(360deg);} }
+@media (prefers-reduced-motion: reduce) { .glow-ring::before { animation: none; } }
+
+/* Step transition animation */
+@keyframes fade-slide-in {
+  from { opacity: 0; transform: translateY(6px) scale(0.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.step-anim { animation: fade-slide-in 0.28s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .step-anim { animation: none; } }
+
+/* Subtle element animations for home screen */
+.fade-in-up { animation: fade-slide-in 0.5s ease-out both; }
+.hover-float { transition: transform 220ms ease, box-shadow 220ms ease; }
+.hover-float:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 18px 40px rgba(168, 85, 247, 0.25); }
+
+/* Reveal-on-scroll utility for staggered cards */
+.reveal-card { opacity: 0; transform: translateY(10px); transition: opacity 500ms ease, transform 500ms ease, box-shadow 220ms ease; }
+.reveal-card.in-view { opacity: 1; transform: translateY(0); }
+
+/* Header floating overlay + scrolled glass state */
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(88, 28, 135, 0.95); box-shadow: none; transition: background 200ms ease-out; }
+.site-header-inner { padding: 18px 0; transition: padding 200ms ease-out; }
+.site-header.is-scrolled { background: rgba(88, 28, 135, 0.95); box-shadow: none; }
+.site-header.is-scrolled .site-header-inner { padding: 12px 0; }
+
+/* Navigation link glow interaction */
+.nav-link-glow:hover { color: #FFFFFF !important; text-shadow: 0 0 4px rgba(255,255,255,0.25); }
+
+/* CTA glow effects */
+.cta-glow { box-shadow: 0 0 6px rgba(236, 72, 153, 0.25); transition: filter 160ms ease, box-shadow 160ms ease, transform 100ms ease; }
+.cta-glow:hover { filter: brightness(1.05); box-shadow: 0 3px 12px rgba(236, 72, 153, 0.45); }
+.cta-glow:active { transform: scale(0.98); }

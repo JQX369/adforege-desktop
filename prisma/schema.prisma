@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  embedding Float[]  @default([]) // User preference vector
+  createdAt DateTime @default(now())
+  swipes    Swipe[]
+}
+
+model Product {
+  id              String        @id @default(cuid())
+  title           String
+  description     String        @db.Text
+  price           Float
+  images          String[]
+  affiliateUrl    String
+  categories      String[]
+  embedding       Float[] // For pgvector
+  status          ProductStatus @default(PENDING)
+  vendorEmail     String?
+  stripeSessionId String?       @unique
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+  swipes          Swipe[]
+  vendorId        String?
+  vendor          Vendor?       @relation(fields: [vendorId], references: [id])
+}
+
+model Swipe {
+  id        String      @id @default(cuid())
+  userId    String
+  productId String
+  action    SwipeAction
+  ts        DateTime    @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+enum SwipeAction {
+  LEFT
+  RIGHT
+  SAVED
+}
+
+enum ProductStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Vendor {
+  id                   String             @id @default(cuid())
+  userId               String             @unique
+  email                String             @unique
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  plan                 VendorPlan         @default(BASIC)
+  subscriptionStatus   SubscriptionStatus @default(INACTIVE)
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(now())
+  products             Product[]
+}
+
+enum VendorPlan {
+  BASIC
+  FEATURED
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  INACTIVE
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  PAUSED
+}

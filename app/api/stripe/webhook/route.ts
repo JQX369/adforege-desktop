@@ -1,0 +1,180 @@
+import { NextRequest, NextResponse } from 'next/server'
+import Stripe from 'stripe'
+import { PrismaClient } from '@prisma/client'
+
+export const runtime = 'nodejs'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
+  apiVersion: '2023-10-16'
+})
+
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
+
+export async function POST(req: NextRequest) {
+  try {
+    if (!webhookSecret) {
+      console.error('STRIPE_WEBHOOK_SECRET not configured')
+      return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 })
+    }
+
+    const body = await req.text()
+    const sig = req.headers.get('stripe-signature')
+
+    if (!sig) {
+      console.error('Missing stripe-signature header')
+      return NextResponse.json({ error: 'Missing signature' }, { status: 400 })
+    }
+
+    let event: Stripe.Event
+    try {
+      event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
+    } catch (err: any) {
+      console.error('Webhook signature verification failed:', err.message)
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
+    }
+
+    const prisma = new PrismaClient()
+
+    // Check for duplicate events (idempotency)
+    const existingEvent = await prisma.paymentsEvent?.findUnique({
+      where: { stripeEventId: event.id }
+    }).catch(() => null)
+
+    if (existingEvent) {
+      console.log(`Event ${event.id} already processed`)
+      return NextResponse.json({ received: true })
+    }
+
+    // Store the event
+    try {
+      await prisma.paymentsEvent?.create({
+        data: {
+          stripeEventId: event.id,
+          type: event.type,
+          payload: event.data as any
+        }
+      }).catch(() => {
+        // Table might not exist yet; continue processing
+      })
+    } catch (e) {
+      console.warn('Failed to store webhook event:', e)
+    }
+
+    console.log(`Processing webhook: ${event.type}`)
+
+    switch (event.type) {
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session
+        if (session.mode === 'subscription' && session.customer && session.subscription) {
+          const customerId = session.customer as string
+          const subscriptionId = session.subscription as string
+          
+          // Find vendor by Stripe customer ID
+          const vendor = await prisma.vendor.findUnique({
+            where: { stripeCustomerId: customerId }
+          })
+
+          if (vendor) {
+            // Get subscription details
+            const subscription = await stripe.subscriptions.retrieve(subscriptionId)
+            const lineItem = subscription.items.data[0]
+            const quantity = lineItem?.quantity || 1
+            
+            // Determine plan from price lookup key or product metadata
+            let plan = 'BASIC'
+            if (lineItem?.price.lookup_key?.includes('featured')) plan = 'FEATURED'
+            else if (lineItem?.price.lookup_key?.includes('premium')) plan = 'PREMIUM'
+
+            await prisma.vendor.update({
+              where: { id: vendor.id },
+              data: {
+                stripeSubscriptionId: subscriptionId,
+                plan: plan as any,
+                subscriptionStatus: 'ACTIVE',
+                currentPeriodEnd: new Date(subscription.current_period_end * 1000)
+              }
+            })
+
+            console.log(`Updated vendor ${vendor.id}: plan=${plan}, quantity=${quantity}`)
+          }
+        }
+        break
+      }
+
+      case 'customer.subscription.updated': {
+        const subscription = event.data.object as Stripe.Subscription
+        const customerId = subscription.customer as string
+        
+        const vendor = await prisma.vendor.findUnique({
+          where: { stripeCustomerId: customerId }
+        })
+
+        if (vendor) {
+          const lineItem = subscription.items.data[0]
+          let plan = 'BASIC'
+          if (lineItem?.price.lookup_key?.includes('featured')) plan = 'FEATURED'
+          else if (lineItem?.price.lookup_key?.includes('premium')) plan = 'PREMIUM'
+
+          await prisma.vendor.update({
+            where: { id: vendor.id },
+            data: {
+              plan: plan as any,
+              subscriptionStatus: subscription.status === 'active' ? 'ACTIVE' : 
+                                 subscription.status === 'past_due' ? 'PAST_DUE' :
+                                 subscription.status === 'canceled' ? 'CANCELED' : 'INACTIVE',
+              currentPeriodEnd: new Date(subscription.current_period_end * 1000)
+            }
+          })
+        }
+        break
+      }
+
+      case 'customer.subscription.deleted': {
+        const subscription = event.data.object as Stripe.Subscription
+        const customerId = subscription.customer as string
+        
+        const vendor = await prisma.vendor.findUnique({
+          where: { stripeCustomerId: customerId }
+        })
+
+        if (vendor) {
+          await prisma.vendor.update({
+            where: { id: vendor.id },
+            data: {
+              subscriptionStatus: 'CANCELED',
+              currentPeriodEnd: null
+            }
+          })
+        }
+        break
+      }
+
+      case 'invoice.payment_failed': {
+        const invoice = event.data.object as Stripe.Invoice
+        const customerId = invoice.customer as string
+        
+        const vendor = await prisma.vendor.findUnique({
+          where: { stripeCustomerId: customerId }
+        })
+
+        if (vendor) {
+          await prisma.vendor.update({
+            where: { id: vendor.id },
+            data: {
+              subscriptionStatus: 'PAST_DUE'
+            }
+          })
+        }
+        break
+      }
+
+      default:
+        console.log(`Unhandled event type: ${event.type}`)
+    }
+
+    return NextResponse.json({ received: true })
+  } catch (err: any) {
+    console.error('Webhook error:', err)
+    return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 })
+  }
+}
