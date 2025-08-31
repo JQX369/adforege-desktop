@@ -109,3 +109,35 @@
   - Created `@docs/affiliates-mvp-shortlist.md` with recommended MVP sets (API-first, network-first, Apify boost)
 - Next step: Confirm preferred MVP set (A/B/C) and start applications/integrations
 - Links (commits/PRs/artifacts): @requirements/docs-index.md, @docs/affiliates-mvp-shortlist.md
+
+## Entry
+- Timestamp (UTC): 2025-08-30
+- Prompt (verbatim): remove these steps from the form to make it down to 9 questions\n-\nmake sure backend still wired up\n\nRemove:\nStep 7,10,12\n\n\nfor good mesure add one more catogry for step 9
+- Current focus: Reduce GiftForm to 9 steps and keep backend compatibility
+- Decisions:
+  - Removed form steps for Living (7), Avoid (10), Context (12)
+  - Added "Outdoors" to Interests options
+  - Made GiftPrompt fields optional for removed steps; included safe fallbacks
+- Next step: Confirm UX flow and counts reflect 9 steps across devices
+- Links (commits/PRs/artifacts): components/GiftForm.tsx, prompts/GiftPrompt.ts
+
+## Entry
+- Timestamp (UTC): 2025-08-30
+- Prompt (verbatim): F.1 - We must move up the home page to fill missing gap (Seem image 1) their is a gap between Header bar and main page.\n\nF.2 - Remove the hover animation when hovering over the swipe section image
+- Current focus: Tighten header-to-content spacing and remove swipe image hover
+- Decisions:
+  - Reduced top padding in layout from pt-24 to pt-20 and hero from pt-12/20 to pt-10/16
+  - Removed hover-float class from swipe section image container
+- Next step: Visual QA across breakpoints to confirm spacing feels right
+- Links (commits/PRs/artifacts): app/layout.tsx, components/site/Hero.tsx, components/site/SwipeSection.tsx
+
+## Entry
+- Timestamp (UTC): 2025-08-30
+- Prompt (verbatim): F.1 - Once the gift Form is submited (add a cool/funny loading animation)\n\tMake sure matches style
+- Current focus: Add playful loading overlay to GiftForm submit flow
+- Decisions:
+  - Added animated gradient gift box with sparkles overlay when isLoading
+  - Implemented CSS keyframes (gift-bounce, sparkle-pop) and utility classes
+  - Avoided inline styles; created reusable sparkle position variants
+- Next step: UX verify on mobile and dark mode
+- Links (commits/PRs/artifacts): components/GiftForm.tsx, app/globals.css

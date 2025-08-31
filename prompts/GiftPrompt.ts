@@ -6,12 +6,12 @@ export interface GiftFormData {
   budget: string
   interests: string[]
   personality: string
-  living: string
   giftType: string
-  avoid: string[]
+  avoid?: string[]
+  living?: string
   location?: string
   requirements?: string
-  context: string
+  context?: string
 }
 
 export function buildGiftPrompt(formData: GiftFormData): string {
@@ -27,7 +27,8 @@ RECIPIENT INFORMATION:
 - Personality Type: ${formData.personality}
 - Living Situation: ${formData.living}
 - Gift Preference: ${formData.giftType}
-- Categories to Avoid: ${formData.avoid.join(', ') || 'None'}
+- Categories to Avoid: ${(formData.avoid || []).join(', ') || 'None'}
+- Living Situation: ${formData.living || 'Unspecified'}
 - Location (optional): ${formData.location || 'Not specified'}
 - Additional Context: ${formData.context || 'None'}
 

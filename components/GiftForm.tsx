@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { GiftFormData } from '@/prompts/GiftPrompt'
@@ -27,13 +26,10 @@ const BASE_STEP_DEFS = [
   { key: 'occasion', label: 'Occasion', type: 'radio', options: ['Birthday','Christmas','Anniversary','Valentine\'s Day','Mother\'s Day','Father\'s Day','Graduation','Wedding','Baby Shower','Housewarming','Just Because','Other'] },
   { key: 'budget', label: 'Budget Range', type: 'radio', options: [] }, // Will be populated dynamically
   { key: 'personality', label: 'Personality Type', type: 'radio', options: ['Adventurous','Creative','Practical','Intellectual','Social','Introverted','Luxury-loving','Minimalist'] },
-  { key: 'living', label: 'Living Situation', type: 'radio', options: ['Apartment','House','Dorm','With Parents','Other'] },
   { key: 'giftType', label: 'Gift Preference', type: 'radio', options: ['Experiences','Physical Items','Subscriptions','Gift Cards','Donations','No Preference'] },
-  { key: 'interests', label: 'Primary Interests (Select up to 3)', type: 'multi', options: ['Technology','Sports','Reading','Cooking','Gaming','Fashion','Art','Music','Travel','Fitness','Gardening','Photography'] },
-  { key: 'avoid', label: 'Categories to Avoid', type: 'multi', options: ['Clothing','Electronics','Books','Food/Drink','Home Decor','Jewelry','Beauty Products'] },
+  { key: 'interests', label: 'Primary Interests (Select up to 3)', type: 'multi', options: ['Technology','Sports','Reading','Cooking','Gaming','Fashion','Art','Music','Travel','Fitness','Gardening','Photography','Outdoors'] },
   // Renamed from "Special Requirements" to location-based prompt
   { key: 'location', label: 'Find near them', type: 'text' },
-  { key: 'context', label: 'Additional Context', type: 'textarea' },
 ]
 
 function reorderWithPriority(options: string[], priorityInOrder: string[]): string[] {
@@ -252,9 +248,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
     }, 250)
   }
 
-  const handleTextAutoNext = (field: keyof GiftFormData, value: string) => {
-    updateFormData(field, value)
-  }
+  // No textarea step currently
 
   const canProceed = () => {
     const step = dynamicStepDefs[currentStep - 1]
@@ -264,13 +258,13 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
       if (step.key === 'avoid') return true
     }
     if (step.type === 'text') return true
-    if (step.type === 'textarea') return true
+    // No textarea steps at present
     // For radio steps, if already selected (going back), allow Next via explicit button
     return !!(formData as any)[step.key]
   }
 
   return (
-    <Card className="w-full max-w-2xl glass-panel glow-ring shadow-xl shadow-fuchsia-200/30">
+    <Card className="w-full max-w-2xl glass-panel glow-ring shadow-xl shadow-fuchsia-200/30 relative overflow-hidden">
       <CardHeader>
         <CardTitle>Find the Perfect Gift</CardTitle>
         <CardDescription>
@@ -408,20 +402,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
               </div>
             )
           }
-          if (step.type === 'textarea') {
-            return (
-              <div className="space-y-2 step-anim outline-none" ref={stepRef} tabIndex={-1} aria-live="polite">
-                <Label htmlFor="context">{step.label}</Label>
-                <Textarea
-                  id="context"
-                  placeholder="Tell us more about the recipient or the occasion..."
-                  value={formData.context || ''}
-                  onChange={(e) => handleTextAutoNext('context', e.target.value)}
-                  rows={4}
-                />
-              </div>
-            )
-          }
+          // No textarea step currently
           return null
         })()}
       </CardContent>
@@ -454,6 +435,24 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
           })()}
         </div>
       </CardFooter>
+      {/* Loading overlay */}
+      {isLoading && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-background/70 backdrop-blur-sm">
+          <div className="relative flex flex-col items-center gap-3">
+            <div className="relative w-14 h-14 rounded-xl bg-gradient-to-br from-pink-500 to-violet-500 animate-gift-bounce flex items-center justify-center shadow-lg">
+              {/* Gift ribbon cross */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-2 h-10 bg-white/90 rounded-sm" />
+                <div className="w-10 h-2 bg-white/90 rounded-sm absolute" />
+              </div>
+            </div>
+            <div className="text-sm text-muted-foreground">Picking perfect presents…</div>
+            {/* sparkles */}
+            <span className="pg-sparkle pg-sparkle--a">*</span>
+            <span className="pg-sparkle pg-sparkle--b">*</span>
+          </div>
+        </div>
+      )}
       {/* Sticky mobile controls for multi-select & text steps */}
       {(() => {
         const step = dynamicStepDefs[currentStep - 1]

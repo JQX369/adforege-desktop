@@ -45,7 +45,7 @@ export function Hero(props: React.HTMLAttributes<HTMLElement>) {
 
   return (
     <section className="relative overflow-hidden" {...props}>
-      <div className="container mx-auto px-4 pt-12 pb-6 md:pt-20 md:pb-10 text-center">
+      <div className="container mx-auto px-4 pt-10 pb-6 md:pt-16 md:pb-10 text-center">
         <Badge className="mb-4" variant="secondary">Completely free</Badge>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
           Gifts they’ll actually{' '}

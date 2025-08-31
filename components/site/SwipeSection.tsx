@@ -8,7 +8,7 @@ export function SwipeSection() {
     <section className="py-8 md:py-10 border-top border-white/10 fade-in-up" aria-label="How swiping works" data-spotlight="true">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-6 md:gap-10 items-center">
-          <div className="order-1 hover-float relative">
+          <div className="order-1 relative">
             <div className="mx-auto md:mx-0 w-full max-w-xl rounded-2xl overflow-hidden glass-panel p-4">
               <div className="relative w-full aspect-square">
                 <Image
