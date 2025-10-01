@@ -47,11 +47,9 @@ Return JSON array with fields:
 `
 
     const modelCandidates = [
-      'sonar-pro',
-      'sonar',
-      'sonar-medium-online',
+      'gpt-5.0-mini',
+      'gpt-5.0-nano',
       'sonar-small-online',
-      'llama-3.1-sonar-small-128k-online',
     ]
 
     let response: any = null
@@ -59,25 +57,34 @@ Return JSON array with fields:
     for (const m of modelCandidates) {
       try {
         console.log('[Perplexity] Trying model:', m)
-        response = await perplexity.chat.completions.create({
+        response = await perplexity.responses.create({
           model: m,
-          messages: [
-            { role: 'user', content: searchPrompt },
+          input: [
+            {
+              role: 'user',
+              content: [
+                { type: 'input_text', text: searchPrompt },
+              ],
+            },
           ],
-          temperature: 0.2,
         })
-        if (response?.choices?.[0]?.message?.content) break
+        const contentBlocks = response?.output?.[0]?.content
+        const textBlock = contentBlocks?.find((block: any) => block.type === 'output_text')
+        if (textBlock?.text) break
       } catch (err) {
         lastErr = err
         console.log('[Perplexity] Model failed:', m, err instanceof Error ? err.message : String(err))
         continue
       }
     }
-    if (!response?.choices?.[0]?.message?.content) {
+    const contentBlocks = response?.output?.[0]?.content
+    const textBlock = contentBlocks?.find((block: any) => block.type === 'output_text')
+
+    if (!textBlock?.text) {
       throw lastErr || new Error('Perplexity returned no content')
     }
 
-    const content = response.choices[0]?.message?.content
+    const content = textBlock.text
     if (!content) {
       throw new Error('No response from Perplexity')
     }

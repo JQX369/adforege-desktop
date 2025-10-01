@@ -27,7 +27,7 @@ const BASE_STEP_DEFS = [
   { key: 'budget', label: 'Budget Range', type: 'radio', options: [] }, // Will be populated dynamically
   { key: 'personality', label: 'Personality Type', type: 'radio', options: ['Adventurous','Creative','Practical','Intellectual','Social','Introverted','Luxury-loving','Minimalist'] },
   { key: 'giftType', label: 'Gift Preference', type: 'radio', options: ['Experiences','Physical Items','Subscriptions','Gift Cards','Donations','No Preference'] },
-  { key: 'interests', label: 'Primary Interests (Select up to 3)', type: 'multi', options: ['Technology','Sports','Reading','Cooking','Gaming','Fashion','Art','Music','Travel','Fitness','Gardening','Photography','Outdoors'] },
+  { key: 'interests', label: 'Primary Interests (Select up to 6)', type: 'multi', options: ['Technology','Sports','Reading','Cooking','Gaming','Fashion','Art','Music','Travel','Fitness','Gardening','Photography','Outdoors'] },
   // Renamed from "Special Requirements" to location-based prompt
   { key: 'location', label: 'Find near them', type: 'text' },
 ]
@@ -166,16 +166,14 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
     return computeFilteredStepDefs(formData, budgetOptions)
   }, [formData, budgetOptions])
 
-  const TOTAL_STEPS = dynamicStepDefs.length
-  const progressWidthClass = useMemo(() => {
-    const widths = [
-      'w-1/12','w-2/12','w-3/12','w-4/12','w-5/12','w-6/12','w-7/12','w-8/12','w-9/12','w-10/12','w-11/12','w-full'
-    ]
-    return widths[Math.min(Math.max(currentStep,1), TOTAL_STEPS) - 1]
-  }, [currentStep])
+  const totalSteps = useMemo(() => dynamicStepDefs.length, [dynamicStepDefs])
+  const progressPercent = useMemo(() => {
+    const clamped = Math.min(Math.max(currentStep, 1), totalSteps)
+    return Math.round((clamped / Math.max(1, totalSteps)) * 100)
+  }, [currentStep, totalSteps])
 
   // Progress fraction 0..1
-  const progressFraction = (currentStep - 1) / Math.max(1, (TOTAL_STEPS - 1))
+  const progressFraction = (currentStep - 1) / Math.max(1, (totalSteps - 1))
   React.useEffect(() => {
     if (onProgressChange) onProgressChange(Math.max(0, Math.min(1, progressFraction)))
   }, [progressFraction, onProgressChange])
@@ -200,7 +198,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
     const current = formData.interests || []
     if (current.includes(interest)) {
       updateFormData('interests', current.filter(i => i !== interest))
-    } else if (current.length < 3) {
+    } else if (current.length < 6) {
       updateFormData('interests', [...current, interest])
     }
   }
@@ -215,7 +213,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
   }
 
   const goNext = () => {
-    if (currentStep < TOTAL_STEPS) setCurrentStep(currentStep + 1)
+    if (currentStep < totalSteps) setCurrentStep(currentStep + 1)
     else onSubmit(formData as GiftFormData)
   }
 
@@ -268,10 +266,10 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
       <CardHeader>
         <CardTitle>Find the Perfect Gift</CardTitle>
         <CardDescription>
-          Step {currentStep} of {TOTAL_STEPS} - Tell us about the gift recipient
+          Step {currentStep} of {totalSteps} - Tell us about the gift recipient
         </CardDescription>
         <div className="mt-2 h-2 w-full bg-muted rounded">
-          <div className={`h-2 bg-primary rounded transition-all duration-300 ${progressWidthClass}`} aria-hidden />
+          <div className="pg-progress" aria-hidden style={{ width: `${progressPercent}%` }} />
         </div>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -313,7 +311,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
                         id={interest}
                         checked={formData.interests?.includes(interest) || false}
                         onCheckedChange={() => handleInterestToggle(interest)}
-                        disabled={!formData.interests?.includes(interest) && (formData.interests?.length || 0) >= 3}
+                        disabled={!formData.interests?.includes(interest) && (formData.interests?.length || 0) >= 6}
                       />
                       <Label htmlFor={interest} className="cursor-pointer">
                         {interest}
@@ -321,7 +319,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
                     </div>
                   ))}
                 </div>
-                <div className="text-xs text-muted-foreground mt-1">{(formData.interests?.length || 0)}/3 selected</div>
+                <div className="text-xs text-muted-foreground mt-1">{(formData.interests?.length || 0)}/6 selected</div>
                 {getStepHint(step.key) && (
                   <p className="text-xs text-muted-foreground">{getStepHint(step.key) as string}</p>
                 )}
@@ -424,7 +422,7 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
                 </Button>
               )
             }
-            if (currentStep === TOTAL_STEPS) {
+            if (currentStep === totalSteps) {
               return (
                 <Button onClick={() => onSubmit(formData as GiftFormData)} disabled={isLoading}>
                   {isLoading ? 'Finding Gifts...' : 'Find Gifts'}
@@ -462,8 +460,8 @@ export function GiftForm({ onSubmit, isLoading = false, onProgressChange, onGend
           <div className="fixed inset-x-0 bottom-0 z-30 md:hidden p-3">
             <div className="mx-auto max-w-md glass-panel glow-ring rounded-xl p-3 flex items-center justify-between">
               <Button variant="outline" size="sm" onClick={goBack} disabled={currentStep === 1}>Back</Button>
-              <Button size="sm" onClick={currentStep === TOTAL_STEPS ? () => onSubmit(formData as GiftFormData) : goNext} disabled={!canProceed() || isLoading}>
-                {currentStep === TOTAL_STEPS ? (isLoading ? 'Finding…' : 'Find Gifts') : 'Next'}
+              <Button size="sm" onClick={currentStep === totalSteps ? () => onSubmit(formData as GiftFormData) : goNext} disabled={!canProceed() || isLoading}>
+                {currentStep === totalSteps ? (isLoading ? 'Finding…' : 'Find Gifts') : 'Next'}
               </Button>
             </div>
           </div>

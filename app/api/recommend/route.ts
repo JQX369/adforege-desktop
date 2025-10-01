@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient, AvailabilityStatus, ProductSource, VendorPlan } from '@prisma/client'
+import { rateLimit } from '@/lib/utils'
 import { buildGiftPrompt, buildSearchQuery, GiftFormData } from '@/prompts/GiftPrompt'
 import { buildAffiliateUrl } from '@/lib/affiliates'
 import {
@@ -30,6 +31,10 @@ const TIER_BOOSTS = {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get('x-forwarded-for') || 'anon'
+    if (!rateLimit(`rec:${ip}`, 60)) {
+      return NextResponse.json({ error: 'Rate limited' }, { status: 429 })
+    }
     const body = await request.json()
     const { formData, userId } = body as { formData: GiftFormData; userId?: string }
 
@@ -38,22 +43,31 @@ export async function POST(request: NextRequest) {
     let recommendations: any[] = []
     try {
       console.log('[Recommend] Building chat prompt')
-      const completion = await openai.chat.completions.create({
-        model: 'gpt-4-turbo',
-        messages: [
+      const completion = await openai.responses.create({
+        model: process.env.OPENAI_GIFT_MODEL || 'gpt-5.0-mini',
+        input: [
           {
             role: 'system',
-            content: 'You are a helpful gift recommendation assistant. Always respond with valid JSON.',
+            content: [{ type: 'input_text', text: 'You are a helpful gift recommendation assistant. Always respond with valid JSON.' }],
           },
           {
             role: 'user',
-            content: prompt,
+            content: [{ type: 'input_text', text: prompt }],
           },
         ],
-        response_format: { type: 'json_object' },
         temperature: 0.8,
       })
-      const aiResponse = JSON.parse(completion.choices[0].message.content || '{}')
+
+      const outputText = completion.output_text
+        ? completion.output_text
+        : completion.output
+            ?.flatMap((segment: any) => segment.content || [])
+            .filter((segment: any) => segment.type === 'output_text')
+            .map((segment: any) => segment.text)
+            .join('') ||
+          '{}'
+
+      const aiResponse = JSON.parse(outputText)
       console.log('[Recommend] AI recs count:', Array.isArray(aiResponse.recommendations) ? aiResponse.recommendations.length : 0)
       recommendations = aiResponse.recommendations || []
     } catch (aiError) {
@@ -65,10 +79,10 @@ export async function POST(request: NextRequest) {
     const userPreferenceText = `${formData.occasion} gift for ${formData.relationship} who is ${formData.personality} and likes ${formData.interests.join(', ')}`
     let userEmbedding: number[] | null = null
     try {
-        const userEmbeddingResponse = await openai.embeddings.create({
-          model: 'text-embedding-3-small',
-          input: userPreferenceText,
-        })
+      const userEmbeddingResponse = await openai.embeddings.create({
+        model: 'text-embedding-3-small',
+        input: userPreferenceText,
+      })
       userEmbedding = userEmbeddingResponse.data[0].embedding
     } catch (embedError) {
       console.log('Embedding generation failed; skipping vector search:', embedError)
@@ -83,29 +97,36 @@ export async function POST(request: NextRequest) {
 
     if (vectorString) {
       try {
-        // Find vendor products that match demographics
+        // Find vendor products that match and are in stock with quality
         vendorProducts = await prisma.$queryRaw`
           SELECT 
             id, title, description, price, images, "affiliateUrl", categories,
-            1 - (embedding <=> ${vectorString}::vector) as similarity,
-            "vendorEmail", status
+            retailer, source, availability, "vendorEmail", status,
+            1 - (embedding <=> ${vectorString}::vector) as similarity
           FROM "Product"
           WHERE status = 'APPROVED'
             AND "vendorEmail" IS NOT NULL
+            AND availability != 'OUT_OF_STOCK'
+            AND price > 0
+            AND array_length(images, 1) > 0
           ORDER BY embedding <=> ${vectorString}::vector
-          LIMIT 20
+          LIMIT 40
         ` as any[]
 
         // Find affiliate products (non-vendor)
         affiliateProducts = await prisma.$queryRaw`
           SELECT 
             id, title, description, price, images, "affiliateUrl", categories,
+            retailer, source, availability,
             1 - (embedding <=> ${vectorString}::vector) as similarity
           FROM "Product"
           WHERE status = 'APPROVED'
             AND "vendorEmail" IS NULL
+            AND availability != 'OUT_OF_STOCK'
+            AND price > 0
+            AND array_length(images, 1) > 0
           ORDER BY embedding <=> ${vectorString}::vector
-          LIMIT 10
+          LIMIT 40
         ` as any[]
       } catch (vectorError) {
         console.log('Vector search failed, falling back to simple product query:', vectorError)
@@ -114,7 +135,9 @@ export async function POST(request: NextRequest) {
           vendorProducts = await prisma.product.findMany({
             where: {
               status: 'APPROVED',
-              vendorEmail: { not: null }
+              vendorEmail: { not: null },
+              availability: { not: 'OUT_OF_STOCK' },
+              price: { gt: 0 },
             },
             take: 20,
             select: {
@@ -127,13 +150,18 @@ export async function POST(request: NextRequest) {
               categories: true,
               vendorEmail: true,
               status: true,
+              availability: true,
+              source: true,
+              retailer: true,
             }
           })
 
           affiliateProducts = await prisma.product.findMany({
             where: {
               status: 'APPROVED',
-              vendorEmail: null
+              vendorEmail: null,
+              availability: { not: 'OUT_OF_STOCK' },
+              price: { gt: 0 },
             },
             take: 10,
             select: {
@@ -146,6 +174,9 @@ export async function POST(request: NextRequest) {
               categories: true,
               vendorEmail: true,
               status: true,
+              availability: true,
+              source: true,
+              retailer: true,
             }
           })
 
@@ -161,7 +192,22 @@ export async function POST(request: NextRequest) {
     }
 
     // Combine and prioritize products
+    // Budget filter: crude clamp
+    const budget = (formData.budget || '').toLowerCase()
+    const [minBudget, maxBudget] = (() => {
+      const num = (s: string) => Number((s || '').replace(/[^0-9.]/g, '')) || 0
+      if (budget.includes('under')) return [0, num(budget)]
+      if (budget.includes('over')) return [num(budget), Infinity]
+      const m = budget.match(/(\d+)[^\d]+(\d+)/)
+      if (m) return [Number(m[1]), Number(m[2])]
+      return [0, Infinity]
+    })()
+
+    const priceInBudget = (p: number) => p >= minBudget && p <= maxBudget
+
     const allProducts = [...vendorProducts, ...affiliateProducts]
+      .filter(p => Array.isArray(p.images) && p.images.length > 0)
+      .filter(p => typeof p.price === 'number' && priceInBudget(p.price))
 
     // Sort by priority: vendor products first (by tier), then by match score
     const prioritizedProducts = allProducts
@@ -169,10 +215,9 @@ export async function POST(request: NextRequest) {
         // Calculate demographic match score
         let matchScore = product.similarity || 0.5
         
-        // Apply vendor tier boost (would need tier field in schema)
+        // Apply vendor tier boost (use Vendor.plan if available via join later; here simple boost)
         if (product.vendorEmail) {
-          // For now, give all vendor products a boost
-          matchScore *= 1.5 // This would use TIER_BOOSTS based on actual tier
+          matchScore *= 1.3
         }
         
         // Check demographic matching
@@ -259,109 +304,22 @@ export async function POST(request: NextRequest) {
       sponsored: Boolean(product.sponsored),
     }))
 
-    // If we don't have enough products, search for real products using Perplexity
-    if (enhancedRecommendations.length < 12) {
-      console.log(`[Recommend] Only ${enhancedRecommendations.length} products found, searching for more...`)
-      
-      try {
-        const origin = new URL(request.url).origin
-        const searchQuery = buildPerplexityQuery(formData) + `\n\nConstraints: Only include URLs from these domains: ${process.env.AFFILIATE_ALLOWED_DOMAINS || 'amazon.com, amzn.to'}.`
-        const searchResults = await searchGiftProducts(searchQuery)
-        console.log('[Recommend] Search results:', searchResults.length)
-        
-        const targetCount = Math.max(12 - enhancedRecommendations.length, 0)
-        const searchBasedProducts = searchResults.slice(0, targetCount).map((product) => ({
-          id: `search-${Date.now()}-${Math.random()}`,
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          imageUrl: product.imageUrl || '',
-          affiliateUrl: buildAffiliateUrl(product.url),
-          matchScore: 0.7, // Give search results a good match score
-          categories: product.categories,
-          isVendor: false,
-          isSearchResult: true,
-          sponsored: false,
-        }))
+    // Do not add live search or placeholders in request path. If <12, return fewer with honesty.
 
-        enhancedRecommendations.push(...searchBasedProducts)
-        
-        if (searchBasedProducts.length > 0) {
-          console.log(`Added ${searchBasedProducts.length} products from search`)
-        }
-        // If still not enough (e.g., Perplexity returned nothing), fill with placeholders
-        if (enhancedRecommendations.length < 12) {
-          const needed = 12 - enhancedRecommendations.length
-          const aiBased = (recommendations || []).slice(0, needed).map((rec: any) => ({
-            id: `placeholder-${Date.now()}-${Math.random()}`,
-            title: rec.title || 'Thoughtful Gift Idea',
-            description: rec.description || 'A well-reviewed gift idea suitable for the recipient.',
-            price: 0,
-            imageUrl: '',
-            affiliateUrl: '#',
-            matchScore: 0.5,
-            categories: rec.category || [],
-            isVendor: false,
-            sponsored: false,
-          }))
-          if (aiBased.length > 0) {
-            enhancedRecommendations.push(...aiBased)
-          } else {
-            const defaults = Array.from({ length: needed }).map((_, idx) => ({
-              id: `default-${Date.now()}-${idx}-${Math.random()}`,
-              title: `${formData.occasion || 'Gift'} Idea ${idx + 1}`,
-              description: `A versatile gift option for a ${formData.relationship || 'recipient'} who enjoys ${formData.interests?.[0] || 'great gifts'}.`,
-              price: 0,
-              imageUrl: '',
-              affiliateUrl: '#',
-              matchScore: 0.45,
-              categories: Array.isArray(formData.interests) ? [formData.interests[0]] : [],
-              isVendor: false,
-              sponsored: false,
-            }))
-            enhancedRecommendations.push(...defaults)
-          }
-        }
-      } catch (searchError) {
-        console.log('Search failed, falling back to AI placeholders:', searchError)
-        
-        // Fallback to AI-generated placeholders
-        const needed = 30 - enhancedRecommendations.length
-        const aiBased = recommendations.slice(0, needed).map((rec: any) => ({
-          id: `placeholder-${Date.now()}-${Math.random()}`,
-          title: rec.title || 'Thoughtful Gift Idea',
-          description: rec.description || 'A well-reviewed gift idea suitable for the recipient.',
-          price: 0,
-          imageUrl: '',
-          affiliateUrl: '#',
-          matchScore: 0.5,
-          categories: rec.category || [],
-          isVendor: false,
-          sponsored: false,
-        }))
-
-        if (aiBased.length > 0) {
-          enhancedRecommendations.push(...aiBased)
-        } else {
-          const defaults = Array.from({ length: needed }).map((_, idx) => ({
-            id: `default-${Date.now()}-${idx}-${Math.random()}`,
-            title: `${formData.occasion || 'Gift'} Idea ${idx + 1}`,
-            description: `A versatile gift option for a ${formData.relationship || 'recipient'} who enjoys ${formData.interests?.[0] || 'great gifts'}.`,
-            price: 0,
-            imageUrl: '',
-            affiliateUrl: '#',
-            matchScore: 0.45,
-            categories: Array.isArray(formData.interests) ? [formData.interests[0]] : [],
-            isVendor: false,
-            sponsored: false,
-          }))
-          enhancedRecommendations.push(...defaults)
-        }
-      }
-    }
-
-    // Generate session ID for tracking
+    // Generate session ID for tracking and log impression
     const sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    try {
+      await prisma.recommendLog.create({
+        data: {
+          sessionId,
+          userId: userId || null,
+          productIds: enhancedRecommendations.map(p => String(p.id)),
+          resultsCount: enhancedRecommendations.length,
+        }
+      })
+    } catch (e) {
+      console.log('RecommendLog create failed:', e)
+    }
 
     return NextResponse.json({
       recommendations: enhancedRecommendations,

@@ -33,6 +33,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: `Missing required fields: ${missing.join(', ')}` }, { status: 400 })
     }
 
+    const payload: ProductData = {
+      title: String(productData.title),
+      description: String(productData.description),
+      price: Number(productData.price),
+      images: Array.isArray(productData.images) ? productData.images.map(String) : [],
+      originalUrl: String(productData.originalUrl),
+      vendorEmail: productData.vendorEmail ? String(productData.vendorEmail) : (user.email || ''),
+    }
+
     const openAiKey = process.env.OPENAI_API_KEY
     if (!openAiKey) {
       console.error('categorise-product: OPENAI_API_KEY missing')
@@ -42,33 +51,41 @@ export async function POST(request: NextRequest) {
     const openai = new OpenAI({ apiKey: openAiKey })
 
     // Clean the URL
-    const cleanedUrl = cleanProductUrl(productData.originalUrl as string)
+    const cleanedUrl = cleanProductUrl(payload.originalUrl)
 
     // Generate categorization using OpenAI
-    const prompt = buildCategorizerPrompt(productData)
-    
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4-turbo',
-      messages: [
+    const prompt = buildCategorizerPrompt(payload)
+
+    const completion = await openai.responses.create({
+      model: process.env.OPENAI_GIFT_MODEL || 'gpt-5.0-mini',
+      input: [
         {
           role: 'system',
-          content: 'You are a product categorization expert. Always respond with valid JSON.',
+          content: [{ type: 'input_text', text: 'You are a product categorization expert. Always respond with valid JSON.' }],
         },
         {
           role: 'user',
-          content: prompt,
+          content: [{ type: 'input_text', text: prompt }],
         },
       ],
-      response_format: { type: 'json_object' },
       temperature: 0.7,
     })
 
-    const analysis = JSON.parse(completion.choices[0].message.content || '{}')
+    const responseText = completion.output_text
+      ? completion.output_text
+      : completion.output
+          ?.flatMap((segment: any) => segment.content || [])
+          .filter((segment: any) => segment.type === 'output_text')
+          .map((segment: any) => segment.text)
+          .join('') ||
+        '{}'
+
+    const analysis = JSON.parse(responseText)
 
     // Generate embedding for the product
-    const embeddingText = extractEmbeddingText(productData as ProductData, analysis)
+    const embeddingText = extractEmbeddingText(payload, analysis)
     const embeddingResponse = await openai.embeddings.create({
-      model: 'text-embedding-ada-002',
+      model: 'text-embedding-3-small',
       input: embeddingText,
     })
     const embedding = embeddingResponse.data[0].embedding
@@ -80,49 +97,45 @@ export async function POST(request: NextRequest) {
     }
 
     // Find existing product or create new one
-    let product = await prisma.product.findFirst({
+    const existing = await prisma.product.findFirst({
       where: { affiliateUrl: cleanedUrl }
     })
 
-    if (product) {
-      // Update existing product
-      product = await prisma.product.update({
-        where: { id: product.id },
-        data: {
-          title: productData.title,
-          description: productData.description,
-          price: productData.price,
-          images: productData.images,
-          categories: analysis.categories || [],
-          embedding: embedding,
-          vendorEmail: productData.vendorEmail || vendor.email,
-          vendorId: vendor.id,
-          status: 'PENDING', // Products start as pending for moderation
-        },
-      })
-    } else {
-      // Create new product
-      product = await prisma.product.create({
-        data: {
-          title: productData.title,
-          description: productData.description,
-          price: productData.price,
-          images: productData.images,
-          affiliateUrl: cleanedUrl,
-          categories: analysis.categories || [],
-          embedding: embedding,
-          vendorEmail: productData.vendorEmail || vendor.email,
-          vendorId: vendor.id,
-          status: 'PENDING',
-        },
-      })
-    }
+    const savedProduct = existing
+      ? await prisma.product.update({
+          where: { id: existing.id },
+          data: {
+            title: payload.title,
+            description: payload.description,
+            price: payload.price,
+            images: payload.images,
+            categories: analysis.categories || [],
+            embedding,
+            vendorEmail: payload.vendorEmail || vendor.email,
+            vendorId: vendor.id,
+            status: 'PENDING',
+          },
+        })
+      : await prisma.product.create({
+          data: {
+            title: payload.title,
+            description: payload.description,
+            price: payload.price,
+            images: payload.images,
+            affiliateUrl: cleanedUrl,
+            categories: analysis.categories || [],
+            embedding,
+            vendorEmail: payload.vendorEmail || vendor.email,
+            vendorId: vendor.id,
+            status: 'PENDING',
+          },
+        })
 
     return NextResponse.json({
       success: true,
-      productId: product.id,
-      categories: product.categories,
-      status: product.status,
+      productId: savedProduct.id,
+      categories: savedProduct.categories,
+      status: savedProduct.status,
       message: 'Product submitted successfully. It will be reviewed before appearing in recommendations.',
     })
   } catch (error) {
