@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
             where: {
               status: 'APPROVED',
               vendorEmail: { not: null },
-              availability: { not: 'OUT_OF_STOCK' },
+              NOT: { availability: 'OUT_OF_STOCK' },
               price: { gt: 0 },
             },
             take: 20,
@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
             where: {
               status: 'APPROVED',
               vendorEmail: null,
-              availability: { not: 'OUT_OF_STOCK' },
+              NOT: { availability: 'OUT_OF_STOCK' },
               price: { gt: 0 },
             },
             take: 10,
