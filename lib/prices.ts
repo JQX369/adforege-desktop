@@ -10,7 +10,11 @@ export function getCurrencyFromCountry(countryCode: string | undefined): Support
 	return 'USD'
 }
 
-export function getPriceIdForTier(tier: SubscriptionTier, currency: SupportedCurrency): string | null {
-	const envKey = `STRIPE_PRICE_${tier}_${currency}`
-	return (process.env as any)[envKey] || null
+export function getPriceIdForTier(tier: SubscriptionTier, currency: SupportedCurrency = 'USD'): string | null {
+	const env = process.env as Record<string, string | undefined>
+	const normalizedCurrency = (currency || 'USD').toUpperCase() as SupportedCurrency
+	const keyWithCurrency = `STRIPE_PRICE_${tier}_${normalizedCurrency}`
+	const legacyKey = `STRIPE_PRICE_${tier}`
+
+	return env[keyWithCurrency] ?? env[legacyKey] ?? null
 }
