@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import {
   Sheet,
   SheetContent,
@@ -37,7 +37,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
   const [savedCount, setSavedCount] = useState(0)
   const [open, setOpen] = useState(false)
 
-  const fetchSavedProducts = async () => {
+  const fetchSavedProducts = useCallback(async () => {
     setIsLoading(true)
     try {
       const response = await fetch(`/api/saved/${userId}`)
@@ -62,7 +62,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [userId])
 
   const handleRemove = async (productId: string) => {
     try {
@@ -82,7 +82,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
     if (userId && open) {
       fetchSavedProducts()
     }
-  }, [userId, open])
+  }, [userId, open, fetchSavedProducts])
 
   // Refresh when a save occurs elsewhere
   useEffect(() => {
@@ -91,7 +91,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
     }
     window.addEventListener('pg:saved-updated', handler as any)
     return () => window.removeEventListener('pg:saved-updated', handler as any)
-  }, [userId])
+  }, [userId, fetchSavedProducts])
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>

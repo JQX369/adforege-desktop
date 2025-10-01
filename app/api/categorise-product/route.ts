@@ -6,14 +6,7 @@ import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { isActiveSubscriptionStatus } from '@/lib/vendor-access'
 import { cleanProductUrl } from '@/lib/affiliates'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
-
 const prisma = new PrismaClient()
-
-// Remove edge runtime - Prisma doesn't support it
-// export const runtime = 'edge'
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,11 +17,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const body = await request.json()
-    const productData = body as ProductData
+    const body = await request.json().catch(() => null)
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+    }
+
+    const productData = body as Partial<ProductData>
+    const requiredFields: Array<keyof ProductData> = ['title', 'description', 'price', 'images', 'originalUrl']
+    const missing = requiredFields.filter(field => {
+      const value = productData[field as keyof ProductData]
+      if (field === 'images') return !Array.isArray(value)
+      return value === undefined || value === null || value === ''
+    })
+    if (missing.length > 0) {
+      return NextResponse.json({ error: `Missing required fields: ${missing.join(', ')}` }, { status: 400 })
+    }
+
+    const openAiKey = process.env.OPENAI_API_KEY
+    if (!openAiKey) {
+      console.error('categorise-product: OPENAI_API_KEY missing')
+      return NextResponse.json({ error: 'Server misconfigured: OpenAI unavailable' }, { status: 500 })
+    }
+
+    const openai = new OpenAI({ apiKey: openAiKey })
 
     // Clean the URL
-    const cleanedUrl = cleanProductUrl(productData.originalUrl)
+    const cleanedUrl = cleanProductUrl(productData.originalUrl as string)
 
     // Generate categorization using OpenAI
     const prompt = buildCategorizerPrompt(productData)
@@ -52,7 +66,7 @@ export async function POST(request: NextRequest) {
     const analysis = JSON.parse(completion.choices[0].message.content || '{}')
 
     // Generate embedding for the product
-    const embeddingText = extractEmbeddingText(productData, analysis)
+    const embeddingText = extractEmbeddingText(productData as ProductData, analysis)
     const embeddingResponse = await openai.embeddings.create({
       model: 'text-embedding-ada-002',
       input: embeddingText,

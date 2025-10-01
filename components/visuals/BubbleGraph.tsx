@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
 interface BubbleGraphProps {
   progress: number // 0..1
@@ -27,7 +27,7 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
   const sizeRef = useRef<{ w: number; h: number; dpr: number }>({ w: 0, h: 0, dpr: 1 })
 
   // Rebuild nodes when progress or size changes
-  const rebuild = () => {
+  const rebuild = useCallback(() => {
     const { w, h } = sizeRef.current
     if (!w || !h) return
     const baseNodes = 24
@@ -43,7 +43,7 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
       scale: 1.5,
     }))
     nodesRef.current = nodes
-  }
+  }, [progress])
 
   // Resize handling
   useEffect(() => {
@@ -69,13 +69,12 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
       ro.disconnect()
       window.removeEventListener('resize', resize)
     }
-  }, [])
+  }, [rebuild])
 
   // Rebuild when progress changes
   useEffect(() => {
     rebuild()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [progress])
+  }, [progress, rebuild])
 
   // Mouse listeners for hover interaction + parallax (canvas remains pointer-events none)
   useEffect(() => {
@@ -120,6 +119,20 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
     container.style.filter = `blur(${blurPx}px) brightness(${brightness})`
   }, [focus])
 
+  const colors = useMemo(() => {
+    return colorScheme === 'blue'
+      ? {
+          lineStroke: 'rgba(59, 130, 246, 0.35)',
+          nodeFill: 'rgba(59, 130, 246, 0.65)',
+          nodeShadow: 'rgba(59, 130, 246, 0.35)',
+        }
+      : {
+          lineStroke: 'rgba(136, 84, 208, 0.35)',
+          nodeFill: 'rgba(236, 72, 153, 0.65)',
+          nodeShadow: 'rgba(236, 72, 153, 0.35)',
+        }
+  }, [colorScheme])
+
   // Animation loop
   useEffect(() => {
     const loop = () => {
@@ -139,9 +152,7 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
       const mouse = mouseRef.current
 
       // Color scheme
-      const lineStroke = colorScheme === 'blue' ? 'rgba(59, 130, 246, 0.35)' : 'rgba(136, 84, 208, 0.35)'
-      const nodeFill = colorScheme === 'blue' ? 'rgba(59, 130, 246, 0.65)' : 'rgba(236, 72, 153, 0.65)'
-      const nodeShadow = colorScheme === 'blue' ? 'rgba(59, 130, 246, 0.35)' : 'rgba(236, 72, 153, 0.35)'
+      const { lineStroke, nodeFill, nodeShadow } = colors
 
       // Determine how many bubbles should be in the "grown" state based on progress
       const grownCount = Math.max(0, Math.min(nodes.length, Math.floor(p * nodes.length)))
@@ -204,7 +215,7 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
     }
-  }, [progress])
+  }, [progress, colors])
 
   return (
     <div ref={containerRef} className="pointer-events-none fixed inset-0 -z-10 will-change-transform">
