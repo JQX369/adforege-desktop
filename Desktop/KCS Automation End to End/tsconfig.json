@@ -1,0 +1,16 @@
+{
+  "extends": "./packages/config/tsconfig/base.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@kcs/config/*": ["packages/config/*"],
+      "@kcs/types": ["packages/types/src"],
+      "@kcs/db": ["packages/db/src"],
+      "@kcs/queue": ["packages/queue/src"],
+      "@kcs/shared/*": ["packages/shared/src/*"],
+      "@kcs/shared": ["packages/shared/src"]
+    }
+  },
+  "include": ["packages", "apps", "scripts"]
+}
+
