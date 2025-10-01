@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
-import { PrismaClient, AvailabilityStatus, ProductSource, VendorPlan } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import { rateLimit } from '@/lib/utils'
 import { buildGiftPrompt, buildSearchQuery, GiftFormData } from '@/prompts/GiftPrompt'
 import { buildAffiliateUrl } from '@/lib/affiliates'
