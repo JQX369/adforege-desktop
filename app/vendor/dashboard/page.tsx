@@ -4,14 +4,32 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Textarea } from '@/components/ui/textarea'
 
+type ProductMetric = {
+	id: string
+	title: string
+	imageUrl?: string
+	price?: number
+	currency?: string
+	impressions: number
+	clicks: number
+	saves: number
+	likes: number
+	ctr: number
+	saveRate: number
+}
+
 interface VendorStats {
-	products: { id: string; title: string; savesCount: number }[]
-	totals: { products: number; saves: number }
-	vendor?: { subscriptionStatus: string; currentPeriodEnd?: string | null }
+	products: ProductMetric[]
+	totals: { products: number; impressions: number; clicks: number; saves: number }
+	rates: { ctr: number; saveRate: number }
+	metricsWindowDays: number
+	topProducts?: ProductMetric[]
+	vendor?: { subscriptionStatus: string; currentPeriodEnd?: string | null; plan?: string | null }
 }
 
 export default function VendorDashboardPage() {
@@ -193,14 +211,7 @@ export default function VendorDashboardPage() {
 					</CardContent>
 				</Card>
 
-				<Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
-					<CardHeader>
-						<CardTitle className="text-white flex items-center gap-2">📈 Metrics (last 20 sessions)</CardTitle>
-					</CardHeader>
-					<CardContent>
 						<MetricsPanel />
-					</CardContent>
-				</Card>
 
 				<Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
 					<CardHeader>
@@ -329,6 +340,7 @@ function BulkUrlIngestForm() {
 function MetricsPanel() {
     const [loading, setLoading] = useState(true)
     const [data, setData] = useState<any>(null)
+
     useEffect(() => {
         const run = async () => {
             try {
@@ -338,14 +350,131 @@ function MetricsPanel() {
         }
         run()
     }, [])
-    if (loading) return <div className="text-purple-200">Loading…</div>
-    if (!data) return <div className="text-purple-200">No data.</div>
+
     return (
-        <div className="text-purple-200 text-sm space-y-2">
-            <div>Impressions: <span className="text-white font-semibold">{data.recs}</span></div>
-            <div>Clicks: <span className="text-white font-semibold">{data.clicks}</span></div>
-            <div>CTR: <span className="text-white font-semibold">{(data.ctr * 100).toFixed(2)}%</span></div>
-            <div>Approved products: <span className="text-white font-semibold">{data.approvedProducts}</span></div>
+        <div className="grid lg:grid-cols-2 gap-6">
+            <Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
+                <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-2">Insights (last {data?.metricsWindowDays ?? 7} days)</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    {loading && <div className="text-purple-200">Loading…</div>}
+                    {!loading && !data && <div className="text-purple-200">No data.</div>}
+                    {!loading && data && (
+                        <div className="grid grid-cols-2 gap-4 text-sm text-purple-200">
+                            <MetricTile label="Impressions" value={data.totals?.impressions ?? 0} />
+                            <MetricTile label="Clicks" value={data.totals?.clicks ?? 0} />
+                            <MetricTile label="Saves" value={data.totals?.saves ?? 0} />
+                            <MetricTile label="CTR" value={`${((data.rates?.ctr ?? 0) * 100).toFixed(2)}%`} />
+                            <MetricTile label="Save Rate" value={`${((data.rates?.saveRate ?? 0) * 100).toFixed(2)}%`} />
+                            <MetricTile label="Products" value={data.totals?.products ?? 0} />
+                        </div>
+                    )}
+                </CardContent>
+            </Card>
+
+            {!loading && data && (
+                <Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
+                    <CardHeader>
+                        <CardTitle className="text-white flex items-center gap-2">Plan & Billing</CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-sm text-purple-200 space-y-3">
+                        <div className="flex items-center justify-between">
+                            <span>Plan</span>
+                            <span className="text-white font-medium uppercase">{data.vendor?.plan || 'BASIC'}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span>Subscription Status</span>
+                            <span className="text-white font-medium">{data.vendor?.subscriptionStatus || 'INACTIVE'}</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <span>Current Period Ends</span>
+                            <span className="text-white font-medium">{data.vendor?.currentPeriodEnd ? new Date(data.vendor.currentPeriodEnd).toLocaleDateString() : '—'}</span>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
+            {!loading && data && (
+                <Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl lg:col-span-2">
+                    <CardHeader>
+                        <CardTitle className="text-white flex items-center gap-2">Product Performance</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        {data.products?.length ? (
+                            <Table className="text-purple-200 text-sm">
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Product</TableHead>
+                                        <TableHead>Impressions</TableHead>
+                                        <TableHead>Clicks</TableHead>
+                                        <TableHead>Saves</TableHead>
+                                        <TableHead>CTR</TableHead>
+                                        <TableHead>Save Rate</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {data.products.map((item: any) => (
+                                        <TableRow key={item.id}>
+                                            <TableCell>
+                                                <div className="flex items-center gap-3">
+                                                    {item.imageUrl ? (
+                                                        <img src={item.imageUrl} alt={item.title} className="w-10 h-10 rounded object-cover" />
+                                                    ) : (
+                                                        <div className="w-10 h-10 rounded bg-purple-500/30" />
+                                                    )}
+                                                    <div>
+                                                        <div className="text-white font-medium line-clamp-1">{item.title}</div>
+                                                        {item.price ? (
+                                                            <div className="text-xs text-purple-300">{item.currency ?? 'USD'} {item.price.toFixed(2)}</div>
+                                                        ) : null}
+                                                    </div>
+                                                </div>
+                                            </TableCell>
+                                            <TableCell>{item.impressions}</TableCell>
+                                            <TableCell>{item.clicks}</TableCell>
+                                            <TableCell>{item.saves}</TableCell>
+                                            <TableCell>{(item.ctr * 100).toFixed(1)}%</TableCell>
+                                            <TableCell>{(item.saveRate * 100).toFixed(1)}%</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        ) : (
+                            <div className="text-purple-200">No product metrics yet.</div>
+                        )}
+                    </CardContent>
+                </Card>
+            )}
+        </div>
+    )
+}
+
+function MetricTile({ label, value }: { label: string; value: string | number }) {
+    return (
+        <div className="bg-white/5 rounded-lg px-3 py-2 border border-white/10">
+            <div className="text-xs uppercase tracking-wide text-purple-300">{label}</div>
+            <div className="text-xl text-white font-semibold">{value}</div>
+        </div>
+    )
+}
+
+function InsightList({ title, items, emptyLabel }: { title: string; items?: Array<{ label: string; value: number }>; emptyLabel: string }) {
+    return (
+        <div>
+            <div className="text-white font-semibold mb-2">{title}</div>
+            {items && items.length ? (
+                <div className="space-y-2">
+                    {items.map((item) => (
+                        <div key={`${title}-${item.label}`} className="flex items-center justify-between bg-white/5 px-3 py-2 rounded border border-white/10 text-sm">
+                            <span className="text-white">{item.label}</span>
+                            <span className="text-purple-300">{item.value}</span>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className="text-purple-300 text-sm">{emptyLabel}</div>
+            )}
         </div>
     )
 }

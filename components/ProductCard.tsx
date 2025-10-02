@@ -7,7 +7,7 @@ import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
 import fallbackImg from '@Images/PRESENT.png'
 
-interface Product {
+interface BaseProductCard {
   id: string
   title: string
   description: string
@@ -16,12 +16,15 @@ interface Product {
   affiliateUrl: string
   matchScore: number
   categories: string[]
-  isVendor?: boolean
+  vendor?: string
   sponsored?: boolean
+  badges?: string[]
+  deliveryDays?: string
+  currency?: string
 }
 
 interface ProductCardProps {
-  product: Product
+  product: BaseProductCard
   className?: string
   sessionId?: string
   userId?: string
@@ -46,6 +49,8 @@ export function ProductCard({ product, className = '', sessionId, userId }: Prod
   const sidParam = sessionId ? `&sid=${encodeURIComponent(sessionId)}` : ''
   const uParam = userId ? `&u=${encodeURIComponent(userId)}` : ''
   const href = `/api/r?url=${encodeURIComponent(product.affiliateUrl)}${ccParam}${sidParam}${uParam}`
+  const currencySymbol = product.currency && product.currency.length <= 3 ? product.currency : '$'
+  const vendorBadges = product.vendor ? [product.vendor, ...(product.badges || [])] : product.badges || []
   return (
     <Card className={`h-full overflow-hidden border bg-card ${className}`}>
       <div className="relative h-2/3 bg-gray-100">
@@ -65,6 +70,11 @@ export function ProductCard({ product, className = '', sessionId, userId }: Prod
           <Badge variant="secondary" className="bg-white/90 backdrop-blur-sm">
             {Math.round(product.matchScore * 100)}% Match
           </Badge>
+          {vendorBadges.map((badge) => (
+            <Badge key={badge} variant="secondary" className="bg-white/70 text-neutral-800 border-white/40">
+              {badge}
+            </Badge>
+          ))}
           {product.sponsored && (
             <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-300">
               Sponsored
@@ -89,18 +99,23 @@ export function ProductCard({ product, className = '', sessionId, userId }: Prod
         
         <div className="flex items-center justify-between mt-4">
           <span className="text-2xl md:text-3xl font-bold text-green-600">
-            {product.price && product.price > 0 ? `$${product.price.toFixed(2)}` : 'Price varies'}
+            {product.price && product.price > 0 ? `${currencySymbol}${product.price.toFixed(2)}` : 'Price varies'}
           </span>
-          <a
-            href={href}
-            target="_blank"
-            rel="sponsored noopener nofollow"
-            className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
-            onClick={(e) => e.stopPropagation()}
-          >
-            Shop Now
-            <ExternalLink className="w-3 h-3" />
-          </a>
+          <div className="flex flex-col items-end gap-1">
+            {product.deliveryDays && (
+              <span className="text-xs text-muted-foreground">{product.deliveryDays}</span>
+            )}
+            <a
+              href={href}
+              target="_blank"
+              rel="sponsored noopener nofollow"
+              className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Shop Now
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
         </div>
       </CardContent>
     </Card>

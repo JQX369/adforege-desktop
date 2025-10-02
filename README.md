@@ -1,222 +1,152 @@
 # AI Gift Finder
 
-A production-ready AI-powered gift recommendation web application that helps users find the perfect gift through an interactive questionnaire and Tinder-style swipe interface.
+A production-ready AI-powered gift recommendation platform with automated catalog ingestion, vendor analytics, and a Tinder-style swipe experience.
 
 ## Features
 
-- 🎁 **12-Question Smart Form**: Comprehensive questionnaire to understand gift recipient preferences
-- 🤖 **AI-Powered Recommendations**: Uses OpenAI GPT-4 to generate personalized gift suggestions
-- 👆 **Tinder-Style Swipe Interface**: Intuitive swipe interactions (left/right/save)
-- 🧠 **Machine Learning**: User preference vectors that improve recommendations over time
-- 💰 **Vendor Submission System**: $9 Stripe integration for vendors to submit products
-- 🔗 **Affiliate Links**: Automatic Amazon and Etsy affiliate tag appending
-- 📊 **Vector Search**: Supabase with pgvector for semantic product matching
+- 🎁 **Smart Gift Questionnaire** – multi-step form to capture recipient preferences
+- 🤖 **Hybrid Recommendation Engine** – vector retrieval + rule ranking with optional LLM re-rank
+- 👆 **Tinder-Style Swipe Interface** – swipe left/right/save with realtime scoring & reroll caching
+- 📥 **Automated Catalog Ingestion** – Rainforest (Amazon) + eBay APIs with enrichment & availability refresh
+- 📊 **Vendor Analytics & Billing** – Stripe subscription tiers, vendor dashboard metrics, curated boosts
+- 🔗 **Affiliate Support** – Amazon, eBay, Etsy link localization with region-aware tracking
 
 ## Tech Stack
 
 - **Frontend**: Next.js 14, TypeScript, Tailwind CSS, shadcn/ui
-- **Backend**: Next.js API Routes (Edge Functions), Prisma ORM
-- **Database**: Supabase PostgreSQL with pgvector extension
-- **AI**: OpenAI GPT-4 & Embeddings API
-- **Payments**: Stripe Checkout
-- **UI Components**: react-tinder-card, shadcn/ui components
-- **Deployment**: Vercel
+- **Backend**: Next.js API Routes (Node runtime), Prisma ORM
+- **Database**: Supabase PostgreSQL + pgvector
+- **AI**: OpenAI embeddings + optional rerank model
+- **Payments**: Stripe Checkout & Billing Portal
+- **Deployment**: Vercel + cron-style API triggers
 
 ## Prerequisites
 
-- Node.js 18+ and npm/pnpm
-- Supabase account
+- Node.js 18+
+- Supabase project with pgvector enabled
 - OpenAI API key
-- Stripe account
-- Amazon Associates & Etsy Affiliate accounts (optional)
+- Stripe account (with subscription price IDs)
+- Rainforest API key & eBay developer credentials
+- Amazon Associates / Etsy IDs (optional)
 
 ## Installation
 
-1. Clone the repository:
 ```bash
 git clone https://github.com/yourusername/ai-gift-finder.git
 cd ai-gift-finder
-```
-
-2. Install dependencies:
-```bash
 npm install
-```
-
-3. Set up environment variables:
-```bash
 cp env.example .env.local
 ```
 
-Then edit `.env.local` with your credentials:
-```env
-# OpenAI
-OPENAI_API_KEY=your_openai_api_key
+Populate `.env.local` (see [docs/CURRENT_ENV_SETUP.md](docs/CURRENT_ENV_SETUP.md)).
 
-# Supabase
-SUPABASE_URL=your_supabase_url
-SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-DATABASE_URL=your_postgres_connection_string
+### Database Setup
 
-# Stripe
-STRIPE_SECRET_KEY=your_stripe_secret_key
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_publishable_key
-
-# Affiliate Programs (optional)
-NEXT_PUBLIC_AMZ_TAG=your_amazon_affiliate_tag
-NEXT_PUBLIC_ETSY_ID=your_etsy_affiliate_id
-```
-
-4. Set up Supabase database:
-
-First, enable pgvector extension in Supabase:
 ```sql
-CREATE EXTENSION IF NOT EXISTS vector;
+-- Supabase SQL editor
+create extension if not exists vector;
 ```
 
-Then run Prisma migrations:
 ```bash
 npx prisma generate
 npx prisma migrate dev
 ```
 
-5. Run the development server:
+To create recommended indexes: `psql < sql/setup-indexes.sql` or run in Supabase SQL editor.
+
+## Running Locally
+
 ```bash
 npm run dev
+# optional helpers
+npm run enrich         # enriches products via OpenAI
+npm run ingest         # full API ingestion (rainforest + eBay)
+npm run recs:lint      # lint recommendation modules
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the app.
+Visit http://localhost:3000
 
-## Project Structure
+## Project Structure (excerpt)
 
 ```
 ├── app/
 │   ├── api/
-│   │   ├── recommend/          # Gift recommendation endpoint
-│   │   ├── categorise-product/ # Product categorization
-│   │   └── swipe/             # Swipe tracking & user vectors
-│   ├── vendor/                # Vendor submission page
-│   └── page.tsx              # Main app page
+│   │   ├── recommend/            – recommendation endpoint
+│   │   ├── recommend-more/       – pagination/reroll endpoint
+│   │   ├── refresh/availability/ – nightly stock refresh API
+│   │   ├── admin/curation/       – curated boost CRUD
+│   │   └── vendor/...            – vendor analytics + billing
+│   ├── page.tsx                  – main landing page
+│   └── vendor/dashboard/page.tsx – vendor portal
 ├── components/
-│   ├── GiftForm.tsx          # 12-question wizard form
-│   ├── SwipeDeck.tsx         # Tinder-style swipe interface
-│   ├── ProductCard.tsx       # Product display card
-│   └── SavedDrawer.tsx       # Saved products drawer
+│   ├── GiftForm.tsx, SwipeDeck.tsx, ProductCard.tsx, etc.
+├── docs/                        – ops guides & rollout plans
 ├── lib/
-│   └── affiliates.ts         # Affiliate URL builder
-├── prompts/
-│   ├── GiftPrompt.ts         # Gift recommendation prompt
-│   └── CategoriserPrompt.ts  # Product categorization prompt
-└── prisma/
-    └── schema.prisma         # Database schema
+│   ├── recs/                    – recommendation engine modules
+│   ├── providers/               – Rainforest/eBay ingestion providers
+│   ├── geo.ts, affiliates.ts    – localization helpers
+│   └── ...
+├── prisma/schema.prisma
+├── scripts/
+│   ├── ingest-from-apis.ts      – ingestion orchestrator
+│   ├── enrich-products.ts       – LLM enrichment
+│   └── nightly-refresh.ts       – cron orchestrator
+└── sql/setup-indexes.sql
 ```
 
-## Database Schema
+## Key API Endpoints
 
-The app uses three main models:
-
-- **User**: Stores user preferences and embedding vectors
-- **Product**: Product catalog with embeddings for semantic search
-- **Swipe**: Tracks user interactions (LEFT/RIGHT/SAVED)
-
-## API Endpoints
-
-### POST /api/recommend
-Generates gift recommendations based on form data.
-
-### POST /api/categorise-product
-Categorizes and adds vendor products to the database.
-
-### POST /api/swipe
-Records user swipes and updates preference vectors.
+- `POST /api/recommend` – generate recommendations
+- `POST /api/recommend-more` – fetch additional results for rerolls/pagination
+- `POST /api/swipe` – record swipe/like/save interactions
+- `POST /api/admin/curation` – create curated boosts (admin)
+- `GET /api/admin/curation` – list boosts
+- `DELETE /api/admin/curation?id=...` – remove a boost
+- `POST /api/refresh/availability` – refresh stock/pricing via cron
+- `GET /api/vendor/stats` – vendor analytics (auth required)
 
 ## Deployment
 
-### Deploy to Vercel
+1. Push to GitHub, import into Vercel
+2. Configure environment variables (match `.env.local`)
+3. Set `RECS_LLM_RERANK_ENABLED`, `RECS_CURATED_BOOSTS_ENABLED`, etc.
+4. Deploy via `vercel --prod`
+5. Schedule availability + enrichment runs using Vercel cron or external scheduler hitting `/api/refresh/availability`
 
-1. Push your code to GitHub
-
-2. Import project to Vercel:
-```bash
-vercel
-```
-
-3. Configure environment variables in Vercel dashboard (including `CRON_SECRET` - generate a random string)
-
-4. Deploy:
-```bash
-vercel --prod
-```
-
-**Note**: Cron jobs are automatically configured via `vercel.json` and will run daily at 2 AM UTC.
-
-### Database Setup
-
-1. In Supabase, ensure pgvector is enabled
-2. Run migrations in production:
 ```bash
 npx prisma migrate deploy
-```
-
-## Development Commands
-
-```bash
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run production server
-npm start
-
-# Lint code
-npm run lint
-
-# Run Prisma Studio
-npx prisma studio
-
-# Generate Prisma client
-npx prisma generate
-
-# Create migration
-npx prisma migrate dev --name migration_name
+npm run enrich
+npm run ingest:rainforest
+npm run ingest:ebay
 ```
 
 ## Testing
 
-To test the application:
+See [docs/testing-rollout-plan.md](docs/testing-rollout-plan.md) for full strategy. Recommended baseline:
 
-1. **Gift Form**: Fill out all 12 questions to get recommendations
-2. **Swipe Interface**: Swipe left (reject), right (like), or up (save)
-3. **Vendor Submission**: Go to `/vendor` to submit a product
-4. **Saved Items**: Click the saved button to view your saved products
+```bash
+npm run lint
+npm test
+# soon: npm run test:e2e (Playwright)
+```
 
-## Production Considerations
+Manual smoke:
+- Landing form ➝ recommendations ➝ swipe interactions
+- Vendor signup ➝ choose plan ➝ Stripe checkout (test mode)
+- Vendor dashboard metrics & curated boosts
 
-1. **API Keys**: Ensure all API keys are properly secured
-2. **Rate Limiting**: Implement rate limiting for API endpoints
-3. **Caching**: Consider caching OpenAI responses
-4. **Image Optimization**: Use proper CDN for product images
-5. **Error Handling**: Implement comprehensive error boundaries
-6. **Analytics**: Add tracking for user interactions
-7. **Moderation**: Implement product moderation workflow
+## Operations & Runbooks
+
+- [docs/OPS_RUNBOOK.md](docs/OPS_RUNBOOK.md) – cron jobs, scripts, recovery steps
+- [docs/VENDOR_PORTAL_GUIDE.md](docs/VENDOR_PORTAL_GUIDE.md) – onboarding vendors & tier benefits
+- [docs/testing-rollout-plan.md](docs/testing-rollout-plan.md) – testing + rollout guardrails
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+1. Fork & branch (`git checkout -b feature/foo`)
+2. `npm run lint && npm test`
+3. Submit PR
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- OpenAI for GPT-4 and Embeddings API
-- Supabase for vector database capabilities
-- shadcn/ui for beautiful UI components
-- react-tinder-card for swipe functionality 
+MIT – see LICENSE 

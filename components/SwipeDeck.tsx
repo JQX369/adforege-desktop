@@ -15,6 +15,11 @@ export interface Product {
   affiliateUrl: string
   matchScore: number
   categories: string[]
+  vendor?: string
+  badges?: string[]
+  sponsored?: boolean
+  currency?: string
+  deliveryDays?: string
 }
 
 interface SwipeDeckProps {

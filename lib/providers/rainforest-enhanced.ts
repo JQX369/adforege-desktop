@@ -3,8 +3,18 @@
  * Captures ALL product data: pricing, shipping, delivery, images, ratings
  */
 
-import { ProductSource, ProductCondition, AvailabilityStatus, ProductStatus } from '@prisma/client'
-import { BaseProvider, BaseProduct, ProviderConfig } from './types'
+import {
+  ProductSource,
+  ProductCondition,
+  AvailabilityStatus,
+  ListingType,
+} from '@prisma/client'
+import {
+  BaseProvider,
+  BaseProduct,
+  ProviderConfig,
+  ProductRegionLinkInput,
+} from './types'
 import { buildAffiliateUrl, cleanProductUrl, isAmazonUrl } from '@/lib/affiliates'
 
 interface RainforestSearchResult {
@@ -227,7 +237,7 @@ export class RainforestProvider extends BaseProvider {
     // Availability
     let availability: AvailabilityStatus = AvailabilityStatus.UNKNOWN
     let inStock = true
-    
+
     if (item.availability?.type === 'in_stock') {
       availability = AvailabilityStatus.IN_STOCK
       inStock = true
@@ -248,6 +258,15 @@ export class RainforestProvider extends BaseProvider {
       hasStock: availability !== AvailabilityStatus.UNKNOWN,
     })
 
+    const regionLinks: ProductRegionLinkInput[] = [
+      {
+        country: 'US',
+        affiliateUrl: buildAffiliateUrl(cleaned, 'US'),
+        currency,
+        marketplaceId: 'ATVPDKIKX0DER',
+      },
+    ]
+
     return {
       title,
       description: '', // Not available in search results
@@ -260,7 +279,7 @@ export class RainforestProvider extends BaseProvider {
       imagesThumbnail,
       url,
       urlCanonical: cleaned,
-      affiliateUrl: buildAffiliateUrl(cleaned),
+      affiliateUrl: buildAffiliateUrl(cleaned, 'US'),
       categories,
       brand: undefined, // Not in search results
       shippingCost: freeShipping ? 0 : undefined,
@@ -288,6 +307,10 @@ export class RainforestProvider extends BaseProvider {
       asin: item.asin,
       merchantDomain: 'amazon.com',
       qualityScore,
+      marketplaceId: 'ATVPDKIKX0DER',
+      regionLinks,
+      country: 'US',
+      listingType: ListingType.FIXED_PRICE,
     }
   }
 
@@ -401,7 +424,7 @@ export class RainforestProvider extends BaseProvider {
       imagesThumbnail,
       url,
       urlCanonical: cleaned,
-      affiliateUrl: buildAffiliateUrl(cleaned),
+      affiliateUrl: buildAffiliateUrl(cleaned, 'US'),
       categories,
       brand: item.brand,
       shippingCost: freeShipping ? 0 : undefined,
@@ -429,6 +452,17 @@ export class RainforestProvider extends BaseProvider {
       asin: item.asin,
       merchantDomain: 'amazon.com',
       qualityScore,
+      marketplaceId: 'ATVPDKIKX0DER',
+      regionLinks: [
+        {
+          country: 'US',
+          affiliateUrl: buildAffiliateUrl(cleaned, 'US'),
+          currency,
+          marketplaceId: 'ATVPDKIKX0DER',
+        },
+      ],
+      country: 'US',
+      listingType: ListingType.FIXED_PRICE,
     }
   }
 

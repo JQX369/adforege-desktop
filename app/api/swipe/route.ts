@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
+import { logDislike, logLike, logSave } from '@/lib/recs/events'
 
 const prisma = new PrismaClient()
 
@@ -149,6 +150,15 @@ export async function POST(request: NextRequest) {
         },
       })
     } catch {}
+
+    const eventPayload = { sessionId, userId, productId }
+    if (action === 'SAVED') {
+      await logSave(eventPayload)
+    } else if (action === 'RIGHT') {
+      await logLike(eventPayload)
+    } else if (action === 'LEFT') {
+      await logDislike(eventPayload)
+    }
 
     return NextResponse.json({
       success: true,

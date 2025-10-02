@@ -2,7 +2,12 @@
  * Shared types for product providers
  */
 
-import { ProductSource, ProductStatus, ProductCondition, AvailabilityStatus } from '@prisma/client'
+import {
+  ProductSource,
+  ProductCondition,
+  AvailabilityStatus,
+  ListingType,
+} from '@prisma/client'
 
 export interface BaseProduct {
   // Identity
@@ -41,6 +46,11 @@ export interface BaseProduct {
   inStock: boolean
   stockQuantity?: number
   availability: AvailabilityStatus
+  available?: boolean
+  lastCheckedAt?: string
+  listingStartAt?: string
+  listingEndAt?: string
+  listingType?: ListingType
   
   // Quality & Reviews
   rating?: number
@@ -64,9 +74,29 @@ export interface BaseProduct {
   sourceItemId?: string
   asin?: string
   merchantDomain: string
+  marketplaceId?: string
+  country?: string
   
   // Metadata
   qualityScore: number
+  recencyScore?: number
+  popularityScore?: number
+  regionMask?: string[]
+  tags?: Array<ProductTagInput | string>
+  regionLinks?: ProductRegionLinkInput[]
+  available?: boolean
+}
+
+export interface ProductTagInput {
+  tag: string
+  weight?: number
+}
+
+export interface ProductRegionLinkInput {
+  country: string
+  affiliateUrl: string
+  currency?: string
+  marketplaceId?: string
 }
 
 export interface ProviderConfig {

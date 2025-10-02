@@ -3,8 +3,18 @@
  * Captures ALL product data: pricing, shipping, delivery, condition, seller info
  */
 
-import { ProductSource, ProductCondition, AvailabilityStatus, ProductStatus } from '@prisma/client'
-import { BaseProvider, BaseProduct, ProviderConfig } from './types'
+import {
+  ProductSource,
+  ProductCondition,
+  AvailabilityStatus,
+  ListingType,
+} from '@prisma/client'
+import {
+  BaseProvider,
+  BaseProduct,
+  ProviderConfig,
+  ProductRegionLinkInput,
+} from './types'
 import { buildAffiliateUrl, cleanProductUrl } from '@/lib/affiliates'
 
 interface EbaySearchResult {
@@ -80,11 +90,11 @@ export class EbayProvider extends BaseProvider {
     const startTime = Date.now()
     
     try {
-      const params = new URLSearchParams({
-        q: keyword,
-        limit: Math.min(limit, 50).toString(),
-        filter: 'buyingOptions:{FIXED_PRICE}', // Only Buy It Now items
-      })
+    const params = new URLSearchParams({
+      q: keyword,
+      limit: Math.min(limit, 50).toString(),
+      filter: 'buyingOptions:{FIXED_PRICE}', // Only Buy It Now items
+    })
 
       const url = `${this.baseUrl}/item_summary/search?${params.toString()}`
       const response = await this.fetchWithRetry(url)
@@ -238,18 +248,7 @@ export class EbayProvider extends BaseProvider {
     const inStock = stockQuantity ? stockQuantity > 0 : true
     const availability = inStock ? AvailabilityStatus.IN_STOCK : AvailabilityStatus.OUT_OF_STOCK
 
-    // Build affiliate URL
-    let affiliateUrl = cleaned
-    if (this.campaignId) {
-      try {
-        const urlObj = new URL(cleaned)
-        urlObj.searchParams.set('campid', this.campaignId)
-        urlObj.searchParams.set('customid', `pg-${Date.now().toString(36)}`)
-        affiliateUrl = urlObj.toString()
-      } catch (e) {
-        affiliateUrl = cleaned
-      }
-    }
+    const affiliateUrl = buildAffiliateUrl(cleaned)
 
     // Calculate quality score
     const qualityScore = this.calculateQualityScore({
@@ -262,6 +261,15 @@ export class EbayProvider extends BaseProvider {
       hasRating: sellerRating !== undefined,
       hasStock: stockQuantity !== undefined,
       hasSeller: !!sellerName,
+    })
+
+    const regionLinks: ProductRegionLinkInput[] = []
+    const country = item.itemLocation?.country || 'US'
+    regionLinks.push({
+      country,
+      affiliateUrl,
+      currency,
+      marketplaceId: this.resolveMarketplaceId(country),
     })
 
     return {
@@ -304,6 +312,10 @@ export class EbayProvider extends BaseProvider {
       asin: undefined,
       merchantDomain: 'ebay.com',
       qualityScore,
+      marketplaceId: this.resolveMarketplaceId(country),
+      country,
+      regionLinks,
+      listingType: this.resolveListingType(item.buyingOptions || []),
     }
   }
 
@@ -334,6 +346,32 @@ export class EbayProvider extends BaseProvider {
     if (factors.hasSeller) score += 0.10
     
     return Math.min(score, 1.0)
+  }
+
+  private resolveMarketplaceId(country: string | undefined): string | undefined {
+    switch ((country || 'US').toUpperCase()) {
+      case 'GB':
+      case 'UK':
+        return 'EBAY_GB'
+      case 'DE':
+        return 'EBAY_DE'
+      case 'AU':
+        return 'EBAY_AU'
+      case 'CA':
+        return 'EBAY_CA'
+      default:
+        return 'EBAY_US'
+    }
+  }
+
+  private resolveListingType(options: string[]): ListingType {
+    if (options.includes('AUCTION') || options.includes('AUCTION_WITH_BIN')) {
+      return ListingType.AUCTION
+    }
+    if (options.includes('CLASSIFIED_AD')) {
+      return ListingType.CLASSIFIED
+    }
+    return ListingType.FIXED_PRICE
   }
 
   /**

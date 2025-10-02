@@ -57,10 +57,10 @@ export function localizeAmazonUrl(rawUrl: string, countryCode?: string): string 
 
 export function buildAffiliateUrlWithLocale(rawUrl: string, countryCode?: string): string {
   const localized = localizeAmazonUrl(rawUrl, countryCode)
-  return buildAffiliateUrl(localized)
+  return buildAffiliateUrl(localized, countryCode)
 }
 
-export function buildAffiliateUrl(rawUrl: string): string {
+export function buildAffiliateUrl(rawUrl: string, countryCode?: string): string {
   // Get environment variables
   const amazonTag = process.env.NEXT_PUBLIC_AMZ_TAG
   const etsyRef = process.env.NEXT_PUBLIC_ETSY_ID
@@ -104,6 +104,9 @@ export function buildAffiliateUrl(rawUrl: string): string {
         if (!url.searchParams.get('customid')) {
           const custom = `${ebayCustomPrefix}-${Date.now().toString(36)}`
           url.searchParams.set('customid', custom)
+        }
+        if (countryCode) {
+          url.searchParams.set('geo', countryCode.toLowerCase())
         }
       }
       return url.toString()

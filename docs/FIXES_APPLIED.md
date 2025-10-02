@@ -71,3 +71,9 @@ All code is now using real Supabase and Stripe APIs. The only remaining step is 
 - Updated recommender to hybrid retrieval with hard filters; removed runtime Perplexity fallback
 - Added nightly refresh stub `scripts/nightly-refresh.ts`
 - Added moderation UI placeholder on `app/vendor/dashboard/page.tsx`
+
+## 5. Cleanup & Modernization ✅
+- Removed legacy providers/tests (`lib/providers/rainforest.ts`, `scripts/test-*`, etc.)
+- Updated `package.json` scripts to use the new ingestion/enrichment commands
+- Added geo-aware recommendation flow and enhanced vendor analytics modules
+- Documented testing/rollout plan (`docs/testing-rollout-plan.md`) and refactored README

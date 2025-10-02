@@ -147,24 +147,13 @@ This is make-or-break. You need products to have a functioning app.
    - Already implemented in `lib/providers/rainforest.ts`
 
 2. **Run keyword-based ingestion:**
-   ```typescript
-   // Create script: scripts/seed-from-rainforest.ts
-   import { syncRainforestByKeyword } from '@/lib/providers/rainforest'
-   
-   const GIFT_KEYWORDS = [
-     'personalized gifts', 'tech gadgets', 'home decor',
-     'jewelry gifts', 'toys for kids', 'books best sellers',
-     'kitchen gadgets', 'fitness gifts', 'travel accessories'
-   ]
-   
-   for (const keyword of GIFT_KEYWORDS) {
-     await syncRainforestByKeyword(keyword, 'US')
-   }
-   ```
+  ```typescript
+  // See `lib/providers/rainforest-enhanced.ts` for keyword search usage.
+  ```
 
 3. **Get eBay API access:**
    - Apply at developer.ebay.com (usually approved in 1-2 days)
-   - Use your existing `lib/providers/ebay.ts` integration
+   - Use the enhanced provider `lib/providers/ebay-enhanced.ts`
 
 **Time Investment:** Setup 4-6 hours + API approval wait  
 **Quality:** Good (real product data)  
