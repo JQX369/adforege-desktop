@@ -1,7 +1,7 @@
 # Scratchpad
 
 ## Background and Motivation
-Improve semi-broken search to increase relevance, CTR, and conversion for gifting.
+Make catalog-first recommendations production-ready: reliable 12+ real products per request, fast, with affiliate-safe links.
 
 ## Key Challenges and Analysis
 - Sparse/heterogeneous data; long-tail queries; intent ambiguity
@@ -9,24 +9,23 @@ Improve semi-broken search to increase relevance, CTR, and conversion for giftin
 - Balancing performance and cost; vendor lock-in risks
 
 ## High-level Task Breakdown
-- Define KPIs and baseline (Recall@K, CTR, add-to-cart rate)
-- Instrument query telemetry and zero-results logging
-- Prototype Option A (with APIs) behind flag; A/B test
-- Prototype Option B (no external APIs) behind flag; A/B test
-- Choose path; productionize; rollback plan
+1) Data & ingestion (done): schema, ingest API, CSV script
+2) Retrieval & ranking (done): hybrid, filters, remove placeholders
+3) Ops & UX polish (prod readiness): below
 
 ## Project Status Board
-- [ ] Create plan (two options)
-- [ ] Instrument telemetry
-- [ ] Build Option A prototype
-- [ ] Build Option B prototype
-- [ ] A/B test and decide
+- [ ] Add click redirect logging + simple metrics (coverage, CTR)
+- [ ] Add minimal admin moderation table UI (approve/reject inline)
+- [ ] Add health checks and rate limiting on ingest/recommend
+- [ ] Create seed CSV and ingest 200–500 items
+- [ ] Smoke test deploy (Vercel + Prisma migrate deploy)
+- [ ] Set up cron (nightly refresh) via Vercel/hosted scheduler
 
 ## Current Status / Progress Tracking
-- Initial planning underway
+- Core ingestion and hybrid ranking merged; env/docs updated
 
 ## Executor's Feedback or Assistance Requests
-- Pending product KPIs and constraints on external APIs
+- Confirm preferred metrics sink (console/log drain vs. DB table)
 
 ## Lessons
 - TBD

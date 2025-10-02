@@ -9,7 +9,12 @@
     "lint": "next lint",
     "postinstall": "prisma generate",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "ingest": "ts-node scripts/ingest-from-apis.ts --provider=all",
+    "ingest:rainforest": "ts-node scripts/ingest-from-apis.ts --provider=rainforest",
+    "ingest:ebay": "ts-node scripts/ingest-from-apis.ts --provider=ebay",
+    "ingest:test": "ts-node scripts/ingest-from-apis.ts --provider=all --limit=10 --keywords=\"tech gifts\"",
+    "ingest:dry-run": "ts-node scripts/ingest-from-apis.ts --provider=all --dry-run"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
@@ -26,8 +31,10 @@
     "@supabase/supabase-js": "^2.39.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "csv-parse": "^6.1.0",
     "lucide-react": "^0.526.0",
     "next": "14.2.30",
+    "node-fetch": "^3.3.2",
     "openai": "^4.24.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -132,12 +132,29 @@
 - Links (commits/PRs/artifacts): app/layout.tsx, components/site/Hero.tsx, components/site/SwipeSection.tsx
 
 ## Entry
-- Timestamp (UTC): 2025-08-30
-- Prompt (verbatim): F.1 - Once the gift Form is submited (add a cool/funny loading animation)\n\tMake sure matches style
-- Current focus: Add playful loading overlay to GiftForm submit flow
-- Decisions:
-  - Added animated gradient gift box with sparkles overlay when isLoading
-  - Implemented CSS keyframes (gift-bounce, sparkle-pop) and utility classes
-  - Avoided inline styles; created reusable sparkle position variants
-- Next step: UX verify on mobile and dark mode
-- Links (commits/PRs/artifacts): components/GiftForm.tsx, app/globals.css
+ - Timestamp (UTC): 2025-09-16
+ - Prompt (verbatim): execute
+ - Current focus: Make catalog-first ingestion and hybrid recommendation ready
+ - Decisions:
+   - Extended Prisma schema with catalog quality fields; added Merchant and IngestionJob
+   - Added admin batch ingestion API and CSV importer script
+   - Updated recommend route to hybrid retrieval with strict filters; removed live search and placeholders
+   - Documented new env vars; added moderation UI stub and nightly refresh stub
+ - Next step: Seed 200–500 curated items via CSV and verify recommendations
+ - Links (commits/PRs/artifacts): prisma/schema.prisma, app/api/admin/ingest/batch/route.ts, scripts/ingest-curated.ts, app/api/recommend/route.ts, scripts/nightly-refresh.ts, docs/CURRENT_ENV_SETUP.md, app/vendor/dashboard/page.tsx
+
+## Entry
+ - Timestamp (UTC): 2025-09-17
+ - Prompt (verbatim): complete everything needed for production
+ - Current focus: Finalize production deployment with cron jobs, logging, moderation, and all remaining tasks
+ - Decisions:
+   - Configured Vercel cron jobs via vercel.json for nightly refresh at 2 AM UTC
+   - Added CRON_SECRET security to nightly refresh endpoint
+   - Implemented click logging with session/user tracking in product links
+   - Added admin moderation UI with approve/reject buttons in vendor dashboard
+   - Added rate limiting to recommend and ingest APIs (60 req/min)
+   - Created bookmarklet for one-click product ingestion
+   - Added health check endpoint `/api/health`
+   - Completed production build and migration
+ - Next step: Deploy to Vercel, set CRON_SECRET, start ingesting products
+ - Links (commits/PRs/artifacts): vercel.json, app/api/refresh/nightly/route.ts, app/api/r/route.ts, app/api/admin/moderate/route.ts, app/vendor/dashboard/page.tsx, lib/utils.ts, app/api/health/route.ts, public/bookmarklet.js

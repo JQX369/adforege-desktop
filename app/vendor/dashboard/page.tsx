@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import { Textarea } from '@/components/ui/textarea'
 
 interface VendorStats {
 	products: { id: string; title: string; savesCount: number }[]
@@ -144,20 +145,32 @@ export default function VendorDashboardPage() {
 					<Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
 						<CardHeader>
 							<CardTitle className="text-white flex items-center gap-2">
-								🎁 Your Products
+							🎁 Your Products
 							</CardTitle>
 						</CardHeader>
 						<CardContent>
-							{stats && stats.products.length > 0 ? (
+						{stats && stats.products.length > 0 ? (
 								<div className="space-y-3">
-									{stats.products.map(p => (
-										<div key={p.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-											<span className="text-white font-medium">{p.title}</span>
-											<span className="text-purple-300 text-sm bg-purple-500/20 px-2 py-1 rounded-full">
-												❤️ {p.savesCount} saves
-											</span>
+								{stats.products.map(p => (
+									<div key={p.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 gap-3">
+										<span className="text-white font-medium truncate">{p.title}</span>
+										<div className="flex items-center gap-2">
+											<span className="text-purple-300 text-sm bg-purple-500/20 px-2 py-1 rounded-full">❤️ {p.savesCount}</span>
+											<Button size="sm" variant="outline" onClick={async () => {
+												try {
+													await fetch('/api/admin/moderate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productId: p.id, action: 'APPROVE' }) })
+													window.location.reload()
+												} catch {}
+											}}>Approve</Button>
+											<Button size="sm" variant="destructive" onClick={async () => {
+												try {
+													await fetch('/api/admin/moderate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productId: p.id, action: 'REJECT' }) })
+													window.location.reload()
+												} catch {}
+											}}>Reject</Button>
 										</div>
-									))}
+									</div>
+								))}
 								</div>
 							) : (
 								<div className="text-purple-200 text-center py-8">
@@ -168,6 +181,26 @@ export default function VendorDashboardPage() {
 						</CardContent>
 					</Card>
 				</div>
+
+				{/* Moderation stub to prepare UI space for admin tools */}
+				<Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
+					<CardHeader>
+						<CardTitle className="text-white flex items-center gap-2">🛡️ Moderation & Ingestion</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<div className="text-purple-200 mb-4">Paste product URLs (one per line) to ingest without CSV.</div>
+						<BulkUrlIngestForm />
+					</CardContent>
+				</Card>
+
+				<Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
+					<CardHeader>
+						<CardTitle className="text-white flex items-center gap-2">📈 Metrics (last 20 sessions)</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<MetricsPanel />
+					</CardContent>
+				</Card>
 
 				<Card className="backdrop-blur-lg bg-white/10 border-white/20 shadow-2xl">
 					<CardHeader>
@@ -244,4 +277,75 @@ function ProductSubmissionForm() {
 			</Button>
 		</form>
 	)
+}
+
+function BulkUrlIngestForm() {
+    const [urls, setUrls] = useState('')
+    const [submitting, setSubmitting] = useState(false)
+    const [result, setResult] = useState<any>(null)
+    const onSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        const list = urls
+            .split(/\r?\n/)
+            .map(s => s.trim())
+            .filter(Boolean)
+        if (list.length === 0) return
+        setSubmitting(true)
+        setResult(null)
+        try {
+            const res = await fetch('/api/admin/ingest/urls', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ urls: list })
+            })
+            const data = await res.json()
+            setResult(data)
+        } catch (e) {
+            setResult({ error: (e as any)?.message || 'Failed' })
+        } finally {
+            setSubmitting(false)
+        }
+    }
+    return (
+        <form onSubmit={onSubmit} className="space-y-3">
+            <Textarea
+                placeholder={`https://www.amazon.com/dp/B0...\nhttps://www.etsy.com/listing/...`}
+                value={urls}
+                onChange={e => setUrls(e.target.value)}
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/60 min-h-[160px]"
+            />
+            <Button type="submit" disabled={submitting || urls.trim().length === 0} className="bg-gradient-to-r from-indigo-600 to-cyan-600 text-white">
+                {submitting ? 'Ingesting…' : 'Ingest URLs'}
+            </Button>
+            {result && (
+                <div className="text-xs text-purple-200 whitespace-pre-wrap">
+                    {JSON.stringify(result, null, 2)}
+                </div>
+            )}
+        </form>
+    )
+}
+
+function MetricsPanel() {
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState<any>(null)
+    useEffect(() => {
+        const run = async () => {
+            try {
+                const res = await fetch('/api/admin/metrics')
+                if (res.ok) setData(await res.json())
+            } finally { setLoading(false) }
+        }
+        run()
+    }, [])
+    if (loading) return <div className="text-purple-200">Loading…</div>
+    if (!data) return <div className="text-purple-200">No data.</div>
+    return (
+        <div className="text-purple-200 text-sm space-y-2">
+            <div>Impressions: <span className="text-white font-semibold">{data.recs}</span></div>
+            <div>Clicks: <span className="text-white font-semibold">{data.clicks}</span></div>
+            <div>CTR: <span className="text-white font-semibold">{(data.ctr * 100).toFixed(2)}%</span></div>
+            <div>Approved products: <span className="text-white font-semibold">{data.approvedProducts}</span></div>
+        </div>
+    )
 }

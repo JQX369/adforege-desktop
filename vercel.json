@@ -1,0 +1,19 @@
+{
+  "crons": [{
+    "path": "/api/refresh/nightly",
+    "schedule": "0 2 * * *"
+  },{
+    "path": "/api/providers/rainforest/sync",
+    "schedule": "0 */6 * * *"
+  },{
+    "path": "/api/providers/ebay/sync",
+    "schedule": "30 */6 * * *"
+  },{
+    "path": "/api/providers/sync-all",
+    "schedule": "0 9 * * *"
+  },{
+    "path": "/api/providers/apify/ebay",
+    "schedule": "15 9 * * *"
+  }]
+}
+

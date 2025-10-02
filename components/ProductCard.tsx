@@ -23,9 +23,11 @@ interface Product {
 interface ProductCardProps {
   product: Product
   className?: string
+  sessionId?: string
+  userId?: string
 }
 
-export function ProductCard({ product, className = '' }: ProductCardProps) {
+export function ProductCard({ product, className = '', sessionId, userId }: ProductCardProps) {
   const [imgErrored, setImgErrored] = useState(false)
   // Build safe image src
   const rawSrc = product.imageUrl || ''
@@ -41,7 +43,9 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
     const region = (Intl as any).Locale ? new (Intl as any).Locale(lang).region : (lang.split('-')[1] || '')
     if (region) ccParam = `&cc=${encodeURIComponent(region)}`
   } catch {}
-  const href = `/api/r?url=${encodeURIComponent(product.affiliateUrl)}${ccParam}`
+  const sidParam = sessionId ? `&sid=${encodeURIComponent(sessionId)}` : ''
+  const uParam = userId ? `&u=${encodeURIComponent(userId)}` : ''
+  const href = `/api/r?url=${encodeURIComponent(product.affiliateUrl)}${ccParam}${sidParam}${uParam}`
   return (
     <Card className={`h-full overflow-hidden border bg-card ${className}`}>
       <div className="relative h-2/3 bg-gray-100">

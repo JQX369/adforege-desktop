@@ -186,3 +186,11 @@
   20% { opacity: 1; }
   100% { transform: scale(1) translate(var(--tx, 0), var(--ty, -24px)) rotate(25deg); opacity: 0; }
 }
+
+/* Progress bar utility for GiftForm */
+.pg-progress {
+  height: 0.5rem;
+  border-radius: 0.375rem;
+  background-color: hsl(var(--primary));
+  transition: width 180ms ease;
+}

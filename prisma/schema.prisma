@@ -32,9 +32,72 @@ model Product {
   stripeSessionId String?       @unique
   paidAt          DateTime?
   createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @default(now()) @updatedAt
   swipes          Swipe[]
   vendorId        String?
   vendor          Vendor?       @relation(fields: [vendorId], references: [id])
+
+  // Catalog quality & provenance fields
+  source          ProductSource @default(CURATED)
+  retailer        String?
+  currency        String?
+  availability    AvailabilityStatus @default(UNKNOWN)
+  brand           String?
+  asin            String?
+  merchantId      String?
+  merchant        Merchant?     @relation(fields: [merchantId], references: [id])
+  affiliateProgram String?
+  urlCanonical    String?
+  qualityScore    Float         @default(0)
+  lastSeenAt      DateTime?
+  rating          Float?
+  numReviews      Int?
+
+  // Pricing & Discounts
+  originalPrice   Float?        // List price before discount
+  discountPercent Float?        // Calculated discount percentage
+
+  // Shipping & Delivery
+  shippingCost    Float?        // Shipping cost in currency
+  freeShipping    Boolean       @default(false)
+  deliveryDays    String?       // e.g., "2-3 days" or "Oct 5-7"
+  deliveryMin     Int?          // Minimum delivery days
+  deliveryMax     Int?          // Maximum delivery days
+  primeEligible   Boolean?      // Amazon Prime eligibility
+
+  // Inventory
+  inStock         Boolean       @default(true)
+  stockQuantity   Int?          // Available quantity
+
+  // Enhanced Product Details
+  imagesThumbnail String[]      // Thumbnail versions
+  shortDescription String?      // Brief description
+  features        String[]      // Bullet point features
+
+  // Physical Attributes
+  weight          Float?        // Weight in lbs or kg
+  dimensions      String?       // e.g., "10x8x2 inches"
+
+  // Condition & Quality
+  condition       ProductCondition @default(NEW)
+  bestSeller      Boolean       @default(false)
+
+  // Seller Information
+  sellerName      String?
+  sellerRating    Float?
+
+  // Data Provenance
+  sourceItemId    String?       // External ID (eBay itemId, etc.)
+  lastEnrichedAt  DateTime?     // When full details were fetched
+
+  @@index([asin])
+  @@index([urlCanonical])
+  @@index([inStock])
+  @@index([primeEligible])
+  @@index([condition])
+  @@index([freeShipping])
+  @@index([bestSeller])
+  @@index([sourceItemId])
 }
 
 model Swipe {
@@ -58,6 +121,27 @@ enum ProductStatus {
   PENDING
   APPROVED
   REJECTED
+}
+
+enum ProductSource {
+  VENDOR
+  AFFILIATE
+  CURATED
+}
+
+enum AvailabilityStatus {
+  IN_STOCK
+  OUT_OF_STOCK
+  UNKNOWN
+}
+
+enum ProductCondition {
+  NEW
+  LIKE_NEW
+  USED_VERY_GOOD
+  USED_GOOD
+  USED_ACCEPTABLE
+  REFURBISHED
 }
 
 model Vendor {
@@ -85,4 +169,69 @@ enum SubscriptionStatus {
   PAST_DUE
   CANCELED
   PAUSED
+}
+
+model Merchant {
+  id               String          @id @default(cuid())
+  name             String
+  domain           String          @unique
+  affiliateProgram String?
+  status           MerchantStatus  @default(ACTIVE)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  products         Product[]
+}
+
+enum MerchantStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model IngestionJob {
+  id             String           @id @default(cuid())
+  type           IngestionType
+  status         IngestionStatus  @default(QUEUED)
+  source         String?
+  startedAt      DateTime         @default(now())
+  finishedAt     DateTime?
+  totalProcessed Int              @default(0)
+  totalInserted  Int              @default(0)
+  totalUpdated   Int              @default(0)
+  totalRejected  Int              @default(0)
+  log            String?          @db.Text
+}
+
+enum IngestionStatus {
+  QUEUED
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum IngestionType {
+  CSV
+  JSON
+  API
+}
+
+model RecommendLog {
+  id           String   @id @default(cuid())
+  sessionId    String
+  userId       String?
+  productIds   String[]
+  resultsCount Int
+  createdAt    DateTime @default(now())
+
+  @@index([sessionId])
+}
+
+model ClickEvent {
+  id        String   @id @default(cuid())
+  sessionId String?
+  userId    String?
+  productId String?
+  targetUrl String
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
 }

@@ -133,7 +133,7 @@ export function SwipeDeck({ products, onSwipe, userId, sessionId, onLoadMore, ha
           >
             <div className={`relative h-full ${!isTop ? 'pointer-events-none' : ''}`}>
               {/* Product */}
-              <ProductCard product={product} />
+              <ProductCard product={product} sessionId={sessionId} userId={userId} />
               {/* Gradient overlay - red for left, gold for right; controlled by CSS classes applied by tinder-card */}
               <div className="absolute inset-0 opacity-0 transition-opacity duration-100 gradient-left pointer-events-none" />
               <div className="absolute inset-0 opacity-0 transition-opacity duration-100 gradient-right pointer-events-none" />

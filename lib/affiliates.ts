@@ -64,6 +64,8 @@ export function buildAffiliateUrl(rawUrl: string): string {
   // Get environment variables
   const amazonTag = process.env.NEXT_PUBLIC_AMZ_TAG
   const etsyRef = process.env.NEXT_PUBLIC_ETSY_ID
+  const ebayCampaignId = process.env.EBAY_CAMPAIGN_ID
+  const ebayCustomPrefix = process.env.EBAY_CUSTOM_ID_PREFIX || 'giftaunty'
 
   try {
     const url = new URL(rawUrl)
@@ -88,6 +90,20 @@ export function buildAffiliateUrl(rawUrl: string): string {
         const existingRef = url.searchParams.get('ref')
         if (!existingRef) {
           url.searchParams.set('ref', etsyRef)
+        }
+      }
+      return url.toString()
+    }
+
+    // eBay affiliate link (EPN) - minimal parameterization
+    if (hostname.includes('ebay.')) {
+      if (ebayCampaignId) {
+        if (!url.searchParams.get('campid')) {
+          url.searchParams.set('campid', ebayCampaignId)
+        }
+        if (!url.searchParams.get('customid')) {
+          const custom = `${ebayCustomPrefix}-${Date.now().toString(36)}`
+          url.searchParams.set('customid', custom)
         }
       }
       return url.toString()

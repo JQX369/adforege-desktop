@@ -53,6 +53,14 @@ Notes: respect robots/ToS; prefer structured pages; schedule polite crawls; dedu
 - Set C (Apify boost): Groupon + 2 curated gift sites for gap-fill
   - Why: fill long-tail and geo-specific experiences while API approvals complete
 
+## Allowlisted domains (operational note)
+Keep allowlist documented here (not necessarily in `.env`). Currently supported by code defaults:
+
+- amazon.com, amazon.co.uk, amazon.ca, amazon.de, amazon.fr, amazon.it, amazon.es, amazon.com.au, amazon.co.jp, amzn.to
+- etsy.com
+
+Additions later: update `lib/affiliates.ts` and optionally `lib/config.ts` for env-driven overrides.
+
 ## Next steps
 1) Apply for API access (Amazon, eBay, Viator/GetYourGuide, Best Buy, Etsy app)
 2) Join networks (CJ, Awin, Impact, Rakuten, ShareASale) and enable 3–5 anchor merchants

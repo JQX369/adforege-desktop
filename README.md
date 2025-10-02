@@ -141,12 +141,14 @@ Records user swipes and updates preference vectors.
 vercel
 ```
 
-3. Configure environment variables in Vercel dashboard
+3. Configure environment variables in Vercel dashboard (including `CRON_SECRET` - generate a random string)
 
 4. Deploy:
 ```bash
 vercel --prod
 ```
+
+**Note**: Cron jobs are automatically configured via `vercel.json` and will run daily at 2 AM UTC.
 
 ### Database Setup
 

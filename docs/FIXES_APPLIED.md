@@ -62,3 +62,12 @@ Your environment variables show Stripe PRODUCT IDs (prod_xxx) but for subscripti
 
 ## Status
 All code is now using real Supabase and Stripe APIs. The only remaining step is to update the Stripe Price IDs in your .env.local file.
+
+## Catalog-first Readiness (New)
+
+- Extended `Product` with provenance/quality fields and added `Merchant`/`IngestionJob` models
+- Added admin ingestion API: `/api/admin/ingest/batch`
+- Added CSV importer script: `scripts/ingest-curated.ts`
+- Updated recommender to hybrid retrieval with hard filters; removed runtime Perplexity fallback
+- Added nightly refresh stub `scripts/nightly-refresh.ts`
+- Added moderation UI placeholder on `app/vendor/dashboard/page.tsx`
