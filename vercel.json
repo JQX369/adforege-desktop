@@ -4,10 +4,10 @@
     "schedule": "0 2 * * *"
   },{
     "path": "/api/providers/rainforest/sync",
-    "schedule": "0 */6 * * *"
+    "schedule": "0 3 * * *"
   },{
     "path": "/api/providers/ebay/sync",
-    "schedule": "30 */6 * * *"
+    "schedule": "30 3 * * *"
   },{
     "path": "/api/providers/sync-all",
     "schedule": "0 9 * * *"
