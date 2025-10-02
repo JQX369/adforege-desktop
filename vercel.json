@@ -1,10 +1,2 @@
-{
-  "crons": [{
-    "path": "/api/refresh/nightly",
-    "schedule": "0 2 * * *"
-  },{
-    "path": "/api/providers/sync-all",
-    "schedule": "0 3 * * *"
-  }]
-}
+{}
 
