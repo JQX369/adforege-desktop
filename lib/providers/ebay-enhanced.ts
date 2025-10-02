@@ -210,7 +210,7 @@ export class EbayProvider extends BaseProvider {
     }
 
     // Condition
-    let condition = ProductCondition.NEW
+    let condition: ProductCondition = ProductCondition.NEW
     const conditionStr = (item.condition || '').toUpperCase()
     
     if (conditionStr.includes('NEW')) {
