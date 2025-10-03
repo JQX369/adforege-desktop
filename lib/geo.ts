@@ -8,7 +8,7 @@ export interface GeoInfo {
   currencySymbol: string
 }
 
-const COUNTRY_TO_CURRENCY: Record<string, string> = {
+export const COUNTRY_TO_CURRENCY: Record<string, string> = {
   US: 'USD',
   GB: 'GBP',
   UK: 'GBP',
@@ -26,7 +26,7 @@ const COUNTRY_TO_CURRENCY: Record<string, string> = {
   NL: 'EUR',
 }
 
-const COUNTRY_TO_AMAZON: Record<string, string> = {
+export const COUNTRY_TO_AMAZON: Record<string, string> = {
   US: 'amazon.com',
   GB: 'amazon.co.uk',
   UK: 'amazon.co.uk',
@@ -42,7 +42,7 @@ const COUNTRY_TO_AMAZON: Record<string, string> = {
   MX: 'amazon.com.mx',
 }
 
-const COUNTRY_TO_EBAY_MARKETPLACE: Record<string, string> = {
+export const COUNTRY_TO_EBAY_MARKETPLACE: Record<string, string> = {
   US: 'EBAY_US',
   GB: 'EBAY_GB',
   UK: 'EBAY_GB',

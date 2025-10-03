@@ -16,6 +16,8 @@ import {
   ProductRegionLinkInput,
 } from './types'
 import { buildAffiliateUrl, cleanProductUrl, isAmazonUrl } from '@/lib/affiliates'
+import { buildGeoInfo, COUNTRY_TO_AMAZON } from '@/lib/geo'
+import { IngestionEngine } from '@/lib/providers/ingestion-engine'
 
 interface RainforestSearchResult {
   asin?: string
@@ -112,14 +114,20 @@ export class RainforestProvider extends BaseProvider {
   /**
    * Search Amazon products by keyword
    */
-  async searchByKeyword(keyword: string, limit: number = 20): Promise<BaseProduct[]> {
+  async searchByKeyword(
+    keyword: string,
+    limit: number = 20,
+    geo?: { country: string; marketplaceId?: string; currency?: string }
+  ): Promise<BaseProduct[]> {
     const startTime = Date.now()
     
     try {
       const params = new URLSearchParams({
         api_key: this.apiKey,
         type: 'search',
-        amazon_domain: 'amazon.com',
+        amazon_domain: geo?.country
+          ? COUNTRY_TO_AMAZON[geo.country] ?? 'amazon.com'
+          : 'amazon.com',
         search_term: keyword,
         page: '1',
       })
@@ -529,6 +537,30 @@ export class RainforestProvider extends BaseProvider {
       }
       throw error
     }
+  }
+}
+
+export async function syncRainforestByKeyword(
+  keyword: string,
+  options: { limit?: number; country?: string } = {}
+) {
+  const apiKey = process.env.RAINFOREST_API_KEY
+  if (!apiKey) {
+    console.warn('[rainforest] Missing RAINFOREST_API_KEY; skipping sync')
+    return { created: 0, updated: 0, skipped: 0, errors: 1, errorMessages: ['missing RAINFOREST_API_KEY'], products: [], success: false, duration: 0 }
+  }
+
+  const { limit = 20, country = 'US' } = options
+  const geo = buildGeoInfo(country)
+  const provider = new RainforestProvider(apiKey, { defaultCountry: country })
+  const products = await provider.searchByKeyword(keyword, limit, geo)
+
+  const engine = new IngestionEngine()
+  try {
+    const result = await engine.ingestProducts(products)
+    return result
+  } finally {
+    await engine.disconnect()
   }
 }
 

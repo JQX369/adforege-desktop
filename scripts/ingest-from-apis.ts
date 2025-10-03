@@ -8,10 +8,10 @@
  *   ts-node scripts/ingest-from-apis.ts --provider=all --limit=50
  */
 
-import { RainforestProvider } from '@/lib/providers/rainforest-enhanced'
-import { EbayProvider } from '@/lib/providers/ebay-enhanced'
-import { IngestionEngine } from '@/lib/providers/ingestion-engine'
-import { BaseProduct } from '@/lib/providers/types'
+import { syncRainforestByKeyword } from '../lib/providers/rainforest-enhanced'
+import { syncEbayByKeyword } from '../lib/providers/ebay-enhanced'
+import { IngestionEngine } from '../lib/providers/ingestion-engine'
+import { BaseProduct } from '../lib/providers/types'
 
 // Gift-focused keywords for best results
 const DEFAULT_KEYWORDS = [
@@ -85,8 +85,8 @@ async function main() {
   const ebayToken = process.env.EBAY_OAUTH_TOKEN
   const ebayCampaignId = process.env.EBAY_CAMPAIGN_ID
 
-  let rainforest: RainforestProvider | null = null
-  let ebay: EbayProvider | null = null
+  let rainforest = Boolean(rainforestKey)
+  let ebay = Boolean(ebayAppId && ebayToken)
 
   if (config.provider === 'rainforest' || config.provider === 'all') {
     if (!rainforestKey) {
@@ -94,8 +94,7 @@ async function main() {
       console.log('   Sign up at: https://www.rainforestapi.com/')
       process.exit(1)
     }
-    rainforest = new RainforestProvider(rainforestKey)
-    console.log('✅ Rainforest API initialized')
+    console.log('✅ Rainforest API ready')
   }
 
   if (config.provider === 'ebay' || config.provider === 'all') {
@@ -105,10 +104,10 @@ async function main() {
       console.log('   Sign up at: https://developer.ebay.com/')
       process.exit(1)
     }
-    ebay = new EbayProvider(ebayAppId, ebayToken, ebayCampaignId)
-    console.log('✅ eBay API initialized')
+    console.log('✅ eBay API ready')
   }
 
+  // For dry run we won't ingest but we still want to fetch
   const engine = new IngestionEngine()
   
   // Statistics
@@ -134,7 +133,8 @@ async function main() {
       if (rainforest) {
         try {
           console.log('  📡 Fetching from Rainforest (Amazon)...')
-          const amazonProducts = await rainforest.searchByKeyword(keyword, config.limit)
+          const result = await syncRainforestByKeyword(keyword, { limit: config.limit || 20 })
+          const amazonProducts = result.products || []
           products = products.concat(amazonProducts)
           stats.rainforestProducts += amazonProducts.length
           console.log(`  ✅ Found ${amazonProducts.length} products from Amazon`)
@@ -148,7 +148,8 @@ async function main() {
       if (ebay) {
         try {
           console.log('  📡 Fetching from eBay...')
-          const ebayProducts = await ebay.searchByKeyword(keyword, config.limit)
+          const result = await syncEbayByKeyword(keyword, { limit: config.limit || 20 })
+          const ebayProducts = result.products || []
           products = products.concat(ebayProducts)
           stats.ebayProducts += ebayProducts.length
           console.log(`  ✅ Found ${ebayProducts.length} products from eBay`)
@@ -221,21 +222,11 @@ async function main() {
     console.log(`  └─ In stock: ${dbStats.dataCompleteness.inStock.toFixed(1)}%`)
 
     // Show provider stats
-    if (rainforest) {
-      const rfStats = rainforest.getStats()
-      console.log(`\n🌧️  Rainforest API Stats:`)
-      console.log(`  Total requests: ${rfStats.totalRequests}`)
-      console.log(`  Success rate: ${((rfStats.successfulRequests / rfStats.totalRequests) * 100).toFixed(1)}%`)
-      console.log(`  Avg response time: ${rfStats.averageResponseTime.toFixed(0)}ms`)
-    }
-
-    if (ebay) {
-      const ebayStats = ebay.getStats()
-      console.log(`\n🛒 eBay API Stats:`)
-      console.log(`  Total requests: ${ebayStats.totalRequests}`)
-      console.log(`  Success rate: ${((ebayStats.successfulRequests / ebayStats.totalRequests) * 100).toFixed(1)}%`)
-      console.log(`  Avg response time: ${ebayStats.averageResponseTime.toFixed(0)}ms`)
-    }
+    // These stats are no longer directly available from the providers as they are now sync functions
+    // The original code had rainforest.getStats() and ebay.getStats()
+    // Since the providers are now sync, we'll just log a message indicating they are ready.
+    console.log(`\n🌧️  Rainforest API Stats: (sync function, no direct stats available here)`)
+    console.log(`🛒 eBay API Stats: (sync function, no direct stats available here)`)
 
     console.log('\n✅ All done! Your catalog is ready.\n')
 

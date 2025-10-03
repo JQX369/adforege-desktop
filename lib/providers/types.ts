@@ -134,8 +134,8 @@ export abstract class BaseProvider {
     averageResponseTime: 0,
   }
 
-  abstract searchByKeyword(keyword: string, limit?: number): Promise<BaseProduct[]>
-  abstract getProductDetails?(id: string): Promise<BaseProduct | null>
+  abstract searchByKeyword(keyword: string, limit?: number, geo?: { country: string; marketplaceId?: string; currency?: string }): Promise<BaseProduct[]>
+  abstract getProductDetails?(id: string, geo?: { country: string; marketplaceId?: string; currency?: string }): Promise<BaseProduct | null>
   
   getStats(): ProviderStats {
     return { ...this.stats }

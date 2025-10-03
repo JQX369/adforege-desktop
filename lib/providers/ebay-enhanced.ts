@@ -16,6 +16,8 @@ import {
   ProductRegionLinkInput,
 } from './types'
 import { buildAffiliateUrl, cleanProductUrl } from '@/lib/affiliates'
+import { buildGeoInfo, COUNTRY_TO_EBAY_MARKETPLACE } from '@/lib/geo'
+import { IngestionEngine } from '@/lib/providers/ingestion-engine'
 
 interface EbaySearchResult {
   itemId?: string
@@ -86,15 +88,19 @@ export class EbayProvider extends BaseProvider {
   /**
    * Search eBay products by keyword
    */
-  async searchByKeyword(keyword: string, limit: number = 20): Promise<BaseProduct[]> {
+  async searchByKeyword(
+    keyword: string,
+    limit: number = 20,
+    geo?: { country: string; marketplaceId?: string; currency?: string }
+  ): Promise<BaseProduct[]> {
     const startTime = Date.now()
     
     try {
-    const params = new URLSearchParams({
-      q: keyword,
-      limit: Math.min(limit, 50).toString(),
-      filter: 'buyingOptions:{FIXED_PRICE}', // Only Buy It Now items
-    })
+      const params = new URLSearchParams({
+        q: keyword,
+        limit: Math.min(limit, 50).toString(),
+        filter: 'buyingOptions:{FIXED_PRICE}', // Only Buy It Now items
+      })
 
       const url = `${this.baseUrl}/item_summary/search?${params.toString()}`
       const response = await this.fetchWithRetry(url)
@@ -128,7 +134,7 @@ export class EbayProvider extends BaseProvider {
   /**
    * Get detailed item information
    */
-  async getProductDetails(itemId: string): Promise<BaseProduct | null> {
+  async getProductDetails(itemId: string, geo?: { country: string; marketplaceId?: string; currency?: string }): Promise<BaseProduct | null> {
     const startTime = Date.now()
     
     try {
@@ -413,6 +419,31 @@ export class EbayProvider extends BaseProvider {
       }
       throw error
     }
+  }
+}
+
+export async function syncEbayByKeyword(
+  keyword: string,
+  options: { limit?: number; country?: string } = {}
+) {
+  const clientId = process.env.EBAY_APP_ID || process.env.EBAY_CLIENT_ID
+  const oauthToken = process.env.EBAY_OAUTH_TOKEN
+  if (!clientId || !oauthToken) {
+    console.warn('[ebay] Missing credentials; skipping sync')
+    return { created: 0, updated: 0, skipped: 0, errors: 1, errorMessages: ['missing ebay credentials'], products: [], success: false, duration: 0 }
+  }
+
+  const { limit = 20, country = 'US' } = options
+  const geo = buildGeoInfo(country)
+  const provider = new EbayProvider(clientId, oauthToken, process.env.EBAY_CAMPAIGN_ID)
+  const products = await provider.searchByKeyword(keyword, limit, geo)
+
+  const engine = new IngestionEngine()
+  try {
+    const result = await engine.ingestProducts(products)
+    return result
+  } finally {
+    await engine.disconnect()
   }
 }
 

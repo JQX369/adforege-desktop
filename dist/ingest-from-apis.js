@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 "use strict";
 /**
  * Main Ingestion Script - Rainforest + eBay
@@ -10,9 +10,9 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.main = main;
-const rainforest_enhanced_1 = require("@/lib/providers/rainforest-enhanced");
-const ebay_enhanced_1 = require("@/lib/providers/ebay-enhanced");
-const ingestion_engine_1 = require("@/lib/providers/ingestion-engine");
+const rainforest_enhanced_1 = require("../lib/providers/rainforest-enhanced");
+const ebay_enhanced_1 = require("../lib/providers/ebay-enhanced");
+const ingestion_engine_1 = require("../lib/providers/ingestion-engine");
 // Gift-focused keywords for best results
 const DEFAULT_KEYWORDS = [
     // High-intent gift searches
@@ -82,8 +82,7 @@ async function main() {
             console.log('   Sign up at: https://www.rainforestapi.com/');
             process.exit(1);
         }
-        rainforest = new rainforest_enhanced_1.RainforestProvider(rainforestKey);
-        console.log('✅ Rainforest API initialized');
+        console.log('✅ Rainforest API ready');
     }
     if (config.provider === 'ebay' || config.provider === 'all') {
         if (!ebayAppId || !ebayToken) {
@@ -92,8 +91,7 @@ async function main() {
             console.log('   Sign up at: https://developer.ebay.com/');
             process.exit(1);
         }
-        ebay = new ebay_enhanced_1.EbayProvider(ebayAppId, ebayToken, ebayCampaignId);
-        console.log('✅ eBay API initialized');
+        console.log('✅ eBay API ready');
     }
     const engine = new ingestion_engine_1.IngestionEngine();
     // Statistics
@@ -116,7 +114,8 @@ async function main() {
             if (rainforest) {
                 try {
                     console.log('  📡 Fetching from Rainforest (Amazon)...');
-                    const amazonProducts = await rainforest.searchByKeyword(keyword, config.limit);
+                    const result = await (0, rainforest_enhanced_1.syncRainforestByKeyword)(keyword, { limit: config.limit || 20 });
+                    const amazonProducts = result.products || [];
                     products = products.concat(amazonProducts);
                     stats.rainforestProducts += amazonProducts.length;
                     console.log(`  ✅ Found ${amazonProducts.length} products from Amazon`);
@@ -130,7 +129,8 @@ async function main() {
             if (ebay) {
                 try {
                     console.log('  📡 Fetching from eBay...');
-                    const ebayProducts = await ebay.searchByKeyword(keyword, config.limit);
+                    const result = await (0, ebay_enhanced_1.syncEbayByKeyword)(keyword, { limit: config.limit || 20 });
+                    const ebayProducts = result.products || [];
                     products = products.concat(ebayProducts);
                     stats.ebayProducts += ebayProducts.length;
                     console.log(`  ✅ Found ${ebayProducts.length} products from eBay`);
