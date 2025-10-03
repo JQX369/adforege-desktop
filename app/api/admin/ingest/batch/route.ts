@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient, ProductStatus, ProductSource, AvailabilityStatus } from '@prisma/client'
+import { ProductStatus, ProductSource, AvailabilityStatus } from '@prisma/client'
 import OpenAI from 'openai'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { cleanProductUrl, buildAffiliateUrl } from '@/lib/affiliates'
 import { rateLimit } from '@/lib/utils'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/lib/prisma'
+import { logError, logInfo } from '@/lib/log'
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' })
 
 export const runtime = 'nodejs'
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, createdCount: created.length, updatedCount: updated.length, rejected, createdIds: created, updatedIds: updated })
   } catch (err: any) {
-    console.error('Batch ingest error:', err)
+    logError('Batch ingest error', { error: err })
     return NextResponse.json({ error: err?.message || 'Unknown error' }, { status: 500 })
   }
 }

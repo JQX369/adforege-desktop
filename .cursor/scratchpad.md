@@ -2,11 +2,19 @@
 
 Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 
+- 2025-10-03: Produce a holistic architecture audit covering scalability, modularity, and maintainability to guide near-term refactors.
+
 ## Key Challenges and Analysis
 
 - Need a remote GitHub repository (either manual creation or GH CLI).
 - Vercel best practice is to connect the GitHub repo for CI/CD.
 - Ensure Node project builds on Vercel; capture any required env vars.
+- Architecture footprint has evolved rapidly (recommendation engine, vendor billing, ingestion pipelines); must map current layering to surface coupling hot spots, including data flow across `lib/recs/*`, `app/api/recommend*`, and admin ingestion routes.
+- Numerous planner notes across sessions; need to reconcile historical decisions (catalog-first pivot, Stripe integration) before advising refactors.
+- Must evaluate dependency freshness and security posture without breaking production-ready stack.
+- Architecture mapping needs to cover hybrid recommendation pipeline (Prisma+$queryRaw vector retrieval, ranking heuristics, optional LLM rerank) and admin/vendor subsystems to explain data flow from ingestion → catalog → recommendations → analytics.
+- Potential anti-patterns to validate: pervasive PrismaClient instantiation per module (risk of connection exhaustion), direct OpenAI usage inside routes without isolation, UI components depending on API shape coupling.
+- Conventions review shows lint tooling exists but inconsistent logging/error handling patterns; dependency review flags outdated lint config (eslint-config-next 14.0.4) and Stripe SDK versions that may need upgrades.
 
 ## High-level Task Breakdown
 
@@ -16,6 +24,11 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 4) Add remote and push main (success: branch visible on GitHub).
 5) Connect repo to Vercel (success: project created, deployment runs).
 6) Verify production deployment URL works (success: live site reachable).
+7) Gather context for architecture audit: confirm stack, review READMEs/docs, outline subsystems (success: have module inventory draft).
+8) Assess code structure for coupling/anti-patterns via representative files in `app/`, `components/`, `lib/`, `prisma/`, `scripts/` (success: list of issues with file citations).
+9) Review conventions (lint, naming, state mgmt), logging/error handling practices (success: documented gaps with citations).
+10) Audit dependencies and tooling (package.json, prisma migrations, infra configs) for updates/security (success: table of dependency actions).
+11) Synthesize refactor plan (Now/Next/Later) with risk/impact estimates (success: plan ready for user sign-off).
 
 ## Project Status Board
 
@@ -25,14 +38,34 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 - [ ] Push main to GitHub
 - [ ] Link repo in Vercel and configure
 - [ ] First successful production deploy
+- [x] Audit-1: Gather architecture context (docs, README, current stack summary)
+- [x] Audit-2: Map modules & data flows with citations
+- [x] Audit-3: Identify anti-patterns and coupling issues
+- [x] Audit-4: Review conventions (lint, naming, error handling)
+- [x] Audit-5: Dependency and security health check
+- [x] Audit-6: Draft refactor plan (Now/Next/Later)
+- [ ] Now-1: Shared Prisma client utility
+- [ ] Now-2: Saved drawer delete flow alignment
+- [ ] Now-3: Central logging helper rollout
 
 ## Current Status / Progress Tracking
 
 Starting setup. Will initialize Git and prepare initial commit.
+Planning architecture audit scope; compiling task list and evidence-gathering approach.
+Audit-1 complete: README, @docs executive/development summaries, package.json reviewed; stack cataloged.
+Audit-2 complete: Documented recommendation pipeline, ingestion APIs, vendor billing flow; ready to note coupling hotspots.
+Audit-3 complete: noted repeated PrismaClient instantiation per module, OpenAI usage in multiple routes, SavedDrawer stale remove path, session embedding coupling.
+Audit-4 complete: lint via `next lint`, prettier present; observed inconsistent logging, error handling fallback; naming mostly consistent.
+Audit-5 complete: checked package versions (Next 14.2.30, Prisma 5.7.0), noted outdated eslint-config-next 14.0.4, stripe 14.10.0; npm audit not run due to policy (requires approval if vulnerabilities present).
+Audit-6 complete: drafted architecture overview, module list, anti-patterns, conventions gaps, dependency findings, refactor plan staged Now/Next/Later.
+Now-1 complete: shared Prisma client (`lib/prisma.ts`) in place and imports updated.
+Now-2 complete: Saved drawer now uses `/api/saved/[userId]` DELETE with JSON body; server route handles removal.
+Now-3 complete: Added `lib/log.ts` helper and replaced console logging in key APIs.
 
 ## Executor's Feedback or Assistance Requests
 
 - Please provide your GitHub repo URL (or confirm use of GH CLI if installed).
+- None for audit planning; awaiting execution phase to raise evidence gaps.
 
 ## Lessons
 

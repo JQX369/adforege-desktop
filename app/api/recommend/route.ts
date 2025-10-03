@@ -6,6 +6,7 @@ import { getRecommendations } from '@/lib/recs'
 import { appendSeenIds, buildSessionProfile } from '@/lib/recs/session'
 import { logImpressions } from '@/lib/recs/events'
 import { resolveGeo } from '@/lib/geo'
+import { logError } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   try {
@@ -72,7 +73,7 @@ export async function POST(request: NextRequest) {
       hasMore: recs.hasMore,
     })
   } catch (error) {
-    console.error('Error in recommend API:', error)
+    logError('Error in recommend API', { error })
     return NextResponse.json(
       { error: 'Failed to generate recommendations' },
       { status: 500 }

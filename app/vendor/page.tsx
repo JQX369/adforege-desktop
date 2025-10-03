@@ -87,14 +87,15 @@ export default function VendorPage() {
             <span className="text-white/80 text-sm">Live Demo Mode</span>
           </div>
           <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-            Grow Sales with The Gift Aunty
+            Grow Your Sales with FairyWize
           </h1>
-          <p className="text-2xl text-purple-100 mb-4">Get discovered by gift-seekers. Pay monthly. Cancel anytime.</p>
+          <p className="text-2xl text-purple-100 mb-4">Join the #1 AI-powered gift marketplace. Get discovered by thousands of gift-seekers.</p>
           <div className="max-w-3xl mx-auto bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
             <p className="text-purple-200 text-lg leading-relaxed">
               📊 See views, swipes, and favorites on your products<br/>
-              🧪 Use The Gift Aunty as a product test bed to validate what resonates before scaling<br/>
-              🎯 Reach thousands of active gift-seekers powered by AI
+              🧪 Use FairyWize as your product test bed to validate what resonates before scaling<br/>
+              🎯 Reach thousands of active gift-seekers powered by AI<br/>
+              💰 Earn affiliate commissions when users purchase through your listings
             </p>
           </div>
         </header>

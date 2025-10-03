@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/lib/prisma'
 
 // Remove edge runtime - Prisma doesn't support it
 // export const runtime = 'edge'
@@ -44,3 +42,34 @@ export async function GET(
     )
   }
 } 
+
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { userId: string } }
+) {
+  try {
+    const userId = params.userId
+    const body = await request.json().catch(() => null)
+    const productId = body?.productId as string | undefined
+
+    if (!productId) {
+      return NextResponse.json({ error: 'productId required' }, { status: 400 })
+    }
+
+    const result = await prisma.swipe.deleteMany({
+      where: {
+        userId,
+        productId,
+        action: 'SAVED',
+      },
+    })
+
+    return NextResponse.json({ success: true, deleted: result.count })
+  } catch (error) {
+    console.error('Error deleting saved product:', error)
+    return NextResponse.json(
+      { error: 'Failed to delete saved product' },
+      { status: 500 }
+    )
+  }
+}

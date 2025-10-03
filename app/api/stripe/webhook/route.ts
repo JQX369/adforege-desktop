@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
+import { logError, logInfo } from '@/lib/log'
 
 export const runtime = 'nodejs'
 
@@ -13,7 +14,7 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
 export async function POST(req: NextRequest) {
   try {
     if (!webhookSecret) {
-      console.error('STRIPE_WEBHOOK_SECRET not configured')
+      logError('STRIPE_WEBHOOK_SECRET not configured')
       return NextResponse.json({ error: 'Webhook secret not configured' }, { status: 500 })
     }
 
@@ -21,7 +22,7 @@ export async function POST(req: NextRequest) {
     const sig = req.headers.get('stripe-signature')
 
     if (!sig) {
-      console.error('Missing stripe-signature header')
+      logError('Missing stripe-signature header')
       return NextResponse.json({ error: 'Missing signature' }, { status: 400 })
     }
 
@@ -29,16 +30,14 @@ export async function POST(req: NextRequest) {
     try {
       event = stripe.webhooks.constructEvent(body, sig, webhookSecret)
     } catch (err: any) {
-      console.error('Webhook signature verification failed:', err.message)
+      logError('Webhook signature verification failed', { message: err.message })
       return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
-
-    const prisma = new PrismaClient()
 
     // Optional: persist webhook event for idempotency if a table exists in your DB.
     // Skipping persistence to avoid type errors when Prisma model is not defined.
 
-    console.log(`Processing webhook: ${event.type}`)
+    logInfo('Processing Stripe webhook', { type: event.type })
 
     switch (event.type) {
       case 'checkout.session.completed': {
@@ -73,7 +72,7 @@ export async function POST(req: NextRequest) {
               }
             })
 
-            console.log(`Updated vendor ${vendor.id}: plan=${plan}, quantity=${quantity}`)
+            logInfo('Updated vendor subscription', { vendorId: vendor.id, plan, quantity })
           }
         }
         break
@@ -147,12 +146,12 @@ export async function POST(req: NextRequest) {
       }
 
       default:
-        console.log(`Unhandled event type: ${event.type}`)
+        logInfo('Unhandled Stripe event type', { type: event.type })
     }
 
     return NextResponse.json({ received: true })
   } catch (err: any) {
-    console.error('Webhook error:', err)
+    logError('Webhook error', { error: err })
     return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 })
   }
 }

@@ -66,12 +66,16 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
 
   const handleRemove = async (productId: string) => {
     try {
-      const response = await fetch(`/api/user/${userId}/saved/${productId}`, {
+      const response = await fetch(`/api/saved/${userId}`, {
         method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ productId }),
       })
       if (response.ok) {
-        setSavedProducts(prev => prev.filter(p => p.id !== productId))
-        setSavedCount(prev => prev - 1)
+        setSavedProducts((prev) => prev.filter((p) => p.id !== productId))
+        setSavedCount((prev) => Math.max(0, prev - 1))
       }
     } catch (error) {
       console.error('Error removing saved product:', error)

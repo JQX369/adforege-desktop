@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import { logDislike, logLike, logSave } from '@/lib/recs/events'
-
-const prisma = new PrismaClient()
 
 // Remove edge runtime - Prisma doesn't support it
 // export const runtime = 'edge'

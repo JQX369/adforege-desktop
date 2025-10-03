@@ -1,6 +1,5 @@
-import { PrismaClient, RecommendationAction } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { RecommendationAction } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 
 interface ImpressionPayload {
   sessionId: string

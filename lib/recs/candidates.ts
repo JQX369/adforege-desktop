@@ -1,7 +1,6 @@
-import { PrismaClient, Prisma } from '@prisma/client'
+import { Prisma } from '@prisma/client'
+import { prisma } from '@/lib/prisma'
 import { CandidateProduct, SessionProfile } from './types'
-
-const prisma = new PrismaClient()
 
 const VECTOR_FALLBACK_LIMIT = 20
 

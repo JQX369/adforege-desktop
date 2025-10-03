@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { buildAffiliateUrlWithLocale } from '@/lib/affiliates'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/lib/prisma'
+import { logError, logInfo } from '@/lib/log'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -26,15 +25,15 @@ export async function GET(request: NextRequest) {
     }
 
     const target = buildAffiliateUrlWithLocale(rawUrl, country)
-    console.log('[Redirector] pid:', productId, 'url:', rawUrl, 'cc:', country)
+    logInfo('Redirecting affiliate click', { productId, rawUrl, country, sessionId, userId })
     try {
       await prisma.clickEvent.create({ data: { sessionId: sessionId || null, userId: userId || null, productId: productId || null, targetUrl: target } })
     } catch (e) {
-      console.log('ClickEvent create failed:', e)
+      logError('ClickEvent create failed', { error: e })
     }
     return NextResponse.redirect(target, { status: 302 })
   } catch (error) {
-    console.error('Redirector error:', error)
+    logError('Redirector error', { error })
     return NextResponse.json({ error: 'Failed to redirect' }, { status: 500 })
   }
 }

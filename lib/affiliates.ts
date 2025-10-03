@@ -122,19 +122,6 @@ export function buildAffiliateUrl(rawUrl: string, countryCode?: string): string 
 }
 
 // Helper to check if URL is from a supported affiliate program
-export function isSupportedAffiliate(url: string): boolean {
-  try {
-    const hostname = new URL(url).hostname.toLowerCase()
-    return (
-      isAmazonHost(hostname) ||
-      hostname === 'amzn.to' ||
-      hostname.includes('etsy.com')
-    )
-  } catch {
-    return false
-  }
-}
-
 // Extract clean product URL (remove tracking params except affiliate ones)
 export function cleanProductUrl(url: string): string {
   try {

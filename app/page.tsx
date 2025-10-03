@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import Link from 'next/link'
 import { GiftForm } from '@/components/GiftForm'
 import { SwipeDeck, Product } from '@/components/SwipeDeck'
 import { SavedDrawer } from '@/components/SavedDrawer'
@@ -304,6 +305,41 @@ export default function Home() {
                   sizes="(min-width: 768px) 18rem, 100vw"
                 />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Local SEO Section */}
+        <section className="py-8 md:py-12 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-6">Find Gifts Near You</h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Discover unique local gift shops and boutiques in your area. Support local businesses while finding one-of-a-kind presents.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/80 dark:bg-white/5 rounded-lg p-6 backdrop-blur-sm">
+                <div className="text-3xl mb-4">🏪</div>
+                <h3 className="font-semibold mb-2">Local Gift Shops</h3>
+                <p className="text-sm text-muted-foreground">Find unique boutiques and specialty stores near you</p>
+              </div>
+              <div className="bg-white/80 dark:bg-white/5 rounded-lg p-6 backdrop-blur-sm">
+                <div className="text-3xl mb-4">🎨</div>
+                <h3 className="font-semibold mb-2">Artisan Markets</h3>
+                <p className="text-sm text-muted-foreground">Handcrafted gifts from local makers and artists</p>
+              </div>
+              <div className="bg-white/80 dark:bg-white/5 rounded-lg p-6 backdrop-blur-sm">
+                <div className="text-3xl mb-4">🛍️</div>
+                <h3 className="font-semibold mb-2">Shopping Centers</h3>
+                <p className="text-sm text-muted-foreground">Department stores and malls with gift sections</p>
+              </div>
+            </div>
+            <div className="mt-8">
+              <Link
+                href="/local-gifts"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
+              >
+                Find Local Gift Shops →
+              </Link>
             </div>
           </div>
         </section>
