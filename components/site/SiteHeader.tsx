@@ -5,6 +5,7 @@ import { Gift, User, LogOut } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
+import { CompactCurrencySelector } from '@/components/currency-selector'
 
 export function SiteHeader() {
   const [user, setUser] = useState<any>(null)
@@ -83,7 +84,9 @@ export function SiteHeader() {
               </Link>
             </Button>
           )}
-          
+
+          <CompactCurrencySelector />
+
           <Button asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 cta-glow">
             <Link href="/#gift-form">🎁 Find Gifts</Link>
           </Button>

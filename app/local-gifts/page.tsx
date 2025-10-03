@@ -1,27 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Metadata } from 'next'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-export const metadata: Metadata = {
-  title: 'Local Gift Shops Near Me | Find Boutiques & Gift Stores | FairyWize',
-  description: 'Discover local gift shops, boutiques, and specialty stores in your area. Support local businesses and find unique, handcrafted gifts near you.',
-  keywords: [
-    'gift shops near me', 'local gift stores', 'boutiques near me',
-    'gift boutiques', 'local gift shops', 'gift stores nearby',
-    'handmade gifts near me', 'artisan gifts local'
-  ],
-  openGraph: {
-    title: 'Local Gift Shops Near Me | Find Boutiques & Gift Stores | FairyWize',
-    description: 'Discover local gift shops, boutiques, and specialty stores in your area. Support local businesses and find unique, handcrafted gifts near you.',
-    type: 'website',
-    url: '/local-gifts',
-  },
-}
 
 interface LocalBusiness {
   name: string
@@ -41,7 +24,7 @@ export default function LocalGiftsPage() {
   const [isLoading, setIsLoading] = useState(false)
 
   // Mock local businesses data - in real implementation, this would come from an API
-  const mockBusinesses: LocalBusiness[] = [
+  const mockBusinesses = useMemo<LocalBusiness[]>(() => [
     {
       name: "Sarah's Gift Boutique",
       type: "Gift Shop",
@@ -105,17 +88,29 @@ export default function LocalGiftsPage() {
       rating: 4.9,
       category: "Food"
     }
-  ]
+  ], [])
 
-  const handleLocationSearch = async () => {
+  const handleLocationSearch = useCallback(async () => {
     setIsLoading(true)
     // Simulate API call delay
     await new Promise(resolve => setTimeout(resolve, 1000))
     setSearchResults(mockBusinesses)
     setIsLoading(false)
-  }
+  }, [mockBusinesses])
 
   useEffect(() => {
+    // Set page title and meta description for SEO
+    document.title = 'Local Gift Shops Near Me | Find Boutiques & Gift Stores | FairyWize'
+
+    // Update meta description
+    let metaDescription = document.querySelector('meta[name="description"]') as HTMLMetaElement | null
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta') as HTMLMetaElement
+      metaDescription.name = 'description'
+      document.head.appendChild(metaDescription)
+    }
+    metaDescription.setAttribute('content', 'Discover local gift shops, boutiques, and specialty stores in your area. Support local businesses and find unique, handcrafted gifts near you.')
+
     // Auto-detect location if geolocation is available
     if (navigator.geolocation && !location) {
       navigator.geolocation.getCurrentPosition(
@@ -129,7 +124,7 @@ export default function LocalGiftsPage() {
         }
       )
     }
-  }, [location])
+  }, [location, handleLocationSearch])
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-accent/10">
@@ -263,7 +258,7 @@ export default function LocalGiftsPage() {
 
         {/* CTA Section */}
         <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          <h2 className="text-2xl md-text-3xl font-bold mb-4">
             Need Personalized Gift Ideas?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">

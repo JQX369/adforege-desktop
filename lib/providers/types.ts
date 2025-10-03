@@ -51,6 +51,7 @@ export interface BaseProduct {
   listingStartAt?: string
   listingEndAt?: string
   listingType?: ListingType
+  expiresAt?: Date | string
   
   // Quality & Reviews
   rating?: number
@@ -84,7 +85,6 @@ export interface BaseProduct {
   regionMask?: string[]
   tags?: Array<ProductTagInput | string>
   regionLinks?: ProductRegionLinkInput[]
-  available?: boolean
 }
 
 export interface ProductTagInput {
@@ -104,6 +104,7 @@ export interface ProviderConfig {
   rateLimit?: number
   retryAttempts?: number
   timeout?: number
+  defaultCountry?: string
 }
 
 export interface IngestionResult {

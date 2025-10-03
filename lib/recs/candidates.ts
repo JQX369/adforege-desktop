@@ -69,7 +69,7 @@ async function fetchFallback(where: Prisma.ProductWhereInput, limit: number): Pr
     take: Math.max(limit, VECTOR_FALLBACK_LIMIT),
   })
 
-  return products.map((product) => ({
+  return products.map((product: any) => ({
     id: product.id,
     title: product.title,
     description: product.description,

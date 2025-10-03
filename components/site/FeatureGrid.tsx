@@ -1,23 +1,20 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import aiImg from '@Images/ai.png'
-import handpickedImg from '@Images/handpicked.png'
-import swipeImg from '@Images/swipe.png'
 
 const features = [
   {
-    image: aiImg,
+    image: '/images/placeholder.png',
     title: 'AI-tailored picks',
     text: 'Recommendations based on personality, interests, and occasion.'
   },
   {
-    image: handpickedImg,
+    image: '/images/placeholder.png',
     title: 'Hand-picked finds',
     text: 'A mix of curated vendor products and trusted sources.'
   },
   {
-    image: swipeImg,
+    image: '/images/placeholder.png',
     title: 'Swipe to refine',
     text: 'Like or save to tune results instantly.'
   },

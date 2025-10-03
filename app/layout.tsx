@@ -4,6 +4,8 @@ import React from 'react'
 import './globals.css'
 import { AFFILIATE_DISCLOSURE_TEXT } from '@/lib/config'
 import { SiteHeader } from '@/components/site/SiteHeader'
+import { CurrencyProvider } from '@/lib/currency-context'
+import { websiteSchema, organizationSchema, softwareApplicationSchema } from '@/lib/schema'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -72,33 +74,11 @@ export const metadata: Metadata = {
 }
 
 // Structured Data for SEO
-const structuredData = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "FairyWize",
-  "alternateName": "FairyWize AI Gift Finder",
-  "url": process.env.NEXT_PUBLIC_SITE_URL || "https://fairywize.com",
-  "description": "AI-powered gift recommendation platform that helps users find perfect presents through personalized suggestions",
-  "publisher": {
-    "@type": "Organization",
-    "name": "FairyWize",
-    "url": process.env.NEXT_PUBLIC_SITE_URL || "https://fairywize.com",
-    "logo": {
-      "@type": "ImageObject",
-      "url": `${process.env.NEXT_PUBLIC_SITE_URL || "https://fairywize.com"}/logo.png`,
-      "width": 512,
-      "height": 512
-    }
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": `${process.env.NEXT_PUBLIC_SITE_URL || "https://fairywize.com"}/?search={search_term_string}`
-    },
-    "query-input": "required name=search_term_string"
-  }
-}
+const structuredData = [
+  websiteSchema,
+  organizationSchema,
+  softwareApplicationSchema
+]
 
 export default function RootLayout({
   children,
@@ -108,12 +88,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="h-full">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData),
-          }}
-        />
+        {structuredData.map((schema, index) => (
+          <script
+            key={index}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(schema),
+            }}
+          />
+        ))}
       </head>
       <body className={`${inter.className} h-full antialiased bg-background/80 backdrop-blur-xl`}>
         {/* Google Analytics */}
@@ -139,11 +122,13 @@ export default function RootLayout({
           </>
         )}
 
-        <SiteHeader />
-        <div className="pt-20">{children}</div>
-        <footer className="mt-12 py-8 text-center text-xs text-muted-foreground">
-          {AFFILIATE_DISCLOSURE_TEXT}
-        </footer>
+        <CurrencyProvider>
+          <SiteHeader />
+          <div className="pt-20">{children}</div>
+          <footer className="mt-12 py-8 text-center text-xs text-muted-foreground">
+            {AFFILIATE_DISCLOSURE_TEXT}
+          </footer>
+        </CurrencyProvider>
       </body>
     </html>
   )

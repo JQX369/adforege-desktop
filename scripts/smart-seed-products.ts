@@ -228,7 +228,7 @@ async function seedFromCSV(filePath: string) {
 async function seedFromEbay(keywords: string[]) {
   console.log(`🔍 Fetching from eBay for ${keywords.length} keywords...`)
   
-  const { syncEbayByKeyword } = await import('@/lib/providers/ebay')
+  const { syncEbayByKeyword } = await import('@/lib/providers/ebay-enhanced')
   
   let totalCreated = 0
   let totalUpdated = 0

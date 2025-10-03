@@ -1,0 +1,25 @@
+# Development documentation and planning files
+@docs/
+@requirements/
+@templates/
+docs/
+templates/
+BUILD_COMPLETE.md
+LAUNCH_CHECKLIST.md
+SETUP_GUIDE.md
+tmp_req.json
+tools/
+
+# Development scripts (keep only production ones if needed)
+scripts/stripe_bootstrap*.ps1
+scripts/stripe_live_*.ps1
+scripts/test-auth*.js
+scripts/simple-auth-test.js
+scripts/test-credentials.js
+
+# Images directory (if not needed in production)
+Images/
+
+# Development data
+data/
+dist/

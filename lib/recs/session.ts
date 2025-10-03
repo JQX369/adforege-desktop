@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import OpenAI from 'openai'
+import { Prisma } from '@prisma/client'
 import { SessionProfile, SessionConstraints } from './types'
 
 const prisma = new PrismaClient()
@@ -23,11 +24,11 @@ export async function buildSessionProfile(sessionId: string, text: string, const
       create: {
         sessionId,
         embedding: embedding ?? [],
-        constraints,
+        constraints: constraints as unknown as Prisma.InputJsonValue,
       },
       update: {
         embedding: embedding ?? [],
-        constraints,
+        constraints: constraints as unknown as Prisma.InputJsonValue,
         updatedAt: new Date(),
       },
     })
@@ -45,7 +46,7 @@ export async function loadSessionProfile(sessionId: string): Promise<SessionProf
     return {
       sessionId,
       embedding: record.embedding ?? [],
-      constraints: (record.constraints as SessionConstraints) || { interests: [], excludeIds: [], seenIds: [] },
+      constraints: (record.constraints as unknown as SessionConstraints) || { interests: [], excludeIds: [], seenIds: [] },
     }
   } catch (error) {
     console.log('[recs][session] load failed', error)

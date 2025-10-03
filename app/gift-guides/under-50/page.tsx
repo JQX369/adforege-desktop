@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -75,7 +76,7 @@ export default function BudgetGiftsPage() {
             Gifts Under $50
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Amazing gifts don't have to cost a fortune. Discover thoughtful, high-quality presents
+            Amazing gifts don\'t have to cost a fortune. Discover thoughtful, high-quality presents
             that show you care without breaking the bank. Perfect for any occasion!
           </p>
         </div>
@@ -120,7 +121,7 @@ export default function BudgetGiftsPage() {
               <h3 className="text-lg font-semibold mb-3">🎯 Focus on Thoughtfulness</h3>
               <p className="text-muted-foreground">
                 The most meaningful gifts aren't always the most expensive. Our AI helps you find
-                items that perfectly match the recipient's interests and personality.
+                items that perfectly match the recipient\'s interests and personality.
               </p>
             </div>
             <div>
@@ -153,7 +154,7 @@ export default function BudgetGiftsPage() {
             Need More Specific Ideas?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Tell our AI about the recipient's interests, personality, and your relationship,
+            Tell our AI about the recipient\'s interests, personality, and your relationship,
             and we'll find the perfect budget-friendly gift just for them.
           </p>
           <Link
@@ -168,15 +169,15 @@ export default function BudgetGiftsPage() {
         <div className="prose prose-lg max-w-4xl mx-auto text-muted-foreground">
           <h2>Budget-Friendly Gifts That Don't Feel Cheap</h2>
           <p>
-            Finding meaningful gifts under $50 is easier than you think with FairyWize's AI-powered
-            recommendation system. We understand that budget constraints don't mean you have to compromise
+            Finding meaningful gifts under $50 is easier than you think with FairyWize\'s AI-powered
+            recommendation system. We understand that budget constraints don\'t mean you have to compromise
             on thoughtfulness or quality.
           </p>
 
           <h3>Why Choose Budget Gifts?</h3>
           <p>
-            Budget-friendly gifts prove that it's the thought that counts. A carefully chosen $30 gift
-            that perfectly matches someone's interests often means more than an expensive item they won't use.
+            Budget-friendly gifts prove that it\'s the thought that counts. A carefully chosen $30 gift
+            that perfectly matches someone\'s interests often means more than an expensive item they won\'t use.
             Our AI analyzes recipient preferences to ensure every suggestion hits the mark.
           </p>
 

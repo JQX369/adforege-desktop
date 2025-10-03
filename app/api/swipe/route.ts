@@ -73,7 +73,6 @@ export async function POST(request: NextRequest) {
               images: incoming.imageUrl ? [incoming.imageUrl] : [],
               affiliateUrl: url.toString(),
               categories: Array.isArray(incoming.categories) ? incoming.categories : [],
-              embedding: [],
               status: 'APPROVED',
             },
             select: { id: true },
@@ -106,20 +105,20 @@ export async function POST(request: NextRequest) {
       try {
         product = await prisma.product.findUnique({
           where: { id: productId },
-          select: { embedding: true },
+          select: { embeddings: true },
         })
       } catch {}
 
-      if (product && product.embedding) {
+      if (product && product.embeddings?.embedding) {
         // Update user embedding with weighted average
         // Formula: newEmbedding = 0.8 * oldEmbedding + 0.2 * productEmbedding
-        
+
         if (user.embedding && user.embedding.length > 0) {
           // User has existing embedding
-          const newEmbedding = user.embedding.map((val: number, idx: number) => 
-            0.8 * val + 0.2 * product.embedding[idx]
+          const newEmbedding = user.embedding.map((val: number, idx: number) =>
+            0.8 * val + 0.2 * product.embeddings.embedding[idx]
           )
-          
+
           try {
             await prisma.user.update({
               where: { id: userId },
@@ -131,7 +130,7 @@ export async function POST(request: NextRequest) {
           try {
             await prisma.user.update({
               where: { id: userId },
-              data: { embedding: product.embedding },
+              data: { embedding: product.embeddings.embedding },
             })
           } catch {}
         }

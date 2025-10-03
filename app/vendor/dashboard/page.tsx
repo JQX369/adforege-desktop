@@ -174,7 +174,7 @@ export default function VendorDashboardPage() {
 									<div key={p.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10 gap-3">
 										<span className="text-white font-medium truncate">{p.title}</span>
 										<div className="flex items-center gap-2">
-											<span className="text-purple-300 text-sm bg-purple-500/20 px-2 py-1 rounded-full">❤️ {p.savesCount}</span>
+											<span className="text-purple-300 text-sm bg-purple-500/20 px-2 py-1 rounded-full">❤️ {p.saves}</span>
 											<Button size="sm" variant="outline" onClick={async () => {
 												try {
 													await fetch('/api/admin/moderate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ productId: p.id, action: 'APPROVE' }) })

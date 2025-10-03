@@ -1,19 +1,20 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'Holiday Gift Guide 2024 | Christmas Gifts & Seasonal Presents | FairyWize',
-  description: 'Find the perfect Christmas gifts and holiday presents for 2024. Our AI-powered gift guide features personalized recommendations for family, friends, and colleagues.',
+  title: 'Holiday Gift Guide | Christmas Gifts & Seasonal Presents | FairyWize',
+  description: 'Find the perfect Christmas gifts and holiday presents. Our AI-powered gift guide features personalized recommendations for family, friends, and colleagues.',
   keywords: [
-    'holiday gift guide 2024', 'christmas gifts', 'holiday gifts',
+    'holiday gift guide', 'christmas gifts', 'holiday gifts',
     'christmas gift ideas', 'holiday presents', 'seasonal gifts',
     'gifts for christmas', 'holiday shopping guide'
   ],
   openGraph: {
-    title: 'Holiday Gift Guide 2024 | Christmas Gifts & Seasonal Presents | FairyWize',
-    description: 'Find the perfect Christmas gifts and holiday presents for 2024. Our AI-powered gift guide features personalized recommendations for family, friends, and colleagues.',
+    title: 'Holiday Gift Guide | Christmas Gifts & Seasonal Presents | FairyWize',
+    description: 'Find the perfect Christmas gifts and holiday presents. Our AI-powered gift guide features personalized recommendations for family, friends, and colleagues.',
     type: 'website',
     url: '/gift-guides/holiday-2024',
   },
@@ -70,9 +71,9 @@ export default function HolidayGiftGuidePage() {
       <div className="container mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-12">
-          <Badge className="mb-4" variant="secondary">🎄 Holiday Season 2024</Badge>
+          <Badge className="mb-4" variant="secondary">🎄 Holiday Gift Guide</Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Holiday Gift Guide 2024
+            Holiday Gift Guide
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Make this holiday season magical with our curated collection of Christmas gifts and seasonal presents.
@@ -153,7 +154,7 @@ export default function HolidayGiftGuidePage() {
             Still Need More Gift Ideas?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-            Use our AI-powered gift finder for personalized recommendations based on the recipient's
+            Use our AI-powered gift finder for personalized recommendations based on the recipient\'s
             personality, interests, and your relationship with them.
           </p>
           <Link
@@ -169,7 +170,7 @@ export default function HolidayGiftGuidePage() {
           <h2>The Ultimate Holiday Gift Guide for 2024</h2>
           <p>
             The holiday season is upon us, and finding the perfect gifts for your loved ones can feel overwhelming.
-            That's where FairyWize comes in - our AI-powered gift recommendation platform makes holiday shopping
+            That\'s where FairyWize comes in - our AI-powered gift recommendation platform makes holiday shopping
             effortless and enjoyable.
           </p>
 
@@ -183,14 +184,14 @@ export default function HolidayGiftGuidePage() {
 
           <h3>Holiday Gift Trends for 2024</h3>
           <p>
-            This year, we're seeing a surge in personalized and experiential gifts. People are moving away
-            from generic presents toward items that reflect the recipient's individual personality and create
+            This year, we\'re seeing a surge in personalized and experiential gifts. People are moving away
+            from generic presents toward items that reflect the recipient\'s individual personality and create
             lasting memories. Our AI algorithm identifies these trends and matches them with your specific needs.
           </p>
 
           <h3>Stress-Free Holiday Shopping</h3>
           <p>
-            The holiday rush doesn't have to be stressful. With FairyWize, you can:
+            The holiday rush doesn\'t have to be stressful. With FairyWize, you can:
           </p>
           <ul>
             <li>Get personalized gift recommendations in minutes</li>
@@ -202,7 +203,7 @@ export default function HolidayGiftGuidePage() {
 
           <h3>Perfect for Every Relationship</h3>
           <p>
-            Whether you're shopping for family members, friends, colleagues, or that special someone,
+            Whether you\'re shopping for family members, friends, colleagues, or that special someone,
             our AI understands the nuances of different relationships and suggests appropriate gifts accordingly.
           </p>
         </div>

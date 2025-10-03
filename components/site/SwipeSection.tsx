@@ -1,7 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Heart, X, Bookmark } from 'lucide-react'
 import Image from 'next/image'
-import swipeHero from '@Images/Swipeingsection.png'
 
 export function SwipeSection() {
   return (
@@ -12,7 +11,7 @@ export function SwipeSection() {
             <div className="mx-auto md:mx-0 w-full max-w-xl rounded-2xl overflow-hidden glass-panel p-4">
               <div className="relative w-full aspect-square">
                 <Image
-                  src={swipeHero}
+                  src="/images/placeholder.png"
                   alt="Illustration of swiping left or right to rate gift ideas"
                   fill
                   className="object-contain rounded-xl"

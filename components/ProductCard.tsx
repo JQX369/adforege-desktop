@@ -5,7 +5,6 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ExternalLink } from 'lucide-react'
 import Image from 'next/image'
-import fallbackImg from '@Images/PRESENT.png'
 
 interface BaseProductCard {
   id: string
@@ -35,7 +34,7 @@ export function ProductCard({ product, className = '', sessionId, userId }: Prod
   // Build safe image src
   const rawSrc = product.imageUrl || ''
   const computedSrc = imgErrored || !rawSrc
-    ? (fallbackImg as any)
+    ? '/images/placeholder.png'
     : (rawSrc.startsWith('//') ? `https:${rawSrc}` : rawSrc)
 
   // Build localized link href

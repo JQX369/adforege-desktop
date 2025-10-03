@@ -1,4 +1,4 @@
-import { RecommendationAction } from '@prisma/client'
+import { RecommendationAction, Prisma } from '@prisma/client'
 import { prisma } from '@/lib/prisma'
 
 interface ImpressionPayload {
@@ -56,7 +56,7 @@ async function logEvent({ sessionId, userId, productId, metadata, action }: Even
         userId: userId ?? null,
         productId: productId ?? null,
         action,
-        metadata: metadata ?? null,
+        metadata: metadata ? (metadata as Prisma.InputJsonValue) : undefined,
       },
     })
   } catch (error) {

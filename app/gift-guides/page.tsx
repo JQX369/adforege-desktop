@@ -1,19 +1,20 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
 export const metadata: Metadata = {
-  title: 'Gift Guides 2024 | FairyWize AI Gift Finder',
-  description: 'Discover the ultimate gift guides for every occasion in 2024. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder.',
+  title: 'Gift Guides | FairyWize AI Gift Finder',
+  description: 'Discover the ultimate gift guides for every occasion. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder.',
   keywords: [
-    'gift guides 2024', 'holiday gift guide', 'birthday gift ideas',
+    'gift guides', 'holiday gift guide', 'birthday gift ideas',
     'valentines gifts', 'christmas gifts', 'gift ideas for her',
     'gift ideas for him', 'gift recommendations'
   ],
   openGraph: {
-    title: 'Gift Guides 2024 | FairyWize AI Gift Finder',
-    description: 'Discover the ultimate gift guides for every occasion in 2024. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder.',
+    title: 'Gift Guides | FairyWize AI Gift Finder',
+    description: 'Discover the ultimate gift guides for every occasion. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder.',
     type: 'website',
     url: '/gift-guides',
   },
@@ -105,7 +106,7 @@ export default function GiftGuidesPage() {
         <div className="text-center mb-12">
           <Badge className="mb-4" variant="secondary">🎁 Complete Gift Guide Collection</Badge>
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            2024 Gift Guides
+            Gift Guides
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
             Discover the perfect gifts for every occasion with our AI-powered gift guides.
@@ -167,10 +168,10 @@ export default function GiftGuidesPage() {
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl p-8 border border-purple-200/20">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">
-              Can't find what you're looking for?
+              Can\'t find what you\'re looking for?
             </h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Use our AI-powered gift finder to get personalized recommendations based on the recipient's personality, interests, and your relationship.
+              Use our AI-powered gift finder to get personalized recommendations based on the recipient\'s personality, interests, and your relationship.
             </p>
             <Link
               href="/"
@@ -187,19 +188,19 @@ export default function GiftGuidesPage() {
           <p>
             Finding the perfect gift can be challenging, but FairyWize makes it effortless with our AI-powered recommendation system.
             Unlike traditional gift guides, we ask you thoughtful questions about the recipient and use advanced artificial intelligence
-            to suggest gifts they'll truly love.
+            to suggest gifts they\'ll truly love.
           </p>
 
           <h3>Personalized Gift Recommendations</h3>
           <p>
-            Our 12-question quiz captures the recipient's personality, interests, relationship to you, budget preferences,
+            Our 12-question quiz captures the recipient\'s personality, interests, relationship to you, budget preferences,
             and occasion details to deliver highly personalized gift suggestions.
           </p>
 
           <h3>Curated by AI, Shopped by You</h3>
           <p>
             Each recommendation comes with direct shopping links to trusted retailers like Amazon, Etsy, and eBay,
-            so you can purchase with confidence knowing you're getting quality products at fair prices.
+            so you can purchase with confidence knowing you&apos;re getting quality products at fair prices.
           </p>
 
           <h3>Join Our Vendor Marketplace</h3>

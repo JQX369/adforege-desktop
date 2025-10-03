@@ -122,18 +122,46 @@ npm run ingest:ebay
 
 ## Testing
 
-See [docs/testing-rollout-plan.md](docs/testing-rollout-plan.md) for full strategy. Recommended baseline:
+Comprehensive test suite covering unit, integration, E2E, and SEO validation. See [docs/TESTING.md](docs/TESTING.md) for detailed guide.
+
+### Quick Test Commands
 
 ```bash
-npm run lint
+# Run unit tests
 npm test
-# soon: npm run test:e2e (Playwright)
+
+# Run E2E tests
+npm run test:e2e
+
+# Generate coverage report
+npm run test:coverage
+
+# Run all tests (unit + E2E)
+npm run test:all
+
+# Pre-push validation (Windows)
+.\scripts\pre-push-tests.ps1
+
+# Pre-push validation (Linux/Mac)
+./scripts/pre-push-tests.sh
 ```
 
-Manual smoke:
-- Landing form ➝ recommendations ➝ swipe interactions
-- Vendor signup ➝ choose plan ➝ Stripe checkout (test mode)
-- Vendor dashboard metrics & curated boosts
+### Test Coverage
+- ✅ Unit tests for core utilities (currency, prices, middleware)
+- ✅ Integration tests for API endpoints
+- ✅ E2E tests for user journeys (Playwright)
+- ✅ SEO validation tests
+- ✅ Currency switching and localization
+- ✅ Performance and accessibility checks
+
+### Manual Testing Checklist
+- [ ] Landing form → recommendations → swipe interactions
+- [ ] Currency switching (USD → GBP → EUR)
+- [ ] Gift guides load correctly
+- [ ] Vendor signup → choose plan → Stripe checkout
+- [ ] Vendor dashboard metrics & curated boosts
+- [ ] Mobile responsiveness
+- [ ] SEO meta tags and structured data
 
 ## Operations & Runbooks
 
