@@ -101,7 +101,7 @@ export async function POST(request: NextRequest) {
       where: { affiliateUrl: cleanedUrl }
     })
 
-    const productData = {
+    const productRecord = {
       title: payload.title,
       description: payload.description,
       price: payload.price,
@@ -116,7 +116,7 @@ export async function POST(request: NextRequest) {
       ? await prisma.product.update({
           where: { id: existing.id },
           data: {
-            ...productData,
+            ...productRecord,
             embeddings: embedding?.length
               ? {
                   upsert: {
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
         })
       : await prisma.product.create({
           data: {
-            ...productData,
+            ...productRecord,
             affiliateUrl: cleanedUrl,
             embeddings: embedding?.length
               ? {
