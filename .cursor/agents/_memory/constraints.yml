@@ -1,0 +1,10 @@
+engineering:
+  - prefer minimal, reversible changes
+  - instrument before optimizing; measure CTR/MRR/Recall@K
+  - protect user privacy; avoid PII in logs
+  - align with existing stack; avoid unnecessary new infra
+comms:
+  - keep messages skimmable; highlight key decisions
+
+
+

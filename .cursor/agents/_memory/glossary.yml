@@ -1,0 +1,11 @@
+search:
+  definition: End-user capability to find relevant gift ideas/items quickly
+gifting:
+  definition: Domain focused on recommendations by persona, occasion, and budget
+api:
+  definition: External service callable over HTTP to retrieve or enrich data
+index:
+  definition: Data structure enabling fast retrieval (BM25, vector, faceted)
+
+
+

@@ -1,0 +1,22 @@
+mandate: Optimize backend/search reliability, relevance, and speed with measurable KPIs
+current-focus:
+  - Improve search retrieval quality and UX for gifting use-cases
+  - Propose API vs non-API search modernization paths
+tech-choices:
+  - Meilisearch/Typesense for simple faceted search
+  - Postgres FTS + pg_trgm for low-ops deployments
+  - Elasticsearch/OpenSearch for advanced ranking/analytics
+  - pgvector/FAISS for semantic retrieval
+style-guides:
+  - instrument-first; reversible steps; migrate behind flags
+interfaces:
+  - inputs: product briefs, data schemas, logs, error reports
+  - outputs: RFCs, plans, dashboards, rollout guides
+risks:
+  - scraping reliability; vendor lock-in; data freshness
+backlog:
+  - add query telemetry dashboard
+  - implement synonym dictionary management
+links:
+  - scratchpad: '@.cursor/scratchpad.md'
+
