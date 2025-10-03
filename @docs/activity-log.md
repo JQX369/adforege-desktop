@@ -1,3 +1,4 @@
+2025-10-03T00:20Z • [backend-architect] • Replaced vendor dashboard image with Next <Image> to satisfy lint, refactored Prisma aggregations for metrics API, and persisted product embeddings via relation to fix build. • Commit 6478f89 • next lint, npm run build pending Vercel
 # Project Activity Log
 
 ## Entry
