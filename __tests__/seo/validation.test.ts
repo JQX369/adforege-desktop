@@ -64,7 +64,7 @@ describe('SEO Validation', () => {
     it('should validate gift guides page metadata', () => {
       const metadata: Metadata = {
         title: 'Gift Guides | FairyWize AI Gift Finder',
-        description: 'Discover the ultimate gift guides for every occasion. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder.',
+        description: 'Discover the ultimate gift guides for every occasion. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder',
         keywords: [
           'gift guides', 'holiday gift guide', 'birthday gift ideas',
           'valentines gifts', 'christmas gifts', 'gift ideas for her',
@@ -116,7 +116,7 @@ describe('SEO Validation', () => {
       const errors = validateStructuredData(softwareApplicationSchema, 'software')
       expect(errors).toHaveLength(0)
       expect(softwareApplicationSchema['@type']).toBe('SoftwareApplication')
-      expect(softwareApplicationSchema.name).toBe('FairyWize')
+      expect(softwareApplicationSchema.name).toBe('FairyWize AI Gift Finder')
     })
 
     it('should have proper context URLs', () => {

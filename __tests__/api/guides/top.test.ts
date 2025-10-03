@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
-import { GET } from '@/app/api/guides/top/route'
 
 // Mock Prisma
 const mockPrisma = {
@@ -15,6 +14,8 @@ const mockPrisma = {
 vi.mock('@/lib/prisma', () => ({
   prisma: mockPrisma,
 }))
+
+import { GET } from '@/app/api/guides/top/route'
 
 describe('GET /api/guides/top', () => {
   beforeEach(() => {

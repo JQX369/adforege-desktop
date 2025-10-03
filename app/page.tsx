@@ -1,3 +1,4 @@
+"use client"
 import { useState } from 'react'
 import { Hero } from '@/components/site/Hero'
 import { FeatureGrid } from '@/components/site/FeatureGrid'
@@ -10,6 +11,8 @@ export default function Home() {
   const [recommendations, setRecommendations] = useState([])
   const [showSwipeDeck, setShowSwipeDeck] = useState(false)
   const [userId, setUserId] = useState('')
+
+  const bubbleProgress = showSwipeDeck ? 0.95 : 0.45
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-background to-accent/10">
@@ -31,7 +34,7 @@ export default function Home() {
         </div>
       </div>
 
-      <BubbleGraph />
+      <BubbleGraph progress={bubbleProgress} />
     </main>
   )
 }

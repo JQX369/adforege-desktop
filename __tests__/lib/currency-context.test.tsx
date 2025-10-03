@@ -1,3 +1,4 @@
+import React from 'react'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { CurrencyProvider, useCurrency } from '@/lib/currency-context'
@@ -14,6 +15,12 @@ Object.defineProperty(window, 'localStorage', { value: mockLocalStorage })
 // Mock navigator.language
 Object.defineProperty(navigator, 'language', {
   value: 'en-US',
+  writable: true,
+})
+
+// Also mock navigator.languages for completeness
+Object.defineProperty(navigator, 'languages', {
+  value: ['en-US', 'en'],
   writable: true,
 })
 
@@ -40,9 +47,20 @@ describe('Currency Context', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     document.cookie = ''
+    // Reset navigator.language to default for each test
+    Object.defineProperty(navigator, 'language', {
+      value: 'en',
+      writable: true,
+    })
   })
 
   it('should provide default USD currency', async () => {
+    // Mock navigator.language for this specific test
+    Object.defineProperty(navigator, 'language', {
+      value: 'en-US',
+      writable: true,
+    })
+
     render(
       <CurrencyProvider>
         <TestComponent />
@@ -93,6 +111,12 @@ describe('Currency Context', () => {
   })
 
   it('should set cookie when currency changes', async () => {
+    // Mock navigator.language for this specific test
+    Object.defineProperty(navigator, 'language', {
+      value: 'en-US',
+      writable: true,
+    })
+
     const mockSetCookie = vi.fn()
     Object.defineProperty(document, 'cookie', {
       set: mockSetCookie,
