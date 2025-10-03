@@ -8,6 +8,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { createSupabaseBrowserClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Textarea } from '@/components/ui/textarea'
+import Image from 'next/image'
 
 type ProductMetric = {
 	id: string
@@ -419,7 +420,14 @@ function MetricsPanel() {
                                             <TableCell>
                                                 <div className="flex items-center gap-3">
                                                     {item.imageUrl ? (
-                                                        <img src={item.imageUrl} alt={item.title} className="w-10 h-10 rounded object-cover" />
+                                                        <Image
+                                                            src={item.imageUrl}
+                                                            alt={item.title}
+                                                            width={40}
+                                                            height={40}
+                                                            className="w-10 h-10 rounded object-cover"
+                                                            unoptimized
+                                                        />
                                                     ) : (
                                                         <div className="w-10 h-10 rounded bg-purple-500/30" />
                                                     )}

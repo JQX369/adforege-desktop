@@ -101,33 +101,41 @@ export async function POST(request: NextRequest) {
       where: { affiliateUrl: cleanedUrl }
     })
 
+    const productData = {
+      title: payload.title,
+      description: payload.description,
+      price: payload.price,
+      images: payload.images,
+      categories: analysis.categories || [],
+      vendorEmail: payload.vendorEmail || vendor.email,
+      vendorId: vendor.id,
+      status: 'PENDING' as const,
+    }
+
     const savedProduct = existing
       ? await prisma.product.update({
           where: { id: existing.id },
           data: {
-            title: payload.title,
-            description: payload.description,
-            price: payload.price,
-            images: payload.images,
-            categories: analysis.categories || [],
-            embedding,
-            vendorEmail: payload.vendorEmail || vendor.email,
-            vendorId: vendor.id,
-            status: 'PENDING',
+            ...productData,
+            embeddings: embedding?.length
+              ? {
+                  upsert: {
+                    update: { embedding, updatedAt: new Date() },
+                    create: { embedding },
+                  },
+                }
+              : undefined,
           },
         })
       : await prisma.product.create({
           data: {
-            title: payload.title,
-            description: payload.description,
-            price: payload.price,
-            images: payload.images,
+            ...productData,
             affiliateUrl: cleanedUrl,
-            categories: analysis.categories || [],
-            embedding,
-            vendorEmail: payload.vendorEmail || vendor.email,
-            vendorId: vendor.id,
-            status: 'PENDING',
+            embeddings: embedding?.length
+              ? {
+                  create: { embedding },
+                }
+              : undefined,
           },
         })
 

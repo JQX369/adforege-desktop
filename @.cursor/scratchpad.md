@@ -20,6 +20,8 @@ Make catalog-first recommendations production-ready: reliable 12+ real products 
 - [ ] Create seed CSV and ingest 200–500 items
 - [ ] Smoke test deploy (Vercel + Prisma migrate deploy)
 - [ ] Set up cron (nightly refresh) via Vercel/hosted scheduler
+- [ ] Fix Prisma aggregation ordering in admin metrics API
+- [ ] Replace vendor dashboard `<img>` with Next `<Image>`
 
 ## Current Status / Progress Tracking
 - Core ingestion and hybrid ranking merged; env/docs updated

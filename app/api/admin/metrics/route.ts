@@ -43,7 +43,13 @@ export async function GET(req: NextRequest) {
         productId: { not: null },
       },
       _count: { _all: true },
-      orderBy: { _count: { _all: 'desc' } },
+      orderBy: [
+        {
+          _count: {
+            productId: 'desc',
+          },
+        },
+      ],
       take: 50,
     })
 
@@ -132,7 +138,13 @@ export async function GET(req: NextRequest) {
           by: ['tag'],
           where: { productId: { in: activeProductIds } },
           _count: { _all: true },
-          orderBy: { _count: { _all: 'desc' } },
+          orderBy: [
+            {
+              _count: {
+                tag: 'desc',
+              },
+            },
+          ],
           take: 10,
         })
       : []
