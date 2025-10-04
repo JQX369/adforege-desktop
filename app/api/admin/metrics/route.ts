@@ -1,19 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
-
-export const runtime = 'nodejs'
+import { assertAdmin, AdminAuthError } from '@/lib/admin-auth'
 
 const prisma = new PrismaClient()
 
+export const runtime = 'nodejs'
+
 export async function GET(req: NextRequest) {
   try {
-    const supabase = createSupabaseServerClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const admins = (process.env.INGEST_ADMINS || '').split(',').map(s => s.trim()).filter(Boolean)
-    if (!user || (admins.length > 0 && !admins.includes(user.email || ''))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    await assertAdmin(req)
 
     const windowDays = Number(process.env.DASHBOARD_WINDOW_DAYS || 7)
     const since = new Date(Date.now() - windowDays * 24 * 60 * 60 * 1000)
@@ -182,6 +177,9 @@ export async function GET(req: NextRequest) {
       approvedProducts,
     })
   } catch (e: any) {
+    if (e instanceof AdminAuthError) {
+      return NextResponse.json({ error: e.message }, { status: e.status })
+    }
     console.error('metrics error:', e)
     return NextResponse.json({ error: e?.message || 'Unknown error' }, { status: 500 })
   }

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
 import { CompactCurrencySelector } from '@/components/currency-selector'
+import { trackEvent } from '@/lib/track'
 
 export function SiteHeader() {
   const [user, setUser] = useState<any>(null)
@@ -87,8 +88,19 @@ export function SiteHeader() {
 
           <CompactCurrencySelector />
 
-          <Button asChild className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 cta-glow">
-            <Link href="/#gift-form">🎁 Find Gifts</Link>
+          <Button
+            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 cta-glow"
+            onClick={() => {
+              trackEvent('cta_click', { source: 'header' })
+              const el = document.getElementById('gift-form')
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              } else {
+                window.location.href = '/#gift-form'
+              }
+            }}
+          >
+            🎁 Find Gifts
           </Button>
         </nav>
       </div>

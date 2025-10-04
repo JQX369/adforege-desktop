@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient, ProductStatus, ProductSource, AvailabilityStatus } from '@prisma/client'
+import { ProductStatus, ProductSource, AvailabilityStatus } from '@prisma/client'
 import OpenAI from 'openai'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { buildAffiliateUrl, cleanProductUrl } from '@/lib/affiliates'
 import { rateLimit } from '@/lib/utils'
+import { assertAdmin, AdminAuthError } from '@/lib/admin-auth'
+import { prisma } from '@/lib/prisma'
 
 export const runtime = 'nodejs'
 
-const prisma = new PrismaClient()
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' })
 
 function absoluteUrl(base: string, maybeRelative?: string): string | undefined {
@@ -122,12 +122,7 @@ export async function POST(req: NextRequest) {
     if (!rateLimit(`ingest:${ip}`, 60)) {
       return NextResponse.json({ error: 'Rate limited' }, { status: 429 })
     }
-    const supabase = createSupabaseServerClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const admins = (process.env.INGEST_ADMINS || '').split(',').map(s => s.trim()).filter(Boolean)
-    if (!user || (admins.length > 0 && !admins.includes(user.email || ''))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    await assertAdmin(req)
 
     const body = await req.json()
     const urls: string[] = Array.isArray(body?.urls) ? body.urls : []
@@ -145,6 +140,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, results })
   } catch (err: any) {
+    if (err instanceof AdminAuthError) {
+      return NextResponse.json({ error: err.message }, { status: err.status })
+    }
     console.error('URL ingest POST error:', err)
     return NextResponse.json({ error: err?.message || 'Unknown error' }, { status: 500 })
   }
@@ -156,12 +154,7 @@ export async function GET(req: NextRequest) {
     if (!rateLimit(`ingest:${ip}`, 60)) {
       return NextResponse.json({ error: 'Rate limited' }, { status: 429 })
     }
-    const supabase = createSupabaseServerClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const admins = (process.env.INGEST_ADMINS || '').split(',').map(s => s.trim()).filter(Boolean)
-    if (!user || (admins.length > 0 && !admins.includes(user.email || ''))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    await assertAdmin(req)
     const { searchParams } = new URL(req.url)
     const url = searchParams.get('url')
     if (!url) return NextResponse.json({ error: 'Missing url' }, { status: 400 })
@@ -169,6 +162,9 @@ export async function GET(req: NextRequest) {
     const origin = new URL(req.url).origin
     return NextResponse.redirect(`${origin}/vendor/dashboard?ingested=1`, { status: 302 })
   } catch (err: any) {
+    if (err instanceof AdminAuthError) {
+      return NextResponse.json({ error: err.message }, { status: err.status })
+    }
     console.error('URL ingest GET error:', err)
     return NextResponse.json({ error: err?.message || 'Unknown error' }, { status: 500 })
   }

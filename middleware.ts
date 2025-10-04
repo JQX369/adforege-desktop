@@ -15,6 +15,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Protect /dev route for admin users only
+  if (pathname.startsWith('/dev')) {
+    const hasSession = request.cookies.has('sb-access-token') || request.cookies.has('sb.access-token')
+    if (!hasSession) {
+      return NextResponse.redirect(new URL('/', request.url))
+    }
+  }
+
 
   // Get currency from various sources
   let detectedCurrency = 'USD' // Default fallback

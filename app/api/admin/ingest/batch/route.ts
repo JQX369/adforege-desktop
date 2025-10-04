@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { ProductStatus, ProductSource, AvailabilityStatus } from '@prisma/client'
 import OpenAI from 'openai'
-import { createSupabaseServerClient } from '@/lib/supabase-server'
-import { cleanProductUrl, buildAffiliateUrl } from '@/lib/affiliates'
+import { buildAffiliateUrl, cleanProductUrl } from '@/lib/affiliates'
 import { rateLimit } from '@/lib/utils'
 import { prisma } from '@/lib/prisma'
 import { logError, logInfo } from '@/lib/log'
+import { assertAdmin } from '@/lib/admin-auth'
+
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' })
 
 export const runtime = 'nodejs'
@@ -31,13 +32,7 @@ export async function POST(req: NextRequest) {
     if (!rateLimit(`ingest:${ip}`, 60)) {
       return NextResponse.json({ error: 'Rate limited' }, { status: 429 })
     }
-    // Simple admin/auth guard: require a Supabase user and an env allowlist of admin emails
-    const supabase = createSupabaseServerClient()
-    const { data: { user } } = await supabase.auth.getUser()
-    const admins = (process.env.INGEST_ADMINS || '').split(',').map(e => e.trim()).filter(Boolean)
-    if (!user || (admins.length > 0 && !admins.includes(user.email || ''))) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-    }
+    await assertAdmin(req)
 
     const body = await req.json()
     const items: IngestItem[] = Array.isArray(body?.items) ? body.items : []

@@ -5,18 +5,18 @@ import Image from 'next/image'
 const features = [
   {
     image: '/images/placeholder.png',
-    title: 'AI-tailored picks',
-    text: 'Recommendations based on personality, interests, and occasion.'
+    title: 'Fast personal quiz',
+    text: 'Twelve questions tuned to occasion, budget, and personality so every match feels intentional.'
   },
   {
     image: '/images/placeholder.png',
-    title: 'Hand-picked finds',
-    text: 'A mix of curated vendor products and trusted sources.'
+    title: 'Curated matches',
+    text: 'AI-assisted picks blended with human-reviewed products and affiliate offers from trusted retailers.'
   },
   {
     image: '/images/placeholder.png',
-    title: 'Swipe to refine',
-    text: 'Like or save to tune results instantly.'
+    title: 'Refine with swipes',
+    text: 'Like or pass to instantly reshuffle ideas, then save favourites to share when you are ready.'
   },
 ]
 

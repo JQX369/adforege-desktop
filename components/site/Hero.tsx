@@ -1,9 +1,16 @@
 "use client"
 
+import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { trackEvent } from '@/lib/track'
 
-export function Hero(props: React.HTMLAttributes<HTMLElement>) {
+interface HeroProps extends React.HTMLAttributes<HTMLElement> {
+  onStart?: () => void
+}
+
+export function Hero({ onStart, ...props }: HeroProps) {
   const words = useMemo(() => ['Love', 'Treasure', 'Cherish', 'Remember', 'Adore', 'Celebrate'], [])
   const [wordIndex, setWordIndex] = useState(0)
   const [display, setDisplay] = useState('')
@@ -43,6 +50,22 @@ export function Hero(props: React.HTMLAttributes<HTMLElement>) {
     return () => clearTimeout(timeout)
   }, [display, deleting, wordIndex, words, pause])
 
+  const handleStart = () => {
+    trackEvent('cta_click', { source: 'hero_primary' })
+    if (onStart) {
+      onStart()
+      return
+    }
+    if (typeof window !== 'undefined') {
+      const el = document.getElementById('gift-form')
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      } else {
+        window.location.href = '/#gift-form'
+      }
+    }
+  }
+
   return (
     <section className="relative overflow-hidden" {...props}>
       <div className="container mx-auto px-4 pt-10 pb-6 md:pt-16 md:pb-10 text-center">
@@ -57,6 +80,24 @@ export function Hero(props: React.HTMLAttributes<HTMLElement>) {
         <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-6">
           Answer a few fun questions and let our AI curate perfect, personalized gift recommendations with direct shopping links.
         </p>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
+          <Button size="lg" className="min-w-[200px]" onClick={handleStart}>
+            Start in 2 minutes
+          </Button>
+          <Button
+            size="lg"
+            variant="ghost"
+            className="min-w-[200px]"
+            asChild
+          >
+            <Link
+              href="/gift-guides"
+              onClick={() => trackEvent('cta_click', { source: 'hero_secondary' })}
+            >
+              Browse gift guides
+            </Link>
+          </Button>
+        </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-green-500 rounded-full"></span>

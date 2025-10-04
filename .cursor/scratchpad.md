@@ -3,6 +3,7 @@
 Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 
 - 2025-10-03: Produce a holistic architecture audit covering scalability, modularity, and maintainability to guide near-term refactors.
+- 2025-10-03 (later): Homepage gift questionnaire disappeared during UI cleanup; need to reinstate the multi-step GiftForm so users can start the flow immediately from the landing page.
 
 ## Key Challenges and Analysis
 
@@ -15,6 +16,12 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 - Architecture mapping needs to cover hybrid recommendation pipeline (Prisma+$queryRaw vector retrieval, ranking heuristics, optional LLM rerank) and admin/vendor subsystems to explain data flow from ingestion → catalog → recommendations → analytics.
 - Potential anti-patterns to validate: pervasive PrismaClient instantiation per module (risk of connection exhaustion), direct OpenAI usage inside routes without isolation, UI components depending on API shape coupling.
 - Conventions review shows lint tooling exists but inconsistent logging/error handling patterns; dependency review flags outdated lint config (eslint-config-next 14.0.4) and Stripe SDK versions that may need upgrades.
+- UI regression: GiftForm component still exists but no longer mounted on `app/page.tsx`; hero CTA now points to an anchor that doesn’t render, breaking the onboarding path.
+- Root cause snapshot: In commit `c08a33e3` (structure cleanup) the homepage was simplified to Hero → FeatureGrid → SwipeSection, removing the form mount that previously sat under the hero section. The GiftForm file (`components/GiftForm.tsx`) remains intact but unused; anchor `#gift-form` now dead.
+- Landing page now feels informational rather than actionable; need to rebalance content density, spacing, and social proof to funnel users into the form quickly while keeping performance tight on mobile.
+- Conversion gap: hero CTA and header button scroll to nowhere, saved drawer badge shows zero by default, and the page lacks social proof or trust signals, all of which can hurt the first-session completion rate.
+- Admin/dev tooling gap: no consolidated `/dev` console—hard to inspect logs, ingestion status, or manage products without digging into DB/scripts.
+
 
 ## High-level Task Breakdown
 
@@ -29,8 +36,31 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 9) Review conventions (lint, naming, state mgmt), logging/error handling practices (success: documented gaps with citations).
 10) Audit dependencies and tooling (package.json, prisma migrations, infra configs) for updates/security (success: table of dependency actions).
 11) Synthesize refactor plan (Now/Next/Later) with risk/impact estimates (success: plan ready for user sign-off).
+12) Investigate missing GiftForm on homepage, reinstate component, and ensure CTA and layout work (success: form renders beneath hero, `/` flows from hero button to form, tests/build pass).
+13) Plan homepage conversion polish: tighten hero + form integration, reorder sections, and define measurement hooks (success: documented implementation steps with success metrics and test approach).
+14) Design secure `/dev` console with logs, ingestion controls, and product admin experience (success: approved plan covering architecture, UX, and auth model).
 
-## Project Status Board
+### Homepage Restore & Conversion Plan (detailed)
+1. **Reintroduce GiftForm component**
+   - Import `GiftForm`, `SwipeDeck`, `SavedDrawer`, `GiftFormData`, `Button`, `Link`, and supporting state utilities back into `app/page.tsx`.
+   - Restore local state for recommendations, session/user management, and helper refs (trim where possible).
+   - Success: Form renders beneath hero (`id="gift-form"`), submits without errors, `showSwipeDeck` toggles correctly.
+2. **Align hero/header CTAs**
+   - Update hero primary CTA and header button to scroll smoothly to `#gift-form`. Add optional secondary CTA linking to trust content.
+   - Success: Clicking either CTA focuses the form and logs analytics event hook stub.
+3. **Streamline state handlers**
+   - Review previous version and remove unused aura/scroll effects if not needed; keep essential handlers for form submit, swipe, load more.
+   - Success: No dead state; lint passes.
+4. **Layout polish for conversion**
+   - Introduce social proof strip (testimonials/logos) and tighten benefit grid copy.
+   - Wrap form + CTA in visually prominent container with progress/time microcopy.
+   - Success: Layout remains responsive on 360px width; hero+form fit within first two viewport heights.
+5. **Analytics hooks scaffold**
+   - Add placeholder functions (e.g., `trackEvent`) around CTAs and form completion for future instrumentation.
+   - Success: Hooks are no-ops by default; tests unaffected.
+6. **QA checklist**
+   - Run `npm test`, targeted Vitest suites, and manual smoke on desktop/mobile.
+   - Verify Lighthouse mobile performance ≥85 and hero CTA + form flow works end-to-end.
 
 - [ ] Initialize Git repo and .gitignore
 - [ ] Initial commit
@@ -47,6 +77,76 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 - [ ] Now-1: Shared Prisma client utility
 - [ ] Now-2: Saved drawer delete flow alignment
 - [ ] Now-3: Central logging helper rollout
+- [ ] Restore GiftForm on homepage and align CTA (current blocker for user onboarding)
+- [ ] Homepage conversion uplift (hero + form integration, trust signals, analytics hooks)
+- [ ] Plan secure `/dev` console with logging + ingestion tooling
+
+### Restore GiftForm + Conversion uplift (Execution Tasks)
+1. Re-add GiftForm, SwipeDeck, SavedDrawer, and supporting state to `app/page.tsx`; remove unused placeholder image section. Success: Form visible, swiping toggles after submit.
+2. Wire hero + header CTAs to smooth-scroll to `#gift-form`; add optional `trackEvent` placeholder. Success: CTA focus works on desktop/mobile (tested manually).
+3. Simplify state by removing unused spotlight/aura code while keeping swipe handlers and load-more flow. Success: lint passes, no runtime errors.
+4. Update layout sections: introduce social proof strip, tighten FeatureGrid copy, ensure saved counter hidden when zero. Success: page remains performant (Lighthouse ≥85 mobile) and visually aligned.
+5. Add analytics scaffolding and document events in `docs/analytics.md`. Success: tests unaffected; events no-op by default.
+6. QA: run `npm test`, `npm run build`, manual smoke on desktop + 360px viewport, ensure hero CTA flow works end-to-end.
+
+### `/dev` Console Planner Draft
+1. Define scope: `/dev` route should surface admin diagnostics (logs, ingestion queues, product catalogue management) behind secure auth. Success: Document feature list, RBAC rules, and data sources.
+2. Auth model: leverage Supabase roles or a simple shared secret so only authorized staff can access. Success: proposal covering login flow, session handling, and environment config.
+3. IA & layout: modern admin shell with left nav tabs (Dashboard, Logs, Ingestion, Products, Settings). Success: wireframe-level description with key components per tab.
+4. Data plumbing: outline APIs/services feeding each tab (e.g., `/api/admin/logs`, `/api/admin/ingestion`, Prisma queries). Success: list of endpoints and caching strategy.
+5. Security & observability: note logging, rate limits, and audit requirements. Success: actionable checklist for Executor to implement.
+
+### `/dev` Console Detailed Plan
+**Routing & Structure**
+- Create `app/(admin)/dev/(layout)` with shared admin shell. Enforce auth in layout & server handlers via `assertAdmin`. Add `middleware` check for presence of Supabase session cookie to avoid unauthenticated hits.
+- Nested routes: `app/(admin)/dev/page.tsx` (Dashboard), `logs/page.tsx`, `ingestion/page.tsx`, `products/page.tsx`, `settings/page.tsx`.
+
+**UI Shell**
+- Left rail (~240px) with brand, environment badge, tabs.
+- Top bar within content for quick actions/export, shows admin email & sign-out.
+- Use shadcn components for tables (data grid), tabs, skeleton states.
+
+**Functional Modules**
+- *Dashboard*: summary cards (deploy info, ingestion queue, product stats, error count), small activity feed.
+- *Logs*: paginated list, filters for level/source/time, export CSV; plan SSE endpoint for future tailing.
+- *Ingestion*: list `IngestionJob` entries (status, counts, timestamps), buttons to trigger full run / dry run / retry.
+- *Products*: searchable table (title, price, status, vendor). Inline approve/reject, edit modal, new product form.
+- *Settings*: feature flag toggles, download sitemap button, display admin allow list (read-only), doc links.
+
+**Backend/API Requirements**
+- Consolidate admin auth with `assertAdmin` returning user; wrap in try/catch to map to 401/403.
+- Replace per-file Prisma instances with `lib/prisma` singleton.
+- Build admin APIs: `/api/admin/logs` (list + optional tail), `/api/admin/ingestion` (list jobs + mutate), `/api/admin/products` (CRUD), `/api/admin/settings` (flags).
+- Introduce `AdminAudit` table recording (userId/email, action, entity, before/after snapshot, timestamp).
+- Reuse `rateLimit` for sensitive endpoints.
+
+**Security & Perf**
+- Ensure admin APIs mask sensitive data; no raw env values.
+- Add caching for expensive metrics where appropriate (e.g., 60s memoization on dashboard totals).
+- Apply rate limiting + audit logging on all mutating actions.
+
+**Implementation Milestones**
+1. Auth guard & layout skeleton (ensure non-admins redirected, admin sees nav with placeholder content).
+2. Dashboard hooking into metrics endpoint (with fallback stubs).
+3. Logs API + table (pagination, filters, manual refresh).
+4. Ingestion API integration (display runs, trigger actions) leveraging existing models.
+5. Products CRUD & audit logging.
+6. Settings tab + finishing touches (empty states, loading skeletons).
+7. Testing: unit (auth helper), integration (API routes), optional Playwright smoke.
+
+**Success Criteria**
+- `/dev` accessible only to authorized admins; unauthorized redirected.
+- Logs, ingestion status, and product catalogue manageable without DB access.
+- Admin actions captured in `AdminAudit`.
+- Build/test suite passes; layout responsive.
+
+### `/dev` Console Execution Tasks
+1. Create `lib/admin-auth.ts` helper (done) and update admin APIs (`metrics`, `moderate`, `ingest/urls`, `curation`, `refresh/nightly`, `refresh/availability`) to use it and shared prisma singleton (partial, continue).
+2. Build admin layout shell under `app/(admin)/dev` with protected server-side authentication and left-nav UI.
+3. Implement API endpoints for logs, ingestion jobs, and product CRUD with audit logging.
+4. Wire each tab UI (Dashboard, Logs, Ingestion, Products, Settings) to the APIs, including loading/empty states.
+5. Add rate limiting, audit writes, and ensure errors surfaced with helpful messages.
+6. Add tests (unit/integration) for `assertAdmin`, key admin APIs, and optional Playwright smoke for `/dev` navigation.
 
 ## Current Status / Progress Tracking
 
@@ -61,6 +161,52 @@ Audit-6 complete: drafted architecture overview, module list, anti-patterns, con
 Now-1 complete: shared Prisma client (`lib/prisma.ts`) in place and imports updated.
 Now-2 complete: Saved drawer now uses `/api/saved/[userId]` DELETE with JSON body; server route handles removal.
 Now-3 complete: Added `lib/log.ts` helper and replaced console logging in key APIs.
+2025-10-03: Executing homepage restoration plan—first focus on reintroducing `GiftForm` and aligning CTAs before layering conversion polish.
+2025-10-03: Planning `/dev` console scope (logs, ingestion dashboard, product admin) before implementation.
+
+### `/dev` Console Detailed Plan
+**Routing & Structure**
+- Create `app/(admin)/dev/(layout)` with shared admin shell. Enforce auth in layout & server handlers via `assertAdmin`. Add `middleware` check for presence of Supabase session cookie to avoid unauthenticated hits.
+- Nested routes: `app/(admin)/dev/page.tsx` (Dashboard), `logs/page.tsx`, `ingestion/page.tsx`, `products/page.tsx`, `settings/page.tsx`.
+
+**UI Shell**
+- Left rail (~240px) with brand, environment badge, tabs.
+- Top bar within content for quick actions/export, shows admin email & sign-out.
+- Use shadcn components for tables (data grid), tabs, skeleton states.
+
+**Functional Modules**
+- *Dashboard*: summary cards (deploy info, ingestion queue, product stats, error count), small activity feed.
+- *Logs*: paginated list, filters for level/source/time, export CSV; plan SSE endpoint for future tailing.
+- *Ingestion*: list `IngestionJob` entries (status, counts, timestamps), buttons to trigger full run / dry run / retry.
+- *Products*: searchable table (title, price, status, vendor). Inline approve/reject, edit modal, new product form.
+- *Settings*: feature flag toggles, download sitemap button, display admin allow list (read-only), doc links.
+
+**Backend/API Requirements**
+- Consolidate admin auth with `assertAdmin` returning user; wrap in try/catch to map to 401/403.
+- Replace per-file Prisma instances with `lib/prisma` singleton.
+- Build admin APIs: `/api/admin/logs` (list + optional tail), `/api/admin/ingestion` (list jobs + mutate), `/api/admin/products` (CRUD), `/api/admin/settings` (flags).
+- Introduce `AdminAudit` table recording (userId/email, action, entity, before/after snapshot, timestamp).
+- Reuse `rateLimit` for sensitive endpoints.
+
+**Security & Perf**
+- Ensure admin APIs mask sensitive data; no raw env values.
+- Add caching for expensive metrics where appropriate (e.g., 60s memoization on dashboard totals).
+- Apply rate limiting + audit logging on all mutating actions.
+
+**Implementation Milestones**
+1. Auth guard & layout skeleton (ensure non-admins redirected, admin sees nav with placeholder content).
+2. Dashboard hooking into metrics endpoint (with fallback stubs).
+3. Logs API + table (pagination, filters, manual refresh).
+4. Ingestion API integration (display runs, trigger actions) leveraging existing models.
+5. Products CRUD & audit logging.
+6. Settings tab + finishing touches (empty states, loading skeletons).
+7. Testing: unit (auth helper), integration (API routes), optional Playwright smoke.
+
+**Success Criteria**
+- `/dev` accessible only to authorized admins; unauthorized redirected.
+- Logs, ingestion status, and product catalogue manageable without DB access.
+- Admin actions captured in `AdminAudit`.
+- Build/test suite passes; layout responsive.
 
 ## Executor's Feedback or Assistance Requests
 
