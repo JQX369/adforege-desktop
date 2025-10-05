@@ -1,4 +1,4 @@
-- 2025-10-04: Implementing landing page conversion upgrade per Planner outline; tokens refresh complete in `app/globals.css`, `tailwind.config.ts`, and font swap set to `display: 'swap'` in `app/layout.tsx`. Dynamic verb component + tests added.
+- 2025-10-04: Landing page conversion upgrade complete! All components implemented, tests passing, changes committed (e87f397) and pushed to origin/main. Ready for Lighthouse testing and deployment.
 ## Background and Motivation
 
 Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
@@ -589,10 +589,10 @@ Request Body:
 - [ ] Implement: Landing page conversion upgrade (Executor)
 
 ### In Progress
-- Executor – landing page conversion upgrade (following Planner outline)
 
 ### Completed
 - ✅ Plan: Landing page conversion upgrade (Planner)
+- ✅ Implement: Landing page conversion upgrade (Executor) - committed e87f397, pushed to origin/main
 - ✅ Initialize Next.js project with TypeScript
 - ✅ Set up Tailwind CSS and shadcn/ui  
 - ✅ Configure Prisma schema
