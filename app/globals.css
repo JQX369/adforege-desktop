@@ -4,61 +4,81 @@
 
 @layer base {
   :root {
-    /* Slightly darker, cooler base */
-    --background: 260 20% 95%;
-    --foreground: 222 47% 11%;
+    --background: 0 0% 100%;
+    --foreground: 240 22% 5%;
     --card: 0 0% 98%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 98%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 265 84% 58%;
+    --card-foreground: 240 22% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 22% 5%;
+    --primary: 248 100% 68%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 265 24% 96%;
-    --secondary-foreground: 265 40% 28%;
-    --muted: 260 20% 94%;
-    --muted-foreground: 260 16% 38%;
-    --accent: 330 85% 96%;
-    --accent-foreground: 330 55% 32%;
-    --destructive: 0 75% 55%;
+    --secondary: 240 20% 97%;
+    --secondary-foreground: 240 22% 20%;
+    --muted: 220 12% 48%;
+    --muted-foreground: 220 10% 30%;
+    --accent: 248 100% 68%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 355 78% 44%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 16% 84%;
-    --input: 260 16% 84%;
-    --ring: 265 84% 58%;
-    --chart-1: 330 85% 60%;
-    --chart-2: 265 82% 58%;
-    --chart-3: 45 96% 58%;
-    --chart-4: 168 74% 45%;
-    --chart-5: 210 92% 55%;
-    --radius: 0.5rem;
-    --brand-1: 330 85% 60%;
-    --brand-2: 265 82% 58%;
-    --brand-3: 45 96% 58%;
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 248 100% 68%;
+    --chart-1: 248 100% 68%;
+    --chart-2: 193 100% 58%;
+    --chart-3: 36 94% 58%;
+    --chart-4: 159 77% 45%;
+    --chart-5: 320 85% 60%;
+    --radius: 0.75rem;
+    --brand-1: 248 100% 68%;
+    --brand-2: 193 100% 58%;
+    --brand-3: 36 94% 58%;
+
+    /* Typographic scale (px): 14, 16, 18, 20, 24, 32, 40, 48 */
+    --font-size-body-sm: 0.875rem;
+    --font-size-body-base: 1rem;
+    --font-size-body-lg: 1.125rem;
+    --font-size-heading-xs: 1.25rem;
+    --font-size-heading-sm: 1.5rem;
+    --font-size-heading-md: 2rem;
+    --font-size-heading-lg: 2.5rem;
+    --font-size-heading-xl: 3rem;
+    --line-height-heading: 1.2;
+    --line-height-body: 1.55;
+
+    /* Spacing rhythm (px): 8, 12, 16, 24, 32, 48, 64 */
+    --space-2xs: 0.5rem;
+    --space-xs: 0.75rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
   }
   .dark {
-    --background: 222 47% 11%;
+    --background: 240 22% 5%;
     --foreground: 0 0% 100%;
-    --card: 222 47% 11%;
+    --card: 240 24% 10%;
     --card-foreground: 0 0% 100%;
-    --popover: 222 47% 11%;
+    --popover: 240 22% 8%;
     --popover-foreground: 0 0% 100%;
-    --primary: 265 84% 58%;
+    --primary: 248 100% 68%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 265 24% 18%;
+    --secondary: 240 16% 18%;
     --secondary-foreground: 0 0% 100%;
-    --muted: 260 24% 20%;
-    --muted-foreground: 260 5% 65%;
-    --accent: 330 30% 18%;
+    --muted: 240 14% 22%;
+    --muted-foreground: 240 11% 74%;
+    --accent: 248 100% 70%;
     --accent-foreground: 0 0% 100%;
-    --destructive: 0 62.8% 30.6%;
+    --destructive: 0 62% 42%;
     --destructive-foreground: 0 0% 100%;
-    --border: 260 24% 22%;
-    --input: 260 24% 22%;
-    --ring: 265 84% 58%;
-    --chart-1: 330 85% 60%;
-    --chart-2: 265 82% 58%;
-    --chart-3: 45 96% 58%;
-    --chart-4: 168 74% 45%;
-    --chart-5: 210 92% 55%
+    --border: 240 16% 18%;
+    --input: 240 16% 18%;
+    --ring: 248 100% 70%;
+    --chart-1: 248 100% 70%;
+    --chart-2: 193 100% 62%;
+    --chart-3: 36 94% 60%;
+    --chart-4: 159 77% 52%;
+    --chart-5: 320 85% 64%;
   }
 }
 
@@ -68,10 +88,33 @@
   }
   body {
     @apply bg-background text-foreground overflow-x-hidden;
-    background-image: radial-gradient(1200px 600px at 10% -10%, rgba(255, 99, 132, 0.08), transparent),
-      radial-gradient(800px 400px at 90% 0%, rgba(99, 102, 241, 0.08), transparent),
-      radial-gradient(900px 500px at 50% 120%, rgba(251, 191, 36, 0.06), transparent);
+    font-size: var(--font-size-body-base);
+    line-height: var(--line-height-body);
+    background-image: radial-gradient(1200px 720px at 50% -20%, rgba(107, 92, 255, 0.12), transparent 70%),
+      radial-gradient(900px 520px at 10% 20%, rgba(11, 11, 15, 0.04), transparent 70%),
+      radial-gradient(1000px 600px at 90% 10%, rgba(187, 247, 208, 0.06), transparent 75%);
     background-attachment: fixed;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: var(--line-height-heading);
+    font-weight: 700;
+    color: hsl(var(--foreground));
+  }
+  p,
+  li,
+  blockquote {
+    line-height: var(--line-height-body);
+    font-size: var(--font-size-body-base);
+    color: hsl(var(--muted-foreground));
+  }
+  small,
+  .text-body-sm {
+    font-size: var(--font-size-body-sm);
   }
 } 
 

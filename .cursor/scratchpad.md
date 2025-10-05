@@ -1,9 +1,11 @@
+- 2025-10-04: Implementing landing page conversion upgrade per Planner outline; tokens refresh complete in `app/globals.css`, `tailwind.config.ts`, and font swap set to `display: 'swap'` in `app/layout.tsx`. Dynamic verb component + tests added.
 ## Background and Motivation
 
 Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 
 - 2025-10-03: Produce a holistic architecture audit covering scalability, modularity, and maintainability to guide near-term refactors.
 - 2025-10-03 (later): Homepage gift questionnaire disappeared during UI cleanup; need to reinstate the multi-step GiftForm so users can start the flow immediately from the landing page.
+- 2025-10-04: Landing page conversion upgrade requested to boost quiz starts, scroll depth, and guide clicks with refreshed hero, trust row, carousel testimonials, swipe demo, guides CTA, analytics tags, A/B toggles, and performance targets.
 
 ## Key Challenges and Analysis
 
@@ -16,11 +18,13 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 - Architecture mapping needs to cover hybrid recommendation pipeline (Prisma+$queryRaw vector retrieval, ranking heuristics, optional LLM rerank) and admin/vendor subsystems to explain data flow from ingestion → catalog → recommendations → analytics.
 - Potential anti-patterns to validate: pervasive PrismaClient instantiation per module (risk of connection exhaustion), direct OpenAI usage inside routes without isolation, UI components depending on API shape coupling.
 - Conventions review shows lint tooling exists but inconsistent logging/error handling patterns; dependency review flags outdated lint config (eslint-config-next 14.0.4) and Stripe SDK versions that may need upgrades.
-- UI regression: GiftForm component still exists but no longer mounted on `app/page.tsx`; hero CTA now points to an anchor that doesn’t render, breaking the onboarding path.
+- UI regression: GiftForm component still exists but no longer mounted on `app/page.tsx`; hero CTA now points to an anchor that doesn't render, breaking the onboarding path.
 - Root cause snapshot: In commit `c08a33e3` (structure cleanup) the homepage was simplified to Hero → FeatureGrid → SwipeSection, removing the form mount that previously sat under the hero section. The GiftForm file (`components/GiftForm.tsx`) remains intact but unused; anchor `#gift-form` now dead.
 - Landing page now feels informational rather than actionable; need to rebalance content density, spacing, and social proof to funnel users into the form quickly while keeping performance tight on mobile.
 - Conversion gap: hero CTA and header button scroll to nowhere, saved drawer badge shows zero by default, and the page lacks social proof or trust signals, all of which can hurt the first-session completion rate.
 - Admin/dev tooling gap: no consolidated `/dev` console—hard to inspect logs, ingestion status, or manage products without digging into DB/scripts.
+- Landing page conversion upgrade adds tight spec for hero/trust/testimonials/swipe demo plus analytics, AB toggles, and Lighthouse target ≥92 mobile—all requiring coordinated component refactors and performance validation.
+- Landing page conversion upgrade adds tight spec for hero/trust/testimonials/swipe demo plus analytics, AB toggles, and Lighthouse target ≥92 mobile—all requiring coordinated component refactors and performance validation.
 
 
 ## High-level Task Breakdown
@@ -39,6 +43,8 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 12) Investigate missing GiftForm on homepage, reinstate component, and ensure CTA and layout work (success: form renders beneath hero, `/` flows from hero button to form, tests/build pass).
 13) Plan homepage conversion polish: tighten hero + form integration, reorder sections, and define measurement hooks (success: documented implementation steps with success metrics and test approach).
 14) Design secure `/dev` console with logs, ingestion controls, and product admin experience (success: approved plan covering architecture, UX, and auth model).
+15) Plan landing page conversion upgrade (success: Planner breakdown aligned with spec and tokens, ready for execution sign-off).
+16) Implement landing page conversion upgrade (success: all sections updated per plan, analytics & reports delivered, targets met).
 
 ### Homepage Restore & Conversion Plan (detailed)
 1. **Reintroduce GiftForm component**
@@ -88,6 +94,70 @@ Deploy PresentGoGo via GitHub and Vercel so changes auto-deploy on push.
 4. Update layout sections: introduce social proof strip, tighten FeatureGrid copy, ensure saved counter hidden when zero. Success: page remains performant (Lighthouse ≥85 mobile) and visually aligned.
 5. Add analytics scaffolding and document events in `docs/analytics.md`. Success: tests unaffected; events no-op by default.
 6. QA: run `npm test`, `npm run build`, manual smoke on desktop + 360px viewport, ensure hero CTA flow works end-to-end.
+
+### Landing Page Conversion Upgrade (Planner Draft – 2025-10-04)
+**Overall success criteria**
+- Mobile Lighthouse ≥92 performance / ≥98 accessibility / ≥95 best practices / ≥95 SEO with no new console errors or layout shifts >0.02.
+- Hero shows single primary CTA with ≤2 lines copy under H1 on 390px wide viewport, anchors smoothly to `#quiz`.
+- Trust row, testimonials carousel, swipe demo, guides CTA, and quiz intro block follow spacing rhythm (8/12/16/24/32/48/64) and new tokens.
+- Analytics attributes fire (`cta_primary_click`, `cta_features_start`, `quiz_start`, `guides_click`, `swipe_demo_interact`) and push to `window.dataLayer` if available.
+- Query params `?v=short`, `?v=trust-top` swap headline or trust placement and emit single `page_variant` event.
+- `/reports/landing-lh.json` generated plus desktop & mobile before/after screenshots saved under `/reports/landing-upgrade/`.
+
+**Task breakdown (tests first wherever feasible)**
+1. **Baseline + tokens**
+   - Capture current desktop/mobile screenshots (store under `/reports/landing-upgrade/before-*`).
+   - Update Tailwind + CSS tokens (`tailwind.config.ts`, `app/globals.css`) for colors (`--bg`, `--fg`, etc.), typography scale (14–48, heading lh 1.2, body 1.55), spacing utilities, shadows (cards=shadow-sm, primary CTA hover shadow-md).
+   - Success: Sample components reflect new palette; regression pass in Story sections.
+
+2. **Dynamic verb TDD**
+   - Create `components/DynamicVerb.tsx` per brief with 4s interval, hover pause, reduced-motion guard; write unit test (Vitest + React Testing Library) to assert interval advance and pause behavior via fake timers + mocked `matchMedia`.
+
+3. **Hero & trust row**
+   - Replace current hero with new `components/Hero.tsx` (use dynamic verb, new copy/CTAs with analytics attributes, radial gradient background, accessible focus states). CTA anchors `#quiz`; secondary text link `#guides`.
+   - Implement adjacent trust row component (desktop inline, mobile stacked; star + lock icons, Amazon disclosure tooltip). Integrate below hero by default and inside hero when `?v=trust-top` param set.
+   - Tests: RTL snapshot ensuring CTA labels, data-analytics attributes, and param variant swap.
+
+4. **Feature cards & quiz intro**
+   - Replace `FeatureGrid` with new `components/Features.tsx` using provided spec (equal heights, CTA). Update import in `app/page.tsx`.
+   - Add quiz intro block (card `Tell us about them` with meta row `~2 minutes • No login • Save & share`, button id anchor `quiz`). Ensure GiftForm container uses `id="quiz"`.
+   - Success: At 768px/1024px cards align; CTA scroll tested.
+
+5. **Social proof carousel**
+   - Build `components/Testimonials.tsx` (Heading `Loved by gifters everywhere`, ≤18-word quotes, bold result phrases, avatars/initials). Implement carousel with accessible buttons and horizontal scroll on mobile, 3-up grid ≥1024px. Add micro-CTA `See more reviews → /reviews` with analytics id.
+   - Tests: interaction test verifying `aria-label` on buttons and correct item count.
+
+6. **Swipe demo refresh**
+   - Replace `SwipeSection` with new `components/SwipeDemo.tsx`: static demo card (Image or simplified animated placeholder) plus three chips (💜/✖️/🔖) and CTA `Try the quiz—see your picks in 2 minutes.` CTA triggers analytics `swipe_demo_interact` and anchors `#quiz`.
+   - Provide reduced-motion fallback (no animation when prefers reduced motion).
+
+7. **Guides CTA bar + footer**
+   - Rebuild guides CTA as single low-contrast gradient bar, remove heavy shadows, button linking `#guides` or `/gift-guides` with analytics attr.
+   - Move "For Vendors" link and Amazon disclosure into footer layout while keeping header minimal: left logo, right `Start gift quiz` ghost button + `Sign in`.
+   - Ensure footer lists simple sitemap, contact, disclosure.
+
+8. **Header behavior & anchors**
+   - Adjust `SiteHeader` to become sticky after 40px with subtle shadow; ensure CTA uses ghost style per brief and scroll target `#quiz`. Confirm no overlap with hero.
+
+9. **Analytics helper**
+   - Extend `lib/track.ts` (or create `lib/analytics.ts`) to listen for clicks on `[data-analytics]` elements, dispatch event to dataLayer if exists, falling back to existing CustomEvent. Include unit test mocking dataLayer.
+
+10. **Variant toggles and logging**
+    - Parse query params in `app/page.tsx` (or hero component) on mount to set headline variant `"Find a gift they'll love."` vs `"Perfect gifts, fast."` and trust placement. Log `page_variant` via analytics helper once.
+    - Test coverage to ensure log fires only first render per variant.
+
+11. **Performance clean-up**
+    - Remove legacy spotlight scroll effects and heavy backgrounds; rely on single CSS radial gradient. Verify `next/image` usage set `loading="lazy"` except hero assets. Confirm Inter font uses `display: 'swap'`.
+    - Success: DevTools audit shows no layout shift, minimal JS.
+
+12. **Testing & reporting**
+    - Follow TDD: run new unit tests first (expected fail), implement features until pass.
+    - Execute `npm run lint`, `npm test`, `npm run build`.
+    - Generate Lighthouse mobile JSON saved to `/reports/landing-lh.json` (use CLI) and capture after screenshots (`/reports/landing-upgrade/after-*`). Document analytics events & variants in `docs/analytics.md`.
+
+**Open points / dependencies**
+- Need decision on demo card asset (static PNG vs lightweight animation). Default to static Next/Image unless user supplies asset.
+- Confirm acceptable tooling for screenshots (likely Playwright `page.screenshot` script). If unavailable, coordinate with user.
 
 ### `/dev` Console Planner Draft
 1. Define scope: `/dev` route should surface admin diagnostics (logs, ingestion queues, product catalogue management) behind secure auth. Success: Document feature list, RBAC rules, and data sources.
@@ -163,6 +233,7 @@ Now-2 complete: Saved drawer now uses `/api/saved/[userId]` DELETE with JSON bod
 Now-3 complete: Added `lib/log.ts` helper and replaced console logging in key APIs.
 2025-10-03: Executing homepage restoration plan—first focus on reintroducing `GiftForm` and aligning CTAs before layering conversion polish.
 2025-10-03: Planning `/dev` console scope (logs, ingestion dashboard, product admin) before implementation.
+2025-10-04: Implementing landing page conversion upgrade per Planner outline; tokens refresh complete in `app/globals.css`, `tailwind.config.ts`, and font swap set to `display: 'swap'` in `app/layout.tsx`. Dynamic verb component + tests added.
 
 ### `/dev` Console Detailed Plan
 **Routing & Structure**
@@ -515,10 +586,13 @@ Request Body:
 - [ ] Optimize performance
 - [ ] Prepare for production deployment
 - [ ] Replace `FeatureGrid` icons with images from `@Images/`
+- [ ] Implement: Landing page conversion upgrade (Executor)
 
 ### In Progress
+- Executor – landing page conversion upgrade (following Planner outline)
 
 ### Completed
+- ✅ Plan: Landing page conversion upgrade (Planner)
 - ✅ Initialize Next.js project with TypeScript
 - ✅ Set up Tailwind CSS and shadcn/ui  
 - ✅ Configure Prisma schema
@@ -689,7 +763,7 @@ Ship a minimal but real flow that: (1) returns working Amazon/Etsy affiliate lin
    - Success: When Perplexity returns mixed URLs, at least 60% of surfaced results are Amazon/Etsy (if present).
 
 8) Disclosure & Legal
-   - Add footer text: “As an Amazon Associate, we earn from qualifying purchases.”  
+   - Add footer text: "As an Amazon Associate, we earn from qualifying purchases."  
    - Success: Copy visible site-wide.
 
 9) Testing
@@ -698,7 +772,7 @@ Ship a minimal but real flow that: (1) returns working Amazon/Etsy affiliate lin
    - Manual: Full vendor flow with Stripe test card.
 
 ### Risks / Mitigations
-- Webhook timing vs. redirect: rely on webhook; show “Processing…” on vendor success page and poll product by `stripeSessionId` if needed.  
+- Webhook timing vs. redirect: rely on webhook; show "Processing…" on vendor success page and poll product by `stripeSessionId` if needed.  
 - Perplexity output variability: keep graceful fallback to AI/default items; do not block recommendations.
 
 ### Project Status Board Additions
@@ -741,7 +815,7 @@ Ship a minimal but real flow that: (1) returns working Amazon/Etsy affiliate lin
 3) Run dev and Stripe CLI:
    - `stripe listen --forward-to localhost:3000/api/stripe/webhook`
 4) Visit `/vendor`, submit, click Proceed. On error, alert shows the exact message. If Stripe.js redirect errors, app falls back to `session.url` hard redirect.
-5) For local testing, prefer `pk_test_*/sk_test_*` keys; live cards won’t accept test numbers.
+5) For local testing, prefer `pk_test_*/sk_test_*` keys; live cards won't accept test numbers.
 
 ### Nice-to-haves queued
 - Vendor analytics (impressions/clicks) and simple dashboard.
@@ -957,11 +1031,11 @@ Notes: keep end‑user experience clean; never exceed 30% sponsored density in a
 8) Add `/api/create-checkout-session` (Stub)
    - Minimal route that returns `{ sessionId: 'demo_session_' + Date.now() }`.
    - Keeps Vendor page flow intact in demo mode.
-   - Success: Clicking “Proceed to Payment” no longer hits a missing route; demo notice remains.
+   - Success: Clicking "Proceed to Payment" no longer hits a missing route; demo notice remains.
 
 9) De-duplication on Load More (Client)
    - On append, filter out items whose `affiliateUrl` or `title` already exists in the list.
-   - Success: No obvious duplicates after multiple “Load More” clicks.
+   - Success: No obvious duplicates after multiple "Load More" clicks.
 
 10) Product Image Improvements
    - Switch `ProductCard` to Next/Image with fixed aspect ratio and a subtle skeleton until loaded.
@@ -990,7 +1064,7 @@ U5) SavedDrawer
    - Success: Drawer feels tidy and readable; no dead controls.
 
 U6) Vendor Page
-   - Add a top-right “Demo Mode” pill; confirm button states/copy; keep image upload affordance clear.
+   - Add a top-right "Demo Mode" pill; confirm button states/copy; keep image upload affordance clear.
    - Success: No confusion about payment; form feels coherent.
 
 ### Run Plan
@@ -1008,7 +1082,7 @@ U6) Vendor Page
 1) [x] P0-7: Offline dev mode in `/api/recommend`
    - Success: With DB unreachable and/or no Perplexity key, endpoint still returns up to 12 items (search or AI placeholders) without 500s.
 2) [x] P0-8: `/api/create-checkout-session` stub
-   - Success: Vendor page “Proceed to Payment” returns a demo `sessionId`; no missing route errors.
+   - Success: Vendor page "Proceed to Payment" returns a demo `sessionId`; no missing route errors.
 3) [x] P0-9: De-dup on Load More (client)
    - Success: Appending new items filters duplicates by `affiliateUrl` or `title`.
 4) [x] P0-10: Product image improvements (Next/Image + skeleton)
@@ -1023,7 +1097,7 @@ U6) Vendor Page
    - Success: Title/price prominence, tidy badges, clear CTA.
 9) [x] U5: SavedDrawer spacing/date (Remove hidden)
    - Success: Readable list with subtle saved date; no dead controls.
-10) [x] U6: Vendor Page “Demo Mode” clarity
+10) [x] U6: Vendor Page "Demo Mode" clarity
    - Success: Visible demo pill; clear button copy and states.
 
 - No active tasks
@@ -1102,7 +1176,7 @@ U6) Vendor Page
 
 ### Experience Principles
 - One clear decision per screen; auto-advance for single selections; explicit Next on multi-select/text.
-- Never trap the user: “Back” is always available; if a choice is already selected (when going back), “Next” is visible without reselecting.
+- Never trap the user: "Back" is always available; if a choice is already selected (when going back), "Next" is visible without reselecting.
 - Keep context: show a small, persistent step label and progress bar; provide a lightweight review before submit.
 - Be forgiving: local draft save; restore on refresh; easy reset.
 - Accessible by default; respect reduced motion.
@@ -1118,15 +1192,15 @@ U6) Vendor Page
    - Smooth step transitions (fade/slide) with reduced-motion support.
 
 3) Validation & Feedback
-   - Multi-select limit counter (e.g., “2/3 selected”) with discreet error when exceeding limit.
+   - Multi-select limit counter (e.g., "2/3 selected") with discreet error when exceeding limit.
    - Inline hints for Budget/Occasion; non-blocking.
 
 4) State Persistence
    - Persist `GiftFormData` and `currentStep` to `localStorage` with a version key.
-   - “Resume where you left off” prompt; “Start over” reset.
+   - "Resume where you left off" prompt; "Start over" reset.
 
 5) Accessibility
-   - Proper roles/labels for radio groups; focus moves to the next step’s legend on advance.
+   - Proper roles/labels for radio groups; focus moves to the next step's legend on advance.
    - High-contrast focus rings; aria-live region for step changes.
 
 6) Visual Emphasis & Motion
@@ -1149,11 +1223,11 @@ U6) Vendor Page
 - [ ] P-Form-4: Sticky mobile controls (Back/Next) for multi-select/text steps
   - Success: Back/Next remain reachable above the keyboard; form auto-scrolls into view.
 - [ ] P-Form-5: Local draft save/restore with versioning; reset control
-  - Success: Refresh preserves progress; “Start over” clears state.
+  - Success: Refresh preserves progress; "Start over" clears state.
 - [ ] P-Form-6: Review step before submit (optional)
-  - Success: Simple summary with “Edit” per field navigating to the step.
+  - Success: Simple summary with "Edit" per field navigating to the step.
 - [ ] P-Form-7: Animated glowing edge gradient around form card
-  - Success: Visible, tasteful glow that animates (looping gradient akin to typing gradient), pauses under reduced motion, and doesn’t impact readability.
+  - Success: Visible, tasteful glow that animates (looping gradient akin to typing gradient), pauses under reduced motion, and doesn't impact readability.
 
 ### Technical Notes
 - Glowing gradient: implement via a pseudo-element on the card using animated conic/radial gradient + mask; fallback to static gradient; gate with `prefers-reduced-motion`.
@@ -1163,7 +1237,7 @@ U6) Vendor Page
 ### Success Criteria
 - Users can complete the form with minimal clicks; back to previous steps never forces reselection to proceed.
 - Keyboard-only and mobile users can complete the flow comfortably.
-- Form state persists across refresh; “Start over” works.
+- Form state persists across refresh; "Start over" works.
 - Animated glow accentuates the form without distracting; passes reduced-motion checks.
 
 ### Rollout Plan
@@ -1188,7 +1262,7 @@ U6) Vendor Page
 
 2) Actions Simplification
    - Remove the Star/Save button; keep only Dislike (X) and Like (Heart) buttons.
-   - Update tip text to “Swipe left to pass, right to like/save”.
+   - Update tip text to "Swipe left to pass, right to like/save".
 
 3) Overlap Fix & Stacking
    - Ensure only the top card is interactive; set `pointer-events: none` and lower z-index for non-top cards.

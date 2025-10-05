@@ -6,8 +6,9 @@ import { AFFILIATE_DISCLOSURE_TEXT } from '@/lib/config'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { CurrencyProvider } from '@/lib/currency-context'
 import { websiteSchema, organizationSchema, softwareApplicationSchema } from '@/lib/schema'
+import Link from 'next/link'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
 export const metadata: Metadata = {
   title: {
@@ -125,8 +126,24 @@ export default function RootLayout({
         <CurrencyProvider>
           <SiteHeader />
           <div className="pt-20">{children}</div>
-          <footer className="mt-12 py-8 text-center text-xs text-muted-foreground">
-            {AFFILIATE_DISCLOSURE_TEXT}
+          <footer className="mt-20 border-t border-border bg-background">
+            <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 text-left text-body-sm text-muted-foreground md:flex-row md:justify-between">
+              <div className="space-y-3">
+                <p className="text-body-sm font-semibold text-foreground">The Gift Aunty</p>
+                <p>{AFFILIATE_DISCLOSURE_TEXT}</p>
+              </div>
+              <nav className="flex flex-col gap-2">
+                <Link href="/gift-guides" className="hover:text-foreground">Gift guides</Link>
+                <Link href="/about" className="hover:text-foreground">About</Link>
+                <Link href="/contact" className="hover:text-foreground">Contact</Link>
+                <Link href="/vendor" className="hover:text-foreground">For vendors</Link>
+              </nav>
+              <div className="flex flex-col gap-2">
+                <Link href="/terms" className="hover:text-foreground">Terms</Link>
+                <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
+                <a href="mailto:hello@thegiftaunty.com" className="hover:text-foreground">hello@thegiftaunty.com</a>
+              </div>
+            </div>
           </footer>
         </CurrencyProvider>
       </body>

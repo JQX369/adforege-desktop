@@ -1,11 +1,10 @@
 "use client"
 
 import Link from 'next/link'
-import { Gift, User, LogOut } from 'lucide-react'
+import { Gift, User } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
-import { CompactCurrencySelector } from '@/components/currency-selector'
 import { trackEvent } from '@/lib/track'
 
 export function SiteHeader() {
@@ -45,63 +44,45 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
-      <div className="site-header-inner container mx-auto px-4 flex items-center justify-between">
-        <Link href="/" aria-label="Home" className="flex items-center gap-3 group hover:scale-105 transition-transform duration-200">
-          <span className="relative inline-flex items-center justify-center w-10 h-10 rounded-full overflow-hidden bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg">
-            <Gift className="w-5 h-5 text-white" />
+      <div className="site-header-inner container mx-auto flex items-center justify-between px-6">
+        <Link href="/" aria-label="Home" className="flex items-center gap-3 transition-transform duration-200">
+          <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg">
+            <Gift className="h-5 w-5" />
           </span>
-          <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-            The Gift Aunty
-          </span>
+          <span className="text-xl font-bold tracking-tight text-white">The Gift Aunty</span>
         </Link>
-        
-        <nav className="flex items-center gap-3">
-          <Button asChild variant="ghost" className="text-white nav-link-glow hover:bg-white/10 hover:text-purple-200 transition-all duration-200">
-            <Link href="/vendor">✨ For Vendors</Link>
+
+        <nav className="flex items-center gap-3 text-white">
+          <Button
+            variant="ghost"
+            className="text-white hover:bg-white/10"
+            data-analytics="cta_header_start"
+            onClick={() => {
+              trackEvent('cta_primary_click', { source: 'header' })
+              const el = document.getElementById('quiz')
+              if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
+            }}
+          >
+            Start gift quiz
           </Button>
-          
+
           {user ? (
-            <div className="flex items-center gap-3">
-              <Button asChild variant="ghost" className="text-white nav-link-glow hover:bg-white/10 hover:text-purple-200 transition-all duration-200">
-                <Link href="/vendor/dashboard" className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  Dashboard
-                </Link>
-              </Button>
-              <Button 
-                onClick={signOut}
-                variant="ghost" 
-                className="text-white nav-link-glow hover:bg-white/10 hover:text-purple-200 transition-all duration-200 flex items-center gap-2"
-              >
-                <LogOut className="w-4 h-4" />
+            <Button asChild variant="ghost" className="text-white hover:bg-white/10">
+              <Link href="/auth/sign-out" className="flex items-center gap-2">
+                <User className="h-4 w-4" />
                 Sign out
-              </Button>
-            </div>
+              </Link>
+            </Button>
           ) : (
-            <Button asChild variant="ghost" className="text-white nav-link-glow hover:bg-white/10 hover:text-purple-200 transition-all duration-200">
+            <Button asChild variant="ghost" className="text-white hover:bg-white/10">
               <Link href="/auth/sign-in" className="flex items-center gap-2">
-                <User className="w-4 h-4" />
+                <User className="h-4 w-4" />
                 Sign in
               </Link>
             </Button>
           )}
-
-          <CompactCurrencySelector />
-
-          <Button
-            className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 cta-glow"
-            onClick={() => {
-              trackEvent('cta_click', { source: 'header' })
-              const el = document.getElementById('gift-form')
-              if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              } else {
-                window.location.href = '/#gift-form'
-              }
-            }}
-          >
-            🎁 Find Gifts
-          </Button>
         </nav>
       </div>
     </header>

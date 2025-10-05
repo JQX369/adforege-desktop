@@ -1,0 +1,23 @@
+mandate: Optimize gifting UI for clarity, speed, and conversion uplift
+current-focus:
+  - Modernize landing page hero, trust, and quiz entry flow
+  - Maintain accessibility and reduced motion compliance
+tech-choices:
+  - Next.js + React + Tailwind for composable UI
+  - shadcn/ui primitives for consistent components
+  - Lighthouse + Web Vitals for performance validation
+style-guides:
+  - Responsive-first layout, 8pt spacing rhythm adapted to brand tokens
+  - Accessible interactions (keyboard, reduced motion, ARIA labels)
+interfaces:
+  - inputs: product briefs, analytics requirements, design tokens
+  - outputs: component implementations, CSS tokens, verification notes
+risks:
+  - Overuse of motion affecting performance
+  - CTA clutter reducing conversion focus
+backlog:
+  - Document reusable landing page sections
+  - Track Lighthouse trends in /reports
+links:
+  - scratchpad: '@.cursor/scratchpad.md'
+
