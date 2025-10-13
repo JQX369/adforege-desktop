@@ -7,7 +7,6 @@ import {
   ProductSource,
   ProductCondition,
   AvailabilityStatus,
-  ListingType,
 } from '@prisma/client'
 import {
   BaseProvider,
@@ -66,6 +65,7 @@ export class EbayProvider extends BaseProvider {
   private campaignId?: string
   private baseUrl = 'https://api.ebay.com/buy/browse/v1'
   private config: ProviderConfig
+  private static cachedToken: { token: string; exp: number } | null = null
 
   constructor(
     appId: string,
@@ -83,6 +83,37 @@ export class EbayProvider extends BaseProvider {
       timeout: 30000,
       ...config,
     }
+  }
+
+  private async getAppToken(): Promise<string> {
+    const now = Math.floor(Date.now() / 1000)
+    if (EbayProvider.cachedToken && EbayProvider.cachedToken.exp - 120 > now) {
+      return EbayProvider.cachedToken.token
+    }
+    const clientId = process.env.EBAY_CLIENT_ID || process.env.EBAY_APP_ID
+    const clientSecret = process.env.EBAY_CLIENT_SECRET
+    if (!clientId || !clientSecret) {
+      throw new Error('Missing EBAY_CLIENT_ID/EBAY_CLIENT_SECRET')
+    }
+    const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
+    const params = new URLSearchParams()
+    params.set('grant_type', 'client_credentials')
+    params.set('scope', 'https://api.ebay.com/oauth/api_scope')
+    const res = await fetch('https://api.ebay.com/identity/v1/oauth2/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${basic}`,
+      },
+      body: params.toString(),
+    })
+    if (!res.ok) {
+      const text = await res.text()
+      throw new Error(`eBay token error: ${res.status} ${text}`)
+    }
+    const json = (await res.json()) as { access_token: string; expires_in: number }
+    EbayProvider.cachedToken = { token: json.access_token, exp: now + (json.expires_in || 7200) }
+    return EbayProvider.cachedToken.token
   }
 
   /**
@@ -321,7 +352,6 @@ export class EbayProvider extends BaseProvider {
       marketplaceId: this.resolveMarketplaceId(country),
       country,
       regionLinks,
-      listingType: this.resolveListingType(item.buyingOptions || []),
     }
   }
 
@@ -370,15 +400,6 @@ export class EbayProvider extends BaseProvider {
     }
   }
 
-  private resolveListingType(options: string[]): ListingType {
-    if (options.includes('AUCTION') || options.includes('AUCTION_WITH_BIN')) {
-      return ListingType.AUCTION
-    }
-    if (options.includes('CLASSIFIED_AD')) {
-      return ListingType.CLASSIFIED
-    }
-    return ListingType.FIXED_PRICE
-  }
 
   /**
    * Fetch with retry logic
@@ -388,10 +409,12 @@ export class EbayProvider extends BaseProvider {
       const controller = new AbortController()
       const timeout = setTimeout(() => controller.abort(), this.config.timeout)
 
+      // Always use current app token (auto-refresh)
+      const token = await this.getAppToken()
       const response = await fetch(url, {
         signal: controller.signal,
         headers: {
-          'Authorization': `Bearer ${this.oauthToken}`,
+          'Authorization': `Bearer ${token}`,
           'X-EBAY-C-ENDUSERCTX': 'contextualLocation=country=US,zip=94016',
           'X-EBAY-C-MARKETPLACE-ID': 'EBAY_US',
           'Content-Type': 'application/json',
@@ -401,6 +424,10 @@ export class EbayProvider extends BaseProvider {
       clearTimeout(timeout)
 
       if (!response.ok) {
+        // If 401, clear cache and retry once immediately (respecting backoff below)
+        if (response.status === 401) {
+          EbayProvider.cachedToken = null
+        }
         throw new Error(`eBay API error: ${response.status} ${response.statusText}`)
       }
 

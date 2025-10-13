@@ -1,8 +1,8 @@
 // Development auth bypass for when Supabase email auth is misconfigured
 const DEV_USERS = [
-  { email: 'vendor@thegiftaunty.com', password: 'SecurePass123!', id: 'dev-user-1' },
+  { email: 'vendor@fairywize.com', password: 'SecurePass123!', id: 'dev-user-1' },
   { email: 'test@example.com', password: 'password123', id: 'dev-user-2' },
-  { email: 'admin@thegiftaunty.com', password: 'AdminPass123!', id: 'dev-user-3' }
+  { email: 'admin@fairywize.com', password: 'AdminPass123!', id: 'dev-user-3' }
 ]
 
 export function isDevMode(): boolean {

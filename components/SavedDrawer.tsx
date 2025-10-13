@@ -112,7 +112,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
           </Button>
         )}
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-md">
+      <SheetContent className="w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl">
         <SheetHeader>
           <SheetTitle>Saved Gifts</SheetTitle>
           <SheetDescription>
@@ -120,7 +120,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
           </SheetDescription>
         </SheetHeader>
         
-        <ScrollArea className="h-[calc(100vh-120px)] mt-6">
+        <ScrollArea className="h-[calc(100vh-140px)] mt-6">
           {isLoading ? (
             <div className="flex items-center justify-center h-40">
               <p className="text-muted-foreground">Loading saved items...</p>

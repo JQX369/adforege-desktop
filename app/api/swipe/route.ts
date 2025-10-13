@@ -105,18 +105,18 @@ export async function POST(request: NextRequest) {
       try {
         product = await prisma.product.findUnique({
           where: { id: productId },
-          select: { embeddings: true },
+          select: { embedding: true },
         })
       } catch {}
 
-      if (product && product.embeddings?.embedding) {
+      if (product && product.embedding) {
         // Update user embedding with weighted average
         // Formula: newEmbedding = 0.8 * oldEmbedding + 0.2 * productEmbedding
 
         if (user.embedding && user.embedding.length > 0) {
           // User has existing embedding
           const newEmbedding = user.embedding.map((val: number, idx: number) =>
-            0.8 * val + 0.2 * product.embeddings.embedding[idx]
+            0.8 * val + 0.2 * product.embedding[idx]
           )
 
           try {
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
           try {
             await prisma.user.update({
               where: { id: userId },
-              data: { embedding: product.embeddings.embedding },
+              data: { embedding: product.embedding },
             })
           } catch {}
         }

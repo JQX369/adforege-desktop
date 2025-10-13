@@ -129,7 +129,7 @@ export default function RootLayout({
           <footer className="mt-20 border-t border-border bg-background">
             <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 text-left text-body-sm text-muted-foreground md:flex-row md:justify-between">
               <div className="space-y-3">
-                <p className="text-body-sm font-semibold text-foreground">The Gift Aunty</p>
+                <p className="text-body-sm font-semibold text-foreground">FairyWize</p>
                 <p>{AFFILIATE_DISCLOSURE_TEXT}</p>
               </div>
               <nav className="flex flex-col gap-2">
@@ -141,7 +141,7 @@ export default function RootLayout({
               <div className="flex flex-col gap-2">
                 <Link href="/terms" className="hover:text-foreground">Terms</Link>
                 <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
-                <a href="mailto:hello@thegiftaunty.com" className="hover:text-foreground">hello@thegiftaunty.com</a>
+                <a href="mailto:hello@fairywize.com" className="hover:text-foreground">hello@fairywize.com</a>
               </div>
             </div>
           </footer>

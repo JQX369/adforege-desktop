@@ -67,11 +67,11 @@ const CURRENCY_SYMBOLS: Record<string, string> = {
 }
 
 const DEFAULT_GEO: GeoInfo = {
-  country: 'US',
-  currency: 'USD',
-  amazonDomain: 'amazon.com',
-  marketplaceId: 'EBAY_US',
-  currencySymbol: '$',
+  country: 'GB',
+  currency: 'GBP',
+  amazonDomain: 'amazon.co.uk',
+  marketplaceId: 'EBAY_GB',
+  currencySymbol: '£',
 }
 
 function normalizeCountry(country: string | undefined): string {

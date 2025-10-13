@@ -8,6 +8,12 @@
  *   ts-node scripts/ingest-from-apis.ts --provider=all --limit=50
  */
 
+import { config } from 'dotenv'
+import { resolve } from 'path'
+
+// Load environment variables from .env.local
+config({ path: resolve(process.cwd(), '.env.local') })
+
 import { syncRainforestByKeyword } from '../lib/providers/rainforest-enhanced'
 import { syncEbayByKeyword } from '../lib/providers/ebay-enhanced'
 import { IngestionEngine } from '../lib/providers/ingestion-engine'

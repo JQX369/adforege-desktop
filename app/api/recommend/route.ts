@@ -10,17 +10,45 @@ import { logError } from '@/lib/log'
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('🔍 [DEBUG] Starting recommendation request')
+    
+    // Debug 1: Check environment variables
+    console.log('🔍 [DEBUG] Environment check:', {
+      hasOpenAIKey: !!process.env.OPENAI_API_KEY,
+      openAIKeyLength: process.env.OPENAI_API_KEY?.length || 0,
+      openAIKeyPrefix: process.env.OPENAI_API_KEY?.substring(0, 10) || 'N/A',
+      hasSupabaseUrl: !!process.env.NEXT_PUBLIC_SUPABASE_URL,
+      hasSupabaseAnonKey: !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      hasDatabaseUrl: !!process.env.DATABASE_URL,
+    })
+
     const ip = request.headers.get('x-forwarded-for') || 'anon'
     if (!rateLimit(`rec:${ip}`, 60)) {
       return NextResponse.json({ error: 'Rate limited' }, { status: 429 })
     }
+    
     const body = await request.json()
     const { formData, userId, page = 0 } = body as { formData: GiftFormData; userId?: string; page?: number }
 
+    // Debug 2: Check form data
+    console.log('🔍 [DEBUG] Form data received:', {
+      occasion: formData.occasion,
+      relationship: formData.relationship,
+      personality: formData.personality,
+      interests: formData.interests,
+      interestsCount: formData.interests?.length || 0,
+    })
+
     const geoInfo = await resolveGeo(request.headers)
+    console.log('🔍 [DEBUG] Geo info:', geoInfo)
 
     const preferenceText = `${formData.occasion} gift for ${formData.relationship} who is ${formData.personality} and likes ${(formData.interests || []).join(', ')}`
     const sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+    
+    console.log('🔍 [DEBUG] Session details:', {
+      sessionId,
+      preferenceText: preferenceText.substring(0, 100) + '...',
+    })
 
     const constraints = {
       interests: formData.interests || [],
@@ -32,14 +60,28 @@ export async function POST(request: NextRequest) {
       excludeIds: [],
     }
 
+    console.log('🔍 [DEBUG] Building session profile...')
     const sessionProfile = await buildSessionProfile(sessionId, preferenceText, constraints)
+    console.log('🔍 [DEBUG] Session profile created:', {
+      sessionId: sessionProfile.sessionId,
+      hasEmbedding: !!sessionProfile.embedding,
+      embeddingLength: sessionProfile.embedding?.length || 0,
+    })
 
+    // Debug 3: Check database connection and tables
+    console.log('🔍 [DEBUG] Getting recommendations...')
     const recs = await getRecommendations({
       session: sessionProfile,
       page,
       pageSize: 30,
       country: geoInfo.country,
       region: geoInfo.country,
+    })
+    
+    console.log('🔍 [DEBUG] Recommendations received:', {
+      productCount: recs.products.length,
+      hasMore: recs.hasMore,
+      firstProductId: recs.products[0]?.id || 'N/A',
     })
 
     const recommendations = recs.products.map(product => ({
@@ -60,11 +102,15 @@ export async function POST(request: NextRequest) {
     }))
 
     const recommendationIds = recommendations.map((product) => product.id)
+    console.log('🔍 [DEBUG] Recommendation IDs:', recommendationIds.slice(0, 5))
 
+    // Debug 4: Check database operations
+    console.log('🔍 [DEBUG] Saving session data...')
     await Promise.all([
       appendSeenIds(sessionId, recommendationIds),
       logImpressions({ sessionId, userId, productIds: recommendationIds }),
     ])
+    console.log('🔍 [DEBUG] Session data saved successfully')
 
     return NextResponse.json({
       recommendations,
@@ -73,6 +119,15 @@ export async function POST(request: NextRequest) {
       hasMore: recs.hasMore,
     })
   } catch (error) {
+    // Debug 5: Enhanced error logging
+    console.error('🔍 [DEBUG] Error details:', {
+      errorName: error?.name,
+      errorMessage: error?.message,
+      errorCode: error?.code,
+      errorStack: error?.stack?.split('\n').slice(0, 5),
+      errorType: typeof error,
+    })
+    
     logError('Error in recommend API', { error })
     return NextResponse.json(
       { error: 'Failed to generate recommendations' },

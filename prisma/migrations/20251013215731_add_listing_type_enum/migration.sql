@@ -1,0 +1,2 @@
+-- CreateEnum
+CREATE TYPE "ListingType" AS ENUM ('AUCTION', 'FIXED_PRICE', 'CLASSIFIED');

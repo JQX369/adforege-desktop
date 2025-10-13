@@ -126,8 +126,8 @@ export class RainforestProvider extends BaseProvider {
         api_key: this.apiKey,
         type: 'search',
         amazon_domain: geo?.country
-          ? COUNTRY_TO_AMAZON[geo.country] ?? 'amazon.com'
-          : 'amazon.com',
+          ? COUNTRY_TO_AMAZON[geo.country] ?? 'amazon.co.uk'
+          : 'amazon.co.uk',
         search_term: keyword,
         page: '1',
       })
@@ -268,10 +268,10 @@ export class RainforestProvider extends BaseProvider {
 
     const regionLinks: ProductRegionLinkInput[] = [
       {
-        country: 'US',
-        affiliateUrl: buildAffiliateUrl(cleaned, 'US'),
+        country: 'GB',
+        affiliateUrl: buildAffiliateUrl(cleaned, 'GB'),
         currency,
-        marketplaceId: 'ATVPDKIKX0DER',
+        marketplaceId: 'A1F83G8C2ARO7P',
       },
     ]
 
@@ -313,12 +313,12 @@ export class RainforestProvider extends BaseProvider {
       affiliateProgram: 'amazon',
       sourceItemId: item.asin,
       asin: item.asin,
-      merchantDomain: 'amazon.com',
+      merchantDomain: 'amazon.co.uk',
       qualityScore,
-      marketplaceId: 'ATVPDKIKX0DER',
+      marketplaceId: 'A1F83G8C2ARO7P',
       regionLinks,
-      country: 'US',
-      listingType: ListingType.FIXED_PRICE,
+      country: 'GB',
+      listingType: 'FIXED_PRICE' as any,
     }
   }
 
@@ -458,19 +458,19 @@ export class RainforestProvider extends BaseProvider {
       affiliateProgram: 'amazon',
       sourceItemId: item.asin,
       asin: item.asin,
-      merchantDomain: 'amazon.com',
+      merchantDomain: 'amazon.co.uk',
       qualityScore,
-      marketplaceId: 'ATVPDKIKX0DER',
+      marketplaceId: 'A1F83G8C2ARO7P',
       regionLinks: [
         {
-          country: 'US',
-          affiliateUrl: buildAffiliateUrl(cleaned, 'US'),
+          country: 'GB',
+          affiliateUrl: buildAffiliateUrl(cleaned, 'GB'),
           currency,
-          marketplaceId: 'ATVPDKIKX0DER',
+          marketplaceId: 'A1F83G8C2ARO7P',
         },
       ],
-      country: 'US',
-      listingType: ListingType.FIXED_PRICE,
+      country: 'GB',
+      listingType: 'FIXED_PRICE' as any,
     }
   }
 
@@ -550,7 +550,7 @@ export async function syncRainforestByKeyword(
     return { created: 0, updated: 0, skipped: 0, errors: 1, errorMessages: ['missing RAINFOREST_API_KEY'], products: [], success: false, duration: 0 }
   }
 
-  const { limit = 20, country = 'US' } = options
+  const { limit = 20, country = 'GB' } = options
   const geo = buildGeoInfo(country)
   const provider = new RainforestProvider(apiKey, { defaultCountry: country })
   const products = await provider.searchByKeyword(keyword, limit, geo)

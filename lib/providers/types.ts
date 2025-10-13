@@ -6,7 +6,6 @@ import {
   ProductSource,
   ProductCondition,
   AvailabilityStatus,
-  ListingType,
 } from '@prisma/client'
 
 export interface BaseProduct {
@@ -50,7 +49,6 @@ export interface BaseProduct {
   lastCheckedAt?: string
   listingStartAt?: string
   listingEndAt?: string
-  listingType?: ListingType
   expiresAt?: Date | string
   
   // Quality & Reviews

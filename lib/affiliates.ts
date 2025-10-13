@@ -65,7 +65,7 @@ export function buildAffiliateUrl(rawUrl: string, countryCode?: string): string 
   const amazonTag = process.env.NEXT_PUBLIC_AMZ_TAG
   const etsyRef = process.env.NEXT_PUBLIC_ETSY_ID
   const ebayCampaignId = process.env.EBAY_CAMPAIGN_ID
-  const ebayCustomPrefix = process.env.EBAY_CUSTOM_ID_PREFIX || 'giftaunty'
+  const ebayCustomPrefix = process.env.EBAY_CUSTOM_ID_PREFIX || 'fairywize'
 
   try {
     const url = new URL(rawUrl)

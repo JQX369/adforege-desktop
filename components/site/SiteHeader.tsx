@@ -49,7 +49,7 @@ export function SiteHeader() {
           <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg">
             <Gift className="h-5 w-5" />
           </span>
-          <span className="text-xl font-bold tracking-tight text-white">The Gift Aunty</span>
+          <span className="text-xl font-bold tracking-tight text-white">FairyWize</span>
         </Link>
 
         <nav className="flex items-center gap-3 text-white">

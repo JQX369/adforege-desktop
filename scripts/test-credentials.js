@@ -7,11 +7,11 @@ const supabase = createClient(
 )
 
 async function testCredentials() {
-  console.log("Testing credentials for vendor@thegiftaunty.com...")
+  console.log("Testing credentials for vendor@fairywize.com...")
   
   // First try sign in
   const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-    email: "vendor@thegiftaunty.com",
+    email: "vendor@fairywize.com",
     password: "SecurePass123!"
   })
   
@@ -21,7 +21,7 @@ async function testCredentials() {
     // Try to create the user first
     console.log("Attempting to create user...")
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: "vendor@thegiftaunty.com", 
+      email: "vendor@fairywize.com", 
       password: "SecurePass123!"
     })
     
@@ -32,7 +32,7 @@ async function testCredentials() {
       
       // Try sign in again
       const { data: retryData, error: retryError } = await supabase.auth.signInWithPassword({
-        email: "vendor@thegiftaunty.com",
+        email: "vendor@fairywize.com",
         password: "SecurePass123!"
       })
       

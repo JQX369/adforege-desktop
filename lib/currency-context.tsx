@@ -16,7 +16,7 @@ interface CurrencyProviderProps {
   initialCurrency?: SupportedCurrency
 }
 
-export function CurrencyProvider({ children, initialCurrency = 'USD' }: CurrencyProviderProps) {
+export function CurrencyProvider({ children, initialCurrency = 'GBP' }: CurrencyProviderProps) {
   const [currency, setCurrencyState] = useState<SupportedCurrency>(initialCurrency)
   const [isLoading, setIsLoading] = useState(true)
 

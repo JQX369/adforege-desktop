@@ -80,7 +80,6 @@ export class IngestionEngine {
           availability: product.availability,
           brand: product.brand,
           asin: product.asin,
-          merchantId: merchant.id,
           affiliateProgram: product.affiliateProgram,
           urlCanonical: product.urlCanonical,
           qualityScore: finalQualityScore,
@@ -97,12 +96,8 @@ export class IngestionEngine {
           deliveryMax: product.deliveryMax,
           primeEligible: product.primeEligible,
           inStock: product.inStock,
-          available: product.available ?? product.inStock,
           stockQuantity: product.stockQuantity,
-          lastCheckedAt: product.lastCheckedAt ? new Date(product.lastCheckedAt) : new Date(),
-          listingStartAt: product.listingStartAt ? new Date(product.listingStartAt) : null,
           expiresAt: product.listingEndAt ? new Date(product.listingEndAt) : product.expiresAt ? new Date(product.expiresAt) : null,
-          listingType: product.listingType || null,
           features: product.features || [],
           weight: product.weight,
           dimensions: product.dimensions,
@@ -112,21 +107,29 @@ export class IngestionEngine {
           sellerRating: product.sellerRating,
           sourceItemId: product.sourceItemId,
           lastEnrichedAt: new Date(),
-          regionMask: product.regionMask || (product.country ? [product.country] : []),
         }
 
-        const tags = this.normalizeTags(product.tags)
-        const regionLinks = this.normalizeRegionLinks(product.regionLinks, dataToSave.affiliateUrl, dataToSave.currency)
 
         existing
           ? await this.prisma.product.update({
               where: { id: existing.id },
-              data: this.buildUpdateData(dataToSave, embedding, tags, regionLinks),
-              include: { embeddings: true },
+              data: this.buildUpdateData(
+                {
+                  ...dataToSave,
+                  merchant: merchant ? { connect: { id: merchant.id } } : undefined,
+                } as any,
+                embedding,
+              ),
             })
           : await this.prisma.product.create({
-              data: this.buildCreateData(dataToSave, embedding, tags, regionLinks),
-              include: { embeddings: true },
+              data: this.buildCreateData(
+                {
+                  ...dataToSave,
+                  // Use relation connect instead of raw merchantId assignment
+                  merchant: merchant ? { connect: { id: merchant.id } } : undefined,
+                } as any,
+                embedding,
+              ),
             })
 
         if (existing) {
@@ -362,81 +365,20 @@ export class IngestionEngine {
   private buildCreateData(
     data: Prisma.ProductUncheckedCreateInput,
     embedding: number[],
-    tags: ProductTagInput[],
-    regionLinks: ProductRegionLinkInput[],
   ): Prisma.ProductUncheckedCreateInput {
     return {
       ...data,
-      embeddings: embedding.length
-        ? { create: { embedding } }
-        : undefined,
-      tags: tags.length
-        ? {
-            createMany: {
-              data: tags.map((t) => ({ tag: t.tag, weight: t.weight ?? 1 })),
-              skipDuplicates: true,
-            },
-          }
-        : undefined,
-      regionLinks: regionLinks.length
-        ? {
-            createMany: {
-              data: regionLinks.map((link) => ({
-                country: link.country,
-                affiliateUrl: link.affiliateUrl,
-                currency: link.currency,
-                marketplaceId: link.marketplaceId,
-              })),
-              skipDuplicates: true,
-            },
-          }
-        : undefined,
+      embedding: embedding.length ? embedding : [],
     }
   }
 
   private buildUpdateData(
     data: Prisma.ProductUncheckedUpdateInput,
     embedding: number[],
-    tags: ProductTagInput[],
-    regionLinks: ProductRegionLinkInput[],
   ): Prisma.ProductUncheckedUpdateInput {
     return {
       ...data,
-      embeddings: embedding.length
-        ? {
-            upsert: {
-              update: { embedding, updatedAt: new Date() },
-              create: { embedding },
-            },
-          }
-        : undefined,
-      tags: {
-        deleteMany: {},
-        ...(tags.length
-          ? {
-              createMany: {
-                data: tags.map((t) => ({ tag: t.tag, weight: t.weight ?? 1 })),
-                skipDuplicates: true,
-              },
-            }
-          : {}),
-      },
-      regionLinks: {
-        deleteMany: {},
-        ...(regionLinks.length
-          ? {
-              createMany: {
-                data: regionLinks.map((link) => ({
-                  country: link.country,
-                  affiliateUrl: link.affiliateUrl,
-                  currency: link.currency,
-                  marketplaceId: link.marketplaceId,
-                })),
-                skipDuplicates: true,
-              },
-            }
-          : {}),
-      },
+      embedding: embedding.length ? embedding : [],
     }
   }
 }

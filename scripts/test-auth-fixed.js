@@ -10,7 +10,7 @@ async function test() {
   console.log("Testing with valid email...")
   
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-    email: "vendor@thegiftaunty.com",
+    email: "vendor@fairywize.com",
     password: "SecurePass123!"
   })
   
@@ -21,7 +21,7 @@ async function test() {
   }
   
   const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-    email: "vendor@thegiftaunty.com",
+    email: "vendor@fairywize.com",
     password: "SecurePass123!"
   })
   

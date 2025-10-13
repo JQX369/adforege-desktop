@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,111 +8,78 @@ datasource db {
 }
 
 model User {
-  id        String       @id @default(cuid())
-  email     String       @unique
-  embedding Float[]      @default([]) // User preference vector
-  createdAt DateTime     @default(now())
+  id        String   @id @default(cuid())
+  email     String   @unique
+  embedding Float[]  @default([])
+  createdAt DateTime @default(now())
   swipes    Swipe[]
-  profile   UserProfile?
 }
 
 model Product {
-  id              String        @id @default(cuid())
-  title           String
-  description     String        @db.Text
-  price           Float
-  images          String[]
-  affiliateUrl    String
-  categories      String[]
-  status          ProductStatus @default(PENDING)
-  vendorEmail     String?
-  stripeSessionId String?       @unique
-  paidAt          DateTime?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @default(now()) @updatedAt
-  swipes          Swipe[]
-  vendorId        String?
-  vendor          Vendor?       @relation(fields: [vendorId], references: [id])
-
-  // Catalog quality & provenance fields
-  source           ProductSource      @default(CURATED)
-  retailer         String?
-  currency         String?
+  id               String             @id @default(cuid())
+  title            String
+  description      String
+  price            Float
+  images           String[]
+  affiliateUrl     String
+  categories       String[]
+  embedding        Float[]
+  status           ProductStatus      @default(PENDING)
+  vendorEmail      String?
+  createdAt        DateTime           @default(now())
+  stripeSessionId  String?            @unique
+  paidAt           DateTime?
+  vendorId         String?
+  affiliateProgram String?
+  asin             String?
   availability     AvailabilityStatus @default(UNKNOWN)
   brand            String?
-  asin             String?
-  merchantId       String?
-  merchant         Merchant?          @relation(fields: [merchantId], references: [id])
-  affiliateProgram String?
-  urlCanonical     String?
-  qualityScore     Float              @default(0)
-  recencyScore     Float              @default(0)
-  popularityScore  Float              @default(0)
+  currency         String?
   lastSeenAt       DateTime?
-  rating           Float?
+  merchantId       String?
   numReviews       Int?
+  qualityScore     Float              @default(0)
+  rating           Float?
+  retailer         String?
+  source           ProductSource      @default(CURATED)
+  updatedAt        DateTime           @default(now()) @updatedAt
+  urlCanonical     String?
+  originalPrice    Float?
+  discountPercent  Float?
+  shippingCost     Float?
+  freeShipping     Boolean            @default(false)
+  deliveryDays     String?
+  deliveryMin      Int?
+  deliveryMax      Int?
+  primeEligible    Boolean?
+  inStock          Boolean            @default(true)
+  stockQuantity    Int?
+  imagesThumbnail  String[]
+  shortDescription String?
+  features         String[]
+  weight           Float?
+  dimensions       String?
+  condition        ProductCondition   @default(NEW)
+  bestSeller       Boolean            @default(false)
+  sellerName       String?
+  sellerRating     Float?
+  sourceItemId     String?
+  lastEnrichedAt   DateTime?
+  popularityScore  Float              @default(0)
+  recencyScore     Float              @default(0)
   expiresAt        DateTime?
-
-  // Pricing & Discounts
-  originalPrice   Float? // List price before discount
-  discountPercent Float? // Calculated discount percentage
-
-  // Shipping & Delivery
-  shippingCost  Float? // Shipping cost in currency
-  freeShipping  Boolean  @default(false)
-  deliveryDays  String? // e.g., "2-3 days" or "Oct 5-7"
-  deliveryMin   Int? // Minimum delivery days
-  deliveryMax   Int? // Maximum delivery days
-  primeEligible Boolean? // Amazon Prime eligibility
-
-  // Inventory
-  available      Boolean      @default(true)
-  inStock        Boolean      @default(true)
-  stockQuantity  Int? // Available quantity
-  lastCheckedAt  DateTime?
-  listingStartAt DateTime?
-  listingType    ListingType?
-
-  // Enhanced Product Details
-  imagesThumbnail  String[] // Thumbnail versions
-  shortDescription String? // Brief description
-  features         String[] // Bullet point features
-
-  // Physical Attributes
-  weight     Float? // Weight in lbs or kg
-  dimensions String? // e.g., "10x8x2 inches"
-
-  // Condition & Quality
-  condition  ProductCondition @default(NEW)
-  bestSeller Boolean          @default(false)
-
-  // Seller Information
-  sellerName   String?
-  sellerRating Float?
-
-  // Data Provenance
-  sourceItemId   String? // External ID (eBay itemId, etc.)
-  lastEnrichedAt DateTime? // When full details were fetched
-  regionMask     String[]  @default([])
-
-  embeddings           ProductEmbedding?
-  tags                 ProductTag[]
-  regionLinks          ProductRegionLink[]
-  availabilityLog      AvailabilityEvent[]
-  curatedBoosts        CuratedBoost[]
-  recommendationEvents RecommendationEvent[]
+  merchant         Merchant?          @relation(fields: [merchantId], references: [id])
+  vendor           Vendor?            @relation(fields: [vendorId], references: [id])
+  swipes           Swipe[]
 
   @@index([asin])
   @@index([urlCanonical])
   @@index([inStock])
-  @@index([available])
   @@index([primeEligible])
   @@index([condition])
   @@index([freeShipping])
   @@index([bestSeller])
   @@index([sourceItemId])
-  @@index([expiresAt])
-  @@index([listingStartAt])
 }
 
 model Swipe {
@@ -124,9 +88,80 @@ model Swipe {
   productId String
   action    SwipeAction
   ts        DateTime    @default(now())
+  product   Product     @relation(fields: [productId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
+}
 
-  user    User    @relation(fields: [userId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+model Vendor {
+  id                   String             @id @default(cuid())
+  userId               String             @unique
+  email                String             @unique
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  plan                 VendorPlan         @default(BASIC)
+  subscriptionStatus   SubscriptionStatus @default(INACTIVE)
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(now())
+  products             Product[]
+}
+
+model Merchant {
+  id               String         @id @default(cuid())
+  name             String
+  domain           String         @unique
+  affiliateProgram String?
+  status           MerchantStatus @default(ACTIVE)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  products         Product[]
+}
+
+model SessionProfile {
+  id          String   @id @default(cuid())
+  sessionId   String   @unique
+  embedding   Float[]  @default([])
+  constraints Json?
+  negatives   String[] @default([])
+  seen        String[] @default([])
+  region      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+}
+
+model IngestionJob {
+  id             String          @id @default(cuid())
+  type           IngestionType
+  status         IngestionStatus @default(QUEUED)
+  source         String?
+  startedAt      DateTime        @default(now())
+  finishedAt     DateTime?
+  totalProcessed Int             @default(0)
+  totalInserted  Int             @default(0)
+  totalUpdated   Int             @default(0)
+  totalRejected  Int             @default(0)
+  log            String?
+}
+
+model RecommendLog {
+  id           String   @id @default(cuid())
+  sessionId    String
+  userId       String?
+  productIds   String[]
+  resultsCount Int
+  createdAt    DateTime @default(now())
+
+  @@index([sessionId])
+}
+
+model ClickEvent {
+  id        String   @id @default(cuid())
+  sessionId String?
+  userId    String?
+  productId String?
+  targetUrl String
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
 }
 
 enum SwipeAction {
@@ -162,30 +197,10 @@ enum ProductCondition {
   REFURBISHED
 }
 
-enum ListingType {
-  FIXED_PRICE
-  AUCTION
-  CLASSIFIED
-}
-
-model Vendor {
-  id                   String             @id @default(cuid())
-  userId               String             @unique
-  email                String             @unique
-  stripeCustomerId     String?            @unique
-  stripeSubscriptionId String?            @unique
-  plan                 VendorPlan         @default(BASIC)
-  subscriptionStatus   SubscriptionStatus @default(INACTIVE)
-  currentPeriodEnd     DateTime?
-  createdAt            DateTime           @default(now())
-  products             Product[]
-}
-
 enum VendorPlan {
   BASIC
   FEATURED
   PREMIUM
-  ENTERPRISE
 }
 
 enum SubscriptionStatus {
@@ -196,151 +211,9 @@ enum SubscriptionStatus {
   PAUSED
 }
 
-model Merchant {
-  id               String         @id @default(cuid())
-  name             String
-  domain           String         @unique
-  affiliateProgram String?
-  status           MerchantStatus @default(ACTIVE)
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  products         Product[]
-}
-
 enum MerchantStatus {
   ACTIVE
   INACTIVE
-}
-
-model ProductEmbedding {
-  productId String   @id
-  embedding Float[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@index([productId])
-}
-
-model ProductTag {
-  id        String   @id @default(cuid())
-  productId String
-  tag       String
-  weight    Float    @default(0)
-  createdAt DateTime @default(now())
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@unique([productId, tag])
-  @@index([productId])
-  @@index([tag])
-}
-
-model ProductRegionLink {
-  id            String   @id @default(cuid())
-  productId     String
-  country       String
-  affiliateUrl  String
-  currency      String?
-  marketplaceId String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @default(now()) @updatedAt
-  product       Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@unique([productId, country])
-  @@index([productId])
-}
-
-model AvailabilityEvent {
-  id        String             @id @default(cuid())
-  productId String
-  status    AvailabilityStatus
-  available Boolean
-  message   String?            @db.Text
-  checkedAt DateTime           @default(now())
-  product   Product            @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@index([productId])
-  @@index([checkedAt])
-}
-
-enum RecommendationAction {
-  IMPRESSION
-  CLICK
-  LIKE
-  DISLIKE
-  SAVE
-  REROLL
-  OUTBOUND
-}
-
-model RecommendationEvent {
-  id        String               @id @default(cuid())
-  sessionId String?
-  userId    String?
-  productId String?
-  action    RecommendationAction
-  metadata  Json?
-  createdAt DateTime             @default(now())
-  product   Product?             @relation(fields: [productId], references: [id])
-
-  @@index([sessionId])
-  @@index([userId])
-  @@index([productId])
-}
-
-model CuratedBoost {
-  id          String    @id @default(cuid())
-  productId   String
-  profileTag  String?
-  characterId String?
-  weight      Float     @default(0)
-  startAt     DateTime?
-  endAt       DateTime?
-  createdAt   DateTime  @default(now())
-  createdBy   String?
-  notes       String?   @db.Text
-  product     Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  @@index([productId])
-}
-
-model UserProfile {
-  id          String   @id @default(cuid())
-  userId      String   @unique
-  embedding   Float[]  @default([])
-  priceMin    Float?
-  priceMax    Float?
-  preferences Json?
-  tags        String[] @default([])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model SessionProfile {
-  id          String   @id @default(cuid())
-  sessionId   String   @unique
-  embedding   Float[]  @default([])
-  constraints Json?
-  negatives   String[] @default([])
-  seen        String[] @default([])
-  region      String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now()) @updatedAt
-}
-
-model IngestionJob {
-  id             String          @id @default(cuid())
-  type           IngestionType
-  status         IngestionStatus @default(QUEUED)
-  source         String?
-  startedAt      DateTime        @default(now())
-  finishedAt     DateTime?
-  totalProcessed Int             @default(0)
-  totalInserted  Int             @default(0)
-  totalUpdated   Int             @default(0)
-  totalRejected  Int             @default(0)
-  log            String?         @db.Text
 }
 
 enum IngestionStatus {
@@ -356,24 +229,40 @@ enum IngestionType {
   API
 }
 
-model RecommendLog {
-  id           String   @id @default(cuid())
-  sessionId    String
-  userId       String?
-  productIds   String[]
-  resultsCount Int
-  createdAt    DateTime @default(now())
-
-  @@index([sessionId])
+enum ListingType {
+  AUCTION
+  FIXED_PRICE
+  CLASSIFIED
 }
 
-model ClickEvent {
-  id        String   @id @default(cuid())
+enum RecommendationAction {
+  IMPRESSION
+  CLICK
+  LIKE
+  DISLIKE
+  SAVE
+}
+
+model RecommendationEvent {
+  id        String             @id @default(cuid())
   sessionId String?
   userId    String?
   productId String?
-  targetUrl String
-  createdAt DateTime @default(now())
+  action    RecommendationAction
+  metadata  Json?
+  createdAt DateTime           @default(now())
+  
+  @@map("recommendation_events")
+}
 
-  @@index([sessionId])
+model IngestionLog {
+  id              String   @id @default(cuid())
+  createdAt       DateTime @default(now())
+  durationMs      Int
+  productsCreated Int
+  productsUpdated Int
+  errors          Int
+  errorMessages   Json?
+  
+  @@map("ingestion_logs")
 }
