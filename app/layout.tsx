@@ -125,7 +125,7 @@ export default function RootLayout({
 
         <CurrencyProvider>
           <SiteHeader />
-          <div className="pt-20">{children}</div>
+          <div className="pt-0">{children}</div>
           <footer className="mt-20 border-t border-border bg-background">
             <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-10 text-left text-body-sm text-muted-foreground md:flex-row md:justify-between">
               <div className="space-y-3">
@@ -141,7 +141,7 @@ export default function RootLayout({
               <div className="flex flex-col gap-2">
                 <Link href="/terms" className="hover:text-foreground">Terms</Link>
                 <Link href="/privacy" className="hover:text-foreground">Privacy</Link>
-                <a href="mailto:hello@fairywize.com" className="hover:text-foreground">hello@fairywize.com</a>
+                <a href="mailto:Fairy@Custom-Stories.com" className="hover:text-foreground">Fairy@Custom-Stories.com</a>
               </div>
             </div>
           </footer>

@@ -191,19 +191,13 @@ export default function Home() {
 
       {!showSwipeDeck && (
         <>
-          <div className="py-16">
+          <div className="py-12">
             <QuizIntro onStart={() => {
               const el = document.getElementById('quiz-card')
               if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
             }} />
           </div>
           <Features />
-          <Testimonials />
-          <SwipeDemo onCta={() => {
-            const el = document.getElementById('quiz-card')
-            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          }} />
-          <GuidesCta />
         </>
       )}
 

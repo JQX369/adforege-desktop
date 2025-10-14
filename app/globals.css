@@ -200,9 +200,9 @@
 .reveal-card.in-view { opacity: 1; transform: translateY(0); }
 
 /* Header floating overlay + scrolled glass state */
-.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(88, 28, 135, 0.95); box-shadow: none; transition: background 200ms ease-out; }
-.site-header-inner { padding: 18px 0; transition: padding 200ms ease-out; }
-.site-header.is-scrolled { background: rgba(88, 28, 135, 0.95); box-shadow: none; }
+.site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(88, 28, 135, 0.95); backdrop-filter: blur(10px); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); transition: all 200ms ease-out; }
+.site-header-inner { padding: 16px 0; transition: padding 200ms ease-out; }
+.site-header.is-scrolled { background: rgba(88, 28, 135, 0.98); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
 .site-header.is-scrolled .site-header-inner { padding: 12px 0; }
 
 /* Navigation link glow interaction */
