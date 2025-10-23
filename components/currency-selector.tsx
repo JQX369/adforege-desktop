@@ -1,33 +1,32 @@
 'use client'
 
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/src/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from '@/src/ui/dropdown-menu'
 import { useCurrency, getCurrencySymbol } from '@/lib/currency-context'
-import { SupportedCurrency } from '@/lib/prices'
+import { SupportedCurrency } from '@/src/shared/constants/prices'
 
-const currencies: { code: SupportedCurrency; name: string; symbol: string }[] = [
-  { code: 'USD', name: 'US Dollar', symbol: '$' },
-  { code: 'GBP', name: 'British Pound', symbol: '£' },
-  { code: 'EUR', name: 'Euro', symbol: '€' },
-]
+const currencies: { code: SupportedCurrency; name: string; symbol: string }[] =
+  [
+    { code: 'USD', name: 'US Dollar', symbol: '$' },
+    { code: 'GBP', name: 'British Pound', symbol: '£' },
+    { code: 'EUR', name: 'Euro', symbol: '€' },
+  ]
 
 export function CurrencySelector() {
   const { currency, setCurrency, isLoading } = useCurrency()
   const [isOpen, setIsOpen] = useState(false)
 
   if (isLoading) {
-    return (
-      <div className="w-16 h-8 bg-muted animate-pulse rounded" />
-    )
+    return <div className="w-16 h-8 bg-muted animate-pulse rounded" />
   }
 
-  const currentCurrency = currencies.find(c => c.code === currency)
+  const currentCurrency = currencies.find((c) => c.code === currency)
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -41,9 +40,7 @@ export function CurrencySelector() {
           <span className="font-mono font-medium">
             {currentCurrency?.symbol || '$'}
           </span>
-          <span className="text-xs opacity-75">
-            {currency}
-          </span>
+          <span className="text-xs opacity-75">{currency}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
@@ -58,9 +55,7 @@ export function CurrencySelector() {
               currency === curr.code ? 'bg-accent' : ''
             }`}
           >
-            <span className="font-mono font-medium text-lg">
-              {curr.symbol}
-            </span>
+            <span className="font-mono font-medium text-lg">{curr.symbol}</span>
             <div className="flex flex-col">
               <span className="font-medium">{curr.name}</span>
               <span className="text-xs text-muted-foreground">{curr.code}</span>

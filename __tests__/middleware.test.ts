@@ -41,7 +41,10 @@ describe('Middleware', () => {
     mockRequest.headers.set('accept-language', 'en-US,en;q=0.9')
     mockRequest.cookies.get = vi.fn().mockReturnValue(null)
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)
@@ -61,7 +64,10 @@ describe('Middleware', () => {
     mockRequest.headers.set('accept-language', 'en-GB,en;q=0.9')
     mockRequest.cookies.get = vi.fn().mockReturnValue(null)
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)
@@ -76,7 +82,10 @@ describe('Middleware', () => {
   it('should respect existing currency cookie', () => {
     mockRequest.cookies.get = vi.fn().mockReturnValue({ value: 'EUR' })
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)
@@ -101,7 +110,10 @@ describe('Middleware', () => {
     mockRequest.headers.set('accept-language', 'en-US,en;q=0.9')
     mockRequest.cookies.get = vi.fn().mockReturnValue({ value: 'EUR' })
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)
@@ -114,7 +126,10 @@ describe('Middleware', () => {
     mockRequest.headers.set('cf-ipcountry', 'DE')
     mockRequest.cookies.get = vi.fn().mockReturnValue(null)
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)
@@ -130,7 +145,10 @@ describe('Middleware', () => {
     mockRequest.headers.set('x-vercel-ip-country', 'FR')
     mockRequest.cookies.get = vi.fn().mockReturnValue(null)
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)
@@ -145,7 +163,10 @@ describe('Middleware', () => {
   it('should default to USD when no location data', () => {
     mockRequest.cookies.get = vi.fn().mockReturnValue(null)
 
-    const mockResponse = { cookies: { set: vi.fn() }, headers: { set: vi.fn() } }
+    const mockResponse = {
+      cookies: { set: vi.fn() },
+      headers: { set: vi.fn() },
+    }
     vi.spyOn(NextResponse, 'next').mockReturnValue(mockResponse as any)
 
     middleware(mockRequest)

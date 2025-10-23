@@ -1,0 +1,86 @@
+app/layout.tsx:85 - default
+app/layout.tsx:14 - metadata
+app/page.tsx:7 - default
+app/page.tsx:5 - metadata
+app/VendorPageClient.tsx:11 - default
+components/GiftForm.tsx:43 - computeFilteredStepDefs (used in module)
+lib/analytics.ts:13 - reportWebVitals (used in module)
+lib/analytics.ts:71 - trackPageLoad (used in module)
+lib/analytics.ts:84 - trackApiCall
+lib/analytics.ts:99 - trackInteraction
+lib/analytics.ts:38 - PerformanceMonitor (used in module)
+lib/config.ts:5 - ENABLE_SPONSORED_SLOTS
+lib/config.ts:6 - SPONSORED_DENSITY_CAP
+lib/config.ts:7 - MIN_SPONSORED_RELEVANCE
+lib/config.ts:8 - SPONSORED_SLOT_INDICES
+lib/config.ts:14 - AFFILIATE_ALLOWED_DOMAINS (used in module)
+lib/config.ts:19 - AFFILIATE_REQUIRE_ALLOWED (used in module)
+lib/currency-context.tsx:74 - useCurrency
+lib/currency-context.tsx:83 - formatPrice
+lib/currency-context.tsx:94 - getCurrencySymbol
+lib/database.ts:238 - prisma (used in module)
+lib/database.ts:241 - db (used in module)
+lib/database.ts:261 - QueryOptimizer
+lib/geo.ts:86 - buildGeoInfo (used in module)
+lib/geo.ts:98 - detectGeoFromIP (used in module)
+lib/geo.ts:147 - cacheGeoInfo
+lib/geo.ts:156 - resolveGeo
+lib/geo.ts:3 - GeoInfo (used in module)
+lib/geo.ts:11 - COUNTRY_TO_CURRENCY (used in module)
+lib/geo.ts:29 - COUNTRY_TO_AMAZON (used in module)
+lib/geo.ts:45 - COUNTRY_TO_EBAY_MARKETPLACE (used in module)
+lib/metadata.ts:32 - generatePageMetadata (used in module)
+lib/metadata.ts:144 - generateProductMetadata
+lib/metadata.ts:171 - generateGiftGuideMetadata
+lib/metadata.ts:3 - PageMetadataParams (used in module)
+lib/metadata.ts:135 - VENDOR_METADATA
+lib/prices.ts:13 - getPriceIdForTier
+lib/prices.ts:1 - SubscriptionTier (used in module)
+lib/schema.ts:112 - giftGuideSchema
+lib/schema.ts:142 - faqSchema
+lib/schema.ts:155 - breadcrumbSchema
+lib/schema.ts:167 - productSchema
+lib/schema.ts:214 - localBusinessSchema
+lib/supabase.ts:3 - SupabaseClientType
+lib/track.ts:24 - trackPageView
+lib/track.ts:28 - registerAnalyticsDelegation
+lib/utils.ts:10 - rateLimit
+prompts/GiftPrompt.ts:17 - buildGiftPrompt
+prompts/GiftPrompt.ts:59 - buildSearchQuery
+app/about/page.tsx:10 - default
+app/about/page.tsx:8 - metadata
+app/contact/page.tsx:25 - default
+app/contact/page.tsx:6 - metadata
+app/gift-guides/page.tsx:88 - default
+app/gift-guides/page.tsx:8 - metadata
+app/privacy/page.tsx:24 - default
+app/privacy/page.tsx:5 - metadata
+app/robots.txt/route.ts:3 - GET
+app/sitemap.xml/route.ts:4 - GET
+app/terms/page.tsx:24 - default
+app/terms/page.tsx:5 - metadata
+components/ui/badge.tsx:26 - BadgeProps (used in module)
+components/ui/badge.tsx:36 - badgeVariants (used in module)
+components/ui/button.tsx:37 - ButtonProps (used in module)
+components/ui/button.tsx:57 - buttonVariants (used in module)
+components/ui/scroll-area.tsx:48 - ScrollBar (used in module)
+components/ui/sheet.tsx:131 - SheetPortal (used in module)
+components/ui/sheet.tsx:132 - SheetOverlay (used in module)
+components/ui/sheet.tsx:134 - SheetClose (used in module)
+components/ui/sheet.tsx:137 - SheetFooter (used in module)
+app/auth/reset-password/page.tsx:10 - default
+app/auth/sign-in/page.tsx:10 - default
+app/auth/sign-out/route.ts:4 - POST
+app/gift-guides/birthday/page.tsx:28 - default
+app/gift-guides/birthday/page.tsx:6 - metadata
+app/gift-guides/birthday/page.tsx:26 - revalidate
+app/gift-guides/for-her/page.tsx:28 - default
+app/gift-guides/for-her/page.tsx:6 - metadata
+app/gift-guides/for-her/page.tsx:26 - revalidate
+app/gift-guides/for-him/page.tsx:28 - default
+app/gift-guides/for-him/page.tsx:6 - metadata
+app/gift-guides/for-him/page.tsx:26 - revalidate
+app/gift-guides/holiday-2024/page.tsx:68 - default
+app/gift-guides/holiday-2024/page.tsx:7 - metadata
+app/gift-guides/under-50/page.tsx:67 - default
+app/gift-guides/under-50/page.tsx:6 - metadata

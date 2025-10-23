@@ -30,7 +30,10 @@ async function main() {
     price: toNumber(r.price),
     imageUrl: r.imageUrl,
     url: r.url,
-    categories: (r.categories || '').split('|').map((s: string) => s.trim()).filter(Boolean),
+    categories: (r.categories || '')
+      .split('|')
+      .map((s: string) => s.trim())
+      .filter(Boolean),
     brand: r.brand || undefined,
     retailer: r.retailer || undefined,
     currency: r.currency || undefined,
@@ -56,6 +59,3 @@ main().catch((e) => {
   console.error(e)
   process.exit(1)
 })
-
-
-

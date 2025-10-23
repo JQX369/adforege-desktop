@@ -3,7 +3,7 @@
 import React, { useState, useRef, useMemo, useEffect } from 'react'
 import TinderCard from 'react-tinder-card'
 import { ProductCard } from './ProductCard'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/src/ui/button'
 import { Heart, X } from 'lucide-react'
 
 export interface Product {
@@ -24,7 +24,10 @@ export interface Product {
 
 interface SwipeDeckProps {
   products: Product[]
-  onSwipe: (productId: string, action: 'LEFT' | 'RIGHT' | 'SAVED') => Promise<void>
+  onSwipe: (
+    productId: string,
+    action: 'LEFT' | 'RIGHT' | 'SAVED'
+  ) => Promise<void>
   userId: string
   sessionId: string
   onLoadMore?: () => void
@@ -33,12 +36,19 @@ interface SwipeDeckProps {
 
 type SwipeDirection = 'left' | 'right' | 'up' | 'down'
 
-export function SwipeDeck({ products, onSwipe, userId, sessionId, onLoadMore, hasMore }: SwipeDeckProps) {
+export function SwipeDeck({
+  products,
+  onSwipe,
+  userId,
+  sessionId,
+  onLoadMore,
+  hasMore,
+}: SwipeDeckProps) {
   const [currentIndex, setCurrentIndex] = useState(products.length - 1)
   const [isLoading, setIsLoading] = useState(false)
   const [hideMap, setHideMap] = useState<Record<string, boolean>>({})
   const prefetchRequestedRef = useRef(false)
-  
+
   // References for programmatic swipes
   const currentIndexRef = useRef(currentIndex)
   const childRefs = useMemo(
@@ -66,9 +76,13 @@ export function SwipeDeck({ products, onSwipe, userId, sessionId, onLoadMore, ha
     }
   }, [currentIndex, hasMore, onLoadMore])
 
-  const swiped = async (direction: SwipeDirection, productId: string, index: number) => {
+  const swiped = async (
+    direction: SwipeDirection,
+    productId: string,
+    index: number
+  ) => {
     updateCurrentIndex(index - 1)
-    
+
     setIsLoading(true)
     try {
       let action: 'LEFT' | 'RIGHT' | 'SAVED'
@@ -82,14 +96,14 @@ export function SwipeDeck({ products, onSwipe, userId, sessionId, onLoadMore, ha
       } else {
         return // Ignore down swipes
       }
-      
+
       await onSwipe(productId, action)
-      
+
       // Auto-save on right swipe
       if (action === 'RIGHT') {
         await onSwipe(productId, 'SAVED')
       }
-      setHideMap(prev => ({ ...prev, [productId]: true }))
+      setHideMap((prev) => ({ ...prev, [productId]: true }))
     } catch (error) {
       console.error('Error recording swipe:', error)
     } finally {
@@ -120,44 +134,52 @@ export function SwipeDeck({ products, onSwipe, userId, sessionId, onLoadMore, ha
             ? belowBy === 1
               ? 'scale-95 translate-y-2 opacity-95'
               : belowBy === 2
-              ? 'scale-90 translate-y-4 opacity-90'
-              : 'scale-90 translate-y-8 opacity-80'
+                ? 'scale-90 translate-y-4 opacity-90'
+                : 'scale-90 translate-y-8 opacity-80'
             : 'scale-100'
           const hidden = hideMap[product.id]
           return (
-          <TinderCard
-            ref={childRefs[index]}
-            key={product.id}
-            onSwipe={(dir) => swiped(dir as SwipeDirection, product.id, index)}
-            onCardLeftScreen={() => outOfFrame(product.title, index)}
-            preventSwipe={['down','up']}
-            swipeRequirementType="velocity"
-            swipeThreshold={0.18}
-            flickOnSwipe={true}
-            className={`absolute w-full h-full ${stackClass} ${hidden ? 'hidden' : ''} ${isTop ? 'z-30' : 'z-10'} will-change-transform`}
-          >
-            <div className={`relative h-full ${!isTop ? 'pointer-events-none' : ''}`}>
-              {/* Product */}
-              <ProductCard product={product} sessionId={sessionId} userId={userId} />
-              {/* Gradient overlay - red for left, gold for right; controlled by CSS classes applied by tinder-card */}
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-100 gradient-left pointer-events-none" />
-              <div className="absolute inset-0 opacity-0 transition-opacity duration-100 gradient-right pointer-events-none" />
-            </div>
-          </TinderCard>
+            <TinderCard
+              ref={childRefs[index]}
+              key={product.id}
+              onSwipe={(dir) =>
+                swiped(dir as SwipeDirection, product.id, index)
+              }
+              onCardLeftScreen={() => outOfFrame(product.title, index)}
+              preventSwipe={['down', 'up']}
+              swipeRequirementType="velocity"
+              swipeThreshold={0.18}
+              flickOnSwipe={true}
+              className={`absolute w-full h-full ${stackClass} ${hidden ? 'hidden' : ''} ${isTop ? 'z-30' : 'z-10'} will-change-transform`}
+            >
+              <div
+                className={`relative h-full ${!isTop ? 'pointer-events-none' : ''}`}
+              >
+                {/* Product */}
+                <ProductCard
+                  product={product}
+                  sessionId={sessionId}
+                  userId={userId}
+                />
+                {/* Gradient overlay - red for left, gold for right; controlled by CSS classes applied by tinder-card */}
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-100 gradient-left pointer-events-none" />
+                <div className="absolute inset-0 opacity-0 transition-opacity duration-100 gradient-right pointer-events-none" />
+              </div>
+            </TinderCard>
           )
         })}
-        
+
         {currentIndex < 0 && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center">
-              <h3 className="text-2xl font-bold mb-2">No more recommendations!</h3>
-              <p className="text-muted-foreground mb-4">Check your saved items or try a new search.</p>
+              <h3 className="text-2xl font-bold mb-2">
+                No more recommendations!
+              </h3>
+              <p className="text-muted-foreground mb-4">
+                Check your saved items or try a new search.
+              </p>
               {hasMore && onLoadMore && (
-                <Button
-                  onClick={onLoadMore}
-                  size="lg"
-                  className="mt-4"
-                >
+                <Button onClick={onLoadMore} size="lg" className="mt-4">
                   Load More Recommendations
                 </Button>
               )}
@@ -194,9 +216,25 @@ export function SwipeDeck({ products, onSwipe, userId, sessionId, onLoadMore, ha
       </p>
 
       <style jsx>{`
-        :global(.swipe-right) .gradient-right { opacity: 0.28; background: linear-gradient(90deg, rgba(255,215,0,0.35), rgba(255,215,0,0.0)); mix-blend-mode: multiply; }
-        :global(.swipe-left) .gradient-left { opacity: 0.28; background: linear-gradient(270deg, rgba(239,68,68,0.35), rgba(239,68,68,0.0)); mix-blend-mode: multiply; }
+        :global(.swipe-right) .gradient-right {
+          opacity: 0.28;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 215, 0, 0.35),
+            rgba(255, 215, 0, 0)
+          );
+          mix-blend-mode: multiply;
+        }
+        :global(.swipe-left) .gradient-left {
+          opacity: 0.28;
+          background: linear-gradient(
+            270deg,
+            rgba(239, 68, 68, 0.35),
+            rgba(239, 68, 68, 0)
+          );
+          mix-blend-mode: multiply;
+        }
       `}</style>
     </div>
   )
-} 
+}

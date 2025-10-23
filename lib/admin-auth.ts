@@ -26,7 +26,10 @@ export async function assertAdmin(req: NextRequest) {
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean)
 
-  if (allowedEmails.length > 0 && !allowedEmails.includes(user.email.toLowerCase())) {
+  if (
+    allowedEmails.length > 0 &&
+    !allowedEmails.includes(user.email.toLowerCase())
+  ) {
     throw new AdminAuthError('Forbidden', 403)
   }
 
@@ -34,4 +37,3 @@ export async function assertAdmin(req: NextRequest) {
 }
 
 export { AdminAuthError }
-

@@ -69,5 +69,3 @@ export interface RecommendationResult {
   hasMore: boolean
   products: RankedProduct[]
 }
-
-

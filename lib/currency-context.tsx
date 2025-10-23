@@ -1,6 +1,12 @@
 'use client'
 
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from 'react'
 import { SupportedCurrency } from './prices'
 
 interface CurrencyContextType {
@@ -9,15 +15,21 @@ interface CurrencyContextType {
   isLoading: boolean
 }
 
-const CurrencyContext = createContext<CurrencyContextType | undefined>(undefined)
+const CurrencyContext = createContext<CurrencyContextType | undefined>(
+  undefined
+)
 
 interface CurrencyProviderProps {
   children: ReactNode
   initialCurrency?: SupportedCurrency
 }
 
-export function CurrencyProvider({ children, initialCurrency = 'GBP' }: CurrencyProviderProps) {
-  const [currency, setCurrencyState] = useState<SupportedCurrency>(initialCurrency)
+export function CurrencyProvider({
+  children,
+  initialCurrency = 'GBP',
+}: CurrencyProviderProps) {
+  const [currency, setCurrencyState] =
+    useState<SupportedCurrency>(initialCurrency)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -27,7 +39,7 @@ export function CurrencyProvider({ children, initialCurrency = 'GBP' }: Currency
         // First try to get from cookie
         const cookieCurrency = document.cookie
           .split('; ')
-          .find(row => row.startsWith('preferred-currency='))
+          .find((row) => row.startsWith('preferred-currency='))
           ?.split('=')[1] as SupportedCurrency
 
         if (cookieCurrency && ['USD', 'GBP', 'EUR'].includes(cookieCurrency)) {
@@ -44,7 +56,29 @@ export function CurrencyProvider({ children, initialCurrency = 'GBP' }: Currency
           // Simple mapping - in production, you'd use a more comprehensive mapping
           if (countryCode === 'GB' || countryCode === 'UK') {
             setCurrencyState('GBP')
-          } else if (['AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES'].includes(countryCode)) {
+          } else if (
+            [
+              'AT',
+              'BE',
+              'CY',
+              'EE',
+              'FI',
+              'FR',
+              'DE',
+              'GR',
+              'IE',
+              'IT',
+              'LV',
+              'LT',
+              'LU',
+              'MT',
+              'NL',
+              'PT',
+              'SK',
+              'SI',
+              'ES',
+            ].includes(countryCode)
+          ) {
             setCurrencyState('EUR')
           }
         }
@@ -80,7 +114,10 @@ export function useCurrency() {
 }
 
 // Currency display utilities
-export function formatPrice(amount: number, currency: SupportedCurrency): string {
+export function formatPrice(
+  amount: number,
+  currency: SupportedCurrency
+): string {
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
@@ -93,9 +130,13 @@ export function formatPrice(amount: number, currency: SupportedCurrency): string
 
 export function getCurrencySymbol(currency: SupportedCurrency): string {
   switch (currency) {
-    case 'GBP': return '£'
-    case 'EUR': return '€'
-    case 'USD': return '$'
-    default: return '$'
+    case 'GBP':
+      return '£'
+    case 'EUR':
+      return '€'
+    case 'USD':
+      return '$'
+    default:
+      return '$'
   }
 }

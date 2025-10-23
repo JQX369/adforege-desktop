@@ -1,0 +1,122 @@
+## main...origin/main [ahead 1]
+ M __tests__/components/dynamic-verb.test.tsx
+ M __tests__/integration/ingestion-dry-run.test.ts
+ M __tests__/lib/currency-context.test.tsx
+ M __tests__/lib/ebay-token.test.ts
+ M __tests__/lib/ingestion-engine.test.ts
+ M __tests__/setup.ts
+ M app/about/page.tsx
+ M app/api/recommend/route.ts
+ M app/gift-guides/page.tsx
+ M app/globals.css
+ M app/layout.tsx
+ M app/page.tsx
+ M app/vendor/page.tsx
+ M components/DynamicVerb.tsx
+ M components/GiftForm.tsx
+ M components/Hero.tsx
+ M lib/prisma.ts
+ M lib/providers/ebay-enhanced.ts
+ M lib/providers/ingestion-engine.ts
+ M lib/schema.ts
+ M middleware.ts
+ M next.config.js
+ M package-lock.json
+ M package.json
+ M prisma/schema.prisma
+ M supabase/.temp/cli-latest
+ M tsconfig.json
+ M vitest.config.ts
+?? .cursor/commands/accessibility-audit.md
+?? .cursor/commands/add-documentation.md
+?? .cursor/commands/add-error-handling.md
+?? .cursor/commands/address-github-pr-comments.md
+?? .cursor/commands/cmd-recent-changes-deep-check.md
+?? .cursor/commands/cmd-repo-deep-clean.md
+?? .cursor/commands/code-review.md
+?? .cursor/commands/create-pr.md
+?? .cursor/commands/database-migration.md
+?? .cursor/commands/debug-issue.md
+?? .cursor/commands/fix-compile-errors.md
+?? .cursor/commands/fix-git-issues.md
+?? .cursor/commands/generate-api-docs.md
+?? .cursor/commands/generate-pr-description.md
+?? .cursor/commands/git.md
+?? .cursor/commands/kcsdb-exec-prisma-migrate-deploy.md
+?? .cursor/commands/light-review-existing-diffs.md
+?? .cursor/commands/lint-fix.md
+?? .cursor/commands/onboard-new-developer.md
+?? .cursor/commands/optimize-performance.md
+?? .cursor/commands/refactor-code.md
+?? .cursor/commands/run-all-tests-and-fix.md
+?? .cursor/commands/run-lint-suite.md
+?? .cursor/commands/security-audit.md
+?? .cursor/commands/security-review.md
+?? .cursor/commands/setup-new-feature.md
+?? .cursor/commands/write-unit-tests.md
+?? .reports/
+?? DESIGN_VISION_FOR_AI.md
+?? "UI example.tsx"
+?? app/HomePageClient.tsx
+?? app/VendorPageClient.tsx
+?? app/admin/
+?? app/api/admin/accessibility/
+?? app/api/admin/analytics/
+?? app/api/admin/database/
+?? app/api/admin/errors/
+?? app/api/admin/ml/
+?? app/api/analytics/
+?? app/api/cms/
+?? app/api/csrf/
+?? app/api/monetization/
+?? app/api/recommend/ml/
+?? app/api/vendor/analytics/
+?? app/api/vendor/bulk/
+?? app/api/vendor/dashboard/
+?? app/api/vendor/onboarding/
+?? app/blog/
+?? app/robots.txt/
+?? app/sitemap.xml/
+?? app/vendor/dashboard/enhanced/
+?? components/ErrorBoundary.tsx
+?? components/blog/
+?? components/ui/AccessibleButton.tsx
+?? components/ui/AccessibleForm.tsx
+?? components/ui/AccessibleNavigation.tsx
+?? components/ui/LazyLoad.tsx
+?? components/ui/MobileImage.tsx
+?? components/ui/MobileLayout.tsx
+?? components/ui/MobileTouch.tsx
+?? components/ui/OptimizedImage.tsx
+?? components/vendor/
+?? docs/
+?? lib/ab-testing.ts
+?? lib/accessibility.ts
+?? lib/analytics-tracker.ts
+?? lib/analytics.ts
+?? lib/api-error-handler.ts
+?? lib/cache.ts
+?? lib/cms/
+?? lib/csrf.ts
+?? lib/database.ts
+?? lib/error-handler.ts
+?? lib/metadata.ts
+?? lib/ml/
+?? lib/mobile-utils.ts
+?? lib/monetization/
+?? lib/rate-limit.ts
+?? lib/validation.ts
+?? prisma/migrations/20251014021548_add_analytics_models/
+?? prisma/migrations/20251014023308_add_vendor_onboarding_fields/
+?? scripts/accessibility-audit.ts
+?? scripts/analytics-monitor.ts
+?? scripts/cms-automation.ts
+?? scripts/database-optimize.ts
+?? scripts/error-monitor.ts
+?? scripts/ml-training.ts
+?? scripts/mobile-performance.ts
+?? scripts/monetization-automation.ts
+?? scripts/security-audit.ts
+?? scripts/vendor-dashboard.ts
+?? supabase/migrations/
+?? tsconfig.app.json

@@ -1,0 +1,184 @@
+{
+  "@playwright/test": {
+    "current": "1.55.1",
+    "wanted": "1.56.1",
+    "latest": "1.56.1",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@playwright/test"
+  },
+  "@prisma/client": {
+    "current": "5.22.0",
+    "wanted": "5.22.0",
+    "latest": "6.17.1",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@prisma/client"
+  },
+  "@react-spring/web": {
+    "current": "9.7.5",
+    "wanted": "9.7.5",
+    "latest": "10.0.3",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@react-spring/web"
+  },
+  "@stripe/stripe-js": {
+    "current": "2.4.0",
+    "wanted": "2.4.0",
+    "latest": "8.1.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@stripe/stripe-js"
+  },
+  "@supabase/ssr": {
+    "current": "0.5.2",
+    "wanted": "0.5.2",
+    "latest": "0.7.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@supabase/ssr"
+  },
+  "@supabase/supabase-js": {
+    "current": "2.58.0",
+    "wanted": "2.76.1",
+    "latest": "2.76.1",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@supabase/supabase-js"
+  },
+  "@testing-library/react": {
+    "current": "14.3.1",
+    "wanted": "14.3.1",
+    "latest": "16.3.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@testing-library/react"
+  },
+  "@types/node": {
+    "current": "20.19.21",
+    "wanted": "20.19.23",
+    "latest": "24.9.1",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@types/node"
+  },
+  "@types/react": {
+    "current": "18.3.25",
+    "wanted": "18.3.26",
+    "latest": "19.2.2",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@types/react"
+  },
+  "@types/react-dom": {
+    "current": "18.3.7",
+    "wanted": "18.3.7",
+    "latest": "19.2.2",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/@types/react-dom"
+  },
+  "caniuse-lite": {
+    "current": "1.0.30001747",
+    "wanted": "1.0.30001751",
+    "latest": "1.0.30001751",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/caniuse-lite"
+  },
+  "eslint": {
+    "current": "8.57.1",
+    "wanted": "8.57.1",
+    "latest": "9.38.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/eslint"
+  },
+  "eslint-config-next": {
+    "current": "14.0.4",
+    "wanted": "14.0.4",
+    "latest": "16.0.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/eslint-config-next"
+  },
+  "jsdom": {
+    "current": "23.2.0",
+    "wanted": "23.2.0",
+    "latest": "27.0.1",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/jsdom"
+  },
+  "lucide-react": {
+    "current": "0.527.0",
+    "wanted": "0.527.0",
+    "latest": "0.546.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/lucide-react"
+  },
+  "next": {
+    "current": "14.2.33",
+    "wanted": "14.2.33",
+    "latest": "16.0.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/next"
+  },
+  "openai": {
+    "current": "4.104.0",
+    "wanted": "4.104.0",
+    "latest": "6.6.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/openai"
+  },
+  "postcss-selector-parser": {
+    "current": "6.1.2",
+    "wanted": "6.1.2",
+    "latest": "7.1.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/postcss-selector-parser"
+  },
+  "prisma": {
+    "current": "5.22.0",
+    "wanted": "5.22.0",
+    "latest": "6.17.1",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/prisma"
+  },
+  "react": {
+    "current": "18.3.1",
+    "wanted": "18.3.1",
+    "latest": "19.2.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/react"
+  },
+  "react-dom": {
+    "current": "18.3.1",
+    "wanted": "18.3.1",
+    "latest": "19.2.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/react-dom"
+  },
+  "std-env": {
+    "current": "3.9.0",
+    "wanted": "3.10.0",
+    "latest": "3.10.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/std-env"
+  },
+  "stripe": {
+    "current": "14.25.0",
+    "wanted": "14.25.0",
+    "latest": "19.1.0",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/stripe"
+  },
+  "tailwindcss": {
+    "current": "3.4.18",
+    "wanted": "3.4.18",
+    "latest": "4.1.15",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/tailwindcss"
+  },
+  "vite": {
+    "current": "7.1.9",
+    "wanted": "7.1.11",
+    "latest": "7.1.11",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/vite"
+  },
+  "zod": {
+    "current": "3.25.76",
+    "wanted": "3.25.76",
+    "latest": "4.1.12",
+    "dependent": "Fairy Wize",
+    "location": "/Users/jqx/Desktop/Fairy Wize/node_modules/zod"
+  }
+}

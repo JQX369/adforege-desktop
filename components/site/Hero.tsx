@@ -1,9 +1,9 @@
-"use client"
+'use client'
 
 import Link from 'next/link'
 import { useEffect, useMemo, useState } from 'react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Badge } from '@/src/ui/badge'
+import { Button } from '@/src/ui/button'
 import { trackEvent } from '@/lib/track'
 
 interface HeroProps extends React.HTMLAttributes<HTMLElement> {
@@ -11,7 +11,10 @@ interface HeroProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 export function Hero({ onStart, ...props }: HeroProps) {
-  const words = useMemo(() => ['Love', 'Treasure', 'Cherish', 'Remember', 'Adore', 'Celebrate'], [])
+  const words = useMemo(
+    () => ['Love', 'Treasure', 'Cherish', 'Remember', 'Adore', 'Celebrate'],
+    []
+  )
   const [wordIndex, setWordIndex] = useState(0)
   const [display, setDisplay] = useState('')
   const [deleting, setDeleting] = useState(false)
@@ -25,7 +28,10 @@ export function Hero({ onStart, ...props }: HeroProps) {
     const startHold = 600
 
     if (pause) {
-      const t = setTimeout(() => setPause(false), deleting ? startHold : endHold)
+      const t = setTimeout(
+        () => setPause(false),
+        deleting ? startHold : endHold
+      )
       return () => clearTimeout(t)
     }
 
@@ -69,30 +75,33 @@ export function Hero({ onStart, ...props }: HeroProps) {
   return (
     <section className="relative overflow-hidden" {...props}>
       <div className="container mx-auto px-4 pt-10 pb-6 md:pt-16 md:pb-10 text-center">
-        <Badge className="mb-4" variant="secondary">✨ Completely free AI gift finder</Badge>
+        <Badge className="mb-4" variant="secondary">
+          ✨ Completely free AI gift finder
+        </Badge>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-4">
-          <span className="block">Find gifts they&apos;ll actually{' '}</span>
+          <span className="block">Find gifts they&apos;ll actually </span>
           <span className="bg-[linear-gradient(90deg,hsl(var(--brand-1)),hsl(var(--brand-2)),hsl(var(--brand-3)))] bg-clip-text text-transparent">
             {display}
-            <span className="inline-block w-[1ch] border-r-2 border-violet-600 animate-pulse ml-0.5" aria-hidden />
+            <span
+              className="inline-block w-[1ch] border-r-2 border-violet-600 animate-pulse ml-0.5"
+              aria-hidden
+            />
           </span>
         </h1>
         <p className="text-muted-foreground text-lg md:text-xl max-w-2xl mx-auto mb-6">
-          Answer a few fun questions and let our AI curate perfect, personalized gift recommendations with direct shopping links.
+          Answer a few fun questions and let our AI curate perfect, personalized
+          gift recommendations with direct shopping links.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
           <Button size="lg" className="min-w-[200px]" onClick={handleStart}>
             Start in 2 minutes
           </Button>
-          <Button
-            size="lg"
-            variant="ghost"
-            className="min-w-[200px]"
-            asChild
-          >
+          <Button size="lg" variant="ghost" className="min-w-[200px]" asChild>
             <Link
               href="/gift-guides"
-              onClick={() => trackEvent('cta_click', { source: 'hero_secondary' })}
+              onClick={() =>
+                trackEvent('cta_click', { source: 'hero_secondary' })
+              }
             >
               Browse gift guides
             </Link>
@@ -122,4 +131,3 @@ export function Hero({ onStart, ...props }: HeroProps) {
     </section>
   )
 }
-

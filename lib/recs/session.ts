@@ -6,7 +6,11 @@ import { SessionProfile, SessionConstraints } from './types'
 const prisma = new PrismaClient()
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY || '' })
 
-export async function buildSessionProfile(sessionId: string, text: string, constraints: SessionConstraints): Promise<SessionProfile> {
+export async function buildSessionProfile(
+  sessionId: string,
+  text: string,
+  constraints: SessionConstraints
+): Promise<SessionProfile> {
   console.log('🔍 [DEBUG] buildSessionProfile called:', {
     sessionId,
     textLength: text.length,
@@ -48,7 +52,7 @@ export async function buildSessionProfile(sessionId: string, text: string, const
     console.log('🔍 [DEBUG] Checking database connection...')
     await prisma.$queryRaw`SELECT 1`
     console.log('🔍 [DEBUG] Database connection successful')
-    
+
     console.log('🔍 [DEBUG] Checking SessionProfile table...')
     const tableExists = await prisma.$queryRaw`
       SELECT EXISTS (
@@ -91,14 +95,22 @@ export async function buildSessionProfile(sessionId: string, text: string, const
   return { sessionId, embedding, constraints }
 }
 
-export async function loadSessionProfile(sessionId: string): Promise<SessionProfile | null> {
+export async function loadSessionProfile(
+  sessionId: string
+): Promise<SessionProfile | null> {
   try {
-    const record = await prisma.sessionProfile.findUnique({ where: { sessionId } })
+    const record = await prisma.sessionProfile.findUnique({
+      where: { sessionId },
+    })
     if (!record) return null
     return {
       sessionId,
       embedding: record.embedding ?? [],
-      constraints: (record.constraints as unknown as SessionConstraints) || { interests: [], excludeIds: [], seenIds: [] },
+      constraints: (record.constraints as unknown as SessionConstraints) || {
+        interests: [],
+        excludeIds: [],
+        seenIds: [],
+      },
     }
   } catch (error) {
     console.log('[recs][session] load failed', error)
@@ -106,7 +118,10 @@ export async function loadSessionProfile(sessionId: string): Promise<SessionProf
   }
 }
 
-export async function appendSeenIds(sessionId: string, productIds: string[]): Promise<void> {
+export async function appendSeenIds(
+  sessionId: string,
+  productIds: string[]
+): Promise<void> {
   if (!productIds.length) return
   try {
     await prisma.sessionProfile.update({
@@ -122,5 +137,3 @@ export async function appendSeenIds(sessionId: string, productIds: string[]): Pr
     console.log('[recs][session] appendSeenIds failed', error)
   }
 }
-
-

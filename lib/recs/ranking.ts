@@ -16,8 +16,14 @@ const DEFAULT_WEIGHT_RECENCY = 0.25
 const DEFAULT_WEIGHT_POPULAR = 0.15
 const DEFAULT_WEIGHT_SIMILARITY = 0.25
 
-function computeBaseScore(product: CandidateProduct, similarityFallback = 0.5): number {
-  const similarity = typeof product.similarity === 'number' ? product.similarity : similarityFallback
+function computeBaseScore(
+  product: CandidateProduct,
+  similarityFallback = 0.5
+): number {
+  const similarity =
+    typeof product.similarity === 'number'
+      ? product.similarity
+      : similarityFallback
   const quality = product.qualityScore ?? 0
   const recency = product.recencyScore ?? 0
   const popularity = product.popularityScore ?? 0
@@ -49,7 +55,9 @@ export function applyRanking(
   const retailerCounts: Record<string, number> = {}
 
   const scored = products
-    .filter((product) => !seenIds.has(product.id) && !negativeIds.has(product.id))
+    .filter(
+      (product) => !seenIds.has(product.id) && !negativeIds.has(product.id)
+    )
     .map((product) => {
       let score = computeBaseScore(product)
 
@@ -59,7 +67,9 @@ export function applyRanking(
 
       // interest match boost
       const categories = (product.categories || []).map((c) => c.toLowerCase())
-      const matches = interestLower.filter((interest) => categories.some((cat) => cat.includes(interest)))
+      const matches = interestLower.filter((interest) =>
+        categories.some((cat) => cat.includes(interest))
+      )
       if (matches.length) {
         score *= 1 + matches.length * interestBoost
       }
@@ -104,5 +114,3 @@ export function applyRanking(
 
   return diversified
 }
-
-

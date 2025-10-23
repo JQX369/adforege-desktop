@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { getCurrencyFromCountry, SupportedCurrency } from '@/lib/prices'
+import {
+  getCurrencyFromCountry,
+  SupportedCurrency,
+} from '@/src/shared/constants/prices'
 
 describe('Currency Detection', () => {
   it('should return GBP for UK countries', () => {
@@ -11,8 +14,28 @@ describe('Currency Detection', () => {
   })
 
   it('should return EUR for Euro countries', () => {
-    const euroCountries = ['AT', 'BE', 'CY', 'EE', 'FI', 'FR', 'DE', 'GR', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PT', 'SK', 'SI', 'ES']
-    euroCountries.forEach(country => {
+    const euroCountries = [
+      'AT',
+      'BE',
+      'CY',
+      'EE',
+      'FI',
+      'FR',
+      'DE',
+      'GR',
+      'IE',
+      'IT',
+      'LV',
+      'LT',
+      'LU',
+      'MT',
+      'NL',
+      'PT',
+      'SK',
+      'SI',
+      'ES',
+    ]
+    euroCountries.forEach((country) => {
       expect(getCurrencyFromCountry(country)).toBe('EUR')
     })
   })

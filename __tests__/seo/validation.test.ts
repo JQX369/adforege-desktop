@@ -1,7 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { render } from '@testing-library/react'
 import { Metadata } from 'next'
-import { websiteSchema, organizationSchema, softwareApplicationSchema } from '@/lib/schema'
+import {
+  websiteSchema,
+  organizationSchema,
+  softwareApplicationSchema,
+} from '@/lib/schema'
 
 // SEO validation utilities
 function validateMetaTags(metadata: Metadata) {
@@ -15,7 +19,9 @@ function validateMetaTags(metadata: Metadata) {
   if (metadata.title && typeof metadata.title === 'string') {
     const titleLength = metadata.title.length
     if (titleLength < 30 || titleLength > 70) {
-      errors.push(`Title length ${titleLength} is not optimal (30-70 recommended)`)
+      errors.push(
+        `Title length ${titleLength} is not optimal (30-70 recommended)`
+      )
     }
   }
 
@@ -23,13 +29,17 @@ function validateMetaTags(metadata: Metadata) {
   if (metadata.description && typeof metadata.description === 'string') {
     const descLength = metadata.description.length
     if (descLength < 120 || descLength > 160) {
-      errors.push(`Description length ${descLength} is not optimal (120-160 recommended)`)
+      errors.push(
+        `Description length ${descLength} is not optimal (120-160 recommended)`
+      )
     }
   }
 
   // Keywords validation
   if (metadata.keywords) {
-    const keywords = Array.isArray(metadata.keywords) ? metadata.keywords : [metadata.keywords]
+    const keywords = Array.isArray(metadata.keywords)
+      ? metadata.keywords
+      : [metadata.keywords]
     if (keywords.length < 3) {
       errors.push('Too few keywords (minimum 3 recommended)')
     }
@@ -64,11 +74,17 @@ describe('SEO Validation', () => {
     it('should validate gift guides page metadata', () => {
       const metadata: Metadata = {
         title: 'Gift Guides | FairyWize AI Gift Finder',
-        description: 'Discover the ultimate gift guides for every occasion. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder',
+        description:
+          'Discover the ultimate gift guides for every occasion. From birthday gifts to holiday presents, find personalized recommendations with our AI-powered gift finder',
         keywords: [
-          'gift guides', 'holiday gift guide', 'birthday gift ideas',
-          'valentines gifts', 'christmas gifts', 'gift ideas for her',
-          'gift ideas for him', 'gift recommendations'
+          'gift guides',
+          'holiday gift guide',
+          'birthday gift ideas',
+          'valentines gifts',
+          'christmas gifts',
+          'gift ideas for her',
+          'gift ideas for him',
+          'gift recommendations',
         ],
       }
 
@@ -79,11 +95,14 @@ describe('SEO Validation', () => {
     it('should detect invalid title length', () => {
       const metadata: Metadata = {
         title: 'Short',
-        description: 'This is a valid description with proper length for SEO purposes and should pass validation.',
+        description:
+          'This is a valid description with proper length for SEO purposes and should pass validation.',
       }
 
       const errors = validateMetaTags(metadata)
-      expect(errors).toContain('Title length 5 is not optimal (30-70 recommended)')
+      expect(errors).toContain(
+        'Title length 5 is not optimal (30-70 recommended)'
+      )
     })
 
     it('should detect invalid description length', () => {
@@ -93,7 +112,9 @@ describe('SEO Validation', () => {
       }
 
       const errors = validateMetaTags(metadata)
-      expect(errors).toContain('Description length 9 is not optimal (120-160 recommended)')
+      expect(errors).toContain(
+        'Description length 9 is not optimal (120-160 recommended)'
+      )
     })
   })
 
@@ -113,7 +134,10 @@ describe('SEO Validation', () => {
     })
 
     it('should validate software application schema', () => {
-      const errors = validateStructuredData(softwareApplicationSchema, 'software')
+      const errors = validateStructuredData(
+        softwareApplicationSchema,
+        'software'
+      )
       expect(errors).toHaveLength(0)
       expect(softwareApplicationSchema['@type']).toBe('SoftwareApplication')
       expect(softwareApplicationSchema.name).toBe('FairyWize AI Gift Finder')
@@ -135,7 +159,7 @@ describe('SEO Validation', () => {
         '/gift-guides/under-50',
       ]
 
-      urls.forEach(url => {
+      urls.forEach((url) => {
         expect(url).toMatch(/^\/[a-z0-9-]+(\/[a-z0-9-]+)*$/)
         expect(url.length).toBeLessThan(100) // Reasonable URL length
       })
@@ -148,7 +172,7 @@ describe('SEO Validation', () => {
         '/api/recommend',
       ]
 
-      endpoints.forEach(endpoint => {
+      endpoints.forEach((endpoint) => {
         expect(endpoint).toMatch(/^\/api\/[a-z-]+/)
       })
     })

@@ -1,5 +1,5 @@
-const { createClient } = require("@supabase/supabase-js")
-require("dotenv").config({ path: ".env.local" })
+const { createClient } = require('@supabase/supabase-js')
+require('dotenv').config({ path: '.env.local' })
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -7,16 +7,16 @@ const supabase = createClient(
 )
 
 async function test() {
-  console.log("Testing sign up...")
+  console.log('Testing sign up...')
   const { data, error } = await supabase.auth.signUp({
-    email: "test@example.com",
-    password: "password123"
+    email: 'test@example.com',
+    password: 'password123',
   })
-  
+
   if (error) {
-    console.log("Error:", error.message)
+    console.log('Error:', error.message)
   } else {
-    console.log("Success:", data.user?.email)
+    console.log('Success:', data.user?.email)
   }
 }
 

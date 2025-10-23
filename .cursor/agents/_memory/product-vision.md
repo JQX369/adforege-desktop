@@ -8,5 +8,3 @@ Success: A public production URL that reflects latest main.
 Placeholder. To be defined by stakeholders.
 
 Guardrail: Do not modify this file without the explicit token "APPROVE: VISION CHANGE".
-
-

@@ -31,24 +31,27 @@
 ## ✅ WHAT I'VE BUILT SO FAR
 
 ### **1. Enhanced Database Schema**
+
 Added 20+ fields to Product model:
 
-| Category | New Fields |
-|----------|------------|
-| **Pricing** | originalPrice, discountPercent |
-| **Shipping** | shippingCost, freeShipping, primeEligible |
-| **Delivery** | deliveryDays, deliveryMin, deliveryMax |
-| **Inventory** | inStock, stockQuantity |
-| **Details** | features[], shortDescription, imagesThumbnail[] |
-| **Physical** | weight, dimensions |
-| **Quality** | condition, bestSeller, sellerRating |
+| Category      | New Fields                                      |
+| ------------- | ----------------------------------------------- |
+| **Pricing**   | originalPrice, discountPercent                  |
+| **Shipping**  | shippingCost, freeShipping, primeEligible       |
+| **Delivery**  | deliveryDays, deliveryMin, deliveryMax          |
+| **Inventory** | inStock, stockQuantity                          |
+| **Details**   | features[], shortDescription, imagesThumbnail[] |
+| **Physical**  | weight, dimensions                              |
+| **Quality**   | condition, bestSeller, sellerRating             |
 
 **Status:** ✅ Ready to migrate
 
 ### **2. Complete Technical Plan**
+
 📄 `@docs/API_INGESTION_PLAN.md` (comprehensive 28-hour plan)
 
 **Includes:**
+
 - API capabilities breakdown
 - Provider architecture
 - Quality scoring system
@@ -97,10 +100,11 @@ That's it! Then I build everything.
 ## 🚀 WHAT I'LL BUILD (5 days)
 
 ### **Day 1-2: Enhanced Providers**
+
 ```typescript
 // Rainforest Provider (Amazon)
 - Search products by keyword
-- Get detailed product info  
+- Get detailed product info
 - Capture ALL fields: price, shipping, delivery, Prime, ratings, 10+ images
 - Retry logic + rate limiting
 - Error handling
@@ -114,6 +118,7 @@ That's it! Then I build everything.
 ```
 
 ### **Day 3: Orchestration System**
+
 ```typescript
 // Ingestion Orchestrator
 - Keyword-based ingestion
@@ -125,6 +130,7 @@ That's it! Then I build everything.
 ```
 
 ### **Day 4: Testing & CLI**
+
 ```bash
 # Easy-to-use commands
 npm run ingest:rainforest -- --keywords="tech gifts,jewelry"
@@ -135,6 +141,7 @@ npm run report:quality
 ```
 
 ### **Day 5: Deploy & Run**
+
 - Deploy to production
 - Set up daily cron jobs
 - Run first ingestion
@@ -145,15 +152,16 @@ npm run report:quality
 
 ## 💰 COST BREAKDOWN
 
-| Service | Cost | What You Get |
-|---------|------|--------------|
-| **Rainforest API** | $49/mo | 1000 API calls = 500 Amazon products/mo |
-| **eBay API** | $0 | 5000 calls/day = unlimited products |
-| **OpenAI** | ~$10/mo | Embeddings for semantic search |
-| **Infrastructure** | $0-20/mo | Vercel + Supabase (existing) |
-| **TOTAL** | **$59-79/mo** | 1000+ products with complete data |
+| Service            | Cost          | What You Get                            |
+| ------------------ | ------------- | --------------------------------------- |
+| **Rainforest API** | $49/mo        | 1000 API calls = 500 Amazon products/mo |
+| **eBay API**       | $0            | 5000 calls/day = unlimited products     |
+| **OpenAI**         | ~$10/mo       | Embeddings for semantic search          |
+| **Infrastructure** | $0-20/mo      | Vercel + Supabase (existing)            |
+| **TOTAL**          | **$59-79/mo** | 1000+ products with complete data       |
 
 **ROI:**
+
 - 1 vendor signup ($9-99/mo) = Break-even
 - 10 affiliate sales ($50-150) = Profitable
 - **Expected Month 2+:** Profitable
@@ -163,6 +171,7 @@ npm run report:quality
 ## 📊 DATA QUALITY COMPARISON
 
 ### **Current System (Basic):**
+
 ```json
 {
   "title": "Product Name",
@@ -174,10 +183,12 @@ npm run report:quality
   "stock": null
 }
 ```
+
 **Completeness:** 40%  
 **Quality Score:** 0.50
 
 ### **New System (Robust):**
+
 ```json
 {
   "title": "Wireless Charging Pad - Fast Charge 15W",
@@ -206,6 +217,7 @@ npm run report:quality
   "qualityScore": 0.95
 }
 ```
+
 **Completeness:** 95%  
 **Quality Score:** 0.95
 
@@ -214,37 +226,41 @@ npm run report:quality
 ## 🎯 EXPECTED OUTCOMES
 
 ### **Week 1:**
+
 - ✅ 1000 products ingested
 - ✅ 90%+ data completeness
 - ✅ 85%+ auto-approved
 - ✅ All fields captured (shipping, delivery, images)
 
 ### **Month 1:**
+
 - ✅ 3000+ products
 - ✅ 20+ gift categories
 - ✅ Daily automated updates
 - ✅ 95%+ data quality
 
 ### **Product Distribution:**
-| Category | Target |
-|----------|--------|
-| Tech & Electronics | 150 |
-| Personalized Gifts | 150 |
-| Home & Kitchen | 150 |
-| Jewelry & Accessories | 100 |
-| Books & Media | 100 |
-| Toys & Games | 100 |
-| Beauty & Wellness | 100 |
-| Sports & Fitness | 50 |
-| Food & Gourmet | 50 |
-| Other Categories | 50 |
-| **TOTAL** | **1000** |
+
+| Category              | Target   |
+| --------------------- | -------- |
+| Tech & Electronics    | 150      |
+| Personalized Gifts    | 150      |
+| Home & Kitchen        | 150      |
+| Jewelry & Accessories | 100      |
+| Books & Media         | 100      |
+| Toys & Games          | 100      |
+| Beauty & Wellness     | 100      |
+| Sports & Fitness      | 50       |
+| Food & Gourmet        | 50       |
+| Other Categories      | 50       |
+| **TOTAL**             | **1000** |
 
 ---
 
 ## ⚡ QUICK START
 
 ### **Option 1: Full Build (Recommended)**
+
 ```bash
 # 1. Get API keys (30 min)
 # 2. Run migration (5 min)
@@ -253,6 +269,7 @@ npm run report:quality
 ```
 
 ### **Option 2: eBay Only First (Free)**
+
 ```bash
 # 1. Get eBay keys only (15 min)
 # 2. Run migration (5 min)
@@ -262,6 +279,7 @@ npm run report:quality
 ```
 
 ### **Option 3: Test First**
+
 ```bash
 # 1. Get API keys
 # 2. Test with 50 products
@@ -289,6 +307,7 @@ Before we start:
 ## 🎉 READY TO LAUNCH?
 
 **You're 5 days away from:**
+
 - ✅ 1000+ products (no manual work)
 - ✅ Complete product data (price, shipping, delivery, images)
 - ✅ Automated daily updates
@@ -296,6 +315,7 @@ Before we start:
 - ✅ Ready to launch your app
 
 **Total Investment:**
+
 - 💵 $49/mo (Rainforest) or $0 (eBay only)
 - ⏱️ 30 min (get API keys)
 - 🛠️ 5 days (I build everything)
@@ -317,17 +337,16 @@ Before we start:
 
 ## 📚 DOCUMENTATION
 
-| Document | Purpose |
-|----------|---------|
-| `@docs/API_INGESTION_PLAN.md` | Complete technical specification |
-| `@docs/READY_TO_BUILD.md` | Action items & next steps |
-| `API_INGESTION_SUMMARY.md` | This document - quick overview |
-| `prisma/schema.prisma` | Updated database schema |
-| `prisma/migrations/20251001_enhance_product_data/` | Migration SQL |
+| Document                                           | Purpose                          |
+| -------------------------------------------------- | -------------------------------- |
+| `@docs/API_INGESTION_PLAN.md`                      | Complete technical specification |
+| `@docs/READY_TO_BUILD.md`                          | Action items & next steps        |
+| `API_INGESTION_SUMMARY.md`                         | This document - quick overview   |
+| `prisma/schema.prisma`                             | Updated database schema          |
+| `prisma/migrations/20251001_enhance_product_data/` | Migration SQL                    |
 
 ---
 
 **The plan is complete. The database is ready. I'm standing by.** ⚡
 
 **What's your decision?** 🎯
-

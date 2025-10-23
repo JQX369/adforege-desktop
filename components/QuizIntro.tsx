@@ -8,12 +8,22 @@ export function QuizIntro({ onStart }: QuizIntroProps) {
       <div className="rounded-3xl border border-border bg-white p-8 shadow-sm">
         <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="max-w-xl space-y-4">
-            <p className="text-body-sm font-semibold uppercase tracking-[0.2em] text-primary">Just 2 minutes</p>
-            <h2 className="text-display-sm text-foreground">Tell us about them</h2>
+            <p className="text-body-sm font-semibold uppercase tracking-[0.2em] text-primary">
+              Just 2 minutes
+            </p>
+            <h2 className="text-display-sm text-foreground">
+              Tell us about them
+            </h2>
             <div className="flex flex-wrap gap-3 text-body-sm text-muted-foreground">
-              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1">⏱️ ~2 minutes</span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1">🔒 No login</span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1">🔖 Save & share</span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1">
+                ⏱️ ~2 minutes
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1">
+                🔒 No login
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-secondary px-3 py-1">
+                🔖 Save & share
+              </span>
             </div>
           </div>
           <button
@@ -29,4 +39,3 @@ export function QuizIntro({ onStart }: QuizIntroProps) {
     </section>
   )
 }
-

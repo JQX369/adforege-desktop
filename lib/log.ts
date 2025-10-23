@@ -5,7 +5,11 @@ interface LogContext {
   [key: string]: unknown
 }
 
-const formatMessage = (level: LogLevel, message: string, context?: LogContext) => {
+const formatMessage = (
+  level: LogLevel,
+  message: string,
+  context?: LogContext
+) => {
   if (!context || Object.keys(context).length === 0) {
     return message
   }
@@ -24,4 +28,3 @@ export const logWarn = (message: string, context?: LogContext) => {
 export const logError = (message: string, context?: LogContext) => {
   console.error(formatMessage('error', message, context))
 }
-

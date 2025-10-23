@@ -8,10 +8,10 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { ScrollArea } from '@/components/ui/scroll-area'
+} from '@/src/ui/sheet'
+import { Button } from '@/src/ui/button'
+import { Badge } from '@/src/ui/badge'
+import { ScrollArea } from '@/src/ui/scroll-area'
 import { Heart, ExternalLink, Trash2 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -49,13 +49,16 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
           title: p.title,
           description: p.description,
           price: typeof p.price === 'number' ? p.price : Number(p.price) || 0,
-          imageUrl: p.imageUrl || (Array.isArray(p.images) ? p.images[0] : '') || '',
+          imageUrl:
+            p.imageUrl || (Array.isArray(p.images) ? p.images[0] : '') || '',
           affiliateUrl: p.affiliateUrl,
           categories: Array.isArray(p.categories) ? p.categories : [],
           savedAt: p.savedAt,
         }))
         setSavedProducts(normalized)
-        setSavedCount(typeof data.count === 'number' ? data.count : normalized.length)
+        setSavedCount(
+          typeof data.count === 'number' ? data.count : normalized.length
+        )
       }
     } catch (error) {
       console.error('Error fetching saved products:', error)
@@ -119,7 +122,7 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
             Your favorite gift recommendations
           </SheetDescription>
         </SheetHeader>
-        
+
         <ScrollArea className="h-[calc(100vh-140px)] mt-6">
           {isLoading ? (
             <div className="flex items-center justify-center h-40">
@@ -155,15 +158,21 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-medium line-clamp-1">{product.title}</h4>
-                    <p className="text-xs text-muted-foreground mt-0.5">Saved {new Date(product.savedAt).toLocaleDateString()}</p>
+                    <h4 className="font-medium line-clamp-1">
+                      {product.title}
+                    </h4>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Saved {new Date(product.savedAt).toLocaleDateString()}
+                    </p>
                     <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
                       {product.description}
                     </p>
-                      <div className="flex items-center justify-between mt-2">
-                      <span className="font-semibold">${product.price.toFixed(2)}</span>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className="font-semibold">
+                        ${product.price.toFixed(2)}
+                      </span>
                       <div className="flex gap-2">
                         <a
                           href={`/api/r?url=${encodeURIComponent(product.affiliateUrl)}`}
@@ -185,4 +194,4 @@ export function SavedDrawer({ userId, trigger }: SavedDrawerProps) {
       </SheetContent>
     </Sheet>
   )
-} 
+}

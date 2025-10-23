@@ -20,7 +20,10 @@ describe('trackEvent', () => {
 
   it('pushes to dataLayer when available', () => {
     trackEvent('cta_primary_click', { source: 'hero' })
-    expect(window.dataLayer).toContainEqual({ event: 'cta_primary_click', source: 'hero' })
+    expect(window.dataLayer).toContainEqual({
+      event: 'cta_primary_click',
+      source: 'hero',
+    })
   })
 
   it('dispatches custom event for listeners', () => {

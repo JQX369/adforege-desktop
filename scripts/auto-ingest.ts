@@ -7,8 +7,8 @@
 
 import { config } from 'dotenv'
 import { prisma } from '@/lib/prisma'
-import { syncRainforestByKeyword } from '@/lib/providers/rainforest-enhanced'
-import { syncEbayByKeyword } from '@/lib/providers/ebay-enhanced'
+import { syncRainforestByKeyword } from '@/src/lib/clients/rainforest-enhanced'
+import { syncEbayByKeyword } from '@/src/lib/clients/ebay-enhanced'
 
 // Load environment variables
 config({ path: '.env.local' })
@@ -65,9 +65,12 @@ class AutoIngestionSystem {
     await this.runIngestion()
 
     // Schedule periodic runs
-    this.intervalId = setInterval(async () => {
-      await this.runIngestion()
-    }, this.config.intervalMinutes * 60 * 1000)
+    this.intervalId = setInterval(
+      async () => {
+        await this.runIngestion()
+      },
+      this.config.intervalMinutes * 60 * 1000
+    )
 
     console.log('✅ Auto-ingestion system started')
   }
@@ -79,7 +82,7 @@ class AutoIngestionSystem {
     }
 
     console.log('🛑 Stopping auto-ingestion system...')
-    
+
     if (this.intervalId) {
       clearInterval(this.intervalId)
       this.intervalId = null
@@ -104,7 +107,7 @@ class AutoIngestionSystem {
       for (const provider of this.config.providers) {
         try {
           console.log(`  🔍 ${provider}...`)
-          
+
           let result
           if (provider === 'rainforest') {
             result = await syncRainforestByKeyword(keyword, {
@@ -123,18 +126,22 @@ class AutoIngestionSystem {
           if (result.success) {
             totalCreated += result.created
             totalUpdated += result.updated
-            console.log(`    ✅ ${result.created} created, ${result.updated} updated`)
+            console.log(
+              `    ✅ ${result.created} created, ${result.updated} updated`
+            )
           } else {
             totalErrors += result.errors
             errors.push(...result.errorMessages)
-            console.log(`    ❌ ${result.errors} errors: ${result.errorMessages.join(', ')}`)
+            console.log(
+              `    ❌ ${result.errors} errors: ${result.errorMessages.join(', ')}`
+            )
           }
 
           // Small delay between providers to avoid rate limits
-          await new Promise(resolve => setTimeout(resolve, 1000))
-
+          await new Promise((resolve) => setTimeout(resolve, 1000))
         } catch (error) {
-          const errorMsg = error instanceof Error ? error.message : 'Unknown error'
+          const errorMsg =
+            error instanceof Error ? error.message : 'Unknown error'
           totalErrors++
           errors.push(`${provider}: ${errorMsg}`)
           console.log(`    ❌ Error: ${errorMsg}`)
@@ -142,7 +149,7 @@ class AutoIngestionSystem {
       }
 
       // Delay between keywords to avoid rate limits
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000))
     }
 
     const duration = Date.now() - startTime
@@ -152,7 +159,9 @@ class AutoIngestionSystem {
     console.log(`   ❌ Errors: ${totalErrors}`)
 
     if (errors.length > 0) {
-      console.log(`   🚨 Error details: ${errors.slice(0, 5).join(', ')}${errors.length > 5 ? '...' : ''}`)
+      console.log(
+        `   🚨 Error details: ${errors.slice(0, 5).join(', ')}${errors.length > 5 ? '...' : ''}`
+      )
     }
 
     // Log to database for monitoring
@@ -179,7 +188,8 @@ class AutoIngestionSystem {
           productsCreated: data.created,
           productsUpdated: data.updated,
           errors: data.errors,
-          errorMessages: data.errorMessages.length > 0 ? data.errorMessages : null,
+          errorMessages:
+            data.errorMessages.length > 0 ? data.errorMessages : null,
         },
       })
       console.log('📝 Ingestion run logged to database')
@@ -195,9 +205,10 @@ class AutoIngestionSystem {
   }> {
     return {
       isRunning: this.isRunning,
-      nextRun: this.isRunning && this.intervalId 
-        ? new Date(Date.now() + this.config.intervalMinutes * 60 * 1000)
-        : undefined,
+      nextRun:
+        this.isRunning && this.intervalId
+          ? new Date(Date.now() + this.config.intervalMinutes * 60 * 1000)
+          : undefined,
       config: this.config,
     }
   }

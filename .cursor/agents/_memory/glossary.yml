@@ -6,6 +6,3 @@ api:
   definition: External service callable over HTTP to retrieve or enrich data
 index:
   definition: Data structure enabling fast retrieval (BM25, vector, faceted)
-
-
-

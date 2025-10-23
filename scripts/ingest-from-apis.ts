@@ -1,7 +1,7 @@
 #!/usr/bin/env ts-node
 /**
  * Main Ingestion Script - Rainforest + eBay
- * 
+ *
  * Usage:
  *   ts-node scripts/ingest-from-apis.ts --provider=rainforest --keywords="tech gifts,jewelry"
  *   ts-node scripts/ingest-from-apis.ts --provider=ebay --keywords="unique gifts"
@@ -32,7 +32,7 @@ const DEFAULT_KEYWORDS = [
   'gifts for mom birthday',
   'gifts for dad',
   'gifts for teens',
-  
+
   // Specific categories
   'jewelry gifts women',
   'home decor gifts',
@@ -56,7 +56,7 @@ interface IngestionConfig {
 async function main() {
   console.log('🚀 Starting API Ingestion System\n')
   console.log('='.repeat(60))
-  
+
   // Parse command line arguments
   const args = process.argv.slice(2)
   const config: IngestionConfig = {
@@ -70,7 +70,10 @@ async function main() {
     if (arg.startsWith('--provider=')) {
       config.provider = arg.split('=')[1] as any
     } else if (arg.startsWith('--keywords=')) {
-      config.keywords = arg.split('=')[1].split(',').map(k => k.trim())
+      config.keywords = arg
+        .split('=')[1]
+        .split(',')
+        .map((k) => k.trim())
     } else if (arg.startsWith('--limit=')) {
       config.limit = parseInt(arg.split('=')[1])
     } else if (arg === '--dry-run') {
@@ -115,7 +118,7 @@ async function main() {
 
   // For dry run we won't ingest but we still want to fetch
   const engine = new IngestionEngine()
-  
+
   // Statistics
   const stats = {
     totalProducts: 0,
@@ -139,11 +142,15 @@ async function main() {
       if (rainforest) {
         try {
           console.log('  📡 Fetching from Rainforest (Amazon)...')
-          const result = await syncRainforestByKeyword(keyword, { limit: config.limit || 20 })
+          const result = await syncRainforestByKeyword(keyword, {
+            limit: config.limit || 20,
+          })
           const amazonProducts = result.products || []
           products = products.concat(amazonProducts)
           stats.rainforestProducts += amazonProducts.length
-          console.log(`  ✅ Found ${amazonProducts.length} products from Amazon`)
+          console.log(
+            `  ✅ Found ${amazonProducts.length} products from Amazon`
+          )
         } catch (error) {
           console.error(`  ❌ Rainforest error:`, error)
           stats.errors++
@@ -154,7 +161,9 @@ async function main() {
       if (ebay) {
         try {
           console.log('  📡 Fetching from eBay...')
-          const result = await syncEbayByKeyword(keyword, { limit: config.limit || 20 })
+          const result = await syncEbayByKeyword(keyword, {
+            limit: config.limit || 20,
+          })
           const ebayProducts = result.products || []
           products = products.concat(ebayProducts)
           stats.ebayProducts += ebayProducts.length
@@ -169,9 +178,11 @@ async function main() {
 
       // Ingest products
       if (products.length > 0 && !config.dryRun) {
-        console.log(`  💾 Ingesting ${products.length} products into database...`)
+        console.log(
+          `  💾 Ingesting ${products.length} products into database...`
+        )
         const result = await engine.ingestProducts(products)
-        
+
         stats.created += result.created
         stats.updated += result.updated
         stats.errors += result.errors
@@ -180,11 +191,13 @@ async function main() {
         console.log(`     ✨ Created: ${result.created}`)
         console.log(`     🔄 Updated: ${result.updated}`)
         console.log(`     ⚠️  Errors: ${result.errors}`)
-        console.log(`     ⏱️  Duration: ${(result.duration / 1000).toFixed(1)}s`)
+        console.log(
+          `     ⏱️  Duration: ${(result.duration / 1000).toFixed(1)}s`
+        )
 
         if (result.errorMessages.length > 0) {
           console.log(`\n  ⚠️  Error details:`)
-          result.errorMessages.slice(0, 3).forEach(msg => {
+          result.errorMessages.slice(0, 3).forEach((msg) => {
             console.log(`     • ${msg}`)
           })
           if (result.errorMessages.length > 3) {
@@ -196,7 +209,7 @@ async function main() {
       }
 
       // Small delay between keywords
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      await new Promise((resolve) => setTimeout(resolve, 2000))
     }
 
     // Final statistics
@@ -211,31 +224,46 @@ async function main() {
     console.log(`  ├─ Created: ${stats.created}`)
     console.log(`  ├─ Updated: ${stats.updated}`)
     console.log(`  └─ Errors: ${stats.errors}`)
-    console.log(`\n  ⏱️  Total duration: ${((Date.now() - stats.startTime) / 1000 / 60).toFixed(1)} minutes`)
+    console.log(
+      `\n  ⏱️  Total duration: ${((Date.now() - stats.startTime) / 1000 / 60).toFixed(1)} minutes`
+    )
 
     // Show database stats
     const dbStats = await engine.getStats()
     console.log(`\n📈 Database Status:`)
     console.log(`  Total products: ${dbStats.total}`)
-    console.log(`  ├─ Approved: ${dbStats.approved} (${((dbStats.approved / dbStats.total) * 100).toFixed(1)}%)`)
+    console.log(
+      `  ├─ Approved: ${dbStats.approved} (${((dbStats.approved / dbStats.total) * 100).toFixed(1)}%)`
+    )
     console.log(`  ├─ Pending: ${dbStats.pending}`)
     console.log(`  └─ Rejected: ${dbStats.rejected}`)
     console.log(`\n  Quality metrics:`)
     console.log(`  ├─ Average quality score: ${dbStats.avgQuality.toFixed(2)}`)
-    console.log(`  ├─ With images: ${dbStats.dataCompleteness.withImages.toFixed(1)}%`)
-    console.log(`  ├─ With shipping: ${dbStats.dataCompleteness.withShipping.toFixed(1)}%`)
-    console.log(`  ├─ With delivery: ${dbStats.dataCompleteness.withDelivery.toFixed(1)}%`)
-    console.log(`  └─ In stock: ${dbStats.dataCompleteness.inStock.toFixed(1)}%`)
+    console.log(
+      `  ├─ With images: ${dbStats.dataCompleteness.withImages.toFixed(1)}%`
+    )
+    console.log(
+      `  ├─ With shipping: ${dbStats.dataCompleteness.withShipping.toFixed(1)}%`
+    )
+    console.log(
+      `  ├─ With delivery: ${dbStats.dataCompleteness.withDelivery.toFixed(1)}%`
+    )
+    console.log(
+      `  └─ In stock: ${dbStats.dataCompleteness.inStock.toFixed(1)}%`
+    )
 
     // Show provider stats
     // These stats are no longer directly available from the providers as they are now sync functions
     // The original code had rainforest.getStats() and ebay.getStats()
     // Since the providers are now sync, we'll just log a message indicating they are ready.
-    console.log(`\n🌧️  Rainforest API Stats: (sync function, no direct stats available here)`)
-    console.log(`🛒 eBay API Stats: (sync function, no direct stats available here)`)
+    console.log(
+      `\n🌧️  Rainforest API Stats: (sync function, no direct stats available here)`
+    )
+    console.log(
+      `🛒 eBay API Stats: (sync function, no direct stats available here)`
+    )
 
     console.log('\n✅ All done! Your catalog is ready.\n')
-
   } catch (error) {
     console.error('\n❌ Fatal error:', error)
     process.exit(1)
@@ -246,11 +274,10 @@ async function main() {
 
 // Run if executed directly
 if (require.main === module) {
-  main().catch(error => {
+  main().catch((error) => {
     console.error('Fatal error:', error)
     process.exit(1)
   })
 }
 
 export { main }
-

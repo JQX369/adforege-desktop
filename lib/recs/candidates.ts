@@ -31,7 +31,11 @@ const SELECT_FIELDS = Prisma.sql`
   "popularityScore"
 `
 
-async function fetchWithVector(session: SessionProfile, limit: number, whereSql: Prisma.Sql): Promise<CandidateProduct[] | null> {
+async function fetchWithVector(
+  session: SessionProfile,
+  limit: number,
+  whereSql: Prisma.Sql
+): Promise<CandidateProduct[] | null> {
   if (!session.embedding || session.embedding.length === 0) {
     return null
   }
@@ -58,7 +62,10 @@ async function fetchWithVector(session: SessionProfile, limit: number, whereSql:
   }
 }
 
-async function fetchFallback(where: Prisma.ProductWhereInput, limit: number): Promise<CandidateProduct[]> {
+async function fetchFallback(
+  where: Prisma.ProductWhereInput,
+  limit: number
+): Promise<CandidateProduct[]> {
   const products = await prisma.product.findMany({
     where,
     orderBy: [
@@ -97,7 +104,10 @@ async function fetchFallback(where: Prisma.ProductWhereInput, limit: number): Pr
   }))
 }
 
-export async function fetchVendorCandidates(session: SessionProfile, limit: number): Promise<CandidateProduct[]> {
+export async function fetchVendorCandidates(
+  session: SessionProfile,
+  limit: number
+): Promise<CandidateProduct[]> {
   const vectorWhere = Prisma.sql`"vendorEmail" IS NOT NULL`
   const vectorResults = await fetchWithVector(session, limit, vectorWhere)
   if (vectorResults && vectorResults.length) {
@@ -115,7 +125,10 @@ export async function fetchVendorCandidates(session: SessionProfile, limit: numb
   return fetchFallback(baseWhere, limit)
 }
 
-export async function fetchAffiliateCandidates(session: SessionProfile, limit: number): Promise<CandidateProduct[]> {
+export async function fetchAffiliateCandidates(
+  session: SessionProfile,
+  limit: number
+): Promise<CandidateProduct[]> {
   const vectorWhere = Prisma.sql`"vendorEmail" IS NULL`
   const vectorResults = await fetchWithVector(session, limit, vectorWhere)
   if (vectorResults && vectorResults.length) {
@@ -132,5 +145,3 @@ export async function fetchAffiliateCandidates(session: SessionProfile, limit: n
 
   return fetchFallback(baseWhere, limit)
 }
-
-

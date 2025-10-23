@@ -15,17 +15,36 @@ type Check = {
 async function checkOpenAI(): Promise<Check> {
   const key = process.env.OPENAI_API_KEY || ''
   if (!key || key.length < 40 || !key.startsWith('sk-')) {
-    return { name: 'openai.env', ok: false, detail: 'OPENAI_API_KEY missing or malformed' }
+    return {
+      name: 'openai.env',
+      ok: false,
+      detail: 'OPENAI_API_KEY missing or malformed',
+    }
   }
   try {
     const client = new OpenAI({ apiKey: key })
-    const res = await client.embeddings.create({ model: 'text-embedding-3-small', input: 'ok' })
+    const res = await client.embeddings.create({
+      model: 'text-embedding-3-small',
+      input: 'ok',
+    })
     if (!res.data?.[0]?.embedding?.length) {
-      return { name: 'openai.embed', ok: false, detail: 'Empty embedding returned' }
+      return {
+        name: 'openai.embed',
+        ok: false,
+        detail: 'Empty embedding returned',
+      }
     }
-    return { name: 'openai.embed', ok: true, detail: `dim=${res.data[0].embedding.length}` }
+    return {
+      name: 'openai.embed',
+      ok: true,
+      detail: `dim=${res.data[0].embedding.length}`,
+    }
   } catch (err: any) {
-    return { name: 'openai.embed', ok: false, detail: err?.message || String(err) }
+    return {
+      name: 'openai.embed',
+      ok: false,
+      detail: err?.message || String(err),
+    }
   }
 }
 
@@ -50,7 +69,11 @@ function checkSupabase(): Check[] {
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   return [
     { name: 'supabase.url', ok: !!url, detail: url ? 'present' : 'missing' },
-    { name: 'supabase.anon', ok: !!anon && anon.length > 50, detail: anon ? `len=${anon.length}` : 'missing' },
+    {
+      name: 'supabase.anon',
+      ok: !!anon && anon.length > 50,
+      detail: anon ? `len=${anon.length}` : 'missing',
+    },
   ]
 }
 
@@ -59,29 +82,41 @@ function checkEbay(): Check[] {
   const secret = process.env.EBAY_CLIENT_SECRET
   return [
     { name: 'ebay.client_id', ok: !!id, detail: id ? 'present' : 'missing' },
-    { name: 'ebay.client_secret', ok: !!secret, detail: secret ? 'present' : 'missing' },
+    {
+      name: 'ebay.client_secret',
+      ok: !!secret,
+      detail: secret ? 'present' : 'missing',
+    },
   ]
 }
 
 function checkRainforest(): Check {
   const key = process.env.RAINFOREST_API_KEY
-  return { name: 'rainforest.key', ok: !!key, detail: key ? 'present' : 'missing' }
+  return {
+    name: 'rainforest.key',
+    ok: !!key,
+    detail: key ? 'present' : 'missing',
+  }
 }
 
 async function main() {
   const results: Check[] = []
   results.push(rainforest())
 
-  function rainforest(): Check { return checkRainforest() }
+  function rainforest(): Check {
+    return checkRainforest()
+  }
 
   results.push(...checkSupabase(), ...checkEbay())
   results.push(await checkDatabase())
   results.push(await checkOpenAI())
 
-  const ok = results.every(r => r.ok)
+  const ok = results.every((r) => r.ok)
   console.log('Env/Service Verification Results:')
   for (const r of results) {
-    console.log(`${r.ok ? '✅' : '❌'} ${r.name}${r.detail ? ` - ${r.detail}` : ''}`)
+    console.log(
+      `${r.ok ? '✅' : '❌'} ${r.name}${r.detail ? ` - ${r.detail}` : ''}`
+    )
   }
   if (!ok) process.exitCode = 1
 }
@@ -90,5 +125,3 @@ main().catch((e) => {
   console.error('verify-env failed:', e)
   process.exitCode = 1
 })
-
-

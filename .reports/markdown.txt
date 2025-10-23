@@ -1,0 +1,14 @@
+.cursor/agents/_memory/decisions.log.md
+.cursor/agents/_memory/product-vision.md
+.cursor/agents/_templates/agent.template.md
+.cursor/agents/engineering/backend-architect.md
+.cursor/agents/engineering/frontend-developer.md
+.cursor/commands/gi.md
+.cursor/scratchpad.md
+API_INGESTION_SUMMARY.md
+BUILD_COMPLETE.md
+LAUNCH_CHECKLIST.md
+README.md
+SETUP_GUIDE.md
+TESTING.md
+VENDOR_PRICING.md

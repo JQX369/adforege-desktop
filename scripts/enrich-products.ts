@@ -38,7 +38,11 @@ async function fetchProducts(limit: number, force: boolean) {
   })
 }
 
-async function generateEnrichment(product: { title: string; description: string; features: string[] }) {
+async function generateEnrichment(product: {
+  title: string
+  description: string
+  features: string[]
+}) {
   const systemPrompt = `You are a product enrichment assistant. Respond ONLY with strict JSON.`
   const userPrompt = `Create enrichment details for this product.
 Title: ${product.title}
@@ -93,15 +97,22 @@ async function enrichProduct(productId: string) {
   const enrichment = await generateEnrichment(product)
   if (!enrichment) return
 
-  const summaryForEmbedding = enrichment.summary || `${product.title} ${enrichment.shortDescription ?? ''}`
+  const summaryForEmbedding =
+    enrichment.summary ||
+    `${product.title} ${enrichment.shortDescription ?? ''}`
   const embedding = await generateEmbedding(summaryForEmbedding)
 
   await prisma.$transaction(async (tx) => {
     await tx.product.update({
       where: { id: productId },
       data: {
-        shortDescription: enrichment.shortDescription?.slice(0, 200) || product.shortDescription,
-        features: enrichment.highlights && enrichment.highlights.length ? enrichment.highlights : product.features,
+        shortDescription:
+          enrichment.shortDescription?.slice(0, 200) ||
+          product.shortDescription,
+        features:
+          enrichment.highlights && enrichment.highlights.length
+            ? enrichment.highlights
+            : product.features,
         lastEnrichedAt: new Date(),
       },
     })
@@ -115,7 +126,11 @@ async function enrichProduct(productId: string) {
 
     if (tagsToCreate.size) {
       await tx.productTag.createMany({
-        data: Array.from(tagsToCreate).map((tag) => ({ productId, tag, weight: 1 })),
+        data: Array.from(tagsToCreate).map((tag) => ({
+          productId,
+          tag,
+          weight: 1,
+        })),
         skipDuplicates: true,
       })
     }
@@ -131,7 +146,9 @@ async function enrichProduct(productId: string) {
 }
 
 async function main() {
-  const limitArgRaw = process.argv.find((arg) => arg.startsWith('--limit='))?.replace('--limit=', '')
+  const limitArgRaw = process.argv
+    .find((arg) => arg.startsWith('--limit='))
+    ?.replace('--limit=', '')
   const limitArg = limitArgRaw ? Number(limitArgRaw) : NaN
   const take = Number.isFinite(limitArg) && limitArg > 0 ? limitArg : 20
   const force = process.argv.includes('--force')
@@ -163,5 +180,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect()
   })
-
-

@@ -147,6 +147,7 @@ npm run test:all
 ```
 
 ### Test Coverage
+
 - ✅ Unit tests for core utilities (currency, prices, middleware)
 - ✅ Integration tests for API endpoints
 - ✅ E2E tests for user journeys (Playwright)
@@ -155,6 +156,7 @@ npm run test:all
 - ✅ Performance and accessibility checks
 
 ### Manual Testing Checklist
+
 - [ ] Landing form → recommendations → swipe interactions
 - [ ] Currency switching (USD → GBP → EUR)
 - [ ] Gift guides load correctly
@@ -177,4 +179,4 @@ npm run test:all
 
 ## License
 
-MIT – see LICENSE 
+MIT – see LICENSE

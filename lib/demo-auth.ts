@@ -5,7 +5,10 @@ export const DEMO_USER = {
 }
 
 export function isDemoMode() {
-  return !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  return (
+    !process.env.NEXT_PUBLIC_SUPABASE_URL ||
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
 }
 
 export function getDemoUser() {

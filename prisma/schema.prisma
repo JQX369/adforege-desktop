@@ -13,6 +13,14 @@ model User {
   embedding Float[]  @default([])
   createdAt DateTime @default(now())
   swipes    Swipe[]
+  comments  Comment[]
+  reviews   ProductReview[]
+  content   Content[]
+  conversionScore       Float               @default(0)
+  affiliateClicks       AffiliateClick[]
+  abTestAssignments     ABTestAssignment[]
+  conversionEvents      ConversionEvent[]
+  userInteractions      UserInteraction[]
 }
 
 model Product {
@@ -48,6 +56,7 @@ model Product {
   discountPercent  Float?
   shippingCost     Float?
   freeShipping     Boolean            @default(false)
+  reviews          ProductReview[]
   deliveryDays     String?
   deliveryMin      Int?
   deliveryMax      Int?
@@ -71,15 +80,119 @@ model Product {
   merchant         Merchant?          @relation(fields: [merchantId], references: [id])
   vendor           Vendor?            @relation(fields: [vendorId], references: [id])
   swipes           Swipe[]
+  affiliateClicks  AffiliateClick[]
+  affiliateConversions AffiliateConversion[]
 
-  @@index([asin])
-  @@index([urlCanonical])
-  @@index([inStock])
-  @@index([primeEligible])
-  @@index([condition])
-  @@index([freeShipping])
-  @@index([bestSeller])
-  @@index([sourceItemId])
+  @@index([asin], map: "Product_asin_idx")
+  @@index([urlCanonical], map: "Product_urlCanonical_idx")
+  @@index([inStock], map: "Product_inStock_idx")
+  @@index([primeEligible], map: "Product_primeEligible_idx")
+  @@index([condition], map: "Product_condition_idx")
+  @@index([freeShipping], map: "Product_freeShipping_idx")
+  @@index([bestSeller], map: "Product_bestSeller_idx")
+  @@index([sourceItemId], map: "Product_sourceItemId_idx")
+  @@index([status])
+  @@index([source])
+  @@index([vendorId])
+  @@index([merchantId])
+  @@index([price])
+  @@index([rating])
+  @@index([qualityScore])
+  @@index([popularityScore])
+  @@index([recencyScore])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([lastSeenAt])
+  @@index([expiresAt])
+  @@index([availability])
+  @@index([categories])
+  @@index([brand])
+  @@index([retailer])
+  @@index([affiliateProgram])
+  @@index([sellerName])
+  @@index([sellerRating])
+  @@index([stockQuantity])
+  @@index([deliveryMin])
+  @@index([deliveryMax])
+  @@index([weight])
+  @@index([discountPercent])
+  @@index([originalPrice])
+  @@index([shippingCost])
+  @@index([currency])
+  @@index([title])
+  @@index([description])
+  @@index([shortDescription])
+  @@index([features])
+  @@index([dimensions], map: "Product_dimensions_idx")
+  @@index([condition], map: "Product_condition_2_idx")
+  @@index([sourceItemId], map: "Product_sourceItemId_2_idx")
+  @@index([lastEnrichedAt], map: "Product_lastEnrichedAt_idx")
+  @@index([numReviews], map: "Product_numReviews_idx")
+  @@index([images], map: "Product_images_idx")
+  @@index([imagesThumbnail], map: "Product_imagesThumbnail_idx")
+  @@index([urlCanonical], map: "Product_urlCanonical_2_idx")
+  @@index([asin], map: "Product_asin_2_idx")
+  @@index([inStock], map: "Product_inStock_2_idx")
+  @@index([primeEligible], map: "Product_primeEligible_2_idx")
+  @@index([freeShipping], map: "Product_freeShipping_2_idx")
+  @@index([bestSeller], map: "Product_bestSeller_2_idx")
+  @@index([status, source])
+  @@index([status, availability])
+  @@index([price, rating])
+  @@index([qualityScore, popularityScore])
+  @@index([createdAt, updatedAt])
+  @@index([vendorId, status])
+  @@index([merchantId, status])
+  @@index([categories, price])
+  @@index([brand, rating])
+  @@index([retailer, availability])
+  @@index([affiliateProgram, status])
+  @@index([sellerName, sellerRating])
+  @@index([stockQuantity, availability])
+  @@index([deliveryMin, deliveryMax])
+  @@index([weight, shippingCost])
+  @@index([discountPercent, originalPrice])
+  @@index([currency, price])
+  @@index([title, description])
+  @@index([shortDescription, features])
+  @@index([dimensions, weight])
+  @@index([condition, availability])
+  @@index([sourceItemId, source])
+  @@index([lastEnrichedAt, updatedAt])
+  @@index([numReviews, rating])
+  @@index([images, imagesThumbnail])
+  @@index([urlCanonical, asin])
+  @@index([inStock, availability])
+  @@index([primeEligible, freeShipping])
+  @@index([bestSeller, qualityScore])
+  @@index([status, source, availability])
+  @@index([price, rating, qualityScore])
+  @@index([qualityScore, popularityScore, recencyScore])
+  @@index([createdAt, updatedAt, lastSeenAt])
+  @@index([vendorId, status, source])
+  @@index([merchantId, status, availability])
+  @@index([categories, price, rating])
+  @@index([brand, rating, qualityScore])
+  @@index([retailer, availability, inStock])
+  @@index([affiliateProgram, status, source])
+  @@index([sellerName, sellerRating, qualityScore])
+  @@index([stockQuantity, availability, inStock])
+  @@index([deliveryMin, deliveryMax, shippingCost])
+  @@index([weight, shippingCost, freeShipping])
+  @@index([discountPercent, originalPrice, price])
+  @@index([currency, price, shippingCost])
+  @@index([title, description, shortDescription])
+  @@index([shortDescription, features, categories])
+  @@index([dimensions, weight, shippingCost])
+  @@index([condition, availability, inStock])
+  @@index([sourceItemId, source, status])
+  @@index([lastEnrichedAt, updatedAt, createdAt])
+  @@index([numReviews, rating, qualityScore])
+  @@index([images, imagesThumbnail, title])
+  @@index([urlCanonical, asin, source])
+  @@index([inStock, availability, status])
+  @@index([primeEligible, freeShipping, shippingCost])
+  @@index([bestSeller, qualityScore, popularityScore])
 }
 
 model Swipe {
@@ -90,6 +203,21 @@ model Swipe {
   ts        DateTime    @default(now())
   product   Product     @relation(fields: [productId], references: [id])
   user      User        @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([productId])
+  @@index([action])
+  @@index([ts])
+  @@index([userId, action])
+  @@index([productId, action])
+  @@index([userId, productId])
+  @@index([ts, action])
+  @@index([userId, ts])
+  @@index([productId, ts])
+  @@index([userId, productId, action])
+  @@index([userId, action, ts])
+  @@index([productId, action, ts])
+  @@index([userId, productId, action, ts])
 }
 
 model Vendor {
@@ -103,6 +231,53 @@ model Vendor {
   currentPeriodEnd     DateTime?
   createdAt            DateTime           @default(now())
   products             Product[]
+  checkoutFlow         CheckoutFlow       @default(SINGLE_STEP)
+  optimizationAppliedAt DateTime?
+  
+  // Onboarding fields
+  firstName                String?
+  lastName                 String?
+  phone                    String?
+  businessName             String?
+  businessType             String?
+  website                  String?
+  description              String?
+  productCategories        String?
+  averagePrice             String?
+  productCount             String?
+  paymentMethod            String?
+  billingAddress           String?
+  taxId                    String?
+  communicationPreferences String?
+  marketingOptIn           Boolean         @default(false)
+  termsAccepted            Boolean         @default(false)
+  onboardingCompleted      Boolean         @default(false)
+  onboardingCompletedAt    DateTime?
+
+  @@index([userId])
+  @@index([email])
+  @@index([stripeCustomerId])
+  @@index([stripeSubscriptionId])
+  @@index([plan])
+  @@index([subscriptionStatus])
+  @@index([currentPeriodEnd])
+  @@index([createdAt])
+  @@index([plan, subscriptionStatus])
+  @@index([subscriptionStatus, currentPeriodEnd])
+  @@index([createdAt, plan])
+  @@index([plan, subscriptionStatus, currentPeriodEnd])
+  @@index([onboardingCompleted])
+  @@index([businessName])
+  @@index([businessType])
+  
+  abTestResults ABTestResult[]
+  conversionFunnels ConversionFunnel[]
+}
+
+enum CheckoutFlow {
+  SINGLE_STEP
+  MULTI_STEP
+  PROGRESSIVE
 }
 
 model Merchant {
@@ -114,6 +289,18 @@ model Merchant {
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
   products         Product[]
+
+  @@index([name])
+  @@index([domain])
+  @@index([affiliateProgram])
+  @@index([status])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([status, affiliateProgram])
+  @@index([createdAt, status])
+  @@index([domain, status])
+  @@index([name, status])
+  @@index([affiliateProgram, status, createdAt])
 }
 
 model SessionProfile {
@@ -126,6 +313,14 @@ model SessionProfile {
   region      String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
+
+  @@index([sessionId])
+  @@index([region])
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@index([region, createdAt])
+  @@index([sessionId, region])
+  @@index([createdAt, updatedAt])
 }
 
 model IngestionJob {
@@ -140,6 +335,22 @@ model IngestionJob {
   totalUpdated   Int             @default(0)
   totalRejected  Int             @default(0)
   log            String?
+
+  @@index([type])
+  @@index([status])
+  @@index([source])
+  @@index([startedAt])
+  @@index([finishedAt])
+  @@index([totalProcessed])
+  @@index([totalInserted])
+  @@index([totalUpdated])
+  @@index([totalRejected])
+  @@index([type, status])
+  @@index([status, startedAt])
+  @@index([source, status])
+  @@index([startedAt, finishedAt])
+  @@index([type, status, source])
+  @@index([status, startedAt, finishedAt])
 }
 
 model RecommendLog {
@@ -151,6 +362,14 @@ model RecommendLog {
   createdAt    DateTime @default(now())
 
   @@index([sessionId])
+  @@index([userId])
+  @@index([resultsCount])
+  @@index([createdAt])
+  @@index([sessionId, userId])
+  @@index([sessionId, createdAt])
+  @@index([userId, createdAt])
+  @@index([resultsCount, createdAt])
+  @@index([sessionId, userId, createdAt])
 }
 
 model ClickEvent {
@@ -162,6 +381,19 @@ model ClickEvent {
   createdAt DateTime @default(now())
 
   @@index([sessionId])
+  @@index([userId])
+  @@index([productId])
+  @@index([targetUrl])
+  @@index([createdAt])
+  @@index([sessionId, userId])
+  @@index([sessionId, productId])
+  @@index([userId, productId])
+  @@index([sessionId, createdAt])
+  @@index([userId, createdAt])
+  @@index([productId, createdAt])
+  @@index([sessionId, userId, productId])
+  @@index([sessionId, userId, createdAt])
+  @@index([userId, productId, createdAt])
 }
 
 enum SwipeAction {
@@ -243,6 +475,28 @@ enum RecommendationAction {
   SAVE
 }
 
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+  SCHEDULED
+}
+
+enum ContentType {
+  BLOG_POST
+  GIFT_GUIDE
+  REVIEW
+  FAQ
+  TUTORIAL
+}
+
+enum ReviewStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
 model RecommendationEvent {
   id        String             @id @default(cuid())
   sessionId String?
@@ -253,6 +507,34 @@ model RecommendationEvent {
   createdAt DateTime           @default(now())
   
   @@map("recommendation_events")
+  @@index([sessionId])
+  @@index([userId])
+  @@index([productId])
+  @@index([action])
+  @@index([createdAt])
+  @@index([sessionId, userId])
+  @@index([sessionId, productId])
+  @@index([userId, productId])
+  @@index([sessionId, action])
+  @@index([userId, action])
+  @@index([productId, action])
+  @@index([sessionId, createdAt])
+  @@index([userId, createdAt])
+  @@index([productId, createdAt], map: "RecommendationEvent_productId_createdAt_idx")
+  @@index([action, createdAt], map: "RecommendationEvent_action_createdAt_idx")
+  @@index([sessionId, userId, productId])
+  @@index([sessionId, userId, action])
+  @@index([userId, productId, action])
+  @@index([sessionId, productId, action])
+  @@index([sessionId, userId, createdAt])
+  @@index([userId, productId, createdAt])
+  @@index([sessionId, productId, createdAt], map: "RecommendationEvent_sessionId_productId_createdAt_idx")
+  @@index([action, createdAt], map: "RecommendationEvent_action_createdAt_2_idx")
+  @@index([sessionId, userId, productId, action])
+  @@index([sessionId, userId, productId, createdAt])
+  @@index([sessionId, userId, action, createdAt])
+  @@index([userId, productId, action, createdAt])
+  @@index([sessionId, productId, action, createdAt])
 }
 
 model IngestionLog {
@@ -265,4 +547,332 @@ model IngestionLog {
   errorMessages   Json?
   
   @@map("ingestion_logs")
+  @@index([createdAt])
+  @@index([durationMs])
+  @@index([productsCreated])
+  @@index([productsUpdated])
+  @@index([errors])
+  @@index([createdAt, durationMs])
+  @@index([productsCreated, productsUpdated])
+  @@index([errors, createdAt])
+  @@index([durationMs, productsCreated])
+  @@index([productsUpdated, errors])
+  @@index([createdAt, productsCreated])
+  @@index([durationMs, productsUpdated])
+  @@index([productsCreated, errors])
+  @@index([createdAt, durationMs, productsCreated])
+  @@index([productsCreated, productsUpdated, errors])
+  @@index([durationMs, productsUpdated, errors])
+  @@index([createdAt, productsCreated, productsUpdated])
+  @@index([createdAt, durationMs, productsCreated, productsUpdated])
+  @@index([productsCreated, productsUpdated, errors, createdAt])
+}
+
+model AnalyticsEvent {
+  id         String   @id @default(cuid())
+  event      String
+  properties Json?
+  userId     String?
+  sessionId  String
+  timestamp  DateTime @default(now())
+  page       String?
+  referrer   String?
+  userAgent  String?
+  ip         String?
+
+  @@index([event])
+  @@index([userId])
+  @@index([sessionId])
+  @@index([timestamp])
+  @@index([page])
+}
+
+model AnalyticsMetric {
+  id             String   @id @default(cuid())
+  eventType      String
+  date           DateTime @db.Date
+  count          Int      @default(0)
+  uniqueUsers    Int      @default(0)
+  uniqueSessions Int      @default(0)
+
+  @@unique([eventType, date])
+  @@index([eventType])
+  @@index([date])
+}
+
+model Content {
+  id          String        @id @default(cuid())
+  title       String
+  slug        String        @unique
+  description String?
+  content     String
+  excerpt     String?
+  type        ContentType
+  status      ContentStatus @default(DRAFT)
+  authorId    String?
+  author      User?         @relation(fields: [authorId], references: [id])
+  featuredImage String?
+  tags        String[]
+  categories  String[]
+  seoTitle    String?
+  seoDescription String?
+  metaKeywords String[]
+  publishedAt DateTime?
+  scheduledAt DateTime?
+  updatedAt   DateTime      @default(now()) @updatedAt
+  createdAt   DateTime      @default(now())
+  views       Int           @default(0)
+  likes       Int           @default(0)
+  shares      Int           @default(0)
+  comments    Comment[]
+  reviews     ProductReview[]
+  
+  @@index([status, publishedAt])
+  @@index([type, status])
+  @@index([slug])
+  @@index([tags])
+  @@index([categories])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  contentId String
+  content   Content  @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  parentId  String?
+  parent    Comment? @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+  text      String
+  status    CommentStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  
+  @@index([contentId, status])
+  @@index([userId])
+}
+
+model ProductReview {
+  id        String      @id @default(cuid())
+  productId String
+  product   Product     @relation(fields: [productId], references: [id])
+  userId    String?
+  user      User?       @relation(fields: [userId], references: [id])
+  contentId String?
+  content   Content?    @relation(fields: [contentId], references: [id])
+  rating    Int
+  title     String?
+  reviewText String
+  pros      String[]
+  cons      String[]
+  status    ReviewStatus @default(PENDING)
+  helpful   Int         @default(0)
+  verified  Boolean     @default(false)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+  
+  @@index([productId, status])
+  @@index([userId])
+  @@index([rating])
+}
+
+model GiftGuide {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  category    String
+  occasion    String?
+  targetAudience String?
+  featuredProducts String[]
+  seasonal    Boolean  @default(false)
+  budget      String?
+  tags        String[]
+  seoTitle    String?
+  seoDescription String?
+  metaKeywords String[]
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  views       Int      @default(0)
+  shares      Int      @default(0)
+  
+  @@index([category])
+  @@index([occasion])
+  @@index([seasonal])
+  @@index([budget])
+  @@index([slug])
+}
+
+model FAQ {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  category  String
+  order     Int      @default(0)
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  
+  @@index([category])
+  @@index([published])
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  status    NewsletterStatus @default(ACTIVE)
+  preferences String[] // Categories of interest
+  source    String? // How they signed up
+  subscribedAt DateTime @default(now())
+  unsubscribedAt DateTime?
+  
+  @@index([email])
+  @@index([status])
+}
+
+model ContentAnalytics {
+  id        String   @id @default(cuid())
+  contentId String
+  date      DateTime @default(now())
+  views     Int      @default(0)
+  clicks    Int      @default(0)
+  shares    Int      @default(0)
+  comments  Int      @default(0)
+  likes     Int      @default(0)
+  timeOnPage Int     @default(0) // seconds
+  
+  @@index([contentId, date])
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SPAM
+}
+
+enum NewsletterStatus {
+  ACTIVE
+  UNSUBSCRIBED
+  BOUNCED
+  COMPLAINED
+}
+
+model AffiliateClick {
+  id        String   @id @default(cuid())
+  clickId   String   @unique
+  program   String
+  productId String
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  converted Boolean  @default(false)
+  conversionAt DateTime?
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  conversion AffiliateConversion?
+  
+  @@index([clickId])
+  @@index([program])
+  @@index([productId])
+  @@index([userId])
+  @@index([converted])
+  @@index([createdAt])
+}
+
+model AffiliateConversion {
+  id        String   @id @default(cuid())
+  clickId   String   @unique
+  click     AffiliateClick @relation(fields: [clickId], references: [clickId])
+  program   String
+  revenue   Float
+  commission Float
+  orderId   String?
+  createdAt DateTime @default(now())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  
+  @@index([clickId])
+  @@index([program])
+  @@index([revenue])
+  @@index([createdAt])
+}
+
+model ABTestAssignment {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  experimentName String
+  variant       String
+  assignedAt    DateTime @default(now())
+  
+  @@unique([userId, experimentName])
+  @@index([userId])
+  @@index([experimentName])
+  @@index([variant])
+  @@index([assignedAt])
+}
+
+model ABTestResult {
+  id            String   @id @default(cuid())
+  experimentName String
+  variant       String
+  conversions   Int      @default(0)
+  total         Int      @default(0)
+  vendorId      String?
+  vendor        Vendor?  @relation(fields: [vendorId], references: [id])
+  createdAt     DateTime @default(now())
+  
+  @@index([experimentName])
+  @@index([variant])
+  @@index([vendorId])
+  @@index([createdAt])
+}
+
+model ConversionEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  eventType String
+  value     Float    @default(0)
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now())
+  
+  @@index([userId])
+  @@index([eventType])
+  @@index([value])
+  @@index([createdAt])
+}
+
+model ConversionFunnel {
+  id        String   @id @default(cuid())
+  vendorId  String?
+  vendor    Vendor?  @relation(fields: [vendorId], references: [id])
+  step      String
+  conversionRate Float
+  dropOff   Float
+  optimization String?
+  createdAt DateTime @default(now())
+  
+  @@index([vendorId])
+  @@index([step])
+  @@index([conversionRate])
+  @@index([createdAt])
+}
+
+model UserInteraction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  category    String?
+  duration    Int?
+  engagement  Float?
+  deviceType  String?
+  sessionLength Int?
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([category])
+  @@index([duration])
+  @@index([createdAt])
 }

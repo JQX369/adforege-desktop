@@ -1,5 +1,5 @@
-const { createClient } = require("@supabase/supabase-js")
-require("dotenv").config({ path: ".env.local" })
+const { createClient } = require('@supabase/supabase-js')
+require('dotenv').config({ path: '.env.local' })
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -7,28 +7,29 @@ const supabase = createClient(
 )
 
 async function test() {
-  console.log("Testing with valid email...")
-  
+  console.log('Testing with valid email...')
+
   const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-    email: "vendor@fairywize.com",
-    password: "SecurePass123!"
+    email: 'vendor@fairywize.com',
+    password: 'SecurePass123!',
   })
-  
+
   if (signUpError) {
-    console.log("Sign up:", signUpError.message)
+    console.log('Sign up:', signUpError.message)
   } else {
-    console.log("Sign up successful:", signUpData.user?.email)
+    console.log('Sign up successful:', signUpData.user?.email)
   }
-  
-  const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-    email: "vendor@fairywize.com",
-    password: "SecurePass123!"
-  })
-  
+
+  const { data: signInData, error: signInError } =
+    await supabase.auth.signInWithPassword({
+      email: 'vendor@fairywize.com',
+      password: 'SecurePass123!',
+    })
+
   if (signInError) {
-    console.log("Sign in:", signInError.message)
+    console.log('Sign in:', signInError.message)
   } else {
-    console.log("Sign in successful:", signInData.user?.email)
+    console.log('Sign in successful:', signInData.user?.email)
   }
 }
 

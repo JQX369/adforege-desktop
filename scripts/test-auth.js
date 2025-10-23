@@ -19,22 +19,28 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey)
 async function testAuth() {
   try {
     console.log('\n1. Testing sign up...')
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-      email: 'testvendor@example.com',
-      password: 'testpassword123'
-    })
-    
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
+      {
+        email: 'testvendor@example.com',
+        password: 'testpassword123',
+      }
+    )
+
     if (signUpError) {
-      console.log('Sign up error (expected for existing user):', signUpError.message)
+      console.log(
+        'Sign up error (expected for existing user):',
+        signUpError.message
+      )
     } else {
       console.log('Sign up successful:', signUpData.user?.id)
     }
 
     console.log('\n2. Testing sign in...')
-    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-      email: 'testvendor@example.com', 
-      password: 'testpassword123'
-    })
+    const { data: signInData, error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email: 'testvendor@example.com',
+        password: 'testpassword123',
+      })
 
     if (signInError) {
       console.error('Sign in error:', signInError.message)
@@ -50,7 +56,7 @@ async function testAuth() {
   }
 }
 
-testAuth().then(success => {
+testAuth().then((success) => {
   console.log('\nAuth test result:', success ? 'PASSED' : 'FAILED')
   process.exit(success ? 0 : 1)
 })

@@ -1,10 +1,9 @@
-tone: concise
+tone: concise, practical, and user-centric
 style:
   - prefer bullet points
   - clear commands and minimal fluff
   - call out blockers explicitly
 
-tone: concise, practical, and user-centric
 writing:
   headings: use '###' and '##' only
   bullets: use '-' with bold lead phrase
@@ -13,6 +12,3 @@ writing:
 preferences:
   ask-only-when-blocked: true
   summarize-briefly: true
-
-
-

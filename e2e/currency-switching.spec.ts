@@ -19,7 +19,7 @@ test.describe('Currency Switching', () => {
 
     // Check that prices are displayed in USD
     const priceElements = page.locator('[data-testid="price"]')
-    if (await priceElements.count() > 0) {
+    if ((await priceElements.count()) > 0) {
       const firstPrice = await priceElements.first().textContent()
       expect(firstPrice).toMatch(/\$\d+/)
     }
@@ -27,12 +27,14 @@ test.describe('Currency Switching', () => {
 
   test('should switch to GBP when UK locale is detected', async ({ page }) => {
     // Set UK locale
-    await page.context().addCookies([{
-      name: 'preferred-currency',
-      value: 'GBP',
-      domain: 'localhost',
-      path: '/',
-    }])
+    await page.context().addCookies([
+      {
+        name: 'preferred-currency',
+        value: 'GBP',
+        domain: 'localhost',
+        path: '/',
+      },
+    ])
 
     await page.goto('/')
 
@@ -57,11 +59,13 @@ test.describe('Currency Switching', () => {
 
     // Verify cookie is set
     const cookies = await page.context().cookies()
-    const currencyCookie = cookies.find(c => c.name === 'preferred-currency')
+    const currencyCookie = cookies.find((c) => c.name === 'preferred-currency')
     expect(currencyCookie?.value).toBe('GBP')
   })
 
-  test('should persist currency choice across page reloads', async ({ page }) => {
+  test('should persist currency choice across page reloads', async ({
+    page,
+  }) => {
     await page.goto('/')
 
     // Switch to EUR
@@ -107,14 +111,20 @@ test.describe('SEO and Performance', () => {
 
     // Check meta description
     const metaDescription = page.locator('meta[name="description"]')
-    await expect(metaDescription).toHaveAttribute('content', /Discover the ultimate gift guides/)
+    await expect(metaDescription).toHaveAttribute(
+      'content',
+      /Discover the ultimate gift guides/
+    )
 
     // Check Open Graph tags
     const ogTitle = page.locator('meta[property="og:title"]')
     await expect(ogTitle).toHaveAttribute('content', /Gift Guides \| FairyWize/)
 
     const ogDescription = page.locator('meta[property="og:description"]')
-    await expect(ogDescription).toHaveAttribute('content', /Discover the ultimate gift guides/)
+    await expect(ogDescription).toHaveAttribute(
+      'content',
+      /Discover the ultimate gift guides/
+    )
   })
 
   test('should have structured data', async ({ page }) => {
@@ -169,7 +179,11 @@ test.describe('Gift Guide Pages', () => {
   })
 
   test('should load individual guide pages', async ({ page }) => {
-    const guides = ['/gift-guides/for-her', '/gift-guides/for-him', '/gift-guides/birthday']
+    const guides = [
+      '/gift-guides/for-her',
+      '/gift-guides/for-him',
+      '/gift-guides/birthday',
+    ]
 
     for (const guideUrl of guides) {
       await page.goto(guideUrl)

@@ -17,7 +17,10 @@ const DEFAULT_MODEL = process.env.RECS_LLM_RERANK_MODEL || 'gpt-4.1-mini'
 
 const MAX_TOP_N = 30
 
-export async function applyLlmRerank(products: RankedProduct[], { session, topN }: RerankOptions): Promise<RankedProduct[]> {
+export async function applyLlmRerank(
+  products: RankedProduct[],
+  { session, topN }: RerankOptions
+): Promise<RankedProduct[]> {
   if (!products.length) return products
 
   const sliceCount = Math.min(topN ?? 20, MAX_TOP_N, products.length)
@@ -25,7 +28,9 @@ export async function applyLlmRerank(products: RankedProduct[], { session, topN 
 
   const promptItems = subset
     .map((product, index) => {
-      const price = product.price ? `${product.price.toFixed(2)} ${product.currency || 'USD'}` : 'N/A'
+      const price = product.price
+        ? `${product.price.toFixed(2)} ${product.currency || 'USD'}`
+        : 'N/A'
       const categories = (product.categories || []).slice(0, 5).join(', ')
       return `${index + 1}. id=${product.id} | title=${product.title} | price=${price} | categories=${categories}`
     })
@@ -62,7 +67,9 @@ Items:\n${promptItems}`
     const parsed = JSON.parse(output) as LlmRerankResponse
     if (!Array.isArray(parsed.order)) return products
 
-    const idToProduct = new Map(products.map((product) => [product.id, product]))
+    const idToProduct = new Map(
+      products.map((product) => [product.id, product])
+    )
     const ordered: RankedProduct[] = []
     const seen = new Set<string>()
 
@@ -87,9 +94,10 @@ Items:\n${promptItems}`
       rank: index + 1,
     }))
   } catch (error) {
-    console.log('[recs][llm-rerank] failed, falling back to heuristic order', error)
+    console.log(
+      '[recs][llm-rerank] failed, falling back to heuristic order',
+      error
+    )
     return products
   }
 }
-
-

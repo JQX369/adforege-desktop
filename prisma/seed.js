@@ -10,9 +10,12 @@ async function main() {
     {
       id: 'sample-1',
       title: 'Wireless Bluetooth Headphones',
-      description: 'High-quality wireless headphones with noise cancellation and 30-hour battery life.',
+      description:
+        'High-quality wireless headphones with noise cancellation and 30-hour battery life.',
       price: 89.99,
-      images: ['https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500'],
+      images: [
+        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500',
+      ],
       affiliateUrl: 'https://amazon.com/dp/B08N5WRWNW',
       categories: ['Electronics', 'Audio', 'Technology'],
       embedding: new Array(1536).fill(0.1), // Placeholder embedding
@@ -28,9 +31,12 @@ async function main() {
     {
       id: 'sample-2',
       title: 'Art Supplies Kit',
-      description: 'Complete art supplies kit with paints, brushes, canvas, and easel for creative projects.',
+      description:
+        'Complete art supplies kit with paints, brushes, canvas, and easel for creative projects.',
       price: 45.99,
-      images: ['https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500'],
+      images: [
+        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=500',
+      ],
       affiliateUrl: 'https://amazon.com/dp/B08N5WRWNW',
       categories: ['Art', 'Creative', 'Hobbies'],
       embedding: new Array(1536).fill(0.2), // Placeholder embedding
@@ -46,9 +52,12 @@ async function main() {
     {
       id: 'sample-3',
       title: 'Music Production Software',
-      description: 'Professional music production software with virtual instruments and effects.',
+      description:
+        'Professional music production software with virtual instruments and effects.',
       price: 199.99,
-      images: ['https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500'],
+      images: [
+        'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500',
+      ],
       affiliateUrl: 'https://amazon.com/dp/B08N5WRWNW',
       categories: ['Music', 'Software', 'Digital'],
       embedding: new Array(1536).fill(0.3), // Placeholder embedding

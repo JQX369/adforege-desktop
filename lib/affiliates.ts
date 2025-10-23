@@ -16,11 +16,17 @@ export function isAmazonUrl(urlString: string): boolean {
   }
 }
 
-export function isAllowedAffiliate(urlString: string, allowedDomains: string[], requireAllowed: boolean): boolean {
+export function isAllowedAffiliate(
+  urlString: string,
+  allowedDomains: string[],
+  requireAllowed: boolean
+): boolean {
   try {
     const hostname = new URL(urlString).hostname.toLowerCase()
     if (!requireAllowed) return true
-    return allowedDomains.some(domain => hostname === domain || hostname.endsWith(`.${domain}`))
+    return allowedDomains.some(
+      (domain) => hostname === domain || hostname.endsWith(`.${domain}`)
+    )
   } catch {
     return false
   }
@@ -40,7 +46,10 @@ const COUNTRY_TO_AMAZON_DOMAIN: Record<string, string> = {
   JP: 'amazon.co.jp',
 }
 
-export function localizeAmazonUrl(rawUrl: string, countryCode?: string): string {
+export function localizeAmazonUrl(
+  rawUrl: string,
+  countryCode?: string
+): string {
   try {
     const url = new URL(rawUrl)
     const hostname = url.hostname.toLowerCase()
@@ -55,12 +64,18 @@ export function localizeAmazonUrl(rawUrl: string, countryCode?: string): string 
   }
 }
 
-export function buildAffiliateUrlWithLocale(rawUrl: string, countryCode?: string): string {
+export function buildAffiliateUrlWithLocale(
+  rawUrl: string,
+  countryCode?: string
+): string {
   const localized = localizeAmazonUrl(rawUrl, countryCode)
   return buildAffiliateUrl(localized, countryCode)
 }
 
-export function buildAffiliateUrl(rawUrl: string, countryCode?: string): string {
+export function buildAffiliateUrl(
+  rawUrl: string,
+  countryCode?: string
+): string {
   // Get environment variables
   const amazonTag = process.env.NEXT_PUBLIC_AMZ_TAG
   const etsyRef = process.env.NEXT_PUBLIC_ETSY_ID
@@ -127,36 +142,38 @@ export function cleanProductUrl(url: string): string {
   try {
     const urlObj = new URL(url)
     const hostname = urlObj.hostname.toLowerCase()
-    
+
     // Keep only essential params for different platforms
     const essentialParams: Record<string, string[]> = {
       // For any amazon.* domain, keep only tag
-      'amazon': ['tag'],
+      amazon: ['tag'],
       'amzn.to': ['tag'],
       'etsy.com': ['ref', 'listing_id', 'pro'],
     }
-    
+
     // Find matching domain
-    const domain = Object.keys(essentialParams).find(d => d === 'amazon' ? hostname.includes('amazon.') : hostname.includes(d))
-    
+    const domain = Object.keys(essentialParams).find((d) =>
+      d === 'amazon' ? hostname.includes('amazon.') : hostname.includes(d)
+    )
+
     if (domain) {
       const paramsToKeep = essentialParams[domain]
       const searchParams = new URLSearchParams()
-      
+
       // Keep only essential params
-      paramsToKeep.forEach(param => {
+      paramsToKeep.forEach((param) => {
         const value = urlObj.searchParams.get(param)
         if (value) {
           searchParams.set(param, value)
         }
       })
-      
+
       urlObj.search = searchParams.toString()
     }
-    
+
     return urlObj.toString()
   } catch (error) {
     console.error('Failed to clean URL:', error)
     return url
   }
-} 
+}

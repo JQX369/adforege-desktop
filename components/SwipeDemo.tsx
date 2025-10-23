@@ -1,9 +1,9 @@
-import Image from "next/image"
+import Image from 'next/image'
 
 const tips = [
-  { icon: "💜", label: "Swipe right to like" },
-  { icon: "✖️", label: "Swipe left to skip" },
-  { icon: "🔖", label: "Save favourites" },
+  { icon: '💜', label: 'Swipe right to like' },
+  { icon: '✖️', label: 'Swipe left to skip' },
+  { icon: '🔖', label: 'Save favourites' },
 ]
 
 interface SwipeDemoProps {
@@ -12,7 +12,10 @@ interface SwipeDemoProps {
 
 export function SwipeDemo({ onCta }: SwipeDemoProps) {
   return (
-    <section className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-16 md:flex-row md:items-center" aria-labelledby="swipe-demo-heading">
+    <section
+      className="mx-auto flex max-w-6xl flex-col gap-10 px-6 py-16 md:flex-row md:items-center"
+      aria-labelledby="swipe-demo-heading"
+    >
       <div className="flex-1">
         <div className="relative mx-auto aspect-[3/4] max-w-sm overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
           <Image
@@ -22,17 +25,26 @@ export function SwipeDemo({ onCta }: SwipeDemoProps) {
             className="object-cover"
             priority={false}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40" aria-hidden />
+          <div
+            className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/40"
+            aria-hidden
+          />
         </div>
       </div>
       <div className="flex-1 space-y-6" id="swipe-demo-heading">
-        <h2 className="text-display-sm text-foreground">Swipe to refine your picks</h2>
+        <h2 className="text-display-sm text-foreground">
+          Swipe to refine your picks
+        </h2>
         <p className="text-body-base text-muted-foreground">
-          Keep the matches flowing. Swipe to teach the quiz what feels right, then save the ones you want to share.
+          Keep the matches flowing. Swipe to teach the quiz what feels right,
+          then save the ones you want to share.
         </p>
         <div className="flex flex-wrap gap-3">
           {tips.map((tip) => (
-            <span key={tip.label} className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-2 text-body-sm text-foreground">
+            <span
+              key={tip.label}
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-2 text-body-sm text-foreground"
+            >
               <span aria-hidden>{tip.icon}</span>
               {tip.label}
             </span>
@@ -50,4 +62,3 @@ export function SwipeDemo({ onCta }: SwipeDemoProps) {
     </section>
   )
 }
-

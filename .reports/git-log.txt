@@ -1,0 +1,20 @@
+1df5a27 feat: Update email to Fairy@Custom-Stories.com and enhance homepage
+f17286c feat: Complete UK-first localization, automatic ingestion, FairyWize rebranding, and swipe API fixes
+e8c2677 docs: Update scratchpad with landing page upgrade completion status
+e87f397 feat: End-to-End Landing Page Conversion Upgrade
+459710f feat: prepare admin console groundwork
+bd00d5a Merge remote changes and resolve conflicts
+2e8b8db feat: Complete deployment preparation and testing suite
+c08a33e chore(structure): add VSCode nesting, route group for guides, placeholder image, clean explorer and docs
+4bc6e14 feat: Core SEO implementation for FairyWize
+c7950b6 feat: Comprehensive SEO implementation for FairyWize
+f27fee8 fix: Resolve Next.js client component metadata export error
+96e6017 Merge branch 'main' of https://github.com/JQX369/PresentGoGo
+bdf48b5 chore: cleanup env scripts and logging
+fe1de9d Fix: Rename productData alias to avoid duplicate identifier in categorise API
+83ca106 Chore: Update activity log for admin metrics + vendor image fixes
+6478f89 Fix: Prisma metrics ordering and vendor dashboard image optimization
+2e626ac Fix: Update provider sync endpoints to use enhanced adapters
+ae6a1b6 Fix: Add missing User.profile relation to resolve Prisma schema validation error
+3c855a7 Refactor: Complete codebase cleanup & recommendation system implementation
+0812586 chore: remove vercel crons for deploy

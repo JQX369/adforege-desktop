@@ -30,7 +30,12 @@ const nextConfig = {
 
   // Experimental features for better performance
   experimental: {
-    optimizePackageImports: ['lucide-react', '@heroicons/react'],
+    optimizePackageImports: [
+      'lucide-react',
+      '@heroicons/react',
+      'react-tinder-card',
+    ],
+    optimizeCss: true,
     turbo: {
       rules: {
         '*.svg': {
@@ -39,6 +44,35 @@ const nextConfig = {
         },
       },
     },
+  },
+
+  // Compiler optimizations
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Bundle analyzer
+  webpack: (config, { dev, isServer }) => {
+    // Optimize bundle splitting
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            enforce: true,
+          },
+        },
+      }
+    }
+    return config
   },
 
   // Security Headers for SEO trust signals
@@ -74,7 +108,8 @@ const nextConfig = {
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
+            value:
+              'public, max-age=300, s-maxage=600, stale-while-revalidate=86400',
           },
         ],
       },
@@ -131,4 +166,4 @@ const nextConfig = {
   },
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig

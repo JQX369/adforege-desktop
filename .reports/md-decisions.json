@@ -1,0 +1,97 @@
+[
+  {
+    "file": ".cursor/agents/_memory/decisions.log.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": ".cursor/agents/_memory/product-vision.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": ".cursor/agents/_templates/agent.template.md",
+    "tiny": true,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "archive"
+  },
+  {
+    "file": ".cursor/agents/engineering/backend-architect.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": ".cursor/agents/engineering/frontend-developer.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": ".cursor/commands/gi.md",
+    "tiny": true,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "archive"
+  },
+  {
+    "file": ".cursor/scratchpad.md",
+    "tiny": false,
+    "boiler": true,
+    "canonicalRoot": false,
+    "action": "archive"
+  },
+  {
+    "file": "API_INGESTION_SUMMARY.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": "BUILD_COMPLETE.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": "LAUNCH_CHECKLIST.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": "README.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": true,
+    "action": "keep"
+  },
+  {
+    "file": "SETUP_GUIDE.md",
+    "tiny": false,
+    "boiler": false,
+    "canonicalRoot": false,
+    "action": "keep"
+  },
+  {
+    "file": "TESTING.md",
+    "tiny": false,
+    "boiler": true,
+    "canonicalRoot": false,
+    "action": "archive"
+  },
+  {
+    "file": "VENDOR_PRICING.md",
+    "error": "Error: ENOENT: no such file or directory, stat '/Users/jqx/Desktop/Fairy Wize/VENDOR_PRICING.md'"
+  }
+]

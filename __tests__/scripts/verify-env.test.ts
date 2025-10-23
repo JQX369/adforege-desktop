@@ -22,14 +22,14 @@ describe('Environment Verification', () => {
     // Test with no environment variables
     const requiredVars = [
       'DATABASE_URL',
-      'OPENAI_API_KEY', 
+      'OPENAI_API_KEY',
       'EBAY_CLIENT_ID',
       'EBAY_CLIENT_SECRET',
-      'RAINFOREST_API_KEY'
+      'RAINFOREST_API_KEY',
     ]
 
-    const missingVars = requiredVars.filter(key => !process.env[key])
-    
+    const missingVars = requiredVars.filter((key) => !process.env[key])
+
     expect(missingVars).toEqual(requiredVars)
   })
 
@@ -43,16 +43,16 @@ describe('Environment Verification', () => {
 
     const requiredVars = [
       'DATABASE_URL',
-      'OPENAI_API_KEY', 
+      'OPENAI_API_KEY',
       'EBAY_CLIENT_ID',
       'EBAY_CLIENT_SECRET',
-      'RAINFOREST_API_KEY'
+      'RAINFOREST_API_KEY',
     ]
 
     const invalidVars = requiredVars.filter(
-      key => !process.env[key] || process.env[key]!.length < 10
+      (key) => !process.env[key] || process.env[key]!.length < 10
     )
-    
+
     expect(invalidVars).toEqual(requiredVars)
   })
 
@@ -66,37 +66,29 @@ describe('Environment Verification', () => {
 
     const requiredVars = [
       'DATABASE_URL',
-      'OPENAI_API_KEY', 
+      'OPENAI_API_KEY',
       'EBAY_CLIENT_ID',
       'EBAY_CLIENT_SECRET',
-      'RAINFOREST_API_KEY'
+      'RAINFOREST_API_KEY',
     ]
 
     const invalidVars = requiredVars.filter(
-      key => !process.env[key] || process.env[key]!.length < 10
+      (key) => !process.env[key] || process.env[key]!.length < 10
     )
-    
+
     expect(invalidVars).toEqual([])
   })
 
   it('should validate OpenAI API key format', () => {
-    const validKeys = [
-      'sk-1234567890abcdef',
-      'sk-proj-1234567890abcdef',
-    ]
+    const validKeys = ['sk-1234567890abcdef', 'sk-proj-1234567890abcdef']
 
-    const invalidKeys = [
-      'sk-',
-      'sk-123',
-      'invalid-key',
-      '',
-    ]
+    const invalidKeys = ['sk-', 'sk-123', 'invalid-key', '']
 
-    validKeys.forEach(key => {
+    validKeys.forEach((key) => {
       expect(key.startsWith('sk-') && key.length > 10).toBe(true)
     })
 
-    invalidKeys.forEach(key => {
+    invalidKeys.forEach((key) => {
       expect(key.startsWith('sk-') && key.length > 10).toBe(false)
     })
   })
@@ -114,13 +106,17 @@ describe('Environment Verification', () => {
       '',
     ]
 
-    validUrls.forEach(url => {
-      expect(url.startsWith('postgresql://') || url.startsWith('postgres://')).toBe(true)
+    validUrls.forEach((url) => {
+      expect(
+        url.startsWith('postgresql://') || url.startsWith('postgres://')
+      ).toBe(true)
       expect(url.length > 20).toBe(true)
     })
 
-    invalidUrls.forEach(url => {
-      const isValid = (url.startsWith('postgresql://') || url.startsWith('postgres://')) && url.length > 20
+    invalidUrls.forEach((url) => {
+      const isValid =
+        (url.startsWith('postgresql://') || url.startsWith('postgres://')) &&
+        url.length > 20
       expect(isValid).toBe(false)
     })
   })

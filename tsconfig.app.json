@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "app/layout.tsx",
+    "app/page.tsx",
+    "components/DynamicVerb.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "__tests__",
+    "e2e",
+    ".next/types",
+    "app/api/**",
+    "app/admin/**",
+    "app/blog/**",
+    "app/vendor/**",
+    "lib/**",
+    "scripts/**"
+  ]
+}

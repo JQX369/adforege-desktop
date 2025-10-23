@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 /**
  * Main Ingestion Script - Rainforest + eBay
- * 
+ *
  * Usage:
  *   node scripts/ingest-from-apis.js --provider=rainforest --keywords="tech gifts,jewelry"
  *   node scripts/ingest-from-apis.js --provider=ebay --keywords="unique gifts"
  *   node scripts/ingest-from-apis.js --provider=all --limit=50
  */
 
-const { syncRainforestByKeyword } = require('../lib/providers/rainforest-enhanced')
+const {
+  syncRainforestByKeyword,
+} = require('../lib/providers/rainforest-enhanced')
 const { syncEbayByKeyword } = require('../lib/providers/ebay-enhanced')
 const { IngestionEngine } = require('../lib/providers/ingestion-engine')
 
@@ -25,7 +27,7 @@ const DEFAULT_KEYWORDS = [
   'gifts for mom birthday',
   'gifts for dad',
   'gifts for teens',
-  
+
   // Specific categories
   'jewelry gifts women',
   'home decor gifts',
@@ -45,16 +47,19 @@ function parseArgs() {
     provider: 'all',
     keywords: DEFAULT_KEYWORDS,
     limit: 20,
-    dryRun: false
+    dryRun: false,
   }
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i]
-    
+
     if (arg.startsWith('--provider=')) {
       config.provider = arg.split('=')[1]
     } else if (arg.startsWith('--keywords=')) {
-      config.keywords = arg.split('=')[1].split(',').map(k => k.trim())
+      config.keywords = arg
+        .split('=')[1]
+        .split(',')
+        .map((k) => k.trim())
     } else if (arg.startsWith('--limit=')) {
       config.limit = parseInt(arg.split('=')[1])
     } else if (arg === '--dry-run') {
@@ -67,9 +72,9 @@ function parseArgs() {
 
 async function main() {
   console.log('🚀 Starting API Ingestion System\n')
-  
+
   const config = parseArgs()
-  
+
   console.log('📋 Configuration:')
   console.log(`   Provider: ${config.provider}`)
   console.log(`   Keywords: ${config.keywords.length} selected`)
@@ -84,10 +89,11 @@ async function main() {
     errors: 0,
     rainforestProducts: 0,
     ebayProducts: 0,
-    errorMessages: []
+    errorMessages: [],
   }
 
-  const rainforest = config.provider === 'rainforest' || config.provider === 'all'
+  const rainforest =
+    config.provider === 'rainforest' || config.provider === 'all'
   const ebay = config.provider === 'ebay' || config.provider === 'all'
 
   console.log('🔍 Keywords to process:')
@@ -98,19 +104,23 @@ async function main() {
 
   for (const keyword of config.keywords) {
     console.log(`\n🎯 Processing keyword: "${keyword}"`)
-    console.log('=' .repeat(50))
-    
+    console.log('='.repeat(50))
+
     let products = []
 
     // Fetch from Rainforest
     if (rainforest) {
       try {
         console.log('  📡 Fetching from Rainforest (Amazon)...')
-        const result = await syncRainforestByKeyword(keyword, { limit: config.limit || 20 })
+        const result = await syncRainforestByKeyword(keyword, {
+          limit: config.limit || 20,
+        })
         const rainforestProducts = result.products || []
         products = products.concat(rainforestProducts)
         stats.rainforestProducts += rainforestProducts.length
-        console.log(`  ✅ Found ${rainforestProducts.length} products from Rainforest`)
+        console.log(
+          `  ✅ Found ${rainforestProducts.length} products from Rainforest`
+        )
       } catch (error) {
         console.error(`  ❌ Rainforest error:`, error.message)
         stats.errors++
@@ -121,7 +131,9 @@ async function main() {
     if (ebay) {
       try {
         console.log('  📡 Fetching from eBay...')
-        const result = await syncEbayByKeyword(keyword, { limit: config.limit || 20 })
+        const result = await syncEbayByKeyword(keyword, {
+          limit: config.limit || 20,
+        })
         const ebayProducts = result.products || []
         products = products.concat(ebayProducts)
         stats.ebayProducts += ebayProducts.length
@@ -140,7 +152,7 @@ async function main() {
       const engine = new IngestionEngine()
       try {
         const result = await engine.ingestProducts(products)
-        
+
         stats.created += result.created
         stats.updated += result.updated
         stats.errors += result.errors
@@ -149,11 +161,13 @@ async function main() {
         console.log(`     ✨ Created: ${result.created}`)
         console.log(`     🔄 Updated: ${result.updated}`)
         console.log(`     ⚠️  Errors: ${result.errors}`)
-        console.log(`     ⏱️  Duration: ${(result.duration / 1000).toFixed(1)}s`)
+        console.log(
+          `     ⏱️  Duration: ${(result.duration / 1000).toFixed(1)}s`
+        )
 
         if (result.errorMessages.length > 0) {
           console.log(`\n  ⚠️  Error details:`)
-          result.errorMessages.slice(0, 3).forEach(msg => {
+          result.errorMessages.slice(0, 3).forEach((msg) => {
             console.log(`     • ${msg}`)
           })
           if (result.errorMessages.length > 3) {
@@ -168,7 +182,7 @@ async function main() {
     }
 
     // Small delay between keywords
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    await new Promise((resolve) => setTimeout(resolve, 2000))
   }
 
   // Final statistics
@@ -182,7 +196,7 @@ async function main() {
   console.log(`   Created: ${stats.created}`)
   console.log(`   Updated: ${stats.updated}`)
   console.log(`   Errors: ${stats.errors}`)
-  
+
   if (stats.errors > 0) {
     console.log(`\n⚠️  ${stats.errors} errors occurred during ingestion`)
     process.exit(1)
@@ -192,7 +206,7 @@ async function main() {
   }
 }
 
-main().catch(error => {
+main().catch((error) => {
   console.error('💥 Fatal error:', error)
   process.exit(1)
 })

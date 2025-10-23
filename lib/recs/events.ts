@@ -8,7 +8,11 @@ interface ImpressionPayload {
   metadata?: Record<string, unknown>
 }
 
-export async function logImpressions({ sessionId, userId, productIds }: ImpressionPayload): Promise<void> {
+export async function logImpressions({
+  sessionId,
+  userId,
+  productIds,
+}: ImpressionPayload): Promise<void> {
   if (!productIds.length) return
 
   try {
@@ -48,7 +52,13 @@ export async function logLike(payload: EventPayload): Promise<void> {
   await logEvent({ ...payload, action: RecommendationAction.LIKE })
 }
 
-async function logEvent({ sessionId, userId, productId, metadata, action }: EventPayload & { action: RecommendationAction }) {
+async function logEvent({
+  sessionId,
+  userId,
+  productId,
+  metadata,
+  action,
+}: EventPayload & { action: RecommendationAction }) {
   try {
     await prisma.recommendationEvent.create({
       data: {
@@ -63,4 +73,3 @@ async function logEvent({ sessionId, userId, productId, metadata, action }: Even
     console.log(`[recs][events] ${action} log failed`, error)
   }
 }
-

@@ -15,7 +15,7 @@ async function main() {
     const products = await prisma.product.findMany({
       where: { status: 'APPROVED' },
       take: 500,
-      orderBy: { updatedAt: 'desc' as any }
+      orderBy: { updatedAt: 'desc' as any },
     } as any)
 
     const now = new Date()
@@ -26,7 +26,7 @@ async function main() {
         data: {
           lastSeenAt: now,
           availability: p.availability || AvailabilityStatus.UNKNOWN,
-        }
+        },
       })
     }
     console.log(`Refreshed ${products.length} products`)
@@ -35,6 +35,7 @@ async function main() {
   }
 }
 
-main().catch((e) => { console.error(e); process.exit(1) })
-
-
+main().catch((e) => {
+  console.error(e)
+  process.exit(1)
+})

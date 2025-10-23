@@ -10,7 +10,7 @@
 COMPLETED ████████████████░░░░ 80%
 
 ✅ Frontend UI/UX
-✅ AI Recommendation Engine  
+✅ AI Recommendation Engine
 ✅ Swipe Interface
 ✅ Vendor Subscription System
 ✅ Affiliate Infrastructure
@@ -31,6 +31,7 @@ COMPLETED ████████████████░░░░ 80%
 **Without this, nothing else matters. App is non-functional.**
 
 - [ ] **Option A: Manual Curation** (10-15 hours)
+
   ```
   Goal: 200 products minimum
   Sources: Amazon Best Sellers, Etsy Popular, Uncommon Goods
@@ -39,6 +40,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **Option B: Rainforest API** (4-6 hours + $49/mo)
+
   ```
   1. Sign up at rainforestapi.com
   2. Get API key
@@ -62,6 +64,7 @@ COMPLETED ████████████████░░░░ 80%
 ### **PHASE 2: AFFILIATE SETUP** (Day 2) 🟡
 
 - [ ] **Amazon Associates**
+
   ```
   URL: https://affiliate-program.amazon.com
   Time: 15 minutes to apply, 1-7 days approval
@@ -70,6 +73,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **eBay Partner Network**
+
   ```
   URL: https://epn.ebay.com
   Time: 15 minutes, instant approval
@@ -90,6 +94,7 @@ COMPLETED ████████████████░░░░ 80%
 ### **PHASE 3: PRODUCTION DEPLOY** (Day 2-3) 🟡
 
 - [ ] **Pre-deployment Checks**
+
   ```bash
   ✓ npm run build (succeeds)
   ✓ All .env variables documented
@@ -98,6 +103,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **Deploy to Vercel**
+
   ```bash
   1. vercel --prod
   2. Add all .env variables in dashboard
@@ -106,6 +112,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **Custom Domain** (Optional but recommended)
+
   ```
   1. Add domain in Vercel
   2. Update DNS records
@@ -130,16 +137,18 @@ COMPLETED ████████████████░░░░ 80%
 ### **PHASE 4: ANALYTICS & MONITORING** (Day 3) 🟢
 
 - [ ] **Add Analytics**
+
   ```
   Recommended: Plausible ($9/mo)
   Alternative: Google Analytics (free)
-  
+
   Add to app/layout.tsx <head>:
-  <script defer data-domain="yourdomain.com" 
+  <script defer data-domain="yourdomain.com"
     src="https://plausible.io/js/script.js"></script>
   ```
 
 - [ ] **Error Tracking** (Optional)
+
   ```
   Sentry: $26/mo
   Or: Console logging is fine for now
@@ -159,6 +168,7 @@ COMPLETED ████████████████░░░░ 80%
 ### **PHASE 5: LAUNCH PREP** (Day 4-5) 🟢
 
 - [ ] **SEO Basics**
+
   ```
   ✓ Update meta title/description
   ✓ Add Open Graph images
@@ -167,6 +177,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **Marketing Channels Setup**
+
   ```
   ✓ Twitter account created
   ✓ Instagram account created (optional)
@@ -175,6 +186,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **Email Capture**
+
   ```
   ✓ Add email form to homepage
   ✓ Set up Mailchimp/ConvertKit
@@ -196,6 +208,7 @@ COMPLETED ████████████████░░░░ 80%
 ### **PHASE 6: LAUNCH DAY** 🎉
 
 - [ ] **Morning Launch (8am PST)**
+
   ```
   ✓ Post to Product Hunt
   ✓ Tweet announcement
@@ -205,6 +218,7 @@ COMPLETED ████████████████░░░░ 80%
   ```
 
 - [ ] **Monitor & Engage**
+
   ```
   ✓ Watch analytics real-time
   ✓ Respond to Product Hunt comments
@@ -228,18 +242,21 @@ COMPLETED ████████████████░░░░ 80%
 ## 📈 WEEK 1 SUCCESS METRICS
 
 ### **Must Have:**
+
 - [x] 500+ products in database ✓
 - [x] Site deployed and live ✓
 - [x] 100+ unique visitors ✓
 - [x] 10+ gift form completions ✓
 
 ### **Should Have:**
+
 - [ ] 2+ affiliate programs approved
 - [ ] 50+ product swipes logged
 - [ ] 5+ product link clicks
 - [ ] 1 vendor signup
 
 ### **Nice to Have:**
+
 - [ ] 500+ unique visitors
 - [ ] 50+ gift form completions
 - [ ] 10+ saved products
@@ -250,6 +267,7 @@ COMPLETED ████████████████░░░░ 80%
 ## 💰 BUDGET PLANNER
 
 ### **Minimum (Free Launch):**
+
 ```
 Domain: $12/year (or use .vercel.app)
 Vercel: $0 (hobby tier)
@@ -259,6 +277,7 @@ Total: ~$1/month
 ```
 
 ### **Recommended (Growth Launch):**
+
 ```
 Domain: $12/year
 Vercel Pro: $20/month
@@ -269,8 +288,9 @@ Total: $78-103/month
 ```
 
 ### **Premium (Scale Launch):**
+
 ```
-Above + 
+Above +
 Email Marketing: $15/month (ConvertKit)
 Error Tracking: $26/month (Sentry)
 Image CDN: $5/month (Cloudflare)
@@ -286,6 +306,7 @@ Total: $124-149/month
 **Before you press the launch button, verify:**
 
 ### **Technical:**
+
 - [ ] Database has 500+ approved products
 - [ ] At least 50% of products have images
 - [ ] At least 1 affiliate tag configured
@@ -296,6 +317,7 @@ Total: $124-149/month
 - [ ] SSL certificate active (https://)
 
 ### **Content:**
+
 - [ ] Homepage copy reviewed
 - [ ] Meta tags updated
 - [ ] OG images added
@@ -304,6 +326,7 @@ Total: $124-149/month
 - [ ] Terms of service added
 
 ### **Marketing:**
+
 - [ ] Launch tweet drafted
 - [ ] Product Hunt page ready
 - [ ] Reddit posts drafted
@@ -311,6 +334,7 @@ Total: $124-149/month
 - [ ] Analytics tracking works
 
 ### **Business:**
+
 - [ ] Stripe account verified (for vendor payments)
 - [ ] Amazon Associates ToS accepted
 - [ ] eBay Partner Network ToS accepted
@@ -321,20 +345,24 @@ Total: $124-149/month
 ## 🎯 WHAT TO DO FIRST (RIGHT NOW)
 
 ### **If you have 2 hours:**
+
 → Start manual product curation (Option A)
 → Get 50 products into CSV
 
 ### **If you have 4 hours:**
+
 → Sign up for Rainforest API
 → Get API key
 → Let me build the ingestion script
 
 ### **If you have 8 hours:**
+
 → Hybrid approach: Manual curation
 → Get 200 products today
 → Deploy tomorrow
 
 ### **If you're overwhelmed:**
+
 → Tell me your constraints (time, budget)
 → I'll build a custom plan
 → We'll tackle this together
@@ -346,12 +374,14 @@ Total: $124-149/month
 **Pick your speed:**
 
 ### 🚀 **FAST TRACK (3 days)**
+
 - **Day 1:** Manual 200 products (12 hours)
 - **Day 2:** Deploy + APIs (8 hours)
 - **Day 3:** Launch (4 hours)
 - **Total:** 24 hours over 3 days
 
 ### 🐢 **STEADY PACE (7 days)**
+
 - **Days 1-3:** Manual 500 products (15 hours)
 - **Day 4:** Deploy (6 hours)
 - **Days 5-6:** Polish (8 hours)
@@ -359,6 +389,7 @@ Total: $124-149/month
 - **Total:** 33 hours over 7 days
 
 ### ⚡ **AUTOMATED (5 days)**
+
 - **Day 1:** I build automation (8 hours)
 - **Day 2:** Ingestion runs (2 hours supervision)
 - **Day 3:** Deploy + QA (6 hours)
@@ -370,6 +401,7 @@ Total: $124-149/month
 ## ✅ FINAL PRE-LAUNCH CHECKLIST
 
 **Day before launch:**
+
 - [ ] Sleep well
 - [ ] Review all systems
 - [ ] Have coffee ready ☕
@@ -378,6 +410,7 @@ Total: $124-149/month
 - [ ] Have a backup plan (what if site goes down?)
 
 **Launch day:**
+
 - [ ] Check site at 7am
 - [ ] Post to Product Hunt at 8am PST
 - [ ] Monitor analytics every hour
@@ -386,6 +419,7 @@ Total: $124-149/month
 - [ ] Take screenshots of milestones
 
 **Day after launch:**
+
 - [ ] Review metrics
 - [ ] Thank supporters
 - [ ] Plan week 2 improvements
@@ -405,4 +439,3 @@ Total: $124-149/month
 ---
 
 **What's your next move?** 🚀
-

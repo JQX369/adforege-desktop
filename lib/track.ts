@@ -4,7 +4,9 @@ type TrackEventPayload = Record<string, unknown> | undefined
 
 function pushToDataLayer(eventName: string, payload?: TrackEventPayload) {
   if (typeof window === 'undefined') return
-  const win = window as typeof window & { dataLayer?: Array<Record<string, unknown>> }
+  const win = window as typeof window & {
+    dataLayer?: Array<Record<string, unknown>>
+  }
   if (!Array.isArray(win.dataLayer)) return
   win.dataLayer.push({ event: eventName, ...(payload || {}) })
 }
@@ -13,7 +15,9 @@ export function trackEvent(eventName: string, payload?: TrackEventPayload) {
   if (typeof window === 'undefined') return
   try {
     pushToDataLayer(eventName, payload)
-    window.dispatchEvent(new CustomEvent('fairywize:analytics', { detail: { eventName, payload } }))
+    window.dispatchEvent(
+      new CustomEvent('fairywize:analytics', { detail: { eventName, payload } })
+    )
   } catch (error) {
     if (process.env.NODE_ENV === 'development') {
       console.warn('trackEvent noop failed', error)
@@ -39,4 +43,3 @@ export function registerAnalyticsDelegation() {
   window.addEventListener('click', listener)
   return () => window.removeEventListener('click', listener)
 }
-

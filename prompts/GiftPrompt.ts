@@ -58,4 +58,4 @@ Be creative and specific with your suggestions, avoiding generic gifts unless sp
 
 export function buildSearchQuery(recommendation: any): string {
   return `${recommendation.title} ${recommendation.category.join(' ')} gift`
-} 
+}

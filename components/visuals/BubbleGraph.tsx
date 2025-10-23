@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 
@@ -17,14 +17,26 @@ interface NodePoint {
 }
 
 // Lightweight interactive bubble/connection background
-export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: BubbleGraphProps & { focus?: number; colorScheme?: 'default' | 'blue' }) {
+export function BubbleGraph({
+  progress,
+  focus = 0,
+  colorScheme = 'default',
+}: BubbleGraphProps & { focus?: number; colorScheme?: 'default' | 'blue' }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const containerRef = useRef<HTMLDivElement | null>(null)
   const nodesRef = useRef<NodePoint[]>([])
-  const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false })
+  const mouseRef = useRef<{ x: number; y: number; active: boolean }>({
+    x: 0,
+    y: 0,
+    active: false,
+  })
   const rafRef = useRef<number | null>(null)
   const displayProgressRef = useRef(0) // smoothed progress for gentle growth
-  const sizeRef = useRef<{ w: number; h: number; dpr: number }>({ w: 0, h: 0, dpr: 1 })
+  const sizeRef = useRef<{ w: number; h: number; dpr: number }>({
+    w: 0,
+    h: 0,
+    dpr: 1,
+  })
 
   // Rebuild nodes when progress or size changes
   const rebuild = useCallback(() => {
@@ -32,7 +44,10 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
     if (!w || !h) return
     const baseNodes = 24
     const maxAdd = 60
-    const count = Math.max(8, Math.min(baseNodes + Math.round(progress * maxAdd), 120))
+    const count = Math.max(
+      8,
+      Math.min(baseNodes + Math.round(progress * maxAdd), 120)
+    )
     const nodes: NodePoint[] = Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * w,
@@ -53,7 +68,11 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
       if (!canvas || !container) return
       const rect = container.getBoundingClientRect()
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      sizeRef.current = { w: Math.floor(rect.width), h: Math.floor(rect.height), dpr }
+      sizeRef.current = {
+        w: Math.floor(rect.width),
+        h: Math.floor(rect.height),
+        dpr,
+      }
       canvas.width = Math.floor(rect.width * dpr)
       canvas.height = Math.floor(rect.height * dpr)
       canvas.style.width = `${Math.floor(rect.width)}px`
@@ -144,7 +163,9 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       // Smoothly ease display progress toward target
-      const p = displayProgressRef.current + (progress - displayProgressRef.current) * 0.06
+      const p =
+        displayProgressRef.current +
+        (progress - displayProgressRef.current) * 0.06
       displayProgressRef.current = p
 
       const connDist = 100 + p * 100
@@ -155,7 +176,10 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
       const { lineStroke, nodeFill, nodeShadow } = colors
 
       // Determine how many bubbles should be in the "grown" state based on progress
-      const grownCount = Math.max(0, Math.min(nodes.length, Math.floor(p * nodes.length)))
+      const grownCount = Math.max(
+        0,
+        Math.min(nodes.length, Math.floor(p * nodes.length))
+      )
 
       // Update per-node target scales (no movement)
       for (let i = 0; i < nodes.length; i++) {
@@ -218,11 +242,13 @@ export function BubbleGraph({ progress, focus = 0, colorScheme = 'default' }: Bu
   }, [progress, colors])
 
   return (
-    <div ref={containerRef} className="pointer-events-none fixed inset-0 -z-10 will-change-transform">
+    <div
+      ref={containerRef}
+      className="pointer-events-none fixed inset-0 -z-10 will-change-transform"
+    >
       <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   )
 }
 
 export default BubbleGraph
-

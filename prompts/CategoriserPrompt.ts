@@ -43,6 +43,12 @@ Personalities: Adventurous, Creative, Practical, Intellectual, Social, Introvert
 Occasions: Birthday, Christmas, Anniversary, Valentine's Day, Mother's Day, Father's Day, Graduation, Wedding, Baby Shower, Housewarming, Just Because`
 }
 
-export function extractEmbeddingText(product: ProductData, analysis: any): string {
-  return analysis.embeddingSentence || `${product.title} - ${product.description.slice(0, 200)}`
-} 
+export function extractEmbeddingText(
+  product: ProductData,
+  analysis: any
+): string {
+  return (
+    analysis.embeddingSentence ||
+    `${product.title} - ${product.description.slice(0, 200)}`
+  )
+}

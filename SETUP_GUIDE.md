@@ -9,6 +9,7 @@
 ## 🔴 What You Still Need
 
 ### 1. **OpenAI API Key**
+
 - Go to: https://platform.openai.com/api-keys
 - Create a new API key
 - Add to `.env` and `.env.local`:
@@ -17,6 +18,7 @@
   ```
 
 ### 2. **Supabase Service Role Key**
+
 - Go to your Supabase dashboard: https://supabase.com/dashboard/project/pjuvkxsofzmjcdatnbur
 - Navigate to: Settings → API
 - Copy the "service_role" key (not the anon key)
@@ -26,6 +28,7 @@
   ```
 
 ### 3. **Enable pgvector in Supabase**
+
 - Go to: https://supabase.com/dashboard/project/pjuvkxsofzmjcdatnbur/sql/new
 - Run this SQL command:
   ```sql
@@ -33,15 +36,17 @@
   ```
 
 ### 4. **Create Vector Indexes** (Optional but recommended)
+
 - In the same SQL editor, run:
+
   ```sql
   -- Create index for Product embeddings
-  CREATE INDEX IF NOT EXISTS product_embedding_idx ON "Product" 
+  CREATE INDEX IF NOT EXISTS product_embedding_idx ON "Product"
   USING ivfflat (embedding vector_cosine_ops)
   WITH (lists = 100);
 
   -- Create index for User embeddings
-  CREATE INDEX IF NOT EXISTS user_embedding_idx ON "User" 
+  CREATE INDEX IF NOT EXISTS user_embedding_idx ON "User"
   USING ivfflat (embedding vector_cosine_ops)
   WITH (lists = 100);
   ```
@@ -51,6 +56,7 @@
 Once you've added the missing API keys:
 
 1. **Start the development server:**
+
    ```bash
    npm run dev
    ```
@@ -81,8 +87,8 @@ Once you've added the missing API keys:
 After adding products via vendor form, run this in Supabase SQL editor to approve them:
 
 ```sql
-UPDATE "Product" 
-SET status = 'APPROVED' 
+UPDATE "Product"
+SET status = 'APPROVED'
 WHERE status = 'PENDING';
 ```
 
@@ -98,11 +104,13 @@ When ready to deploy:
 ## 💡 Current Credentials Summary
 
 ✅ **Already configured:**
+
 - Supabase Database URL
 - Stripe keys (live)
 - Amazon affiliate tag
 
 ❌ **Still needed:**
+
 - OpenAI API key
 - Supabase service role key
 
@@ -113,4 +121,4 @@ If you get errors:
 1. **"Failed to get recommendations"**: Check OpenAI API key
 2. **"Database connection failed"**: Check Supabase is running
 3. **"Embedding error"**: Make sure pgvector is enabled
-4. **No products showing**: Make sure products are APPROVED status 
+4. **No products showing**: Make sure products are APPROVED status

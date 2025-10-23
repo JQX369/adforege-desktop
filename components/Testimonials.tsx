@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 
 type Testimonial = {
   quote: string
@@ -11,19 +11,19 @@ type Testimonial = {
 
 const testimonials: Testimonial[] = [
   {
-    quote: "Matched my partner with the perfect surprise in minutes.",
-    author: "Amelia · London",
-    highlight: "perfect surprise",
+    quote: 'Matched my partner with the perfect surprise in minutes.',
+    author: 'Amelia · London',
+    highlight: 'perfect surprise',
   },
   {
-    quote: "Saved three ideas instantly for my picky dad.",
-    author: "Jordan · New York",
-    highlight: "three ideas instantly",
+    quote: 'Saved three ideas instantly for my picky dad.',
+    author: 'Jordan · New York',
+    highlight: 'three ideas instantly',
   },
   {
-    quote: "Feels like a personal shopper who knows my friends.",
-    author: "Priya · Dublin",
-    highlight: "personal shopper",
+    quote: 'Feels like a personal shopper who knows my friends.',
+    author: 'Priya · Dublin',
+    highlight: 'personal shopper',
   },
 ]
 
@@ -44,18 +44,25 @@ export function Testimonials() {
   const scrollBy = (direction: number) => {
     const el = containerRef.current
     if (!el) return
-    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: "smooth" })
+    el.scrollBy({ left: direction * el.clientWidth * 0.8, behavior: 'smooth' })
   }
 
   return (
-    <section className="mx-auto max-w-6xl px-6 py-16" aria-labelledby="testimonials-heading">
+    <section
+      className="mx-auto max-w-6xl px-6 py-16"
+      aria-labelledby="testimonials-heading"
+    >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-start gap-3 text-left md:text-center md:items-center">
-          <h2 id="testimonials-heading" className="text-display-sm text-foreground">
+          <h2
+            id="testimonials-heading"
+            className="text-display-sm text-foreground"
+          >
             Loved by gifters everywhere
           </h2>
           <p className="max-w-2xl text-body-base text-muted-foreground md:text-center">
-            Real shoppers using our quiz to deliver thoughtful surprises right on time.
+            Real shoppers using our quiz to deliver thoughtful surprises right
+            on time.
           </p>
         </div>
 
@@ -72,18 +79,22 @@ export function Testimonials() {
               >
                 <blockquote className="text-body-base text-muted-foreground">
                   {highlight
-                    ? quote.split(new RegExp(`(${highlight})`, "i")).map((segment, idx) =>
-                        segment.toLowerCase() === highlight.toLowerCase() ? (
-                          <strong key={idx} className="text-foreground">
-                            {segment}
-                          </strong>
-                        ) : (
-                          <span key={idx}>{segment}</span>
+                    ? quote
+                        .split(new RegExp(`(${highlight})`, 'i'))
+                        .map((segment, idx) =>
+                          segment.toLowerCase() === highlight.toLowerCase() ? (
+                            <strong key={idx} className="text-foreground">
+                              {segment}
+                            </strong>
+                          ) : (
+                            <span key={idx}>{segment}</span>
+                          )
                         )
-                      )
                     : quote}
                 </blockquote>
-                <figcaption className="mt-4 text-body-sm font-semibold text-foreground">{author}</figcaption>
+                <figcaption className="mt-4 text-body-sm font-semibold text-foreground">
+                  {author}
+                </figcaption>
               </figure>
             ))}
           </div>
@@ -123,4 +134,3 @@ export function Testimonials() {
     </section>
   )
 }
-
