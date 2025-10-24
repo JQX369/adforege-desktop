@@ -26,6 +26,7 @@ import {
   Wifi,
   Battery,
   Signal,
+  Hand as TouchIcon,
 } from 'lucide-react'
 
 interface MobileMetrics {

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">FairyWize - Personalized Gift Quiz</title>
+  <desc id="desc">Gradient background with call to action for the AI gift quiz</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="50%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+    <linearGradient id="flare" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.35)" />
+      <stop offset="100%" stop-color="rgba(255,255,255,0)" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" rx="48" />
+  <path d="M-40 520 C 220 400, 480 700, 760 480 S 1200 680, 1340 460 L 1340 700 L -40 700 Z" fill="rgba(255,255,255,0.12)" />
+  <rect x="820" y="80" width="320" height="220" rx="32" fill="rgba(15,23,42,0.75)" stroke="rgba(255,255,255,0.3)" />
+  <text x="860" y="150" font-family="'Inter', 'Segoe UI', sans-serif" font-size="28" font-weight="600" fill="#fff">
+    Start Gift Quiz
+  </text>
+  <text x="860" y="190" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="400" fill="rgba(255,255,255,0.85)">
+    Twelve quick questions
+  </text>
+  <text x="860" y="220" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="400" fill="rgba(255,255,255,0.85)">
+    Swipe to refine picks
+  </text>
+  <text x="860" y="250" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="400" fill="rgba(255,255,255,0.85)">
+    Save favourites instantly
+  </text>
+  <rect x="860" y="280" width="190" height="44" rx="22" fill="#f97316" />
+  <text x="905" y="309" font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" font-weight="600" fill="#fff">
+    Start quiz now →
+  </text>
+  <g fill="#fff">
+    <text x="90" y="260" font-family="'Inter', 'Segoe UI', sans-serif" font-size="70" font-weight="700">
+      FairyWize
+    </text>
+    <text x="90" y="332" font-family="'Inter', 'Segoe UI', sans-serif" font-size="42" font-weight="500" opacity="0.92">
+      AI Gift Finder
+    </text>
+    <text x="90" y="396" font-family="'Inter', 'Segoe UI', sans-serif" font-size="30" font-weight="400" opacity="0.9">
+      Perfect gifts in minutes. Zero guesswork.
+    </text>
+  </g>
+  <rect x="60" y="120" width="520" height="12" rx="6" fill="url(#flare)" />
+</svg>

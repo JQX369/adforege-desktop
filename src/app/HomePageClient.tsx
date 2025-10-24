@@ -6,9 +6,9 @@ import { SwipeDeck, Product } from '@/components/SwipeDeck'
 import { SavedDrawer } from '@/components/SavedDrawer'
 import { GiftFormData } from '@/prompts/GiftPrompt'
 import { Button } from '@/src/ui/button'
-import { Hero } from '@/components/Hero'
-import { TrustRow } from '@/components/TrustRow'
 import { trackEvent } from '@/lib/track'
+import { LandingSimple } from '@/components/site/LandingSimple'
+import { TrustRow } from '@/components/TrustRow'
 
 export default function HomePageClient() {
   const [isLoading, setIsLoading] = useState(false)
@@ -184,85 +184,79 @@ export default function HomePageClient() {
     }
   }, [])
 
-  return (
-    <main className="min-h-screen bg-gradient-to-b from-background to-accent/10">
-      <Hero
-        onStart={() => {
-          const el = document.getElementById('quiz')
-          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        }}
-        heading={headingVariant}
-        trustRow={trustTop ? <TrustRow /> : undefined}
-        scheme={bubbleScheme}
-        formSlot={
-          !showSwipeDeck ? (
-            <div id="quiz" className="w-full max-w-2xl">
-              <GiftForm
-                onSubmit={handleFormSubmit}
-                isLoading={isLoading}
-                colorScheme={bubbleScheme}
-                onGenderChange={(gender) => {
-                  const g = (gender || '').toLowerCase()
-                  if (g === 'male') setBubbleScheme('blue')
-                  else if (g === 'female') setBubbleScheme('pink')
-                  else setBubbleScheme('default')
-                }}
-              />
-            </div>
-          ) : undefined
-        }
+  const formSlot = !showSwipeDeck ? (
+    <GiftForm
+      onSubmit={handleFormSubmit}
+      isLoading={isLoading}
+      colorScheme={bubbleScheme}
+      onGenderChange={(gender) => {
+        const g = (gender || '').toLowerCase()
+        if (g === 'male') setBubbleScheme('blue')
+        else if (g === 'female') setBubbleScheme('pink')
+        else setBubbleScheme('default')
+      }}
+    />
+  ) : undefined
+
+  const swipeDeckSection = showSwipeDeck ? (
+    <div className="mx-auto max-w-4xl px-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div className="text-left">
+          <h2 className="text-display-xs text-foreground">Your matches</h2>
+          <p className="text-body-sm text-muted-foreground">
+            Swipe right to save, left to pass. We&apos;ll keep refining.
+          </p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Button variant="ghost" onClick={handleStartNew}>
+            ← Start over
+          </Button>
+          <SavedDrawer userId={userId} />
+        </div>
+      </div>
+
+      <SwipeDeck
+        products={recommendations}
+        onSwipe={handleSwipe}
+        userId={userId}
+        sessionId={sessionId}
+        onLoadMore={handleLoadMore}
+        hasMore={hasMore}
       />
 
-      {!trustTop && !showSwipeDeck && (
-        <TrustRow className="mx-auto max-w-4xl px-6" />
-      )}
+      <div className="mt-12 text-center">
+        <p className="text-body-sm text-muted-foreground">
+          Want more ideas?{' '}
+          <button
+            className="underline underline-offset-4"
+            onClick={handleLoadMore}
+            disabled={!hasMore || isLoading}
+          >
+            {hasMore ? 'Load another batch' : 'You reached the end of this list'}
+          </button>
+        </p>
+      </div>
+    </div>
+  ) : undefined
 
-      {showSwipeDeck && (
-        <section className="container mx-auto px-6 pb-24">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
-              <div className="text-left">
-                <h2 className="text-display-xs text-foreground">
-                  Your matches
-                </h2>
-                <p className="text-body-sm text-muted-foreground">
-                  Swipe right to save, left to pass. We&apos;ll keep refining.
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <Button variant="ghost" onClick={handleStartNew}>
-                  ← Start over
-                </Button>
-                <SavedDrawer userId={userId} />
-              </div>
-            </div>
-
-            <SwipeDeck
-              products={recommendations}
-              onSwipe={handleSwipe}
-              userId={userId}
-              sessionId={sessionId}
-              onLoadMore={handleLoadMore}
-              hasMore={hasMore}
-            />
-
-            <div className="mt-12 text-center">
-              <p className="text-body-sm text-muted-foreground">
-                Want more ideas?{' '}
-                <button
-                  className="underline underline-offset-4"
-                  onClick={handleLoadMore}
-                  disabled={!hasMore || isLoading}
-                >
-                  {hasMore
-                    ? 'Load another batch'
-                    : 'You reached the end of this list'}
-                </button>
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
-    </main>
+  return (
+    <LandingSimple
+      onStartQuiz={(source) => {
+        trackEvent('cta_primary_click', { source })
+        const el = document.getElementById('quiz')
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }}
+      formSlot={formSlot}
+      swipeDeckSection={swipeDeckSection}
+      showSwipeDeck={showSwipeDeck}
+      bubbleScheme={bubbleScheme}
+      trustRow={trustTop ? <TrustRow /> : undefined}
+      fallbackTrustRow={<TrustRow />}
+      heading="Perfect gifts. Zero guesswork."
+      subheading={
+        headingVariant ??
+        "Tell us who you're shopping for and our friendly AI will surface thoughtful, shoppable gift ideas in minutes."
+      }
+    />
   )
 }

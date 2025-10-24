@@ -39,9 +39,9 @@ import {
   Award,
   Gift,
 } from 'lucide-react'
-import { VendorAnalytics } from '@/src/features/vendor/VendorAnalytics'
-import { BulkOperations } from '@/src/features/vendor/BulkOperations'
-import { VendorOnboarding } from '@/src/features/vendor/VendorOnboarding'
+import { VendorAnalytics } from '@/src/features/vendor/vendor/VendorAnalytics'
+import { BulkOperations } from '@/src/features/vendor/vendor/BulkOperations'
+import { VendorOnboarding } from '@/src/features/vendor/vendor/VendorOnboarding'
 
 interface VendorDashboardProps {
   vendorId: string

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import React from 'react'
-import './globals.css'
+import '@/src/app/globals.css'
 import { AFFILIATE_DISCLOSURE_TEXT } from '@/lib/config'
 import { SiteHeader } from '@/components/site/SiteHeader'
 import { CurrencyProvider } from '@/lib/currency-context'
@@ -197,3 +197,4 @@ export default function RootLayout({
     </html>
   )
 }
+

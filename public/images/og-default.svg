@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">FairyWize - AI Gift Finder</title>
+  <desc id="desc">Gradient background with FairyWize brand text</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f97316" />
+      <stop offset="45%" stop-color="#ec4899" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ede9fe" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#fdf2f8" stop-opacity="0.0" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" rx="48" />
+  <ellipse cx="960" cy="150" rx="220" ry="140" fill="url(#accent)" />
+  <ellipse cx="260" cy="520" rx="260" ry="160" fill="rgba(253,242,248,0.25)" />
+  <g fill="#fff">
+    <text x="90" y="260" font-family="'Inter', 'Segoe UI', sans-serif" font-size="72" font-weight="700">
+      FairyWize
+    </text>
+    <text x="90" y="332" font-family="'Inter', 'Segoe UI', sans-serif" font-size="40" font-weight="500" opacity="0.92">
+      AI Gift Finder
+    </text>
+    <text x="90" y="410" font-family="'Inter', 'Segoe UI', sans-serif" font-size="30" font-weight="400" opacity="0.85">
+      Perfect gifts in minutes, not hours.
+    </text>
+  </g>
+</svg>

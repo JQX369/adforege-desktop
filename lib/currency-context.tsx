@@ -7,7 +7,7 @@ import React, {
   useState,
   ReactNode,
 } from 'react'
-import { SupportedCurrency } from './prices'
+import { SupportedCurrency } from '@/src/shared/constants/prices'
 
 interface CurrencyContextType {
   currency: SupportedCurrency

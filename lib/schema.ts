@@ -32,7 +32,7 @@ export const websiteSchema = {
     '@type': 'SearchAction',
     target: {
       '@type': 'EntryPoint',
-      urlTemplate: 'https://fairywize.com/search?q={search_term_string}',
+      urlTemplate: 'https://fairywize.com/gift-guides?query={search_term_string}',
     },
     'query-input': 'required name=search_term_string',
   },

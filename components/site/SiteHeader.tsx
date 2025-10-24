@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Gift, User } from 'lucide-react'
+import { Gift } from 'lucide-react'
 import { Button } from '@/src/ui/button'
 import { useEffect, useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
@@ -60,10 +60,24 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-3 text-white">
+        <nav className="flex items-center gap-2 sm:gap-3 text-white">
+          <Link
+            href="/gift-guides"
+            className="hidden rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring focus-visible:ring-white/40 md:inline-flex"
+            data-analytics="guides_header_link"
+          >
+            Gift guides
+          </Link>
+          <Link
+            href="/vendor"
+            className="hidden rounded-full px-4 py-2 text-sm font-semibold text-white transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring focus-visible:ring-white/40 md:inline-flex"
+            data-analytics="vendor_header_link"
+          >
+            For vendors
+          </Link>
           <Button
             variant="ghost"
-            className="text-white hover:bg-white/10"
+            className="rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring focus-visible:ring-white/40"
             data-analytics="cta_header_start"
             onClick={() => {
               trackEvent('cta_primary_click', { source: 'header' })
@@ -75,30 +89,6 @@ export function SiteHeader() {
           >
             Start gift quiz
           </Button>
-
-          {user ? (
-            <Button
-              asChild
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-            >
-              <Link href="/auth/sign-out" className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                Sign out
-              </Link>
-            </Button>
-          ) : (
-            <Button
-              asChild
-              variant="ghost"
-              className="text-white hover:bg-white/10"
-            >
-              <Link href="/auth/sign-in" className="flex items-center gap-2">
-                <User className="h-4 w-4" />
-                Sign in
-              </Link>
-            </Button>
-          )}
         </nav>
       </div>
     </header>

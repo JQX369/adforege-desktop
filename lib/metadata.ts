@@ -42,7 +42,7 @@ export function generatePageMetadata({
 }: PageMetadataParams): Metadata {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://fairywize.com'
   const fullUrl = `${siteUrl}${path}`
-  const ogImage = image || `${siteUrl}/og-default.jpg`
+  const ogImage = image || `${siteUrl}/images/og-default.svg`
 
   const metadata: Metadata = {
     title: `${title} | FairyWize`,
@@ -118,7 +118,7 @@ export const HOME_METADATA = generatePageMetadata({
     'gift discovery',
   ],
   path: '/',
-  image: '/og-home.jpg',
+  image: '/images/og-home.svg',
 })
 
 export const GIFT_GUIDES_METADATA = generatePageMetadata({
@@ -132,7 +132,7 @@ export const GIFT_GUIDES_METADATA = generatePageMetadata({
     'occasion gifts',
   ],
   path: '/gift-guides',
-  image: '/og-guides.jpg',
+  image: '/images/og-guides.svg',
 })
 
 export const ABOUT_METADATA = generatePageMetadata({
@@ -145,7 +145,7 @@ export const ABOUT_METADATA = generatePageMetadata({
     'AI technology',
   ],
   path: '/about',
-  image: '/og-about.jpg',
+  image: '/images/og-about.svg',
 })
 
 export const VENDOR_METADATA = generatePageMetadata({
@@ -154,7 +154,7 @@ export const VENDOR_METADATA = generatePageMetadata({
     'Manage your product listings and track performance with FairyWize vendor dashboard. Reach gift-seekers and grow your business.',
   keywords: ['vendor dashboard', 'product listing', 'gift marketplace'],
   path: '/vendor',
-  image: '/og-vendor.jpg',
+  image: '/images/og-vendor.svg',
 })
 
 // Dynamic metadata for product pages
@@ -179,7 +179,7 @@ export function generateProductMetadata(product: {
     description: `${product.description} - Perfect gift idea starting from ${product.currency || '£'}${product.price}`,
     keywords,
     path: `/product/${product.title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
-    image: product.images[0] || '/og-product.jpg',
+    image: product.images[0] || '/images/og-product.svg',
     type: 'website',
   })
 }
