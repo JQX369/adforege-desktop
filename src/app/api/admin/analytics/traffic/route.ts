@@ -36,9 +36,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         referrer: { not: null },
       },
       _count: { referrer: true },
-      _avg: {
-        // This would need additional fields in the schema
-      },
     })
 
     // Transform data for frontend

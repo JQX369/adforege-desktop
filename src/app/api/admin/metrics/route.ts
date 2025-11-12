@@ -136,21 +136,24 @@ export async function GET(req: NextRequest) {
       .sort((a, b) => b.events - a.events)
       .slice(0, 5)
 
-    const tagCounts = activeProductIds.length
-      ? await prisma.productTag.groupBy({
-          by: ['tag'],
-          where: { productId: { in: activeProductIds } },
-          _count: { _all: true },
-          orderBy: [
-            {
-              _count: {
-                tag: 'desc',
-              },
-            },
-          ],
-          take: 10,
-        })
-      : []
+    // TODO: Add ProductTag model to Prisma schema
+    // const tagCounts = activeProductIds.length
+    //   ? await prisma.productTag.groupBy({
+    //       by: ['tag'],
+    //       where: { productId: { in: activeProductIds } },
+    //       _count: { _all: true },
+    //       orderBy: [
+    //         {
+    //           _count: {
+    //             tag: 'desc',
+    //           },
+    //         },
+    //       ],
+    //       take: 10,
+    //     })
+    //   : []
+    
+    const tagCounts: Array<{ tag: string; _count: { _all: number } }> = []
 
     const categoryCounts: Record<string, number> = {}
     for (const product of productDetails) {

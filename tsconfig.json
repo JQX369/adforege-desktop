@@ -14,20 +14,25 @@
     "incremental": true,
     "target": "es2020",
     "downlevelIteration": true,
+    "baseUrl": ".",
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/components/*": ["src/ui/components/*"],
+      "@/lib/*": ["src/lib/*"],
+      "@/shared/*": ["src/shared/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "app/**/*.ts",
     "app/**/*.tsx",
-    "components/DynamicVerb.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     ".next/types/**/*.ts"
   ],
   "exclude": [
@@ -35,13 +40,6 @@
     "__tests__",
     "e2e",
     ".next/types",
-    "UI example.tsx",
-    "app/api/**",
-    "app/admin/**",
-    "app/blog/**",
-    "app/vendor/**",
-    "components/**",
-    "lib/**",
-    "scripts/**"
+    "UI example.tsx"
   ]
 }

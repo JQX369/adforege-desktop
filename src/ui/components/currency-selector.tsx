@@ -36,6 +36,7 @@ export function CurrencySelector() {
           size="sm"
           className="gap-2 min-w-[60px]"
           aria-label={`Current currency: ${currentCurrency?.name || 'USD'}`}
+          data-testid="currency-selector"
         >
           <span className="font-mono font-medium">
             {currentCurrency?.symbol || '$'}

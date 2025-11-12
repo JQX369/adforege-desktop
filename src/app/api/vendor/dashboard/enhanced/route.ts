@@ -110,7 +110,7 @@ export async function GET(req: NextRequest) {
 
     // Calculate performance score
     let performanceScore = 0
-    let performanceLevel = 'beginner' as const
+    let performanceLevel: 'beginner' | 'intermediate' | 'advanced' | 'expert' = 'beginner'
     let badges: string[] = []
     let nextMilestone = ''
 

@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from '@/src/ui/card'
 import { Badge } from '@/src/ui/badge'
+import { GuidesIndex } from '@/src/features/guides/GuidesIndex'
 import { GIFT_GUIDES_METADATA } from '@/lib/metadata'
 
 export const metadata: Metadata = GIFT_GUIDES_METADATA
@@ -89,14 +90,14 @@ const giftGuides = [
 ]
 
 const categories = [
-  { name: 'All Occasions', href: '/gift-guides', count: giftGuides.length },
-  { name: 'Holiday & Seasonal', href: '/gift-guides/holiday', count: 1 },
-  { name: 'Birthday', href: '/gift-guides/birthday', count: 1 },
-  { name: "Valentine's Day", href: '/gift-guides/valentines', count: 1 },
-  { name: "Mother's & Father's Day", href: '/gift-guides/family', count: 2 },
-  { name: 'Budget-Friendly', href: '/gift-guides/budget', count: 1 },
-  { name: 'Tech & Gadgets', href: '/gift-guides/tech', count: 1 },
-  { name: 'Personalized', href: '/gift-guides/personalized-gifts', count: 1 },
+  { name: 'Holiday & Seasonal', value: 'Holiday' },
+  { name: 'Birthday', value: 'Birthday' },
+  { name: "Valentine's Day", value: "Valentine's" },
+  { name: "Mother's Day", value: "Mother's Day" },
+  { name: "Father's Day", value: "Father's Day" },
+  { name: 'Budget', value: 'Budget' },
+  { name: 'Tech', value: 'Tech' },
+  { name: 'Personalized', value: 'Personalized' },
 ]
 
 export default function GiftGuidesPage() {
@@ -115,59 +116,13 @@ export default function GiftGuidesPage() {
             personalized recommendations for everyone.
           </p>
 
-          {/* Category Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                href={category.href}
-                className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-sm transition-colors"
-              >
-                {category.name} ({category.count})
-              </Link>
-            ))}
-          </div>
+        {/* Filters */}
+        <GuidesIndex
+          guides={giftGuides}
+          categories={[{ name: 'All', value: 'all' }, ...categories]}
+        />
         </div>
-
-        {/* Gift Guides Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {giftGuides.map((guide) => (
-            <Card
-              key={guide.href}
-              className="group hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-            >
-              <CardHeader>
-                <div className="flex items-start justify-between mb-2">
-                  <Badge variant="outline" className="text-xs">
-                    {guide.badge}
-                  </Badge>
-                  <span className="text-xs text-muted-foreground">
-                    {guide.searchVolume} searches/mo
-                  </span>
-                </div>
-                <CardTitle className="group-hover:text-primary transition-colors">
-                  <Link href={guide.href} className="hover:underline">
-                    {guide.title}
-                  </Link>
-                </CardTitle>
-                <CardDescription>{guide.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex items-center justify-between">
-                  <Badge variant="secondary" className="text-xs">
-                    {guide.category}
-                  </Badge>
-                  <Link
-                    href={guide.href}
-                    className="text-sm text-primary hover:underline font-medium"
-                  >
-                    Explore Guide →
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+      {/* Results rendered by GuidesIndex */}
 
         {/* CTA Section */}
         <div className="mt-16 text-center">

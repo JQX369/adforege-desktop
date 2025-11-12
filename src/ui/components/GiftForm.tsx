@@ -14,7 +14,7 @@ import { Input } from '@/src/ui/input'
 import { Label } from '@/src/ui/label'
 import { Checkbox } from '@/src/ui/checkbox'
 import { RadioGroup, RadioGroupItem } from '@/src/ui/radio-group'
-import { GiftFormData } from '@/prompts/GiftPrompt'
+import { GiftFormData } from '@/lib/prompts/GiftPrompt'
 import {
   detectGeoFromBrowser,
   getCurrencySymbol,

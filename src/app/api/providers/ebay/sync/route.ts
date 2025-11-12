@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { syncEbayByKeyword } from '@/src/lib/clients/ebay-enhanced'
+import { syncEbayByKeyword } from '@/lib/clients/providers/ebay-enhanced'
 
 export const runtime = 'nodejs'
 

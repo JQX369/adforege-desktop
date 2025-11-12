@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { syncRainforestByKeyword } from '@/src/lib/clients/rainforest-enhanced'
-import { syncEbayByKeyword } from '@/src/lib/clients/ebay-enhanced'
+import { syncRainforestByKeyword } from '@/lib/clients/providers/rainforest-enhanced'
+import { syncEbayByKeyword } from '@/lib/clients/providers/ebay-enhanced'
 
 export const runtime = 'nodejs'
 

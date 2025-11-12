@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     await prisma.product.update({
       where: { id: productId },
       data: {
-        lastCheckedAt: new Date(),
+        lastSeenAt: new Date(),
         availability: AvailabilityStatus.UNKNOWN,
       },
     })

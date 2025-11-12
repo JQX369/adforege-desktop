@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { rateLimit } from '@/lib/utils'
-import { GiftFormData } from '@/prompts/GiftPrompt'
+import { GiftFormData } from '@/lib/prompts/GiftPrompt'
 import { buildAffiliateUrl } from '@/lib/affiliates'
 import { getRecommendations } from '@/lib/recs'
 import { appendSeenIds, buildSessionProfile } from '@/lib/recs/session'
@@ -89,7 +89,6 @@ export const POST = withErrorHandling(
       console.log('🔍 [DEBUG] Form data received:', {
         occasion: formData.occasion,
         relationship: formData.relationship,
-        personality: formData.personality,
         interests: formData.interests,
         interestsCount: formData.interests?.length || 0,
       })
@@ -97,7 +96,7 @@ export const POST = withErrorHandling(
       const geoInfo = await resolveGeo(request.headers)
       console.log('🔍 [DEBUG] Geo info:', geoInfo)
 
-      const preferenceText = `${formData.occasion} gift for ${formData.relationship} who is ${formData.personality} and likes ${(formData.interests || []).join(', ')}`
+      const preferenceText = `${formData.occasion} gift for ${formData.relationship} who likes ${(formData.interests || []).join(', ')}`
       const sessionId = `session-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 
       console.log('🔍 [DEBUG] Session details:', {

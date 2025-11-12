@@ -35,9 +35,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         event: 'conversion',
       },
       _count: { event: true },
-      _avg: {
-        // This would need additional fields in the schema
-      },
     })
 
     // Transform data for frontend

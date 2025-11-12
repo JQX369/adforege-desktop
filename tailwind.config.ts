@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui'],
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -20,8 +23,8 @@ const config: Config = {
         sm: 'calc(var(--radius) - 4px)',
       },
       boxShadow: {
-        sm: '0 12px 32px rgba(11, 11, 15, 0.06)',
-        md: '0 18px 40px rgba(11, 11, 15, 0.12)',
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
       },
       colors: {
         background: 'hsl(var(--background))',

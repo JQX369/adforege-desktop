@@ -231,9 +231,6 @@ class MLTrainingManager {
   // Get training data for recommendation engine
   private async getRecommendationTrainingData(): Promise<any[]> {
     const data = await prisma.recommendationEvent.findMany({
-      include: {
-        product: true,
-      },
       take: 1000,
     })
 

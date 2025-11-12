@@ -6,6 +6,7 @@ import { Button } from '@/src/ui/button'
 import { useEffect, useState } from 'react'
 import { createSupabaseBrowserClient } from '@/lib/supabase'
 import { trackEvent } from '@/lib/track'
+import { ThemeToggle } from '@/src/ui/ThemeToggle'
 
 export function SiteHeader() {
   const [user, setUser] = useState<any>(null)
@@ -75,6 +76,7 @@ export function SiteHeader() {
           >
             For vendors
           </Link>
+          <ThemeToggle />
           <Button
             variant="ghost"
             className="rounded-full border border-white/20 bg-white/10 px-5 py-2 text-sm font-semibold text-white shadow-sm backdrop-blur transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring focus-visible:ring-white/40"

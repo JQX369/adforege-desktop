@@ -216,6 +216,18 @@ export function SwipeDeck({
       </p>
 
       <style jsx>{`
+        @media (prefers-reduced-motion: reduce) {
+          :global(.swipe-right) .gradient-right,
+          :global(.swipe-left) .gradient-left {
+            transition: none !important;
+          }
+          .glass-panel,
+          .gradient-left,
+          .gradient-right {
+            transition: none !important;
+            animation: none !important;
+          }
+        }
         :global(.swipe-right) .gradient-right {
           opacity: 0.28;
           background: linear-gradient(

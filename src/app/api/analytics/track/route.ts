@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { AnalyticsEvent } from '@/src/shared/utils/analytics-tracker'
+import { AnalyticsEvent } from '@/lib/analytics-tracker'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
@@ -27,19 +27,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       try {
         // Store events in database
         await prisma.analyticsEvent.createMany({
-          data: batch.map((event: AnalyticsEvent) =>
-            Randolph({
-              event: event.event,
-              properties: event.properties || {},
-              userId: event.userId,
-              sessionId: event.sessionId,
-              timestamp: event.timestamp || new Date(),
-              page: event.page,
-              referrer: event.referrer,
-              userAgent: event.userAgent,
-              ip: event.ip,
-            })
-          ),
+          data: batch.map((event: AnalyticsEvent) => ({
+            event: event.event,
+            properties: event.properties || {},
+            userId: event.userId,
+            sessionId: event.sessionId || `session_${Date.now()}_${Math.random()}`,
+            timestamp: event.timestamp || new Date(),
+            page: event.page,
+            referrer: event.referrer,
+            userAgent: event.userAgent,
+            ip: event.ip,
+          })),
         })
 
         processedCount += batch.length

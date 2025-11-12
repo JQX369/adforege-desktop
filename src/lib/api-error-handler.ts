@@ -8,16 +8,16 @@ import {
   ErrorContext,
 } from '@/lib/error-handler'
 
-// API error handler wrapper
-export function withErrorHandling(
-  handler: (req: NextRequest) => Promise<NextResponse>,
+// API error handler wrapper - supports both regular and dynamic route handlers
+export function withErrorHandling<T extends { params?: { [key: string]: string } }>(
+  handler: (req: NextRequest, context?: T) => Promise<NextResponse>,
   options: {
     operationName?: string
     logErrors?: boolean
     includeStack?: boolean
   } = {}
 ) {
-  return async (req: NextRequest): Promise<NextResponse> => {
+  return async (req: NextRequest, context?: T): Promise<NextResponse> => {
     const {
       operationName = 'API Operation',
       logErrors = true,
@@ -25,9 +25,9 @@ export function withErrorHandling(
     } = options
 
     try {
-      return await handler(req)
+      return await handler(req, context)
     } catch (error) {
-      const context: ErrorContext = {
+      const errorContext: ErrorContext = {
         requestId: req.headers.get('x-request-id') || undefined,
         userAgent: req.headers.get('user-agent') || undefined,
         ip:
@@ -40,11 +40,12 @@ export function withErrorHandling(
         metadata: {
           operationName,
           includeStack,
+          ...(context?.params && { params: context.params }),
         },
       }
 
       if (logErrors) {
-        await handleError(error as Error, context)
+        await handleError(error as Error, errorContext)
       }
 
       // Determine error type and severity
@@ -83,7 +84,7 @@ export function withErrorHandling(
         errorType,
         error instanceof Error ? error.message : 'Unknown error',
         severity,
-        context
+        errorContext
       )
 
       return createErrorResponse(appError, req)

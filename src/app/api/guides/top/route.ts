@@ -68,7 +68,7 @@ export async function GET(request: NextRequest) {
           in: productIds,
         },
         status: 'APPROVED',
-        available: true,
+        availability: 'IN_STOCK',
       },
       select: {
         id: true,

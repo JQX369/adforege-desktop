@@ -68,6 +68,28 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
 
     const { formData, userId, page = 0, mlConfig = {} } = validationResult.data
 
+    // Parse budget string to min/max values
+    const parseBudget = (budget: string): { min: number; max: number } => {
+      switch (budget) {
+        case 'under-25':
+          return { min: 0, max: 25 }
+        case '25-50':
+          return { min: 25, max: 50 }
+        case '50-100':
+          return { min: 50, max: 100 }
+        case '100-200':
+          return { min: 100, max: 200 }
+        case '200-500':
+          return { min: 200, max: 500 }
+        case '500+':
+          return { min: 500, max: Infinity }
+        default:
+          return { min: 0, max: Infinity }
+      }
+    }
+    
+    const budgetRange = parseBudget(formData.budget)
+
     // Create session profile
     const sessionProfile = {
       sessionId: userId || 'anonymous',
@@ -76,8 +98,8 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
         interests: formData.interests,
         occasion: formData.occasion,
         relationship: formData.relationship,
-        minPrice: formData.budget.min,
-        maxPrice: formData.budget.max,
+        minPrice: budgetRange.min,
+        maxPrice: budgetRange.max,
         seenIds: [],
         excludeIds: [],
       },

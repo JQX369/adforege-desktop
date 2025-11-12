@@ -5,7 +5,7 @@ import {
   buildCategorizerPrompt,
   extractEmbeddingText,
   ProductData,
-} from '@/prompts/CategoriserPrompt'
+} from '@/lib/prompts/CategoriserPrompt'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { isActiveSubscriptionStatus } from '@/lib/vendor-access'
 import { cleanProductUrl } from '@/lib/affiliates'
@@ -148,25 +148,14 @@ export async function POST(request: NextRequest) {
           where: { id: existing.id },
           data: {
             ...productRecord,
-            embeddings: embedding?.length
-              ? {
-                  upsert: {
-                    update: { embedding, updatedAt: new Date() },
-                    create: { embedding },
-                  },
-                }
-              : undefined,
+            embedding: embedding || undefined,
           },
         })
       : await prisma.product.create({
           data: {
             ...productRecord,
             affiliateUrl: cleanedUrl,
-            embeddings: embedding?.length
-              ? {
-                  create: { embedding },
-                }
-              : undefined,
+            embedding: embedding || undefined,
           },
         })
 

@@ -83,8 +83,17 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
   }
 
   const contentManager = new ContentManager()
+  
+  // Ensure slug is provided - generate from title if not provided
+  const slug = validationResult.data.slug || 
+    validationResult.data.title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '')
+  
   const content = await contentManager.createContent({
     ...validationResult.data,
+    slug,
     publishedAt: validationResult.data.publishedAt
       ? new Date(validationResult.data.publishedAt)
       : undefined,

@@ -25,11 +25,11 @@ export async function generateMetadata({
 
   return {
     title: post.seoTitle || post.title,
-    description: post.seoDescription || post.description || post.excerpt,
+    description: post.seoDescription || post.description || post.excerpt || undefined,
     keywords: post.metaKeywords,
     openGraph: {
       title: post.seoTitle || post.title,
-      description: post.seoDescription || post.description || post.excerpt,
+      description: post.seoDescription || post.description || post.excerpt || undefined,
       type: 'article',
       publishedTime: post.publishedAt?.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
@@ -39,7 +39,7 @@ export async function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: post.seoTitle || post.title,
-      description: post.seoDescription || post.description || post.excerpt,
+      description: post.seoDescription || post.description || post.excerpt || undefined,
     },
   }
 }
@@ -72,7 +72,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <BlogPostContent post={post} />
+            <BlogPostContent post={{
+              ...post,
+              description: post.description ?? undefined,
+              excerpt: post.excerpt ?? undefined,
+              featuredImage: post.featuredImage ?? undefined,
+              author: post.author ?? undefined,
+            }} />
             <BlogPostComments postId={post.id} />
           </div>
 

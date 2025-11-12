@@ -34,9 +34,6 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         timestamp: { gte: startDate },
       },
       _count: { timestamp: true },
-      _avg: {
-        // This would need additional fields in the schema
-      },
     })
 
     // Transform data for frontend

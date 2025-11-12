@@ -73,15 +73,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }),
 
       // Average session duration (simplified)
-      prisma.analyticsEvent.aggregate({
-        where: {
-          timestamp: { gte: startDate },
-          event: 'session_duration',
-        },
-        _avg: {
-          // This would need a duration field in the schema
-        },
-      }),
+      Promise.resolve({ _avg: null }),
 
       // Bounce rate (simplified)
       prisma.analyticsEvent.count({
@@ -92,19 +84,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       }),
 
       // Revenue from affiliate clicks
-      prisma.analyticsEvent.aggregate({
-        where: {
-          timestamp: { gte: startDate },
-          event: 'conversion',
-          properties: {
-            path: ['conversionType'],
-            equals: 'affiliate_click',
-          },
-        },
-        _sum: {
-          // This would need a value field in the schema
-        },
-      }),
+      Promise.resolve({ _sum: null }),
     ])
 
     const overview = {

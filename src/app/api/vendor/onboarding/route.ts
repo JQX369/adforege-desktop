@@ -85,21 +85,16 @@ export async function POST(req: NextRequest) {
       },
     })
 
-    // Create onboarding log entry
-    await prisma.ingestionLog.create({
-      data: {
-        type: 'VENDOR_ONBOARDING',
-        status: 'COMPLETED',
-        message: `Vendor ${businessName} completed onboarding`,
-        details: {
-          vendorId,
-          businessType,
-          productCategories,
-          averagePrice,
-          productCount,
-        },
-      },
-    })
+    // TODO: IngestionLog model doesn't support type/status/message fields
+    // Log onboarding completion separately if needed
+    // await prisma.ingestionLog.create({
+    //   data: {
+    //     durationMs: 0,
+    //     productsCreated: 0,
+    //     productsUpdated: 0,
+    //     errors: 0,
+    //   },
+    // })
 
     return NextResponse.json({
       success: true,

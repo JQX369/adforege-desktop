@@ -515,7 +515,7 @@ export default function ErrorDashboard() {
                 </div>
                 <div className="flex gap-2">
                   <Dialog>
-                    <DialogTrigger asChild>
+                    <DialogTrigger>
                       <Button variant="outline" size="sm">
                         View Details
                       </Button>
@@ -565,7 +565,7 @@ export default function ErrorDashboard() {
                   </Dialog>
                   {!log.resolved && (
                     <Dialog>
-                      <DialogTrigger asChild>
+                      <DialogTrigger>
                         <Button
                           variant="default"
                           size="sm"
