@@ -1,0 +1,3 @@
+- Windows-first packaging; avoid macOS-only tooling.
+- Keep Google Gemini usage compliant; no unsupported models.
+- GUI built with CustomTkinter + Tk; maintain style tokens.

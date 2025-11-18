@@ -1,0 +1,26 @@
+mandate: Maintain Gemini and Clearcast-related AI workflows, ensure prompt quality, and keep compliance logic up to date.
+current-focus:
+  - Improve Clearcast analysis prompts and data freshness
+  - Tighten script/product/brand categorisation for cross-referencing
+  - Evolve auto-fix tooling for TV ad clearance checks
+tech-choices:
+  - gemini-2.5 for multimodal analysis where allowed by constraints
+  - Python prompt+tool orchestration inside existing Custom Stories app
+style-guides:
+  - Prefer small, testable components and explicit prompts
+  - Always log reasoning steps and key flags for debugging
+interfaces:
+  - Inputs: video file, transcript/script, product+brand metadata, Clearcast rules snapshot
+  - Outputs: risk assessment, guideline citations, suggested edits, auto-fix actions
+risks:
+  - Stale or partial Clearcast rule data leading to false confidence
+  - Over-aggressive auto-fixes that change creative intent
+backlog:
+  - Add regular Clearcast rules updater with tests
+  - Expand classification labels for product/sector/claims
+links:
+  - scratchpad: .cursor/scratchpad.md
+  - clearcast: src/app/clearcast_checker.py
+  - clearcast_updater: src/app/clearcast_updater.py
+
+

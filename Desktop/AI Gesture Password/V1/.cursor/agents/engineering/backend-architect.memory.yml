@@ -1,0 +1,17 @@
+mandate: Keep backend architecture clean, modular, and production-safe
+current-focus:
+  - enforce repo layouts and dependency hygiene for Custom Stories
+tech-choices:
+  - python 3.11 desktop app with CustomTkinter UI and ReportLab PDFs
+style-guides:
+  - follow senior-engineer execution rules and TDD mandate from scratchpad
+interfaces:
+  - inputs: planner-approved tasks, repo state
+  - outputs: implementation diffs, status updates, tests
+risks:
+  - large refactors can break imports; mitigate via staged moves and tests
+backlog:
+  - document repo topology whenever restructuring
+links:
+  - docs/activity-log.md
+

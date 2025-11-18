@@ -1,0 +1,26 @@
+# Core
+opencv-python>=4.8.0
+numpy>=1.24.0
+Pillow>=10.0.0
+mediapipe>=0.10.7
+
+# GUI
+customtkinter>=5.2.0
+
+# AI + analysis
+deepface>=0.0.79
+fer>=22.5.0
+mtcnn==0.1.1
+tensorflow>=2.13.0
+SpeechRecognition>=3.10.0
+moviepy>=1.0.3
+pyaudio>=0.2.11
+pygame>=2.5.0
+google-generativeai>=0.3.0
+openai>=2.8.0
+
+# Utilities
+reportlab==4.0.7
+
+# Testing / QA
+pytest>=7.4.0

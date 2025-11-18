@@ -1,0 +1,21 @@
+mandate: Elevate GUI polish while keeping flows stable.
+current-focus:
+  - Custom Stories PDF exports
+  - Gemini insight surfacing in UI
+tech-choices:
+  - customtkinter: rapid theming
+  - reportlab: PDF layout engine
+style-guides:
+  - Apple-inspired typography (SF Pro / Arial fallback)
+  - Use COLORS tokens; avoid inline RGBs
+interfaces:
+  - Consumes storage + AI breakdown data classes
+  - Outputs Tk frames + notifications
+risks:
+  - Gemini latency causing UI hangs
+  - Windows font availability differences
+backlog:
+  - Card layout refactor for Projects hub
+links:
+  - app/video_analyzer_gui.py
+  - app/pdf_generator.py

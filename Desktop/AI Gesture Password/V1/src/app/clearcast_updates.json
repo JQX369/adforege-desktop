@@ -1,0 +1,79 @@
+{
+  "last_check": "2025-11-15T14:17:02.213093",
+  "updates": [],
+  "current_version": "v1.0.0",
+  "auto_check_enabled": true,
+  "snapshot": {
+    "version_id": "clearcast-v2025.11.15",
+    "last_checked": "2025-11-15T18:30:00Z",
+    "source_document": "A Complete Guide to Passing TV Adverts_ Key Clearcast Guidance.pdf",
+    "rules": [
+      {
+        "code": "BCAP 3.1",
+        "title": "Misleading advertising",
+        "category": "Misleading Claims",
+        "summary": "Claims must be substantiated and must not exaggerate performance, savings, or consumer benefit.",
+        "severity": "high",
+        "prohibited_or_conditional": "conditional",
+        "age_restrictions": null,
+        "alcohol_or_gambling": false,
+        "claims_require_substantiation": true,
+        "scheduling_notes": null,
+        "example_phrases": [
+          "Include qualification on-screen for introductory pricing",
+          "Show source of comparative claims"
+        ],
+        "tags": [
+          "claims",
+          "pricing",
+          "substantiation"
+        ],
+        "last_updated": "2024-10-01T00:00:00Z"
+      },
+      {
+        "code": "BCAP 5.2",
+        "title": "Children: pressure to purchase",
+        "category": "Children",
+        "summary": "Ads must not directly exhort children to buy or persuade others to buy a product for them.",
+        "severity": "high",
+        "prohibited_or_conditional": "prohibited",
+        "age_restrictions": "targeting under 16",
+        "alcohol_or_gambling": false,
+        "claims_require_substantiation": false,
+        "scheduling_notes": "avoid children's airtime if present",
+        "example_phrases": [
+          "No on-screen text telling kids to 'ask your parents now'",
+          "Avoid framing the child as the decision maker"
+        ],
+        "tags": [
+          "children",
+          "pressure",
+          "call-to-action"
+        ],
+        "last_updated": "2024-09-10T00:00:00Z"
+      },
+      {
+        "code": "BCAP 10.4",
+        "title": "Alcohol advertising appeal",
+        "category": "Alcohol",
+        "summary": "Alcohol ads must not appeal strongly to people under 18 or link drinking to social or sexual success.",
+        "severity": "medium",
+        "prohibited_or_conditional": "conditional",
+        "age_restrictions": "18+ only",
+        "alcohol_or_gambling": true,
+        "claims_require_substantiation": false,
+        "scheduling_notes": "post-watershed for youthful themes",
+        "example_phrases": [
+          "Use talent clearly over 25",
+          "No party games, dares or irresponsible drinking"
+        ],
+        "tags": [
+          "alcohol",
+          "youth",
+          "portrayal"
+        ],
+        "last_updated": "2024-08-15T00:00:00Z"
+      }
+    ]
+  }
+}
