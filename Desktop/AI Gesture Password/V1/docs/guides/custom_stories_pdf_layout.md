@@ -90,10 +90,10 @@
     - `include_blue_flags`
     - `include_compliant_elements`
     - `include_recommendations`
-- **Usage**:
-  - Both `generate_pdf` methods accept an optional `layout_config` argument; when omitted, a sensible default is used.
-  - Future changes (e.g. hiding a section or reordering groups) should be implemented by:
-    - Updating the relevant layout config, and
-    - Adjusting the section-building logic in `app/pdf_generator.py`, rather than inlining control flow into the GUI layer.
+ - **Usage**:
+   - Both `generate_pdf` methods accept an optional `layout_config` argument; when omitted, a sensible default is used.
+   - Future changes (e.g. hiding a section or reordering groups) should be implemented by:
+     - Updating the relevant layout config, and
+     - Adjusting the section-building logic in `app/pdf_generator.py`, rather than inlining control flow into the GUI layer.
 
 

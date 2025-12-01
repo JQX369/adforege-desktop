@@ -9,7 +9,7 @@ SRC_PATH = ROOT_DIR / "src"
 if SRC_PATH.exists():
     sys.path.insert(0, str(SRC_PATH))
 
-from app.clearcast_checker import ClearcastChecker
+from app.features.clearcast.clearcast_checker import ClearcastChecker
 import logging
 
 # Set up logging

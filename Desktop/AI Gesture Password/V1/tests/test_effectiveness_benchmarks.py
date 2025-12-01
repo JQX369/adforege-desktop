@@ -1,7 +1,7 @@
 """Unit tests for effectiveness benchmarks module"""
 
 import pytest
-from app.effectiveness_benchmarks import (
+from app.features.ai_breakdown.effectiveness_benchmarks import (
     get_tier,
     get_tier_range,
     get_tier_definition,

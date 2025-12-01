@@ -1,7 +1,7 @@
 """Test script for Clearcast compliance checker"""
 
 import logging
-from app.clearcast_checker import ClearcastChecker
+from app.features.clearcast.clearcast_checker import ClearcastChecker
 import json
 
 # Configure logging

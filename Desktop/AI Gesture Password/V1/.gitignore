@@ -1,0 +1,85 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Logs
+*.log
+logs/
+
+# Video Analysis Storage
+video_analyses/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+
+# Model weights
+*.h5
+*.pb
+*.onnx
+model_weights/
+
+# Virtual environment
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
+
+# Distribution
+dist/
+build/
+*.egg-info/
+*.spec
+
+# PyInstaller
+*.manifest
+*.pkg
+
+# User data
+data/users.json
+data/sessions.json
+profiles.json
+.guerillascope/
+
+# API Keys and Secrets
+.env
+*.env
+config_secure.py
+app/config_secure.py
+
+# Audio and temporary files
+temp_audio/
+*.mp3
+*.wav
+*_temp_audio.*
+
+# Icon and asset creation files
+create_icon.py
+
+# Test videos
+test_videos/
+*.mp4
+*.avi
+*.mov
+
+# Build artifacts
+GuerillaScope.exe
+version_info.txt 

@@ -1,0 +1,1178 @@
+{
+  "run_id": "de6aea79-e4a9-4fbd-9750-37f53d25d121",
+  "status": "completed",
+  "created_at": "2025-12-01T00:48:27.094108",
+  "updated_at": "2025-12-01T00:57:41.330464",
+  "brief": {
+    "objective": "Drive sales",
+    "target_audience": "Primary: UK Parents (25-45) and Grandparents (55+) seeking meaningful, non-disposable gifts. \n\nPsychographics: They are suffering from 'plastic fatigue'\u2014tired of buying toys that are discarded after a week. They value literacy, imagination, and sentimental keepsakes. They want to feel like 'superheroes' for finding a gift that creates a genuine emotional reaction. \n\nBehavioral: Likely to shop on mobile during evenings (post-bedtime scroll) or looking for last-minute unique birthday/Christmas solutions.",
+    "single_minded_proposition": "Give the only gift where your child is the hero of their own magical adventure.",
+    "tone_of_voice": "Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere.",
+    "asset_name": "Campaign 01/12/2025",
+    "length_seconds": 30,
+    "mandatories": [],
+    "parent_id": null,
+    "creative_mode": "standard_think",
+    "market": "uk",
+    "visual_style": null,
+    "briefing_context": null,
+    "brand_name": "Kidscustomstories",
+    "product_service": "",
+    "budget_range": "No budget specified",
+    "comms_style": "",
+    "brand_colors": [],
+    "brand_context": "Brand: Kidscustomstories",
+    "research_insights": "1. 'The Recognition Gasp': The most powerful moment in personalized gifting is not the wrapping, but the split second a child realizes the character looks like them and shares their name. \n2. 'Keepsake over Clutter': UK parents are increasingly conscious of clutter. A book is seen as a 'forever gift' that sits on a shelf, not in a landfill. \n3. 'The Bedtime Bond': Parents are looking for tools to make bedtime easier and more connecting; reading a story about the child strengthens that bond more than a generic book.",
+    "compliance_requirements": "UK market: BCAP Code, Clearcast pre-clearance required, ASA oversight\nMust adhere to UK CAP Code regarding advertising to children (even if targeting parents). Ensure no misleading claims about delivery times (crucial for gifting). Strict adherence to GDPR/Data Protection regarding the handling of children's names and images."
+  },
+  "retrieval": {
+    "neighbors": [
+      {
+        "id": "3517d396-f189-4a17-8b1a-65212afc04ab",
+        "title": "The Beatles: Rock Band",
+        "brand": "Xbox 360",
+        "category": "Entertainment",
+        "year": 2009,
+        "description": "Promotes The Beatles: Rock Band game compatible with popular music controllers.",
+        "script_excerpt": "Archetype: creator | Hook: statement | Structure: linear | Persuasion: nostalgia, authority, demonstration | Distinctive: Leads with PEGI 12 rating audio cue before main sales message, Positions the game as a family gift rather than just a gamer purchase, Highlights cross-compatibility with existing",
+        "video_url": null,
+        "effectiveness_score": 0.00411,
+        "awards": [],
+        "similarity_score": 0.5849,
+        "tags": [
+          "gb",
+          "entertainment"
+        ]
+      },
+      {
+        "id": "fa49107e-5f0e-461f-b0ae-bfdcea396b62",
+        "title": "Archetype: innocent | Hook: visual_spectacle | Str",
+        "brand": "Thorntons",
+        "category": "FMCG",
+        "year": 2019,
+        "description": "A warm Christmas carol montage promotes Thorntons\u2019 festive 3-for-2 chocolate offer.",
+        "script_excerpt": "Archetype: innocent | Hook: visual_spectacle | Structure: linear | Persuasion: nostalgia, storytelling, unity | Distinctive: Using 'Deck the Halls' with lightly adapted lyrics to segue into the brand message, Positioning the offer as 'for believers', tying promotion to an emotional theme, Relying on",
+        "video_url": null,
+        "effectiveness_score": 0.004054,
+        "awards": [],
+        "similarity_score": 0.5668,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "16600345-cfcf-4d52-b535-3e9673c9a531",
+        "title": "Archetype: jester | Hook: relatable_situation | St",
+        "brand": "Marks & Spencer",
+        "category": "Retail",
+        "year": 2013,
+        "description": "Playful Christmas moments build to the line that Christmas needs your M&S.",
+        "script_excerpt": "Archetype: jester | Hook: relatable_situation | Structure: linear | Persuasion: humor, nostalgia, storytelling, curiosity, liking | Distinctive: Using a risqu\u00e9 gift ('chocolate knickers') as the comedic centerpiece of a mainstream Christmas retail ad, Structuring the script as a repeated 'Christmas ",
+        "video_url": null,
+        "effectiveness_score": 0.004068,
+        "awards": [],
+        "similarity_score": 0.5665,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "831af9f5-6bfa-4c7d-99fc-fa77dc7c3042",
+        "title": "The Best of the BBC from HMV",
+        "brand": "HMV",
+        "category": "Retail",
+        "year": 2009,
+        "description": "HMV promotes discounted BBC DVD box sets for Christmas using classic comedy clips.",
+        "script_excerpt": "Archetype: jester | Hook: humor | Structure: anthology | Persuasion: humor, nostalgia, social_proof, storytelling | Distinctive: Using short, instantly recognisable quotes from multiple BBC comedies as the main audio driver, Framing a retail price ad as a \u2018Best of the BBC\u2019 compilation, Ending with a",
+        "video_url": null,
+        "effectiveness_score": 0.004096,
+        "awards": [],
+        "similarity_score": 0.5494,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "43b3a14a-c22d-4b85-b173-d7143f892ca8",
+        "title": "George gifts",
+        "brand": "Asda",
+        "category": "Retail",
+        "year": 2010,
+        "description": "Seasonal George at Asda spot showcasing affordable fashion gifts.",
+        "script_excerpt": "Archetype: lover | Hook: question | Structure: linear | Persuasion: liking, aspiration, demonstration, storytelling | Distinctive: Opening with a direct seasonal gifting question to frame the ad, Structuring VO around specific gift categories (nightwear, lingerie, accessories, knitwear), Closing wit",
+        "video_url": null,
+        "effectiveness_score": 0.004076,
+        "awards": [],
+        "similarity_score": 0.5481,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "042f3b5b-4c29-4036-9bff-3520a367a3f6",
+        "title": "Camilla Kerslake",
+        "brand": "Camilla Kerslake",
+        "category": "Entertainment",
+        "year": 2009,
+        "description": "Promotes Camilla Kerslake\u2019s debut album as a soothing Christmas listen.",
+        "script_excerpt": "Archetype: creator | Hook: beauty | Structure: linear | Persuasion: authority, aspiration, testimonial, storytelling | Distinctive: Positioning the artist\u2019s voice as the sole product benefit ('amazing', 'incredible voice'), Leveraging Gary Barlow\u2019s discovery as an authority endorsement, Framing the ",
+        "video_url": null,
+        "effectiveness_score": 0.004058,
+        "awards": [],
+        "similarity_score": 0.5461,
+        "tags": [
+          "gb",
+          "entertainment"
+        ]
+      },
+      {
+        "id": "f99df001-32ff-47d9-897d-faf16e9ef2cb",
+        "title": "Half Price Christmas Specials",
+        "brand": "Tesco",
+        "category": "Retail",
+        "year": 2005,
+        "description": "Tesco promotes half price Christmas beauty and gift specials.",
+        "script_excerpt": "Archetype: everyman | Hook: statement | Structure: linear | Persuasion: aspiration, problem_solution, reciprocity | Distinctive: Repetition of the 'Half Price Christmas Specials at Tesco' line at both start and near the end, Benefit-led phrasing for each product (sleeker hair, more alluring, gorgeou",
+        "video_url": null,
+        "effectiveness_score": 0.004064,
+        "awards": [],
+        "similarity_score": 0.5429,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "e573d6ff-47e9-4d81-ace0-250031022f46",
+        "title": "DVD box set offers",
+        "brand": "Play.com",
+        "category": "Retail",
+        "year": 2009,
+        "description": "Play.com promotes big Christmas discounts on popular DVD box sets with free delivery.",
+        "script_excerpt": "Archetype: jester | Hook: statement | Structure: linear | Persuasion: scarcity, authority, humor, nostalgia, comparison | Distinctive: Framing DVD box sets explicitly as Christmas gifts in a rapid-fire retail spot, Using famous character quotes from each featured title to punctuate the price offers,",
+        "video_url": null,
+        "effectiveness_score": 0.004086,
+        "awards": [],
+        "similarity_score": 0.5409,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "c38ec48a-527e-4c0c-95a3-f73388e1a947",
+        "title": "Archetype: everyman | Hook: statement | Structure:",
+        "brand": "QD Stores",
+        "category": "Retail",
+        "year": 2025,
+        "description": "Price-led promo for crackers with a golden ticket in-store prize at QD.",
+        "script_excerpt": "Archetype: everyman | Hook: statement | Structure: linear | Persuasion: scarcity, curiosity, demonstration | Distinctive: Combining a low-price multi-buy with a golden ticket prize mechanic, Very short, tightly scripted VO focused only on offer and brand line, Use of in-store spend as the prize rath",
+        "video_url": null,
+        "effectiveness_score": 0.004056,
+        "awards": [],
+        "similarity_score": 0.5406,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "58a3bdc0-49f5-49a9-9d38-0782bc51204f",
+        "title": "Dining for \u00a310",
+        "brand": "Marks & Spencer",
+        "category": "Retail",
+        "year": null,
+        "description": "Promotes a supermarket Dining for \u00a310 meal deal for two with wine.",
+        "script_excerpt": "Archetype: everyman | Hook: statement | Structure: linear | Persuasion: scarcity, value, aspiration, storytelling | Distinctive: Naming the offer 'Dining for \u00a310' to frame it as a special occasion at-home dining experience, Explicitly structuring the VO around 'for two' to emphasize sharing and valu",
+        "video_url": null,
+        "effectiveness_score": 0.004055,
+        "awards": [],
+        "similarity_score": 0.5373,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      }
+    ],
+    "query_embedding_id": null,
+    "retrieval_time_ms": 8326.1,
+    "tags_used": [
+      "other",
+      "charity",
+      "fmcg",
+      "gb",
+      "retail",
+      "government",
+      "entertainment",
+      "us"
+    ],
+    "structure_references": [
+      {
+        "id": "132fe790-8177-40b4-ae73-8ec0e1e94cb8",
+        "title": "Archetype: innocent | Hook: visual_spectacle | Str",
+        "brand": "Dolce & Gabbana",
+        "category": "Other",
+        "year": null,
+        "description": "Instrumental music plays with no discernible dialogue or messaging.",
+        "script_excerpt": "Archetype: innocent | Hook: visual_spectacle | Structure: linear | Persuasion: curiosity | Distinctive: Use of only instrumental music with no dialogue or VO, Absence of any spoken brand or product references, No discernible narrative structure in the audio",
+        "video_url": null,
+        "effectiveness_score": 0.00405,
+        "awards": [],
+        "similarity_score": 0.5775,
+        "tags": [
+          "other"
+        ]
+      },
+      {
+        "id": "b791b945-9d53-4c3e-b4c7-bca13786398d",
+        "title": "Archetype: lover | Hook: statement | Structure: li",
+        "brand": "Guerlain",
+        "category": "Other",
+        "year": null,
+        "description": "A singer joyfully sings in the rain with a brief romantic French line.",
+        "script_excerpt": "Archetype: lover | Hook: statement | Structure: linear | Persuasion: nostalgia, storytelling | Distinctive: Centering the ad entirely on a sung performance rather than spoken VO or dialogue, Referencing the classic 'singing in the rain' motif to evoke nostalgia, Ending with a short French romantic l",
+        "video_url": null,
+        "effectiveness_score": 0.004062,
+        "awards": [],
+        "similarity_score": 0.5424,
+        "tags": [
+          "other"
+        ]
+      },
+      {
+        "id": "f72194ae-224f-4f08-83e3-29281c5bf4cc",
+        "title": "Archetype: caregiver | Hook: conflict | Structure:",
+        "brand": "Barnardo's",
+        "category": "Charity",
+        "year": 2010,
+        "description": "A vulnerable girl is exploited after running away until Barnardo's helps her rebuild her life.",
+        "script_excerpt": "Archetype: caregiver | Hook: conflict | Structure: before_after | Persuasion: fear_appeal, problem_solution, testimonial, storytelling, curiosity | Distinctive: Use of a single girl's first-person narration to cover home abuse, grooming, drugs, and recovery in under a minute, Stark contrast between ",
+        "video_url": null,
+        "effectiveness_score": 0.004065,
+        "awards": [],
+        "similarity_score": 0.5407,
+        "tags": [
+          "charity",
+          "gb"
+        ]
+      },
+      {
+        "id": "6142aca0-c389-4121-9bad-7c0ec84916d2",
+        "title": "The Best 60s Album in the World, Ever",
+        "brand": "Best Sixties Album In The World Ever",
+        "category": "Entertainment",
+        "year": 1995,
+        "description": "Retro TV spot selling a 3-CD compilation of classic 60s hits.",
+        "script_excerpt": "Archetype: creator | Hook: shocking_stat | Structure: circular | Persuasion: social_proof, authority, nostalgia, comparison, storytelling | Distinctive: Use of an extremely long, hyperbolic product title as the central brand asset, Heavy reliance on 60s nostalgia through music and likely retro graph",
+        "video_url": null,
+        "effectiveness_score": 0.004054,
+        "awards": [],
+        "similarity_score": 0.5369,
+        "tags": [
+          "gb",
+          "entertainment"
+        ]
+      },
+      {
+        "id": "7c4256c3-f38b-4426-a687-c0cb00b24392",
+        "title": "Ralph Lauren Romance",
+        "brand": "Ralph Lauren",
+        "category": "Other",
+        "year": 2024,
+        "description": "A romantic fragrance spot that centers love and the name Romance.",
+        "script_excerpt": "Archetype: lover | Hook: beauty | Structure: linear | Persuasion: aspiration, liking, storytelling | Distinctive: Extremely concise script focused on a single romantic sentiment, Product name that is identical to the emotional theme of the ad, Likely use of soft, cinematic visuals rather than functi",
+        "video_url": null,
+        "effectiveness_score": 0.004051,
+        "awards": [],
+        "similarity_score": 0.5366,
+        "tags": [
+          "other",
+          "us"
+        ]
+      }
+    ],
+    "emotion_references": [
+      {
+        "id": "f72194ae-224f-4f08-83e3-29281c5bf4cc",
+        "title": "Archetype: caregiver | Hook: conflict | Structure:",
+        "brand": "Barnardo's",
+        "category": "Charity",
+        "year": 2010,
+        "description": "A vulnerable girl is exploited after running away until Barnardo's helps her rebuild her life.",
+        "script_excerpt": "Archetype: caregiver | Hook: conflict | Structure: before_after | Persuasion: fear_appeal, problem_solution, testimonial, storytelling, curiosity | Distinctive: Use of a single girl's first-person narration to cover home abuse, grooming, drugs, and recovery in under a minute, Stark contrast between ",
+        "video_url": null,
+        "effectiveness_score": 0.004065,
+        "awards": [],
+        "similarity_score": 0.5188,
+        "tags": [
+          "charity",
+          "gb"
+        ]
+      },
+      {
+        "id": "f99df001-32ff-47d9-897d-faf16e9ef2cb",
+        "title": "Half Price Christmas Specials",
+        "brand": "Tesco",
+        "category": "Retail",
+        "year": 2005,
+        "description": "Tesco promotes half price Christmas beauty and gift specials.",
+        "script_excerpt": "Archetype: everyman | Hook: statement | Structure: linear | Persuasion: aspiration, problem_solution, reciprocity | Distinctive: Repetition of the 'Half Price Christmas Specials at Tesco' line at both start and near the end, Benefit-led phrasing for each product (sleeker hair, more alluring, gorgeou",
+        "video_url": null,
+        "effectiveness_score": 0.004064,
+        "awards": [],
+        "similarity_score": 0.4902,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "5ed20989-1123-4988-91d3-a9dc0f20f388",
+        "title": "Need for Speed Shift",
+        "brand": "Need For Speed",
+        "category": "Entertainment",
+        "year": 2009,
+        "description": "High-intensity racing game spot urging players to think fast and drive faster.",
+        "script_excerpt": "Archetype: explorer | Hook: action | Structure: linear | Persuasion: aspiration, curiosity, shock | Distinctive: Extremely concise VO line that encapsulates the brand promise of speed, Focus on pure speed and reaction time rather than story or characters, Direct 'Out now' call that positions the spo",
+        "video_url": null,
+        "effectiveness_score": 0.004073,
+        "awards": [],
+        "similarity_score": 0.4781,
+        "tags": [
+          "entertainment",
+          "us"
+        ]
+      },
+      {
+        "id": "7dc9a4d0-7e0c-44ad-918b-65fc07ebc573",
+        "title": "Archetype: caregiver | Hook: relatable_situation |",
+        "brand": "NHS",
+        "category": "Government",
+        "year": 2010,
+        "description": "A young couple discuss contraception options and are urged to talk to a health professional.",
+        "script_excerpt": "Archetype: caregiver | Hook: relatable_situation | Structure: three_act | Persuasion: problem_solution, storytelling, fear_appeal, humor, authority | Distinctive: Using a mum-daughter-boyfriend trio to normalise open contraception discussions, Integrating specific methods (pill, IUD, implant) into c",
+        "video_url": null,
+        "effectiveness_score": 0.00406,
+        "awards": [],
+        "similarity_score": 0.4778,
+        "tags": [
+          "government",
+          "gb"
+        ]
+      },
+      {
+        "id": "c38ec48a-527e-4c0c-95a3-f73388e1a947",
+        "title": "Archetype: everyman | Hook: statement | Structure:",
+        "brand": "QD Stores",
+        "category": "Retail",
+        "year": 2025,
+        "description": "Price-led promo for crackers with a golden ticket in-store prize at QD.",
+        "script_excerpt": "Archetype: everyman | Hook: statement | Structure: linear | Persuasion: scarcity, curiosity, demonstration | Distinctive: Combining a low-price multi-buy with a golden ticket prize mechanic, Very short, tightly scripted VO focused only on offer and brand line, Use of in-store spend as the prize rath",
+        "video_url": null,
+        "effectiveness_score": 0.004056,
+        "awards": [],
+        "similarity_score": 0.477,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      }
+    ],
+    "analogue_suggestions": [
+      "Watching paint dry in slow motion",
+      "Waiting for a glacier to cross the room",
+      "Standing in a queue that wraps around the earth",
+      "Watching a snail race across a continent",
+      "Waiting for toast to pop while time stands still"
+    ],
+    "core_emotion": "waiting",
+    "structural_goal": "emotional contrast"
+  },
+  "artifacts": {
+    "press_release": "# Kidscustomstories Launches Award-Winning \"Campaign 01/12/2025\" Campaign\n\n**Product campaign resonates with Primary: UK Parents (25-45) and Grandparents (55+) seeking meaningful, non-disposable gifts. \n\nPsychographics: They are suffering from 'plastic fatigue'\u2014tired of buying toys that are discarded after a week. They value literacy, imagination, and sentimental keepsakes. They want to feel like 'superheroes' for finding a gift that creates a genuine emotional reaction. \n\nBehavioral: Likely to shop on mobile during evenings (post-bedtime scroll) or looking for last-minute unique birthday/Christmas solutions.**\n\n[PLACEHOLDER - Gemini API unavailable]\n\n## Problem Statement\nThis campaign successfully communicated: \"Give the only gift where your child is the hero of their own magical adventure.\"\n\n## Solution\nThe 30-second spot captured attention through its Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. approach,\ndriving exceptional results for the brand.\n\n## The Old Way (The Enemy)\nBefore Kidscustomstories, customers were trapped in an endless cycle of frustration - \nwrestling with outdated processes, drowning in complexity, and losing precious time to tasks that \nshould have been effortless. The old way demanded patience, persistence, and an almost masochistic \ntolerance for inefficiency.\n\n---\nNote: This is a placeholder. The full press release will be generated when the Gemini API is available.\n",
+    "ideas_10": [
+      {
+        "id": "80dd2210",
+        "title": "The Scissors vs The Lawn - Campaign 01/12/2025",
+        "anchor": "A person on their knees, cutting an enormous lawn with tiny nail scissors. Each blade of grass takes a separate snip.",
+        "setup": "The protagonist has been at it for days. Their hands are cramped, their knees are raw. A progress bar overlay shows they're 0.3% complete.",
+        "intervention": "The brand mascot walks in, yawns, and casually blows a dandelion.",
+        "jumper": "The entire lawn transforms into a perfect striped pattern instantly. The scissors dissolve into confetti.",
+        "hook": "Opening on the absurd struggle of the Sisyphean Task",
+        "narrative": "The ad opens with the protagonist trapped in a Sisyphean Task. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Sisyphean Task struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Sisyphean Task metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "a787c42a",
+        "title": "The Filing Cabinet Mountain - Campaign 01/12/2025",
+        "anchor": "An office worker stands before a mountain of filing cabinets that reaches into the clouds, each drawer overflowing with paper.",
+        "setup": "They're climbing the cabinet mountain with a single document, sweating. Signs point to different floors: 'TPS Reports - Floor 847'. An elevator sign says 'Out of Order Since 1987'.",
+        "intervention": "The brand icon appears and simply taps the side of the mountain with one finger.",
+        "jumper": "All cabinets fold into origami birds and fly away, leaving a single glowing screen showing 'Complete'.",
+        "hook": "Opening on the absurd struggle of the Bureaucratic Nightmare",
+        "narrative": "The ad opens with the protagonist trapped in a Bureaucratic Nightmare. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Bureaucratic Nightmare struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Bureaucratic Nightmare metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "c26c2bd6",
+        "title": "The Brick Phone Call - Campaign 01/12/2025",
+        "anchor": "A person tries to make a call using two tin cans connected by a string that stretches across the entire city.",
+        "setup": "They're shouting into the can while running across rooftops, through traffic, across rivers, trying to keep the string taut. The other person hears only static.",
+        "intervention": "The brand character walks by and snaps their fingers.",
+        "jumper": "The string transforms into a beam of light. Suddenly both people are having a crystal-clear holographic conversation.",
+        "hook": "Opening on the absurd struggle of the Stone Age Communication",
+        "narrative": "The ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Stone Age Communication struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Stone Age Communication metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "6f4d770e",
+        "title": "The Maze of Terms & Conditions - Campaign 01/12/2025",
+        "anchor": "A person stands at the entrance to a hedge maze. The hedges are made entirely of tiny legal text. Signs warn: 'Reading time: 47 years'.",
+        "setup": "They venture in, getting lost, tripping over footnotes, attacked by aggressive asterisks. A skeleton nearby holds a scroll that reads 'I almost finished'.",
+        "intervention": "The brand mascot appears floating above the maze and simply winks.",
+        "jumper": "The entire maze flattens into a single 'Got it' button. The customer strolls across triumphantly.",
+        "hook": "Opening on the absurd struggle of the Legal Labyrinth",
+        "narrative": "The ad opens with the protagonist trapped in a Legal Labyrinth. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Legal Labyrinth struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Legal Labyrinth metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "e5a55f70",
+        "title": "The Manual Assembly - Campaign 01/12/2025",
+        "anchor": "A person sits surrounded by 10,000 numbered parts and an instruction manual the size of a phone book, all in a language that doesn't exist.",
+        "setup": "Sweat drips. They've been at it for 72 hours. They've built something, but it's clearly wrong - it looks like abstract art. The manual page reads 'Step 1 of 847,000'.",
+        "intervention": "The brand logo bounces into frame and simply presses a single button.",
+        "jumper": "All parts levitate and assemble themselves into a perfect product in seconds. The manual bursts into celebration confetti.",
+        "hook": "Opening on the absurd struggle of the IKEA Nightmare",
+        "narrative": "The ad opens with the protagonist trapped in a IKEA Nightmare. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The IKEA Nightmare struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This IKEA Nightmare metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      }
+    ],
+    "viable_3": [
+      {
+        "id": "80dd2210",
+        "title": "The Scissors vs The Lawn - Campaign 01/12/2025",
+        "anchor": "A person on their knees, cutting an enormous lawn with tiny nail scissors. Each blade of grass takes a separate snip.",
+        "setup": "The protagonist has been at it for days. Their hands are cramped, their knees are raw. A progress bar overlay shows they're 0.3% complete.",
+        "intervention": "The brand mascot walks in, yawns, and casually blows a dandelion.",
+        "jumper": "The entire lawn transforms into a perfect striped pattern instantly. The scissors dissolve into confetti.",
+        "hook": "Opening on the absurd struggle of the Sisyphean Task",
+        "narrative": "The ad opens with the protagonist trapped in a Sisyphean Task. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Sisyphean Task struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Sisyphean Task metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "a787c42a",
+        "title": "The Filing Cabinet Mountain - Campaign 01/12/2025",
+        "anchor": "An office worker stands before a mountain of filing cabinets that reaches into the clouds, each drawer overflowing with paper.",
+        "setup": "They're climbing the cabinet mountain with a single document, sweating. Signs point to different floors: 'TPS Reports - Floor 847'. An elevator sign says 'Out of Order Since 1987'.",
+        "intervention": "The brand icon appears and simply taps the side of the mountain with one finger.",
+        "jumper": "All cabinets fold into origami birds and fly away, leaving a single glowing screen showing 'Complete'.",
+        "hook": "Opening on the absurd struggle of the Bureaucratic Nightmare",
+        "narrative": "The ad opens with the protagonist trapped in a Bureaucratic Nightmare. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Bureaucratic Nightmare struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Bureaucratic Nightmare metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "c26c2bd6",
+        "title": "The Brick Phone Call - Campaign 01/12/2025",
+        "anchor": "A person tries to make a call using two tin cans connected by a string that stretches across the entire city.",
+        "setup": "They're shouting into the can while running across rooftops, through traffic, across rivers, trying to keep the string taut. The other person hears only static.",
+        "intervention": "The brand character walks by and snaps their fingers.",
+        "jumper": "The string transforms into a beam of light. Suddenly both people are having a crystal-clear holographic conversation.",
+        "hook": "Opening on the absurd struggle of the Stone Age Communication",
+        "narrative": "The ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. Kidscustomstories enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give the only gift where your child is the hero of their own magical adventure..",
+        "key_moments": [
+          "The Stone Age Communication struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "Kidscustomstories make it effortless",
+        "rationale": "This Stone Age Communication metaphor visually demonstrates the contrast between the old way and the new way, making Give the only gift where your child is the hero of their own magical adventure. instantly understandable through Whimsical yet Trustworthy. The voice should feel like a warm storybook narrator\u2014inviting and magical\u2014but grounded by the reliability of a high-quality service provider. Key descriptors: Heartwarming, Personal, Enchanting, Sincere. storytelling.",
+        "inspired_by": []
+      }
+    ],
+    "polished_3": [
+      {
+        "id": "e420ee2e",
+        "title": "The Scissors vs The Lawn - Kidscustomstories",
+        "concept_id": "80dd2210",
+        "opening": "[00:00 - 00:05] \n**LOCATION**: EXT. SUBURBAN BACK GARDEN - DAY (OVERCAST/GREY)\n**CAMERA**: Opens with an EXTREME CLOSE UP (Macro) of tiny, silver nail scissors snipping a single blade of grass. Sound is exaggeratedly loud: *SNIP*. \n**ACTION**: Camera RACK FOCUSES and PULLS BACK rapidly to a WIDE HIGH ANGLE (Drone/Crane). We reveal a Dad (30s, exhausted) kneeling in the center of an impossibly vast, overgrown lawn. He is attempting to mow the entire acre with these tiny grooming scissors. Beside him is a pile of brightly colored, broken plastic toys, resembling a landfill. He looks up, wipes sweat from his brow, completely defeated by the futility. \n**SFX**: The rhythmic, pathetic *snip-snip-snip* of the scissors. A low, droning wind. In the distance, the hollow clatter of plastic junk tumbling.\n**VO (Narrator)**: (Warm, slightly amused) Trying to find a meaningful gift in a sea of plastic junk... feels a bit like cutting the lawn with nail scissors, doesn't it?\n**SUPERS**: NONE.",
+        "development": "[00:05 - 00:20] \n**LOCATION**: EXT. GARDEN -> INT. LIVING ROOM TRANSITION\n**CAMERA**: MEDIUM SHOT on Dad. He sighs, drops the scissors. He pulls his smartphone from his pocket. Screen insert shows the Kidscustomstories interface\u2014clean, bright, inviting.\n**ACTION**: As his thumb taps \"Create Story,\" a ripple of golden light erupts from the phone screen. \n**VFX**: The grey, overcast sky tears open to reveal a warm, golden sunset. The overgrown grass blades don't just get cut; they morph into illustrated storybook elements\u2014tall sunflowers, beanstalks, and castle turrets. The pile of plastic toys dissolves into glittering dust that swirls into the shape of a hardcover book. The Dad is no longer kneeling in dirt; the set smoothly transitions (match cut) to him sitting comfortably on a plush armchair in a warm living room.\n**CAMERA**: 360-degree ORBIT shot around the Dad as the world transforms from drudgery to magic. \n**VO (Narrator)**: Stop the struggle. Kidscustomstories makes you the hero, by making *them* the hero.\n**SFX**: A magical \"whoosh\" sound design, chimes, birds chirping replacing the wind. The sound of a page turning echoes loudly.\n**MUSIC**: The sombre drone shifts instantly into an orchestral, swelling crescendo\u2014strings and celeste.",
+        "climax": "[00:20 - 00:25] \n**LOCATION**: INT. LIVING ROOM - MAGIC HOUR\n**CAMERA**: LOW ANGLE MEDIUM SHOT, looking up at the Dad and his Daughter (6 years old). The camera pushes in slowly (Dolly In).\n**ACTION**: The Dad holds the physical book open. The light from the pages seems to illuminate their faces. We see the Daughter's eyes go wide in genuine wonder. She points to the illustration on the page\u2014it looks exactly like her.\n**CAMERA**: INSERT SHOT of the book page. It shows the child's name and avatar fighting a dragon/exploring space. \n**ACTION**: The daughter looks up at her dad, not with a \"thanks for the toy\" look, but with deep adoration. She hugs him tight. The Dad looks at the camera and gives a subtle, satisfied \"superhero\" nod.\n**VO (Narrator)**: In just a few clicks, create a keepsake they\u2019ll read forever, not discard in a week.\n**SFX**: A soft, collective exhale of wonder. The rustle of high-quality paper. A heartbeat sound\u2014steady and warm.",
+        "resolution": "[00:25 - 00:30] \n**LOCATION**: STUDIO / GRAPHIC BACKGROUND\n**CAMERA**: STATIC PRODUCT SHOT on a textured paper background.\n**ACTION**: The book closes on a table. The cover features the customized child's name in gold foil. A mobile phone slides into frame next to it, showing the easy ordering process.\n**SUPERS**: Animated text appears: \"The Best Gift is Their Story.\"\n**VO (Narrator)**: Kidscustomstories. Effortless magic. Order now for Christmas delivery.\n**GRAPHICS**: URL: Kidscustomstories.com | App Store Badges.\n**SFX**: The satisfying *thud* of a hardback book closing. A final magical *ding*.\n**MUSIC**: Resolves on a warm, sustained major chord.",
+        "full_script": "**SCENE 1**\n**TIMING**: 00:00 - 00:05\n**LOCATION**: EXT. SUBURBAN BACK GARDEN - DAY (OVERCAST)\n**VISUAL**: OPEN on an EXTREME CLOSE UP of tiny silver nail scissors. *SNIP*. A single blade of grass falls. RAPID ZOOM OUT/CRANE UP to reveal DAD (35) kneeling in a vast, overgrown field of grass. He looks exhausted. Beside him, a mountain of discarded plastic toys looms like a trash heap.\n**AUDIO**: Exaggerated *snip* sounds. Cold wind. Hollow plastic clatter.\n**NARRATOR**: Trying to find a meaningful gift in a sea of plastic junk... feels a bit like cutting the lawn with nail scissors, doesn't it?\n\n**SCENE 2**\n**TIMING**: 00:05 - 00:20\n**LOCATION**: EXT. GARDEN TRANSITIONING TO INT. LIVING ROOM\n**VISUAL**: MS on Dad. He drops the scissors, defeats. Pulls out phone. INSERT of Kidscustomstories mobile site. He taps \"Create.\" \n**ACTION**: A shockwave of golden magic hits. The grey sky breaks into a golden sunset. The grass morphs into illustrated storybook flora. The plastic toy pile dissolves into sparkles. The garden bench morphs into a comfy armchair. Dad is now clean, relaxed, and holding a book.\n**AUDIO**: Magical *whoosh*. The drone of wind is replaced by a swelling, cinematic orchestral score (John Williams style).\n**NARRATOR**: Stop the struggle. Kidscustomstories makes you the hero, by making *them* the hero.\n\n**SCENE 3**\n**TIMING**: 00:20 - 00:25\n**LOCATION**: INT. LIVING ROOM - EVENING (WARM)\n**VISUAL**: MS - Dad hands the book to DAUGHTER (6). DOLLY IN. She opens it. Light spills from the pages onto her face. INSERT of the book: The character looks just like her. She gasps, looks at Dad with pure love, and hugs him.\n**AUDIO**: A soft gasp. Rustling paper. Music peaks emotionally.\n**NARRATOR**: In just a few clicks, create a keepsake they\u2019ll read forever, not discard in a week.\n\n**SCENE 4**\n**TIMING**: 00:25 - 00:30\n**LOCATION**: END CARD\n**VISUAL**: Product shot of a premium hardback book next to a smartphone. Text animates in.\n**SUPER**: \"The Best Gift is Their Story.\" \n**CTA**: Kidscustomstories.com\n**AUDIO**: Book closing thud. Final musical resolve.\n**NARRATOR**: Kidscustomstories. Effortless magic.",
+        "visual_style": "**Cinematography**: The spot requires two distinct looks. The 'Before' (0:00-0:05) should feel desaturated, cool, and slightly handheld/unstable\u2014referencing the aesthetic of 'The Office' or a gritty British drama (Aspect ratio 16:9). The 'After' (0:05-0:30) shifts to a rich, warm, cinematic look\u2014think 'Paddington' or 'Harry Potter' visuals. Golden Hour lighting, anamorphic lens flares, smooth gimbal or dolly movements, and rich, saturated colors (specifically the brand's primary colors). \n**Color Palette**: Start with Slate Grey (#708090) and Muted Green. Transition to Gold (#FFD700), Deep Royal Blue (#002366), and Warm Cream (#FFFDD0). \n**Texture**: Emphasize the tactile nature of the book\u2014visible paper grain and foil stamping to contrast against the cold, smooth plastic of the toys.",
+        "audio_notes": "**Music**: Begins with a comedic, repetitive 'plodding' track (pizzicato strings, slow tempo 80 BPM) to underscore the drudgery. At 0:06, hard cut to a sweeping, magical orchestral score (120 BPM) featuring chimes, harp, and a soaring violin melody. It should feel expensive and Disney-esque.\n**Voice Over**: British RP accent, Male or Female (30s-40s). The tone is 'The Storyteller'\u2014warm, inviting, slightly breathy, whispering a secret. Think Stephen Fry or Olivia Colman reading a bedtime story. \n**Sound Design**: The *Snip* needs to be comically isolated. The *Transformation* needs a multi-layered 'shimmer' sound. The book handling needs ASMR-quality paper sounds.",
+        "talent_notes": "**Dad**: Age 30-40. Relatable, 'everyman' look but cleans up well. Needs good comedic timing for the exhaustion beat in the opening. Wardrobe: Starts in slightly rumpled weekend gardening clothes, transforms into a cozy, high-quality knit sweater (cable knit, oatmeal or navy).\n**Daughter**: Age 5-7. Expressive eyes are crucial. Must be able to deliver a genuine reaction of wonder without over-acting. Wardrobe: Pajamas or cozy evening wear, timeless style (no branded clothing).\n**Hand Model**: For the close-up phone interaction shots, ensuring manicured hands demonstrating the UI ease.",
+        "production_considerations": "**Location**: A single location house with a large garden is sufficient. The 'vast lawn' effect can be achieved via matte painting/VFX extension on a standard lawn. \n**VFX**: Heavy lifting required for the transition scene (0:05-0:10). Requires 3D modeling of grass morphing into storybook elements and particle effects for the plastic toys dissolving. \n**Props**: 1x Custom printed Kidscustomstories book (hero prop), 20-30 broken/cheap plastic toys for the 'landfill' pile, 1x pair of tiny grooming scissors. \n**Timeline**: 1 Day Shoot (Morning for exterior gloom, afternoon for interior warmth). 2 Weeks Post-Production for VFX.\n**Crew**: Director, DP, Gaffer, Art Director (crucial for set dressing), VFX Supervisor on set.",
+        "estimated_duration_seconds": 30,
+        "is_winner": true,
+        "scores": {
+          "overall_impact": 7.0,
+          "hook_power": 7.0,
+          "emotional_resonance": 7.0,
+          "clarity_score": 7.0,
+          "distinctiveness": 7.0,
+          "brand_integration": 7.0,
+          "pulse_score": 7.0,
+          "echo_score": 7.0,
+          "overall": 7.0,
+          "reasoning": {
+            "note": "Default scores - scoring failed or unavailable"
+          }
+        },
+        "braintrust_feedback": [
+          {
+            "script_id": "e420ee2e",
+            "critic_persona": "The Craft Purist",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          },
+          {
+            "script_id": "e420ee2e",
+            "critic_persona": "The Strategist",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          },
+          {
+            "script_id": "e420ee2e",
+            "critic_persona": "The Disruptor",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          }
+        ],
+        "compliance_result": null
+      },
+      {
+        "id": "0926a7d0",
+        "title": "The Filing Cabinet Mountain",
+        "concept_id": "a787c42a",
+        "opening": "ACTION: Dad is wading through a sea of identical beige forms. He violently yanks open a drawer labeled \"CHRISTMAS PANIC.\" Instead of paper, a chaotic spill of abstract, multi-colored plastic shapes and unbranded packaging cascades out, burying his feet. He looks at the camera, breaking the fourth wall with a look of absolute exhaustion and 'plastic fatigue.'",
+        "development": "[00:05 - 00:20]\n\nLOCATION: TRANSITIONING SPACE. The warehouse begins to dissolve.\n\nLIGHTING: A warm, golden tungsten light blooms from the center of the frame, overpowering the cold cyan.\n\nCAMERA: CUT TO CLOSE UP (CU) of Dad\u2019s hand pulling out his smartphone. The screen glows. REVERSE ANGLE over shoulder showing the Kidscustomstories interface\u2014simple, intuitive, colorful. SNAP ZOOM out as the environment reacts to his touch.\n\nACTION: As Dad taps \"CREATE,\" a shockwave of magic ripples out. The grey filing cabinets don't just disappear; they burst open and transform. Vines of paper and ink shoot out, weaving together. The metal rust turns into gold-leaf book binding. The industrial floor becomes a soft, tufted carpet. Dad\u2019s grey suit morphs into a comfortable, knitted sweater. He looks around, his stress melting into delight. The transformation is rhythmic, popping in time with the music.\n\nSFX: The industrial drone cuts instantly. Replaced by a harp glissando and the fluttering sound of a thousand pages turning. A magical 'ding' when he presses the button.\n\nVO (NARRATOR): \"Escape the ordinary. With Kidscustomstories, you don't just buy a gift... you write them into the legend.\"",
+        "climax": "[00:20 - 00:25]\n\nLOCATION: COZY LIVING ROOM. Night. A Christmas tree twinkles softly in the background.\n\nLIGHTING: Cinematic amber practicals. A key light (simulating the book's glow) illuminates the child's face.\n\nCAMERA: SLOW PUSH IN on the Child (7, Female). Start at Medium Shot, ending in tight Extreme Close Up on her eyes.\n\nACTION: Dad hands the hardcover book to his daughter. She opens it. A practical golden light spills from the pages onto her face (VFX enhanced). Her eyes go wide\u2014genuine awe. She points to the illustration on the page, then touches her own chest, realizing the character is *her*. She looks up at her Dad. He isn't just a parent anymore; to her, he is a wizard. He gives a humble, satisfied smile.\n\nSFX: The sound of a choir swelling subtly. A heartbeat sound that slows down to a calm, happy rhythm. The rustle of high-quality paper.\n\nDIALOGUE (CHILD): (Whispered, breathless) \"It's me... I'm the hero.\"",
+        "resolution": "[00:25 - 00:30]\n\nLOCATION: TABLETOP STUDIO / LIVING ROOM VIGNETTE.\n\nLIGHTING: Clean, high-key product lighting. Crisp and premium.\n\nCAMERA: STATIC SHOT of the book standing upright. The cover art animates slightly (the character waves).\n\nACTION: The book rests on a wooden surface. Next to it, a mobile phone shows the easy ordering screen. Text animates in cleanly next to the book.\n\nSUPERS: \"The Gift That Lasts.\" fades in. Followed by URL: \"Kidscustomstories.com\".\n\nSFX: The music resolves on a perfect, major-key orchestral chord. A satisfying 'thud' of a heavy book closing.\n\nVO (NARRATOR): \"Kidscustomstories. Make their adventure unforgettable.\"",
+        "full_script": "**SCENE 1**\n\n**[00:00 - 00:05] INT. WAREHOUSE OF DOOM**\n\n**VISUAL:**\nAn EXTREME WIDE SHOT reveals a terrifyingly high mountain of grey filing cabinets. It looks like a bureaucratic nightmare. At the bottom, DAD (35) looks tiny and defeated. \n\n**CAMERA:**\nFast DOLLY IN to DAD.\n\n**ACTION:**\nDad struggles with a drawer labeled \"GENERIC GIFTS.\" He yanks it open. A loud avalanche of cheap, neon plastic toys spills out, burying his shoes. He looks directly into the lens, exhausted.\n\n**SFX:**\nIndustrial drone. Metallic SCREECH of the drawer. CLATTER of plastic.\n\n**NARRATOR (VO):**\nStuck in the endless loop of disposable gifts?\n\n---\n\n**SCENE 2**\n\n**[00:05 - 00:20] INT. TRANSITIONING SPACE**\n\n**VISUAL:**\nDad pulls out his phone. The screen glows warm orange against the blue-grey room.\n\n**CAMERA:**\nOVER THE SHOULDER (OTS) of the phone screen. We see the Kidscustomstories app. He taps \"Create.\"\n\n**ACTION:**\nThe tap triggers a magical shockwave. \n\n**VFX:**\nThe filing cabinets burst open, but instead of files, colorful paper vines and illustrations pour out. The metal walls peel away to reveal a warm living room wallpaper. Dad\u2019s grey suit morphs into a cozy knitted sweater. The transformation is fluid and whimsical.\n\n**SFX:**\nMagical 'whoosh.' Sound of fluttering paper. The industrial noise is replaced by a playful pizzicato string section.\n\n**NARRATOR (VO):**\nEscape the ordinary. With Kidscustomstories, you don't just buy a gift... you write them into the legend.\n\n---\n\n**SCENE 3**\n\n**[00:20 - 00:25] INT. LIVING ROOM - NIGHT**\n\n**VISUAL:**\nThe transformation is complete. We are in a cozy, fire-lit living room.\n\n**CAMERA:**\nCLOSE UP on DAUGHTER (7). The camera pushes in slowly.\n\n**ACTION:**\nDad hands her the book. She opens it. A golden glow (VFX) illuminates her face from the pages. She sees her name and avatar. She gasps, looking from the page to her Dad with pure adoration.\n\n**SFX:**\nOrchestral swell. Heartbeat thumping happily.\n\n**DAUGHTER:**\n(Whispering)\nIt's me... I'm the hero.\n\n---\n\n**SCENE 4**\n\n**[00:25 - 00:30] GRAPHIC CARD**\n\n**VISUAL:**\nProduct shot of the book on a nightstand.\n\n**GRAPHICS:**\nText animates on: \"The Gift That Lasts.\"\nURL appears: \"Kidscustomstories.com\"\n\n**NARRATOR (VO):**\nKidscustomstories. Make their adventure unforgettable.",
+        "visual_style": "**Art Direction & Color Palette:**\n\n*   **The Nightmare (0-5s):** Heavily influenced by Terry Gilliam\u2019s *Brazil* or the intro to *Severance*. Monochromatic, oppressive greys, cyans, and sickly greens. High contrast lighting with deep shadows. The texture is rusted metal, dust, and cheap plastic.\n*   **The Magic (5-30s):** Transitions into a Wes Anderson meets *Paddington* aesthetic. Warm, symmetrical, and cozy. The palette shifts to rich Ambers (#FFB347), Royal Blues (#002366), and festive Golds (#FFD700). \n*   **Texture:** The second half should feel tactile\u2014emphasize the grain of the paper, the knit of the sweater, and the softness of the light. We want the viewer to *feel* the quality of the book through the screen.\n*   **Aspect Ratio:** Shoot 16:9 for TV, but frame protect for 4:5 and 9:16 social crops.",
+        "audio_notes": "**Music:**\n\n*   **Track A (0-5s):** \"Industrial Grind.\" A repetitive, atonal mechanical loop. BPM: 90. heavy on metallic percussion.\n*   **Track B (5-30s):** \"The Storybook Swell.\" Begins with a single harp pluck at the transition, building into a warm, orchestral score featuring celeste, strings, and woodwinds. Think *Harry Potter* prologue music\u2014magical but intimate. BPM: 110.\n\n**Voice Over:**\n\n*   **Narrator:** Male, 50s-60s. British RP accent. Needs to sound like a beloved grandfather reading a bedtime story. References: Stephen Fry, David Attenborough (but warmer).\n*   **SFX:** The sound design is crucial for the transition. We need a \"Flutter-Rush\" sound\u2014a mix of bird wings and turning pages\u2014to sell the magic of the cabinets turning into the book.",
+        "talent_notes": "**Dad (Protagonist):**\n\n*   **Age:** 30-40.\n*   **Look:** Relatable, everyman. Not a supermodel. Expressive face capable of comedy (exhaustion) and genuine warmth. \n*   **Wardrobe:** Starts in an ill-fitting, grey office suit. Transitions into a high-quality, textured cable-knit sweater in a warm oatmeal or navy color.\n\n**Daughter:**\n\n*   **Age:** 6-8 years old.\n*   **Look:** Bright-eyed, expressive. Must be able to deliver a reaction of genuine wonder without looking \"stage school\" or over-acted.\n*   **Wardrobe:** Classic pyjamas, perhaps with a timeless pattern (stars or stripes), avoiding licensed characters.",
+        "production_considerations": "**Logistics:**\n\n*   **Shoot Duration:** 1 Day (10 hours).\n*   **Locations:** Single sound stage split into two builds. \n    *   Build A: The Cabinet Wall (Green screen extensions required for the 'infinite' height).\n    *   Build B: The Living Room set (dressed for maximum coziness).\n*   **VFX Requirements:** The transition from cabinets to living room is the heavy lift. Requires rotoscoping the Dad and morphing the background geometry. The \"glow\" from the book needs to be tracked to the pages.\n*   **Props:** 20-30 physical filing cabinet fronts for the practical wall. A literal mound of cheap plastic toys (can be sourced from recycling centers/charity shops to emphasize 'waste').\n*   **Crew:** Director, DOP, Gaffer, Art Director + Set Build Team, VFX Supervisor (on set), Stylist, Child Chaperone.",
+        "estimated_duration_seconds": 30,
+        "is_winner": false,
+        "scores": {
+          "overall_impact": 7.0,
+          "hook_power": 7.0,
+          "emotional_resonance": 7.0,
+          "clarity_score": 7.0,
+          "distinctiveness": 7.0,
+          "brand_integration": 7.0,
+          "pulse_score": 7.0,
+          "echo_score": 7.0,
+          "overall": 7.0,
+          "reasoning": {
+            "note": "Default scores - scoring failed or unavailable"
+          }
+        },
+        "braintrust_feedback": [
+          {
+            "script_id": "0926a7d0",
+            "critic_persona": "The Craft Purist",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          },
+          {
+            "script_id": "0926a7d0",
+            "critic_persona": "The Strategist",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          },
+          {
+            "script_id": "0926a7d0",
+            "critic_persona": "The Disruptor",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          }
+        ],
+        "compliance_result": {
+          "all_clear": true,
+          "solutions_applied": [
+            {
+              "original_issue": "The visual of 'cheap, neon plastic toys' (Scene 1) borders on denigration of the toy industry. While likely acceptable as a comment on 'disposable culture,' it must not depict identifiable competitor products.",
+              "category": "denigration",
+              "fix_applied": "Removed the adjective 'cheap' to eliminate the specific denigration risk regarding the quality of competitor products (BCAP 3.42). Replaced 'generic toy packaging' with 'unbranded packaging' and specified 'abstract... shapes' to explicitly instruct the production team to avoid identifiable trademarks or designs that could resemble specific competitors.",
+              "location": "Scene 1, 00:00",
+              "confidence": "high",
+              "original_text": "[00:00 - 00:05]\n\nLOCATION: ABYSS OF THE FORGOTTEN (SOUND STAGE). A surreal, infinite warehouse space.\n\nLIGHTING: Cold, desaturated, flickering fluorescent green/cyan top-light. High contrast, deep shadows.\n\nCAMERA: Opens on an EXTREME WIDE SHOT (EWS) looking up at a towering, impossible mountain made entirely of grey, rusted filing cabinets. The camera TILTS DOWN rapidly to find our HERO DAD (35) at the base, looking small and defeated.\n\nACTION: Dad is wading through a sea of identical beige forms. He violently yanks open a drawer labeled \"CHRISTMAS PANIC.\" Instead of paper, a chaotic spill of cheap, neon plastic parts and generic toy packaging cascades out, burying his feet. He looks at the camera, breaking the fourth wall with a look of absolute exhaustion and 'plastic fatigue.'\n\nSFX: An oppressive, low-frequency industrial drone. The harsh, metallic SHRIEK of a rusted drawer opening. The hollow CLATTER of cheap plastic hitting concrete.\n\nVO (NARRATOR): (Warm, rich baritone - think Stephen Fry) \"Stuck in the endless loop of disposable gifts?\"",
+              "fixed_text": "ACTION: Dad is wading through a sea of identical beige forms. He violently yanks open a drawer labeled \"CHRISTMAS PANIC.\" Instead of paper, a chaotic spill of abstract, multi-colored plastic shapes and unbranded packaging cascades out, burying his feet. He looks at the camera, breaking the fourth wall with a look of absolute exhaustion and 'plastic fatigue.'"
+            }
+          ],
+          "categories_checked": [
+            "BCAP",
+            "Clearcast",
+            "Ofcom",
+            "ASA"
+          ],
+          "notes": "Applied 1 compliance fixes automatically.",
+          "market": "uk"
+        }
+      },
+      {
+        "id": "945b4223",
+        "title": "The Bedtime Brick - Kidscustomstories",
+        "concept_id": "c26c2bd6",
+        "opening": "[00:00 - 00:05] INT. LIVING ROOM - NIGHT\n\n**LOCATION/SET**: A typical UK living room. It feels cluttered with generic, neon-colored plastic toys in the background. Lighting is harsh, cold, and unflattering, mimicking a sterile interrogation room or a cave.\n\n**CAMERA**: Opens on a CLOSE UP (CU) of a heavy, grey, rough CINDER BLOCK held in trembling hands. The camera pulls back rapidly (SNAP ZOOM OUT) to a MEDIUM SHOT (MS) revealing DAD (35, exhausted). He is sitting on the edge of a child's bed, struggling to hold this literal brick like a storybook. He is sweating.\n\n**ACTION**: DAUGHTER (6) stares blankly at the brick, completely unimpressed. Dad tries to 'read' the blank brick, grunting with the effort of holding it up. It represents the 'Stone Age' of generic gifting\u2014heavy, lifeless, and dumb. He taps the brick as if expecting it to do something. Nothing happens. Just the sound of stone scraping skin.\n\n**SFX**: Heavy breathing. The scraping sound of stone on skin. A low, dull, prehistoric wind drone. No music yet.\n\n**DIALOGUE**: \nDAD: (Strained, grunting) \"And then... the... uh... generic block... sat there.\"\n\n**SUPERS**: NONE.",
+        "development": "[00:05 - 00:20] INT. LIVING ROOM - CONTINUOUS\n\n**CAMERA**: CUT TO a POV SHOT of the Dad looking down at his other hand, where he holds a sleek smartphone. The screen glows warmly. The camera pushes in smoothly on the screen.\n\n**ACTION**: On the phone screen, we see the 'Kidscustomstories' interface. Dad's thumb effortless taps 'CREATE'. He types 'SOPHIE'.\n\n**VISUAL EFFECTS (VFX)**: As he hits enter, a swirl of warm, golden magical dust (think Tinkerbell meets Doctor Strange) spirals out of the phone screen. The dust wraps around the heavy Cinder Block in his other hand. The cold blue lighting of the room shifts to a warm, amber 'golden hour' glow. The plastic toys in the background fade into shadow, putting all focus on the bed.\n\n**CAMERA**: WIDE SHOT (WS) - Slow motion. The Cinder Block disintegrates into sparkles and reforms instantly into a beautiful, high-quality HARDCOVER BOOK.\n\n**VOICE OVER**: A warm, rich, British female voice (think storybook narrator) cuts through the silence.\n\n**DIALOGUE/VO**:\nVO: \"Still stuck in the stone age of gifting?\"\n(Sound of magical chime)\nVO: \"Give the only gift where your child is the hero of their own magical adventure.\"\n\n**SFX**: The prehistoric wind stops abruptly with a 'record scratch' noise. Replaced by a swelling, whimsical orchestral score (harp, cello, celeste). A magical 'whoosh' and 'sparkle' sound as the book materializes.",
+        "climax": "[00:20 - 00:25] INT. LIVING ROOM - CONTINUOUS\n\n**CAMERA**: EXTREME CLOSE UP (ECU) on the book cover, then tilting up to the Daughter's face. Then a TWO-SHOT of Dad and Daughter.\n\n**ACTION**: The Daughter gasps, her eyes widening. She grabs the book. We see the cover: \"SOPHIE SAVES THE UNIVERSE\" with an illustration that looks exactly like her. She opens the page, and a subtle golden light reflects onto her face from the pages (practical lighting effect). She points to the character, then to herself. Dad leans back, wiping his brow, looking like an absolute superhero. He winks at the camera.\n\n**DIALOGUE/VO**:\nDAUGHTER: (Whispering, awestruck) \"That's... me?\"\nDAD: (Softly, triumphant) \"That's you, superstar.\"\n\n**SFX**: The music swells to a crescendo\u2014emotional and heartwarming. A distinct 'ting' sound when Dad winks.\n\n**SUPERS**: NONE.",
+        "resolution": "[00:25 - 00:30] GRAPHIC CARD / END FRAME\n\n**CAMERA**: STATIC SHOT of the book standing upright on a bedside table, next to a nightlight. The background is a cozy blur.\n\n**ACTION**: The book cover animates slightly (the character waves). The logo locks up next to it.\n\n**SUPERS**: \nText: \"Create their adventure at Kidscustomstories.com\"\nSubtext: \"Order now for Christmas\"\n\n**DIALOGUE/VO**:\nVO: \"Kidscustomstories. Make it effortless. Make it magical.\"\n\n**SFX**: Final musical resolve (major chord). A subtle page-turning sound.\n\n**MUSIC**: Fades out gently on a harp pluck.",
+        "full_script": "**VO**: \"Still stuck in the stone age of gifting? Give a gift where your child is the hero of their own magical adventure.\"",
+        "visual_style": "The visual language relies on a sharp contrast between the 'Before' and 'After' states. \n\n**Part 1 (The Stone Age):** High contrast, desaturated colors (Cool Blues, Greys, Slate). The camera work should be handheld and slightly unstable to convey the struggle. The set dressing should look cluttered with cheap plastic shapes to emphasize 'plastic fatigue'.\n\n**Part 2 (The Magic):** As soon as the brand is introduced, the palette shifts to Warm Golds, Deep Reds, and Royal Blues (Hex #FFD700, #1A237E). The lighting becomes cinematic and soft (diffused practicals). Camera movement switches to smooth, stabilized dolly shots or slow-motion to convey ease and wonder. \n\n**References:** The whimsical symmetry of Wes Anderson for the comedy of the brick, transitioning into the warm, sentimental lighting of a John Lewis Christmas advert.",
+        "audio_notes": "**Music:** \n- Starts with 'Prehistoric Ambience'\u2014hollow wind, low drones. No melody.\n- TRANSITION at 00:06: A magical glissando (wind chimes/harp) bridges into a warm, orchestral track. Think 'Harry Potter' prologue meets 'The Holiday' score. It needs to feel expensive and sentimental. Tempo: 80 BPM.\n\n**Voice Over:**\n- Female, British RP (Received Pronunciation). \n- Tone: Warm, inviting, like a favorite school teacher or a storybook narrator. Not salesy. \n- Reference: Olivia Colman or Julie Walters.\n\n**SFX:**\n- The 'thud' of the brick needs to be heavy and comedic.\n- The magical transformation needs a distinct 'sparkle' sound design that travels from left to right speaker.",
+        "talent_notes": "**DAD (Lead):** \n- Age: 30-40.\n- Look: Relatable, everyday dad. Not a model, but expressive. Needs to have great comedic timing for the physical struggle with the brick, and a warm, genuine smile for the resolution.\n- Wardrobe: Slightly rumpled t-shirt initially, perhaps looking sharper/cleaner in the magical light.\n\n**DAUGHTER:**\n- Age: 6-8 years old.\n- Look: Distinctive features (glasses, curly hair, or freckles) that we can clearly match to the book illustration to prove the customization.\n- Acting: Needs to pivot from bored/zoned-out to genuine wonderment. The reaction to the book must feel authentic, not over-acted.",
+        "production_considerations": "**Location:** \n- Single location shoot: A residential bedroom/living room set. Can be a location house or studio build. \n- Needs space for dolly tracks.\n\n**Props:** \n- 1x Custom prop: A realistic-looking cinder block (foam/lightweight for safety, but painted to look heavy) + 1 real heavy one for insert shots of strain.\n- 3x Hero Books (Kidscustomstories products) with different cover art for lighting checks.\n\n**VFX:** \n- Particle simulation for the Brick-to-Book transformation. This is the key budget item. Needs to look premium, not cheap overlay.\n- Screen replacement for the smartphone.\n\n**Crew:** \n- Director, DOP, Gaffer (lighting shift is crucial), Art Director (set dressing plastic toys vs cozy vibes), Sound Recordist.\n\n**Timeline:** \n- 1 Day Shoot. Morning: 'Stone Age' lighting setup. Afternoon: 'Magical' lighting setup.",
+        "estimated_duration_seconds": 30,
+        "is_winner": false,
+        "scores": {
+          "overall_impact": 7.0,
+          "hook_power": 7.0,
+          "emotional_resonance": 7.0,
+          "clarity_score": 7.0,
+          "distinctiveness": 7.0,
+          "brand_integration": 7.0,
+          "pulse_score": 7.0,
+          "echo_score": 7.0,
+          "overall": 7.0,
+          "reasoning": {
+            "note": "Default scores - scoring failed or unavailable"
+          }
+        },
+        "braintrust_feedback": [
+          {
+            "script_id": "945b4223",
+            "critic_persona": "The Craft Purist",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          },
+          {
+            "script_id": "945b4223",
+            "critic_persona": "The Strategist",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          },
+          {
+            "script_id": "945b4223",
+            "critic_persona": "The Disruptor",
+            "strengths": [
+              "Unable to generate critique"
+            ],
+            "weaknesses": [],
+            "suggestions": [],
+            "overall_rating": 5.0,
+            "would_approve": false,
+            "critique": ""
+          }
+        ],
+        "compliance_result": {
+          "all_clear": true,
+          "solutions_applied": [
+            {
+              "original_issue": "The claim 'Give the only gift where your child is the hero...' is an exclusivity claim that is likely unsupportable.",
+              "category": "claims",
+              "fix_applied": "Removed the absolute exclusivity claim 'only', which would require evidence that no other personalized book exists on the market (BCAP 3.33). Changing to 'Give a gift' removes the need for substantiation while maintaining the narrative flow.",
+              "location": "Scene 2, VO",
+              "confidence": "high",
+              "original_text": "**SCENE 1: THE STRUGGLE**\n**[00:00 - 00:05] INT. LIVING ROOM - NIGHT**\n\n**VISUAL**: The scene opens in a cluttered UK living room, lit with harsh, cold blue tones. DAD (35) sits on a child's bed, visibly straining to hold up a massive, grey CINDER BLOCK as if it were a book. DAUGHTER (6) stares at it, bored and unimpressed.\n**CAMERA**: SNAP ZOOM OUT from the rough texture of the concrete to a MEDIUM SHOT of the Dad struggling.\n**SFX**: Heavy breathing, grunting, low prehistoric wind drone.\n**DAD**: (Strained) \"And then... the... uh... generic block... sat there.\"\n\n**SCENE 2: THE TRANSFORMATION**\n**[00:05 - 00:20] INT. LIVING ROOM - CONTINUOUS**\n\n**VISUAL**: Dad gives up on the brick and looks at his smartphone. The screen glows. He is on the Kidscustomstories website.\n**CAMERA**: POV of phone screen. Thumb taps 'CREATE'.\n**ACTION**: Golden magical dust spirals from the phone, wrapping around the grey cinder block. The harsh room lighting shifts to a warm, cozy amber glow.\n**VFX**: The brick dissolves into sparkles and reforms into a vibrant, personalized HARDCOVER BOOK.\n**SFX**: 'Record scratch' stops the wind. Magical 'whoosh'. Whimsical orchestral score (harp/celeste) begins.\n**VO**: \"Still stuck in the stone age of gifting? Give the only gift where your child is the hero of their own magical adventure.\"\n\n**SCENE 3: THE DISCOVERY**\n**[00:20 - 00:25] INT. LIVING ROOM - CONTINUOUS**\n\n**VISUAL**: The Daughter takes the book. The cover reads \"SOPHIE SAVES THE UNIVERSE\" with her avatar.\n**CAMERA**: ECU on Daughter's face, illuminated by a golden light reflecting from the pages. TWO-SHOT of Dad looking proud.\n**DAUGHTER**: (Awestruck) \"That's... me?\"\n**DAD**: \"That's you, superstar.\"\n**SFX**: Music swells to emotional crescendo. 'Ting' sound on Dad's wink.\n\n**SCENE 4: RESOLUTION**\n**[00:25 - 00:30] GRAPHIC BACKGROUND**\n\n**VISUAL**: Product shot of the book on a nightstand. \n**GRAPHICS**: Logo: Kidscustomstories. Text: \"Create their adventure at Kidscustomstories.com\"\n**VO**: \"Kidscustomstories. Make it effortless. Make it magical.\"\n**SFX**: Page turn. Harp pluck out.",
+              "fixed_text": "**VO**: \"Still stuck in the stone age of gifting? Give a gift where your child is the hero of their own magical adventure.\""
+            }
+          ],
+          "categories_checked": [
+            "BCAP Code Section 3 (Misleading Advertising)",
+            "BCAP Code Section 4 (Harm and Offence)",
+            "BCAP Code Section 5 (Children)",
+            "Clearcast Notes of Guidance",
+            "ASA Rulings on Exclusivity Claims"
+          ],
+          "notes": "Applied 1 compliance fixes automatically.",
+          "market": "uk"
+        }
+      }
+    ],
+    "braintrust_feedback": [
+      {
+        "script_id": "e420ee2e",
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "e420ee2e",
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "e420ee2e",
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "0926a7d0",
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "0926a7d0",
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "0926a7d0",
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "945b4223",
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "945b4223",
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      },
+      {
+        "script_id": "945b4223",
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false,
+        "critique": ""
+      }
+    ],
+    "compliance_checks": [
+      {
+        "passed": true,
+        "risk_level": "low",
+        "issues": [],
+        "recommendations": [],
+        "categories_checked": [
+          "Clearcast",
+          "BCAP",
+          "Ofcom",
+          "ASA"
+        ],
+        "clearcast_notes": "No issues detected for United Kingdom compliance (empty or blocked response)"
+      },
+      {
+        "passed": true,
+        "risk_level": "low",
+        "issues": [
+          {
+            "category": "claims",
+            "severity": "medium",
+            "description": "The claim 'The Gift That Lasts' (Scene 4) is an objective claim that could be interpreted as referring to physical durability, especially when contrasted with 'disposable' toys in Scene 1.",
+            "location": "Scene 4, 00:25",
+            "recommendation": "Be prepared to defend this as 'sentimental longevity' (puffery) or provide evidence of physical durability (hardback quality, paper weight).",
+            "evidence_required": "Physical product sample for Clearcast review; potentially data on binding quality if interpreted literally."
+          },
+          {
+            "category": "misleadingness",
+            "severity": "low",
+            "description": "The depiction of the app interface and the 'one tap' creation process (Scene 2) must not misleadingly exaggerate the ease or speed of the actual consumer journey.",
+            "location": "Scene 2, 00:05",
+            "recommendation": "Ensure the screen shown on the phone matches the actual UI. If the process takes significant time, the 'magical' transition is acceptable as creative hyperbole, but the UI itself must be accurate.",
+            "evidence_required": "Screenshots or video capture of the actual app/mobile web interface."
+          },
+          {
+            "category": "denigration",
+            "severity": "low",
+            "description": "The visual of 'cheap, neon plastic toys' (Scene 1) borders on denigration of the toy industry. While likely acceptable as a comment on 'disposable culture,' it must not depict identifiable competitor products.",
+            "location": "Scene 1, 00:00",
+            "recommendation": "Ensure the props used for the 'plastic mountain' are generic and do not resemble specific trademarked toys (e.g., distinct LEGO bricks, Barbie dolls, Nerf guns).",
+            "evidence_required": "Prop list or confirmation that props are generic/unbranded."
+          },
+          {
+            "category": "child_safety",
+            "severity": "medium",
+            "description": "Use of a child actor (Daughter, Scene 3).",
+            "location": "Scene 3, 00:20",
+            "recommendation": "Standard UK requirement for child actors.",
+            "evidence_required": "Copy of the Child Performance License (issued by the local council)."
+          }
+        ],
+        "recommendations": [
+          "Ensure the 'Golden Glow' VFX in Scene 3 is clearly understood as fantastical exaggeration (BCAP 5.2) and not a literal product feature (e.g., the book doesn't actually light up).",
+          "Although delivery times are not mentioned in the script, if this airs during Q4 (Christmas), Clearcast may require a 'Order by [Date] for Christmas delivery' super to appear on the end card to prevent misleading omissions.",
+          "Verify that the 'Avatar' shown in the book close-up matches the customization options actually available in the app."
+        ],
+        "categories_checked": [
+          "BCAP",
+          "Clearcast",
+          "Ofcom",
+          "ASA"
+        ],
+        "clearcast_notes": "The script is generally compliant and uses acceptable creative hyperbole ('magical shockwave', 'warehouse of doom'). The primary focus for clearance will be substantiating the 'Lasts' claim against the 'Disposable' comparison. Clearcast will view the contrast as a specific comparative claim regarding longevity.\n\n**Evidence Required:**\n1. Physical sample of the book. 2. Child Performance License. 3. Screenshots of the App UI. 4. Confirmation that toy props are generic."
+      },
+      {
+        "passed": false,
+        "risk_level": "medium",
+        "issues": [
+          {
+            "category": "claims",
+            "severity": "high",
+            "description": "The claim 'Give the only gift where your child is the hero...' is an exclusivity claim that is likely unsupportable.",
+            "location": "Scene 2, VO",
+            "recommendation": "Remove the word 'only'. Change to 'Give a gift where...' or 'The ultimate gift where...'.",
+            "evidence_required": "To keep 'only', you would need a comprehensive market analysis proving no other company in the UK offers personalized books where the child is the protagonist (e.g., Wonderbly, Hooray Heroes), which is factually incorrect."
+          },
+          {
+            "category": "harm_and_safety",
+            "severity": "medium",
+            "description": "Dad holding a heavy cinder block over/near a child could be flagged under BCAP 4.4 (condoning dangerous behavior) or BCAP 5.2 (children copying unsafe practices).",
+            "location": "Scene 1, Visual",
+            "recommendation": "Ensure the prop is visibly lightweight/foam or the action is clearly stylized/metaphorical enough that it does not look like a genuine safety risk. Ensure the block is not held directly over the child's head.",
+            "evidence_required": "None, this is a direction/visual execution check."
+          },
+          {
+            "category": "claims",
+            "severity": "low",
+            "description": "The claim 'Make it effortless' is a subjective claim about the user experience.",
+            "location": "Scene 4, VO",
+            "recommendation": "Ensure the website process is actually streamlined. If it takes 30 minutes to configure, 'effortless' is misleading.",
+            "evidence_required": "Clearcast may request a video walkthrough of the ordering process to verify it is reasonably simple."
+          },
+          {
+            "category": "misleading_advertising",
+            "severity": "low",
+            "description": "Visual representation of the printed book.",
+            "location": "Scene 3, Visual",
+            "recommendation": "The physical book shown must match the quality and size of the actual product sold.",
+            "evidence_required": "A physical sample of the product sent to Clearcast."
+          }
+        ],
+        "recommendations": [
+          "Modify the 'only gift' claim immediately as this will cause a rejection.",
+          "Ensure the 'Sophie Saves the Universe' book title and avatar style shown in the ad are actually available on the website at the time of broadcast.",
+          "Ensure the 'Golden magical dust' VFX is clearly fantastical so as not to mislead about the digital-to-physical process (current script seems fine, just a watch-out for post-production).",
+          "Obtain standard Child Performance Licenses for the daughter actress."
+        ],
+        "categories_checked": [
+          "BCAP Code Section 3 (Misleading Advertising)",
+          "BCAP Code Section 4 (Harm and Offence)",
+          "BCAP Code Section 5 (Children)",
+          "Clearcast Notes of Guidance",
+          "ASA Rulings on Exclusivity Claims"
+        ],
+        "clearcast_notes": "Clearcast will reject the 'only gift' claim immediately citing competitors like Wonderbly. They will also scrutinize the cinder block scene to ensure it doesn't breach health and safety guidelines regarding children. The rest of the script is standard and low risk.\n\n**Evidence Required:**\n1. Substantiation for 'only' claim (impossible, so script change required). 2. Physical sample of the book. 3. Child licensing/permits. 4. potentially a demo of the website ordering flow."
+      }
+    ],
+    "final_script": {
+      "id": "e420ee2e",
+      "title": "The Scissors vs The Lawn - Kidscustomstories",
+      "concept_id": "80dd2210",
+      "opening": "[00:00 - 00:05] \n**LOCATION**: EXT. SUBURBAN BACK GARDEN - DAY (OVERCAST/GREY)\n**CAMERA**: Opens with an EXTREME CLOSE UP (Macro) of tiny, silver nail scissors snipping a single blade of grass. Sound is exaggeratedly loud: *SNIP*. \n**ACTION**: Camera RACK FOCUSES and PULLS BACK rapidly to a WIDE HIGH ANGLE (Drone/Crane). We reveal a Dad (30s, exhausted) kneeling in the center of an impossibly vast, overgrown lawn. He is attempting to mow the entire acre with these tiny grooming scissors. Beside him is a pile of brightly colored, broken plastic toys, resembling a landfill. He looks up, wipes sweat from his brow, completely defeated by the futility. \n**SFX**: The rhythmic, pathetic *snip-snip-snip* of the scissors. A low, droning wind. In the distance, the hollow clatter of plastic junk tumbling.\n**VO (Narrator)**: (Warm, slightly amused) Trying to find a meaningful gift in a sea of plastic junk... feels a bit like cutting the lawn with nail scissors, doesn't it?\n**SUPERS**: NONE.",
+      "development": "[00:05 - 00:20] \n**LOCATION**: EXT. GARDEN -> INT. LIVING ROOM TRANSITION\n**CAMERA**: MEDIUM SHOT on Dad. He sighs, drops the scissors. He pulls his smartphone from his pocket. Screen insert shows the Kidscustomstories interface\u2014clean, bright, inviting.\n**ACTION**: As his thumb taps \"Create Story,\" a ripple of golden light erupts from the phone screen. \n**VFX**: The grey, overcast sky tears open to reveal a warm, golden sunset. The overgrown grass blades don't just get cut; they morph into illustrated storybook elements\u2014tall sunflowers, beanstalks, and castle turrets. The pile of plastic toys dissolves into glittering dust that swirls into the shape of a hardcover book. The Dad is no longer kneeling in dirt; the set smoothly transitions (match cut) to him sitting comfortably on a plush armchair in a warm living room.\n**CAMERA**: 360-degree ORBIT shot around the Dad as the world transforms from drudgery to magic. \n**VO (Narrator)**: Stop the struggle. Kidscustomstories makes you the hero, by making *them* the hero.\n**SFX**: A magical \"whoosh\" sound design, chimes, birds chirping replacing the wind. The sound of a page turning echoes loudly.\n**MUSIC**: The sombre drone shifts instantly into an orchestral, swelling crescendo\u2014strings and celeste.",
+      "climax": "[00:20 - 00:25] \n**LOCATION**: INT. LIVING ROOM - MAGIC HOUR\n**CAMERA**: LOW ANGLE MEDIUM SHOT, looking up at the Dad and his Daughter (6 years old). The camera pushes in slowly (Dolly In).\n**ACTION**: The Dad holds the physical book open. The light from the pages seems to illuminate their faces. We see the Daughter's eyes go wide in genuine wonder. She points to the illustration on the page\u2014it looks exactly like her.\n**CAMERA**: INSERT SHOT of the book page. It shows the child's name and avatar fighting a dragon/exploring space. \n**ACTION**: The daughter looks up at her dad, not with a \"thanks for the toy\" look, but with deep adoration. She hugs him tight. The Dad looks at the camera and gives a subtle, satisfied \"superhero\" nod.\n**VO (Narrator)**: In just a few clicks, create a keepsake they\u2019ll read forever, not discard in a week.\n**SFX**: A soft, collective exhale of wonder. The rustle of high-quality paper. A heartbeat sound\u2014steady and warm.",
+      "resolution": "[00:25 - 00:30] \n**LOCATION**: STUDIO / GRAPHIC BACKGROUND\n**CAMERA**: STATIC PRODUCT SHOT on a textured paper background.\n**ACTION**: The book closes on a table. The cover features the customized child's name in gold foil. A mobile phone slides into frame next to it, showing the easy ordering process.\n**SUPERS**: Animated text appears: \"The Best Gift is Their Story.\"\n**VO (Narrator)**: Kidscustomstories. Effortless magic. Order now for Christmas delivery.\n**GRAPHICS**: URL: Kidscustomstories.com | App Store Badges.\n**SFX**: The satisfying *thud* of a hardback book closing. A final magical *ding*.\n**MUSIC**: Resolves on a warm, sustained major chord.",
+      "full_script": "**SCENE 1**\n**TIMING**: 00:00 - 00:05\n**LOCATION**: EXT. SUBURBAN BACK GARDEN - DAY (OVERCAST)\n**VISUAL**: OPEN on an EXTREME CLOSE UP of tiny silver nail scissors. *SNIP*. A single blade of grass falls. RAPID ZOOM OUT/CRANE UP to reveal DAD (35) kneeling in a vast, overgrown field of grass. He looks exhausted. Beside him, a mountain of discarded plastic toys looms like a trash heap.\n**AUDIO**: Exaggerated *snip* sounds. Cold wind. Hollow plastic clatter.\n**NARRATOR**: Trying to find a meaningful gift in a sea of plastic junk... feels a bit like cutting the lawn with nail scissors, doesn't it?\n\n**SCENE 2**\n**TIMING**: 00:05 - 00:20\n**LOCATION**: EXT. GARDEN TRANSITIONING TO INT. LIVING ROOM\n**VISUAL**: MS on Dad. He drops the scissors, defeats. Pulls out phone. INSERT of Kidscustomstories mobile site. He taps \"Create.\" \n**ACTION**: A shockwave of golden magic hits. The grey sky breaks into a golden sunset. The grass morphs into illustrated storybook flora. The plastic toy pile dissolves into sparkles. The garden bench morphs into a comfy armchair. Dad is now clean, relaxed, and holding a book.\n**AUDIO**: Magical *whoosh*. The drone of wind is replaced by a swelling, cinematic orchestral score (John Williams style).\n**NARRATOR**: Stop the struggle. Kidscustomstories makes you the hero, by making *them* the hero.\n\n**SCENE 3**\n**TIMING**: 00:20 - 00:25\n**LOCATION**: INT. LIVING ROOM - EVENING (WARM)\n**VISUAL**: MS - Dad hands the book to DAUGHTER (6). DOLLY IN. She opens it. Light spills from the pages onto her face. INSERT of the book: The character looks just like her. She gasps, looks at Dad with pure love, and hugs him.\n**AUDIO**: A soft gasp. Rustling paper. Music peaks emotionally.\n**NARRATOR**: In just a few clicks, create a keepsake they\u2019ll read forever, not discard in a week.\n\n**SCENE 4**\n**TIMING**: 00:25 - 00:30\n**LOCATION**: END CARD\n**VISUAL**: Product shot of a premium hardback book next to a smartphone. Text animates in.\n**SUPER**: \"The Best Gift is Their Story.\" \n**CTA**: Kidscustomstories.com\n**AUDIO**: Book closing thud. Final musical resolve.\n**NARRATOR**: Kidscustomstories. Effortless magic.",
+      "visual_style": "**Cinematography**: The spot requires two distinct looks. The 'Before' (0:00-0:05) should feel desaturated, cool, and slightly handheld/unstable\u2014referencing the aesthetic of 'The Office' or a gritty British drama (Aspect ratio 16:9). The 'After' (0:05-0:30) shifts to a rich, warm, cinematic look\u2014think 'Paddington' or 'Harry Potter' visuals. Golden Hour lighting, anamorphic lens flares, smooth gimbal or dolly movements, and rich, saturated colors (specifically the brand's primary colors). \n**Color Palette**: Start with Slate Grey (#708090) and Muted Green. Transition to Gold (#FFD700), Deep Royal Blue (#002366), and Warm Cream (#FFFDD0). \n**Texture**: Emphasize the tactile nature of the book\u2014visible paper grain and foil stamping to contrast against the cold, smooth plastic of the toys.",
+      "audio_notes": "**Music**: Begins with a comedic, repetitive 'plodding' track (pizzicato strings, slow tempo 80 BPM) to underscore the drudgery. At 0:06, hard cut to a sweeping, magical orchestral score (120 BPM) featuring chimes, harp, and a soaring violin melody. It should feel expensive and Disney-esque.\n**Voice Over**: British RP accent, Male or Female (30s-40s). The tone is 'The Storyteller'\u2014warm, inviting, slightly breathy, whispering a secret. Think Stephen Fry or Olivia Colman reading a bedtime story. \n**Sound Design**: The *Snip* needs to be comically isolated. The *Transformation* needs a multi-layered 'shimmer' sound. The book handling needs ASMR-quality paper sounds.",
+      "talent_notes": "**Dad**: Age 30-40. Relatable, 'everyman' look but cleans up well. Needs good comedic timing for the exhaustion beat in the opening. Wardrobe: Starts in slightly rumpled weekend gardening clothes, transforms into a cozy, high-quality knit sweater (cable knit, oatmeal or navy).\n**Daughter**: Age 5-7. Expressive eyes are crucial. Must be able to deliver a genuine reaction of wonder without over-acting. Wardrobe: Pajamas or cozy evening wear, timeless style (no branded clothing).\n**Hand Model**: For the close-up phone interaction shots, ensuring manicured hands demonstrating the UI ease.",
+      "production_considerations": "**Location**: A single location house with a large garden is sufficient. The 'vast lawn' effect can be achieved via matte painting/VFX extension on a standard lawn. \n**VFX**: Heavy lifting required for the transition scene (0:05-0:10). Requires 3D modeling of grass morphing into storybook elements and particle effects for the plastic toys dissolving. \n**Props**: 1x Custom printed Kidscustomstories book (hero prop), 20-30 broken/cheap plastic toys for the 'landfill' pile, 1x pair of tiny grooming scissors. \n**Timeline**: 1 Day Shoot (Morning for exterior gloom, afternoon for interior warmth). 2 Weeks Post-Production for VFX.\n**Crew**: Director, DP, Gaffer, Art Director (crucial for set dressing), VFX Supervisor on set.",
+      "estimated_duration_seconds": 30,
+      "is_winner": true,
+      "scores": {
+        "overall_impact": 7.0,
+        "hook_power": 7.0,
+        "emotional_resonance": 7.0,
+        "clarity_score": 7.0,
+        "distinctiveness": 7.0,
+        "brand_integration": 7.0,
+        "pulse_score": 7.0,
+        "echo_score": 7.0,
+        "overall": 7.0,
+        "reasoning": {
+          "note": "Default scores - scoring failed or unavailable"
+        }
+      },
+      "braintrust_feedback": [
+        {
+          "script_id": "e420ee2e",
+          "critic_persona": "The Craft Purist",
+          "strengths": [
+            "Unable to generate critique"
+          ],
+          "weaknesses": [],
+          "suggestions": [],
+          "overall_rating": 5.0,
+          "would_approve": false,
+          "critique": ""
+        },
+        {
+          "script_id": "e420ee2e",
+          "critic_persona": "The Strategist",
+          "strengths": [
+            "Unable to generate critique"
+          ],
+          "weaknesses": [],
+          "suggestions": [],
+          "overall_rating": 5.0,
+          "would_approve": false,
+          "critique": ""
+        },
+        {
+          "script_id": "e420ee2e",
+          "critic_persona": "The Disruptor",
+          "strengths": [
+            "Unable to generate critique"
+          ],
+          "weaknesses": [],
+          "suggestions": [],
+          "overall_rating": 5.0,
+          "would_approve": false,
+          "critique": ""
+        }
+      ],
+      "compliance_result": null
+    },
+    "final_rationale": "Script 1 ('The Scissors vs The Lawn') is the clear winner primarily due to its combination of creative potential and compliance safety. Script 3 was disqualified due to compliance failure (likely trademark risks regarding 'bricks'), and Script 2's metaphor of 'filing cabinets' felt too corporate and cold for a heartwarming children's product, missing the 'whimsical' tone required. Script 1's setting (a grey UK garden) offers the perfect visual canvas to dramatize 'plastic fatigue'\u2014the dullness of disposable toys\u2014contrasted against the vibrant, magical explosion of color when the custom book is introduced. It speaks directly to the UK demographic (who value their gardens) and allows for a strong 'Wizard of Oz' style transition from mundane to magical, perfectly delivering on the SMP of making the child the hero.",
+    "production_notes": "1. Visual Style: Lean heavily into the color grading. The opening seconds (Grey Garden) should feel desaturated and mundane to represent 'plastic fatigue.' When the book is revealed, the saturation should pop significantly to emphasize the 'magic.' \n2. Casting: The child's reaction is the money shot. We need a genuine look of wonder, not a staged 'ad smile.' \n3. Audio: Start with ambient suburban noise (wind, distant traffic) and transition to a warm, orchestral swell or magical chime when the book is opened. \n4. Product: Ensure the book cover shown clearly features the child's name to drive home the 'custom' aspect immediately."
+  },
+  "scores": {
+    "overall_impact": 7.0,
+    "hook_power": 7.0,
+    "emotional_resonance": 7.0,
+    "clarity_score": 7.0,
+    "distinctiveness": 7.0,
+    "brand_integration": 7.0,
+    "pulse_score": 7.0,
+    "echo_score": 7.0,
+    "overall": 7.0,
+    "reasoning": {
+      "note": "Default scores - scoring failed or unavailable"
+    }
+  },
+  "citations": [],
+  "current_stage": "completed",
+  "stage_history": [
+    {
+      "stage": "starting",
+      "timestamp": "2025-12-01T00:48:27.095107",
+      "details": {}
+    },
+    {
+      "stage": "retriever",
+      "timestamp": "2025-12-01T00:48:27.096108",
+      "details": {}
+    },
+    {
+      "stage": "amazon_start",
+      "timestamp": "2025-12-01T00:48:35.425209",
+      "details": {}
+    },
+    {
+      "stage": "ideate",
+      "timestamp": "2025-12-01T00:48:57.999931",
+      "details": {}
+    },
+    {
+      "stage": "selector",
+      "timestamp": "2025-12-01T00:49:44.704234",
+      "details": {}
+    },
+    {
+      "stage": "polish",
+      "timestamp": "2025-12-01T00:50:07.314947",
+      "details": {}
+    },
+    {
+      "stage": "braintrust_loop_1",
+      "timestamp": "2025-12-01T00:52:31.939625",
+      "details": {}
+    },
+    {
+      "stage": "compliance",
+      "timestamp": "2025-12-01T00:55:13.752377",
+      "details": {}
+    },
+    {
+      "stage": "compliance_fix",
+      "timestamp": "2025-12-01T00:55:45.975163",
+      "details": {}
+    },
+    {
+      "stage": "finalize",
+      "timestamp": "2025-12-01T00:56:56.341254",
+      "details": {}
+    },
+    {
+      "stage": "completed",
+      "timestamp": "2025-12-01T00:57:41.330464",
+      "details": {}
+    }
+  ],
+  "error": null
+}

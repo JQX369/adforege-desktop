@@ -1,0 +1,800 @@
+{
+  "run_id": "02c38d1d-ce99-4f54-aec6-19a144a9e933",
+  "status": "completed",
+  "created_at": "2025-11-30T18:00:35.780091",
+  "updated_at": "2025-11-30T18:10:07.000243",
+  "brief": {
+    "objective": "brand awareness",
+    "target_audience": "Primary: UK Parents (skewing female, 25-45) and Grandparents looking for meaningful, non-disposable gifts. They are 'Sentimental Nurturers' who value literacy but struggle to keep children engaged with traditional books amidst screen-time distractions. They are tired of plastic toys that end up in landfill and seek 'forever keepsakes' that build an emotional bond during bedtime routines.",
+    "single_minded_proposition": "Give them the only story in the world where they are the hero.",
+    "tone_of_voice": "Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood.",
+    "asset_name": "Campaign 30/11/2025",
+    "length_seconds": 30,
+    "mandatories": [],
+    "parent_id": null,
+    "creative_mode": "deep_think",
+    "market": "uk",
+    "visual_style": null,
+    "briefing_context": null,
+    "brand_name": "",
+    "product_service": "",
+    "budget_range": "No budget specified",
+    "comms_style": "",
+    "brand_colors": [],
+    "brand_context": "",
+    "research_insights": "1. 'The Plastic Fatigue': UK parents are increasingly conscious of clutter and waste; they prefer gifts with emotional longevity over plastic toys. 2. 'The Narcissism of Childhood': Psychology shows children are significantly more engaged in reading when they see themselves (name, avatar, traits) in the narrative. 3. 'The Bedtime Battle': Parents view the bedtime story as the last line of defense for bonding; they crave tools that make this time special rather than a chore.",
+    "compliance_requirements": "UK market: BCAP Code, Clearcast pre-clearance required, ASA oversight\nMust adhere to UK ASA (Advertising Standards Authority) and CAP Code guidelines. Ensure the visualization of the book in the ad matches the physical product exactly (no misleading rendering). Ensure data protection compliance regarding children's names/images."
+  },
+  "retrieval": {
+    "neighbors": [
+      {
+        "id": "b828f196-dcdd-4e93-8993-91b28bd05a4f",
+        "title": "KFC Hot Rods Boneless Box",
+        "brand": "KFC",
+        "category": "FMCG",
+        "year": 2024,
+        "description": "A fiery KFC sharing box is pitched as a fun way to spice up the moment.",
+        "script_excerpt": "STRENGTH (medium impact): Strong, energetic opening that grabs attention - High-energy coaching lines 'Here we go guys, loads of smiles, enjoy the feeling!' at 0.0-5.0.",
+        "video_url": null,
+        "effectiveness_score": 0.004247,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "1579ffe0-7401-46e6-8889-70d1540baf27",
+        "title": "Colgate Sensitive Pro Relief",
+        "brand": "Colgate",
+        "category": "FMCG",
+        "year": 2010,
+        "description": "Real people test Colgate Sensitive Pro Relief and feel instant relief from sensitivity.",
+        "script_excerpt": "overall_impact: 7.2/10 - Clear demo, strong product explanation, and repeated brand naming support persuasion, though the cre | pulse_score: 7.8/10 - Direct demo with ice water test (9-14s) and imperative CTA 'Prove it to yourself' (28-29s) encourage | echo_score: 6.5/10 - Distinct product name repe",
+        "video_url": null,
+        "effectiveness_score": 0.004051,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "4a3d55e0-a705-4402-b2b2-9b478d092fed",
+        "title": "Seal Hits",
+        "brand": "Seal",
+        "category": "Entertainment",
+        "year": 2009,
+        "description": "Compilation ad promoting Seal\u2019s greatest hits album with two new songs.",
+        "script_excerpt": "Archetype: lover | Hook: celebrity | Structure: linear | Persuasion: authority, nostalgia, social_proof | Distinctive: Repetition of the artist and album name as a mnemonic device, Explicit value add of 'two brand new songs' on a greatest hits compilation, Very direct, retail-style VO without storyl",
+        "video_url": null,
+        "effectiveness_score": 0.004058,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "entertainment",
+          "gb"
+        ]
+      },
+      {
+        "id": "3ce6deb1-422a-4f22-9ebb-476d5658a950",
+        "title": "STRENGTH (medium impact): Memorable, rhythmic tagl",
+        "brand": "Primula",
+        "category": "FMCG",
+        "year": 2024,
+        "description": "Playful Christmas spot inviting viewers to enjoy Primula\u2019s cheesy, squeezy flavours.",
+        "script_excerpt": "STRENGTH (medium impact): Memorable, rhythmic tagline - Opening phrase 'So cheesy, so squeezy' (0.0-2.0s).",
+        "video_url": null,
+        "effectiveness_score": 0.004052,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "831af9f5-6bfa-4c7d-99fc-fa77dc7c3042",
+        "title": "The Best of the BBC from HMV",
+        "brand": "HMV",
+        "category": "Retail",
+        "year": 2009,
+        "description": "HMV promotes discounted BBC DVD box sets for Christmas using classic comedy clips.",
+        "script_excerpt": "overall_impact: 7.4/10 - Strong use of beloved BBC properties, clear prices, and Christmas positioning should drive interest  | pulse_score: 7.8/10 - Multiple explicit price points (\u00a310, \u00a318, \u00a325, \u00a335) and clear product shots plus Christmas gifting c | echo_score: 6.5/10 - Memorable BBC quotes and n",
+        "video_url": null,
+        "effectiveness_score": 0.004096,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "retail",
+          "gb"
+        ]
+      },
+      {
+        "id": "6142aca0-c389-4121-9bad-7c0ec84916d2",
+        "title": "The Best 60s Album in the World, Ever",
+        "brand": "Best Sixties Album In The World Ever",
+        "category": "Entertainment",
+        "year": 1995,
+        "description": "Retro TV spot selling a 3-CD compilation of classic 60s hits.",
+        "script_excerpt": "overall_impact: 6.0/10 - Clear, repetitive messaging and strong nostalgic appeal for 60s music fans, but limited storytelling | pulse_score: 6.5/10 - Direct product-focused VO ('Three CDs', '75 massive 60s hits') and strong superlative claims ('album | echo_score: 5.5/10 - Repetition of the distinct",
+        "video_url": null,
+        "effectiveness_score": 0.004054,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "entertainment",
+          "gb"
+        ]
+      }
+    ],
+    "query_embedding_id": null,
+    "retrieval_time_ms": 6020.506,
+    "tags_used": [
+      "retail",
+      "entertainment",
+      "gb",
+      "fmcg"
+    ],
+    "structure_references": [
+      {
+        "id": "b828f196-dcdd-4e93-8993-91b28bd05a4f",
+        "title": "KFC Hot Rods Boneless Box",
+        "brand": "KFC",
+        "category": "FMCG",
+        "year": 2024,
+        "description": "A fiery KFC sharing box is pitched as a fun way to spice up the moment.",
+        "script_excerpt": "STRENGTH (medium impact): Strong, energetic opening that grabs attention - High-energy coaching lines 'Here we go guys, loads of smiles, enjoy the feeling!' at 0.0-5.0.",
+        "video_url": null,
+        "effectiveness_score": 0.004247,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "1579ffe0-7401-46e6-8889-70d1540baf27",
+        "title": "Colgate Sensitive Pro Relief",
+        "brand": "Colgate",
+        "category": "FMCG",
+        "year": 2010,
+        "description": "Real people test Colgate Sensitive Pro Relief and feel instant relief from sensitivity.",
+        "script_excerpt": "overall_impact: 7.2/10 - Clear demo, strong product explanation, and repeated brand naming support persuasion, though the cre | pulse_score: 7.8/10 - Direct demo with ice water test (9-14s) and imperative CTA 'Prove it to yourself' (28-29s) encourage | echo_score: 6.5/10 - Distinct product name repe",
+        "video_url": null,
+        "effectiveness_score": 0.004051,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "4a3d55e0-a705-4402-b2b2-9b478d092fed",
+        "title": "Seal Hits",
+        "brand": "Seal",
+        "category": "Entertainment",
+        "year": 2009,
+        "description": "Compilation ad promoting Seal\u2019s greatest hits album with two new songs.",
+        "script_excerpt": "Archetype: lover | Hook: celebrity | Structure: linear | Persuasion: authority, nostalgia, social_proof | Distinctive: Repetition of the artist and album name as a mnemonic device, Explicit value add of 'two brand new songs' on a greatest hits compilation, Very direct, retail-style VO without storyl",
+        "video_url": null,
+        "effectiveness_score": 0.004058,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "entertainment",
+          "gb"
+        ]
+      },
+      {
+        "id": "3ce6deb1-422a-4f22-9ebb-476d5658a950",
+        "title": "STRENGTH (medium impact): Memorable, rhythmic tagl",
+        "brand": "Primula",
+        "category": "FMCG",
+        "year": 2024,
+        "description": "Playful Christmas spot inviting viewers to enjoy Primula\u2019s cheesy, squeezy flavours.",
+        "script_excerpt": "STRENGTH (medium impact): Memorable, rhythmic tagline - Opening phrase 'So cheesy, so squeezy' (0.0-2.0s).",
+        "video_url": null,
+        "effectiveness_score": 0.004052,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      }
+    ],
+    "emotion_references": [
+      {
+        "id": "b828f196-dcdd-4e93-8993-91b28bd05a4f",
+        "title": "KFC Hot Rods Boneless Box",
+        "brand": "KFC",
+        "category": "FMCG",
+        "year": 2024,
+        "description": "A fiery KFC sharing box is pitched as a fun way to spice up the moment.",
+        "script_excerpt": "STRENGTH (medium impact): Strong, energetic opening that grabs attention - High-energy coaching lines 'Here we go guys, loads of smiles, enjoy the feeling!' at 0.0-5.0.",
+        "video_url": null,
+        "effectiveness_score": 0.004247,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "1579ffe0-7401-46e6-8889-70d1540baf27",
+        "title": "Colgate Sensitive Pro Relief",
+        "brand": "Colgate",
+        "category": "FMCG",
+        "year": 2010,
+        "description": "Real people test Colgate Sensitive Pro Relief and feel instant relief from sensitivity.",
+        "script_excerpt": "overall_impact: 7.2/10 - Clear demo, strong product explanation, and repeated brand naming support persuasion, though the cre | pulse_score: 7.8/10 - Direct demo with ice water test (9-14s) and imperative CTA 'Prove it to yourself' (28-29s) encourage | echo_score: 6.5/10 - Distinct product name repe",
+        "video_url": null,
+        "effectiveness_score": 0.004051,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      },
+      {
+        "id": "4a3d55e0-a705-4402-b2b2-9b478d092fed",
+        "title": "Seal Hits",
+        "brand": "Seal",
+        "category": "Entertainment",
+        "year": 2009,
+        "description": "Compilation ad promoting Seal\u2019s greatest hits album with two new songs.",
+        "script_excerpt": "Archetype: lover | Hook: celebrity | Structure: linear | Persuasion: authority, nostalgia, social_proof | Distinctive: Repetition of the artist and album name as a mnemonic device, Explicit value add of 'two brand new songs' on a greatest hits compilation, Very direct, retail-style VO without storyl",
+        "video_url": null,
+        "effectiveness_score": 0.004058,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "entertainment",
+          "gb"
+        ]
+      },
+      {
+        "id": "3ce6deb1-422a-4f22-9ebb-476d5658a950",
+        "title": "STRENGTH (medium impact): Memorable, rhythmic tagl",
+        "brand": "Primula",
+        "category": "FMCG",
+        "year": 2024,
+        "description": "Playful Christmas spot inviting viewers to enjoy Primula\u2019s cheesy, squeezy flavours.",
+        "script_excerpt": "STRENGTH (medium impact): Memorable, rhythmic tagline - Opening phrase 'So cheesy, so squeezy' (0.0-2.0s).",
+        "video_url": null,
+        "effectiveness_score": 0.004052,
+        "awards": [],
+        "similarity_score": 0.8,
+        "tags": [
+          "gb",
+          "fmcg"
+        ]
+      }
+    ],
+    "analogue_suggestions": [
+      "Untangling a massive knot of Christmas lights",
+      "Trying to fold a fitted sheet perfectly",
+      "Searching for a matching sock in an infinite pile",
+      "Filling out the same form for the hundredth time",
+      "Waiting on hold with elevator music that never ends"
+    ],
+    "core_emotion": "frustration",
+    "structural_goal": "emotional contrast"
+  },
+  "artifacts": {
+    "press_release": "# Brand Launches Award-Winning \"Campaign 30/11/2025\" Campaign\n\n**Product campaign resonates with Primary: UK Parents (skewing female, 25-45) and Grandparents looking for meaningful, non-disposable gifts. They are 'Sentimental Nurturers' who value literacy but struggle to keep children engaged with traditional books amidst screen-time distractions. They are tired of plastic toys that end up in landfill and seek 'forever keepsakes' that build an emotional bond during bedtime routines.**\n\n[PLACEHOLDER - Gemini API unavailable]\n\n## Problem Statement\nThis campaign successfully communicated: \"Give them the only story in the world where they are the hero.\"\n\n## Solution\nThe 30-second spot captured attention through its Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. approach,\ndriving exceptional results for the brand.\n\n## The Old Way (The Enemy)\nBefore the brand, customers were trapped in an endless cycle of frustration - \nwrestling with outdated processes, drowning in complexity, and losing precious time to tasks that \nshould have been effortless. The old way demanded patience, persistence, and an almost masochistic \ntolerance for inefficiency.\n\n---\nNote: This is a placeholder. The full press release will be generated when the Gemini API is available.\n",
+    "ideas_10": [
+      {
+        "id": "3a31b3c0",
+        "title": "The Scissors vs The Lawn - Campaign 30/11/2025",
+        "anchor": "A person on their knees, cutting an enormous lawn with tiny nail scissors. Each blade of grass takes a separate snip.",
+        "setup": "The protagonist has been at it for days. Their hands are cramped, their knees are raw. A progress bar overlay shows they're 0.3% complete.",
+        "intervention": "The brand mascot walks in, yawns, and casually blows a dandelion.",
+        "jumper": "The entire lawn transforms into a perfect striped pattern instantly. The scissors dissolve into confetti.",
+        "hook": "Opening on the absurd struggle of the Sisyphean Task",
+        "narrative": "The ad opens with the protagonist trapped in a Sisyphean Task. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Sisyphean Task struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Sisyphean Task metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "6edcddb0",
+        "title": "The Filing Cabinet Mountain - Campaign 30/11/2025",
+        "anchor": "An office worker stands before a mountain of filing cabinets that reaches into the clouds, each drawer overflowing with paper.",
+        "setup": "They're climbing the cabinet mountain with a single document, sweating. Signs point to different floors: 'TPS Reports - Floor 847'. An elevator sign says 'Out of Order Since 1987'.",
+        "intervention": "The brand icon appears and simply taps the side of the mountain with one finger.",
+        "jumper": "All cabinets fold into origami birds and fly away, leaving a single glowing screen showing 'Complete'.",
+        "hook": "Opening on the absurd struggle of the Bureaucratic Nightmare",
+        "narrative": "The ad opens with the protagonist trapped in a Bureaucratic Nightmare. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Bureaucratic Nightmare struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Bureaucratic Nightmare metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "6a8fd3ae",
+        "title": "The Brick Phone Call - Campaign 30/11/2025",
+        "anchor": "A person tries to make a call using two tin cans connected by a string that stretches across the entire city.",
+        "setup": "They're shouting into the can while running across rooftops, through traffic, across rivers, trying to keep the string taut. The other person hears only static.",
+        "intervention": "The brand character walks by and snaps their fingers.",
+        "jumper": "The string transforms into a beam of light. Suddenly both people are having a crystal-clear holographic conversation.",
+        "hook": "Opening on the absurd struggle of the Stone Age Communication",
+        "narrative": "The ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Stone Age Communication struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Stone Age Communication metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "b4e3ce9c",
+        "title": "The Maze of Terms & Conditions - Campaign 30/11/2025",
+        "anchor": "A person stands at the entrance to a hedge maze. The hedges are made entirely of tiny legal text. Signs warn: 'Reading time: 47 years'.",
+        "setup": "They venture in, getting lost, tripping over footnotes, attacked by aggressive asterisks. A skeleton nearby holds a scroll that reads 'I almost finished'.",
+        "intervention": "The brand mascot appears floating above the maze and simply winks.",
+        "jumper": "The entire maze flattens into a single 'Got it' button. The customer strolls across triumphantly.",
+        "hook": "Opening on the absurd struggle of the Legal Labyrinth",
+        "narrative": "The ad opens with the protagonist trapped in a Legal Labyrinth. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Legal Labyrinth struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Legal Labyrinth metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "aad827f3",
+        "title": "The Manual Assembly - Campaign 30/11/2025",
+        "anchor": "A person sits surrounded by 10,000 numbered parts and an instruction manual the size of a phone book, all in a language that doesn't exist.",
+        "setup": "Sweat drips. They've been at it for 72 hours. They've built something, but it's clearly wrong - it looks like abstract art. The manual page reads 'Step 1 of 847,000'.",
+        "intervention": "The brand logo bounces into frame and simply presses a single button.",
+        "jumper": "All parts levitate and assemble themselves into a perfect product in seconds. The manual bursts into celebration confetti.",
+        "hook": "Opening on the absurd struggle of the IKEA Nightmare",
+        "narrative": "The ad opens with the protagonist trapped in a IKEA Nightmare. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The IKEA Nightmare struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This IKEA Nightmare metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      }
+    ],
+    "viable_3": [
+      {
+        "id": "3a31b3c0",
+        "title": "The Scissors vs The Lawn - Campaign 30/11/2025",
+        "anchor": "A person on their knees, cutting an enormous lawn with tiny nail scissors. Each blade of grass takes a separate snip.",
+        "setup": "The protagonist has been at it for days. Their hands are cramped, their knees are raw. A progress bar overlay shows they're 0.3% complete.",
+        "intervention": "The brand mascot walks in, yawns, and casually blows a dandelion.",
+        "jumper": "The entire lawn transforms into a perfect striped pattern instantly. The scissors dissolve into confetti.",
+        "hook": "Opening on the absurd struggle of the Sisyphean Task",
+        "narrative": "The ad opens with the protagonist trapped in a Sisyphean Task. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Sisyphean Task struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Sisyphean Task metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "6edcddb0",
+        "title": "The Filing Cabinet Mountain - Campaign 30/11/2025",
+        "anchor": "An office worker stands before a mountain of filing cabinets that reaches into the clouds, each drawer overflowing with paper.",
+        "setup": "They're climbing the cabinet mountain with a single document, sweating. Signs point to different floors: 'TPS Reports - Floor 847'. An elevator sign says 'Out of Order Since 1987'.",
+        "intervention": "The brand icon appears and simply taps the side of the mountain with one finger.",
+        "jumper": "All cabinets fold into origami birds and fly away, leaving a single glowing screen showing 'Complete'.",
+        "hook": "Opening on the absurd struggle of the Bureaucratic Nightmare",
+        "narrative": "The ad opens with the protagonist trapped in a Bureaucratic Nightmare. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Bureaucratic Nightmare struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Bureaucratic Nightmare metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      },
+      {
+        "id": "6a8fd3ae",
+        "title": "The Brick Phone Call - Campaign 30/11/2025",
+        "anchor": "A person tries to make a call using two tin cans connected by a string that stretches across the entire city.",
+        "setup": "They're shouting into the can while running across rooftops, through traffic, across rivers, trying to keep the string taut. The other person hears only static.",
+        "intervention": "The brand character walks by and snaps their fingers.",
+        "jumper": "The string transforms into a beam of light. Suddenly both people are having a crystal-clear holographic conversation.",
+        "hook": "Opening on the absurd struggle of the Stone Age Communication",
+        "narrative": "The ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "key_moments": [
+          "The Stone Age Communication struggle reveal",
+          "The exhaustion and frustration peak",
+          "The brand's effortless intervention",
+          "The magical transformation"
+        ],
+        "cta": "We make it effortless",
+        "rationale": "This Stone Age Communication metaphor visually demonstrates the contrast between the old way and the new way, making Give them the only story in the world where they are the hero. instantly understandable through Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. storytelling.",
+        "inspired_by": []
+      }
+    ],
+    "polished_3": [
+      {
+        "id": "00e4a215",
+        "title": "The Scissors vs The Lawn - Campaign 30/11/2025",
+        "concept_id": "3a31b3c0",
+        "opening": "[00:00] OPEN on Opening on the absurd struggle of the Sisyphean Task",
+        "development": "[00:05] The ad opens with the protagonist trapped in a Sisyphean Task. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "climax": "[00:20] Key moment: The Sisyphean Task struggle reveal",
+        "resolution": "[00:25] We make it effortless. Logo lockup.",
+        "full_script": "# The Scissors vs The Lawn - Campaign 30/11/2025\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening on the absurd struggle of the Sisyphean Task\n\n### Scene 2: Development [00:05 - 00:20]\nThe ad opens with the protagonist trapped in a Sisyphean Task. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- The Sisyphean Task struggle reveal\n- The exhaustion and frustration peak\n- The brand's effortless intervention\n- The magical transformation\n\n### Scene 4: Resolution [00:25 - 00:30]\nWe make it effortless\n\nSUPER: Brand logo",
+        "visual_style": "Match Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. tone with premium cinematography",
+        "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+        "talent_notes": "Cast to represent {brief.target_audience}",
+        "production_considerations": "Budget range: No budget specified. 1-2 day shoot.",
+        "estimated_duration_seconds": 30
+      },
+      {
+        "id": "78e94188",
+        "title": "The Filing Cabinet Mountain",
+        "concept_id": "6edcddb0",
+        "opening": "SCENE: A surreal, foggy landscape. A towering mountain made entirely of grey, rusted filing cabinets stretches into the clouds. A MUM (30s) hangs precariously from a drawer handle, exhausted. \n\nSFX: Cold wind howling. The clatter of metal. \n\nVO (Warm, British female): Searching for a gift that lasts forever... shouldn't feel like this.",
+        "development": "SCENE: Mum pulls open a drawer labeled 'GIFTS FOR 5 YEAR OLDS'. It explodes with plastic tat and generic beige forms. She looks defeated. \n\nSuddenly, a golden sparkle floats down. It\u2019s a [Brand] book. She touches it. \n\nSFX: A magical 'shimmer' sound cuts the wind. \n\nSCENE: The filing cabinets instantly dissolve into soft, floating feathers and warm light. The grey bureaucracy melts away.",
+        "climax": "SCENE: We transition seamlessly to a cozy, golden-lit bedroom. Mum is now sitting comfortably on a bed, the [Brand] book open in her lap. Her CHILD (5) looks at the page, eyes wide with wonder, pointing at a character that looks exactly like them. \n\nCHILD: Look Mummy! That's me! \n\nVO: Give them the only story in the world where they are the hero.",
+        "resolution": "SCENE: Mum pulls the child into a cuddle. The book rests on the duvet. \n\nSUPER: [Brand]. \n\nVO: [Brand]. We make it effortless. \n\nURL: [Brand Website]",
+        "full_script": "TITLE: THE FILING CABINET MOUNTAIN\nLENGTH: 30 SECONDS\n\n[00:00] \nVISUAL: A surreal, cinematic wide shot. A mountain made of endless grey filing cabinets towers into a gloomy sky. MUM (30s) is scaling it, looking weary.\nAUDIO: (SFX) Cold wind, metallic clanking. \nVO: Searching for a gift that lasts forever... shouldn't feel like this.\n\n[00:05]\nVISUAL: Close up. She yanks open a drawer marked 'GENERIC BOY'. An avalanche of plastic toys and paperwork spills out. She sighs.\nAUDIO: (SFX) Harsh crashing sound.\n\n[00:10]\nVISUAL: A warm light breaks the gloom. A [Brand] book floats down. Mum catches it. As she touches the cover, a ripple of magic sweeps across the screen.\nAUDIO: (SFX) A magical, resonant chime. The wind stops instantly. \nVO: But with just a name...\n\n[00:15]\nVISUAL: The metal mountain dissolves into warm, amber particles. The environment morphs instantly into a safe, cozy bedroom.\nAUDIO: (Music) Swells into a heartwarming, acoustic piano and cello melody.\n\n[00:20]\nVISUAL: Mum and Child are snuggled in bed. The Child touches the illustration in the book.\nCHILD: Look Mummy! That's me!\nVISUAL: Mum smiles\u2014a look of pure connection.\n\n[00:25]\nVISUAL: The book closes. Mum kisses the child's head. Freeze frame on the book cover.\nVO: Give them the only story in the world where they are the hero.\n\n[00:28]\nVISUAL: Brand Logo and URL appear on a parchment texture background.\nVO: [Brand]. We make it effortless.",
+        "visual_style": "High-concept magical realism. The 'Bureaucratic Nightmare' should look like a Terry Gilliam set\u2014desaturated, grey, imposing, and absurdly tall. In contrast, the bedroom scene must be rich with 'hygge'\u2014warm ambers, soft focus, fairy lights, and high-quality textiles. The transition between the two worlds should be seamless via CGI morphing, symbolizing the relief the parent feels.",
+        "audio_notes": "MUSIC: Starts with a cold, industrial drone that resolves into a warm, emotional acoustic track (think 'Pixar emotional moment' piano). \nSFX: Exaggerated metallic echoes for the mountain; soft fabric rustles and magical chimes for the transition. \nVO: A trusted British voice (e.g., warm like Olivia Colman or soothing like Stephen Fry). Not an announcer, but a storyteller.",
+        "talent_notes": "MUM: Needs to convey 'tired warrior' in the first half and 'nurturing warmth' in the second. The exhaustion must feel relatable, not terrifying. \nCHILD: Natural, unforced reaction. The 'That's me!' line should feel like a genuine discovery, not a rehearsed line.",
+        "production_considerations": "Given 'No budget specified', we assume a mid-to-high tier approach. The 'Filing Cabinet Mountain' is best achieved via Green Screen/Matte Painting to avoid building a massive physical set, though a physical foreground (3-4 cabinets) is needed for the actor to interact with. The transition requires high-quality VFX. Lighting is critical to sell the temperature shift from cold blue/grey to warm amber.",
+        "estimated_duration_seconds": 30
+      },
+      {
+        "id": "50cbb662",
+        "title": "The Brick Phone Call - Campaign 30/11/2025",
+        "concept_id": "6a8fd3ae",
+        "opening": "[00:00] OPEN on Opening on the absurd struggle of the Stone Age Communication",
+        "development": "[00:05] The ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+        "climax": "[00:20] Key moment: The Stone Age Communication struggle reveal",
+        "resolution": "[00:25] We make it effortless. Logo lockup.",
+        "full_script": "# The Brick Phone Call - Campaign 30/11/2025\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening on the absurd struggle of the Stone Age Communication\n\n### Scene 2: Development [00:05 - 00:20]\nThe ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- The Stone Age Communication struggle reveal\n- The exhaustion and frustration peak\n- The brand's effortless intervention\n- The magical transformation\n\n### Scene 4: Resolution [00:25 - 00:30]\nWe make it effortless\n\nSUPER: Brand logo",
+        "visual_style": "Match Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. tone with premium cinematography",
+        "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+        "talent_notes": "Cast to represent {brief.target_audience}",
+        "production_considerations": "Budget range: No budget specified. 1-2 day shoot.",
+        "estimated_duration_seconds": 30
+      }
+    ],
+    "braintrust_feedback": [
+      {
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Unable to generate critique"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      }
+    ],
+    "compliance_checks": [
+      {
+        "passed": false,
+        "risk_level": "high",
+        "issues": [
+          {
+            "category": "misleading_claims",
+            "severity": "high",
+            "description": "The claim 'Give them the only story in the world where they are the hero' is an absolute exclusivity claim. This is likely factually incorrect as there are numerous personalized book competitors in the UK market (e.g., Wonderbly, Hooray Heroes) where the child is the protagonist.",
+            "location": "Scene 2, 00:05 - 00:20",
+            "recommendation": "Modify copy to 'A story where they are the hero' or 'Their very own story where they are the hero'. Remove the word 'only'.",
+            "evidence_required": "To keep 'only', you would need a comprehensive market analysis proving no other book exists globally where a child is the named hero, which is impossible."
+          },
+          {
+            "category": "product_depiction",
+            "severity": "medium",
+            "description": "The script describes a 'magical transformation'. Per BCAP 3.10, the ad must not exaggerate the capability or appearance of the product. If the 'magic' makes the physical book look like it has special effects (glowing, moving) that it does not possess, this is misleading.",
+            "location": "Scene 3, 00:20 - 00:25",
+            "recommendation": "Ensure the 'magic' is clearly understood as metaphorical or emotional. The final shot of the book must be a realistic representation of the physical paper product.",
+            "evidence_required": "Physical sample of the book sent to Clearcast to compare against the visual effects used."
+          },
+          {
+            "category": "safety",
+            "severity": "medium",
+            "description": "The visual metaphor 'Scissors vs The Lawn' involves a sharp implement. While likely comedic, BCAP 4.4 prohibits condoning unsafe practices. If a child is shown holding the scissors, this will be rejected immediately.",
+            "location": "Scene 1 & 2",
+            "recommendation": "Ensure the protagonist holding the scissors is clearly an adult. The action must be obviously stylized/slapstick to avoid imitation risks.",
+            "evidence_required": "Visual storyboard confirming the protagonist is an adult."
+          },
+          {
+            "category": "substantiation",
+            "severity": "low",
+            "description": "The claim 'We make it effortless' is a subjective claim about the ordering process.",
+            "location": "Scene 4, 00:25 - 00:30",
+            "recommendation": "Be prepared to demonstrate the user journey. If the process involves complex photo uploads or long forms, 'effortless' may be deemed misleading.",
+            "evidence_required": "A video walkthrough of the ordering process to prove ease of use."
+          }
+        ],
+        "recommendations": [
+          "Replace the absolute claim 'only story in the world' immediately to avoid rejection.",
+          "Ensure the 'Sisyphean Task' (cutting grass with scissors) is portrayed as obviously absurd/comedic and performed by an adult to satisfy health and safety rules.",
+          "If using a child's name in the book visual, ensure you have written permission from the parents/guardians of that child, or use a generic name/actor.",
+          "Ensure the transition from the 'struggle' to the 'gift' clearly links the product to the solution (emotional connection) without overpromising that the book solves all parenting behavioral issues."
+        ],
+        "categories_checked": [
+          "BCAP Code 3 (Misleading Advertising)",
+          "BCAP Code 4 (Harm and Offence)",
+          "BCAP Code 5 (Children)",
+          "Clearcast Notes on Exaggeration",
+          "ASA Environmental Claims"
+        ],
+        "clearcast_notes": "Clearcast will reject the 'only story in the world' claim immediately as it is a provably false exclusivity claim. They will also scrutinize the 'magical transformation' to ensure it doesn't misrepresent the physical nature of the book (e.g., paper quality, binding). The safety of the scissors scene will be a standard check\u2014must be an adult.\n\n**Evidence Required:**\n1. Market analysis (if attempting to keep 'only' - unlikely to succeed). 2. Physical sample of the book. 3. Signed release forms for any children's names/images used. 4. Demonstration of the ordering process to support 'effortless'."
+      },
+      {
+        "passed": false,
+        "risk_level": "medium",
+        "issues": [
+          {
+            "category": "claims",
+            "severity": "high",
+            "description": "Absolute exclusivity claim: 'Give them the only story in the world where they are the hero.'",
+            "location": "Scene 5, 00:25",
+            "recommendation": "Remove 'only'. Change to 'Give them a story where they are the hero' or 'Their very own story'.",
+            "evidence_required": "To keep 'only', you would need to prove no other personalized children's books exist globally, which is factually incorrect (e.g., Wonderbly, Hooray Heroes)."
+          },
+          {
+            "category": "misleading_advertising",
+            "severity": "medium",
+            "description": "Process claim: 'But with just a name...'",
+            "location": "Scene 3, 00:10",
+            "recommendation": "Verify the user journey. If the user must also select gender, hair color, or skin tone, 'just a name' is misleading. Change to 'With just a few clicks' if other inputs are required.",
+            "evidence_required": "Video capture of the actual website ordering process demonstrating that only a name is required to generate the book."
+          },
+          {
+            "category": "misleading_visualization",
+            "severity": "medium",
+            "description": "Visual accuracy: Child says 'That's me!' pointing to illustration.",
+            "location": "Scene 4, 00:20",
+            "recommendation": "Ensure the book prop features an avatar that reasonably resembles the child actor (hair/skin tone) based on the product's actual customization capabilities. It cannot look like a photograph if the product is an illustration.",
+            "evidence_required": "Physical sample of the book and screenshots of the avatar configuration options."
+          },
+          {
+            "category": "comparative_advertising",
+            "severity": "low",
+            "description": "Denigration of competitors: 'Avalanche of plastic toys' / 'Generic Boy' drawer.",
+            "location": "Scene 2, 00:05",
+            "recommendation": "Ensure the plastic toys shown are generic and unbranded to avoid trademark infringement or specific denigration. The metaphor of 'clutter' is likely acceptable puffery.",
+            "evidence_required": "None, provided props are generic."
+          }
+        ],
+        "recommendations": [
+          "Modify the VO line at 00:25 immediately; this is the primary barrier to clearance.",
+          "Ensure the 'magic ripple' visual effect does not obscure the actual look of the book cover to the point where the consumer cannot tell what the physical product looks like.",
+          "Ensure the child actor is not shown in close proximity to the 'Avalanche' of toys in a way that suggests physical danger (BCAP Section 5 - Safety)."
+        ],
+        "categories_checked": [
+          "BCAP Code Section 3 (Misleading Advertising)",
+          "BCAP Code Section 3.33 (Comparisons)",
+          "BCAP Code Section 5 (Children)",
+          "BCAP Code Section 20 (Environmental Claims - implicit)",
+          "Clearcast Notes of Guidance"
+        ],
+        "clearcast_notes": "Clearcast will reject the 'only story in the world' claim without hesitation as it is a verifiable objective claim that is likely false given the market competition. They will also scrutinize the 'just a name' claim to ensure the consumer isn't being misled about the effort required to customize the product.\n\n**Evidence Required:**\n1. Physical sample of the book. 2. Screen recording of the online ordering process. 3. Substantiation for 'Effortless' (e.g., time-to-purchase data) if challenged, though likely puffery."
+      },
+      {
+        "passed": true,
+        "risk_level": "low",
+        "issues": [],
+        "recommendations": [],
+        "categories_checked": [
+          "Clearcast",
+          "BCAP",
+          "Ofcom",
+          "ASA"
+        ],
+        "clearcast_notes": "No issues detected for United Kingdom compliance (empty or blocked response)"
+      }
+    ],
+    "final_script": {
+      "id": "50cbb662",
+      "title": "The Brick Phone Call - Campaign 30/11/2025",
+      "concept_id": "6a8fd3ae",
+      "opening": "[00:00] OPEN on Opening on the absurd struggle of the Stone Age Communication",
+      "development": "[00:05] The ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..",
+      "climax": "[00:20] Key moment: The Stone Age Communication struggle reveal",
+      "resolution": "[00:25] We make it effortless. Logo lockup.",
+      "full_script": "# The Brick Phone Call - Campaign 30/11/2025\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening on the absurd struggle of the Stone Age Communication\n\n### Scene 2: Development [00:05 - 00:20]\nThe ad opens with the protagonist trapped in a Stone Age Communication. The struggle is visual and absurd. The brand enters with effortless ease and transforms everything with a simple gesture, demonstrating that Give them the only story in the world where they are the hero..\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- The Stone Age Communication struggle reveal\n- The exhaustion and frustration peak\n- The brand's effortless intervention\n- The magical transformation\n\n### Scene 4: Resolution [00:25 - 00:30]\nWe make it effortless\n\nSUPER: Brand logo",
+      "visual_style": "Match Magical, heartwarming, and encouraging. It should feel like a warm hug\u2014gentle, slightly whimsical, but grounded in the quality of a British educational product. Avoid being overly 'salesy'; focus on the wonder of childhood. tone with premium cinematography",
+      "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+      "talent_notes": "Cast to represent {brief.target_audience}",
+      "production_considerations": "Budget range: No budget specified. 1-2 day shoot.",
+      "estimated_duration_seconds": 30
+    },
+    "final_rationale": "Script 3 is the only viable candidate as it is the sole script to pass compliance checks. While the creative scores across the board were middling (5.0), the 'Stone Age Communication' metaphor offers the most malleable narrative device to address the brief's problem: the disconnect between parents and children due to screens. Script 1 and 2 are tonally dissonant (industrial/surreal) and carry unacceptable compliance risks. We will pivot Script 3's concept of 'difficult communication' to symbolize the struggle of connecting with a distracted child, positioning the personalized book as the breakthrough solution.",
+    "production_notes": "The 'Brick Phone/Stone Age' concept must not feel like a tech commercial. 1) Visual Style: Start with a cool, slightly desaturated palette to represent the 'disconnect' of modern parenting/screens. 2) The Pivot: The moment the [Brand] book is introduced, the lighting must shift immediately to warm, golden bedtime tones. 3) Tone: Soften the absurdity. The 'struggle' to communicate should feel relatable and slightly comedic, not frustrating. 4) Product: The book must look physically high-quality\u2014focus on the texture of the paper and the child's name to ground the 'forever keepsake' angle."
+  },
+  "scores": {
+    "tv_native": 7.0,
+    "clarity": 6.5,
+    "emotional_impact": 6.0,
+    "brand_fit": 6.5,
+    "memorability": 7.5,
+    "originality": 7.0,
+    "overall": 6.8
+  },
+  "citations": [
+    {
+      "neighbor_id": "mock-ref-003",
+      "neighbor_title": "IKEA - Silence The Critics",
+      "influence_type": "inspiration",
+      "specific_element": "Using an absurdist metaphor to highlight a domestic emotional benefit."
+    }
+  ],
+  "current_stage": "completed",
+  "stage_history": [
+    {
+      "stage": "starting",
+      "timestamp": "2025-11-30T18:00:35.782237",
+      "details": {}
+    },
+    {
+      "stage": "retriever",
+      "timestamp": "2025-11-30T18:00:35.783259",
+      "details": {}
+    },
+    {
+      "stage": "amazon_start",
+      "timestamp": "2025-11-30T18:00:41.806584",
+      "details": {}
+    },
+    {
+      "stage": "ideate",
+      "timestamp": "2025-11-30T18:01:08.254697",
+      "details": {}
+    },
+    {
+      "stage": "selector",
+      "timestamp": "2025-11-30T18:01:49.812154",
+      "details": {}
+    },
+    {
+      "stage": "polish",
+      "timestamp": "2025-11-30T18:02:19.294431",
+      "details": {}
+    },
+    {
+      "stage": "braintrust_loop_1",
+      "timestamp": "2025-11-30T18:03:02.156268",
+      "details": {}
+    },
+    {
+      "stage": "braintrust_loop_2",
+      "timestamp": "2025-11-30T18:05:58.959170",
+      "details": {}
+    },
+    {
+      "stage": "compliance",
+      "timestamp": "2025-11-30T18:08:51.917163",
+      "details": {}
+    },
+    {
+      "stage": "finalize",
+      "timestamp": "2025-11-30T18:09:30.192397",
+      "details": {}
+    },
+    {
+      "stage": "completed",
+      "timestamp": "2025-11-30T18:10:07.000243",
+      "details": {}
+    }
+  ],
+  "error": null
+}

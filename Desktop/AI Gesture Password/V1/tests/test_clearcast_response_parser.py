@@ -1,8 +1,8 @@
 import json
 import pytest
 
-from app.clearcast_checker import ClearcastChecker
-from app.clearcast_classifier import (
+from app.features.clearcast.clearcast_checker import ClearcastChecker
+from app.features.clearcast.clearcast_classifier import (
     BrandProfile,
     ClearcastClassificationResult,
     FocusArea,

@@ -1,4 +1,4 @@
-from app.clearcast_audio import ClearcastAudioAnalyzer, AudioNormalizationReport
+from app.features.clearcast.clearcast_audio import ClearcastAudioAnalyzer, AudioNormalizationReport
 
 
 def test_evaluate_levels_ok():

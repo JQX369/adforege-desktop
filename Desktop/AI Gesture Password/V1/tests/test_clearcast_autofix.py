@@ -1,4 +1,4 @@
-from app.clearcast_autofix import (
+from app.features.clearcast.clearcast_autofix import (
     AUTO_FIX_ACTIONS,
     AUTO_FIX_CATEGORIES,
     AUTO_FIX_CATEGORY_ORDER,

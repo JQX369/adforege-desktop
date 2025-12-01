@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from app.clearcast_rules import ClearcastRulesSnapshot
+from app.features.clearcast.clearcast_rules import ClearcastRulesSnapshot
 
 
 def _sample_snapshot():

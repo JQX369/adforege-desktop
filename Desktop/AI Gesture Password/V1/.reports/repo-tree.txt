@@ -1,0 +1,184 @@
+.reports/
+  apply-summary.md
+  APPROVED
+  clean-plan.md
+  commands-dry-run.sh
+  dead-code.txt
+  depcheck.json
+  dependencies.json
+  knip.json
+  markdown.txt
+  md-actions.csv
+  md-boilerplate-grep.txt
+  md-duplicate-basenames.txt
+  md-orphan-dirs.txt
+  md-tiny.txt
+  moves-map.csv
+  pipreqs.txt
+  tmp_inventory.py
+  tree-after.txt
+  tree-before.txt
+  ts-prune.txt
+0.5.0
+_archive/
+  2025-11-15/
+    build/
+    venv-original/
+    GuerillaScope.spec
+  2025-11-22/
+    src/
+A Complete Guide to Passing TV Adverts_ Key Clearcast Guidance.pdf
+assets/
+  icon.ico
+  icon_128.png
+  icon_16.png
+  icon_256.png
+  icon_32.png
+  icon_48.png
+  icon_64.png
+build_app.bat
+build_onefile.bat
+create_icon.py
+data/
+  README.txt
+  sessions.json
+  users.json
+debug/
+  fer_threading_fix_plan.md
+debug_ffmpeg.py
+debug_log.txt
+debug_pdf_gen.py
+debug_pdf_gen_repro.py
+debug_storage.py
+DIST_README.txt
+docs/
+  changelog/
+  decisions/
+  guides/
+    custom_stories_pdf_layout.md
+  references/
+  activity-log.md
+extract_debug_data.py
+fix_dll_issue.py
+GuerillaScope.spec
+long_path_test/
+  Customstories/
+    Clients/
+  CustomStories_Report_A_collection_of_Christmas_ornaments_featuring_diverse_characters_including_a_Black_female_angel_singer_a_Black_male_conductor_and_a_Queen_s_Guard_style_soldier_20251115_132141.pdf
+pre_build_check.py
+pyi_rth_pythondll.py
+requirements.txt
+run_video_analyzer.bat
+set_api_key.py
+setup.py
+src/
+  api/
+    main.py
+  app/
+    components/
+    features/
+    recognizers/
+    views/
+    __init__.py
+    ai_video_breakdown.py
+    auth.py
+    clearcast_updates.json
+    config.py
+    config_secure.py
+    effectiveness_benchmarks.py
+    enhanced_reaction_analyzer.py
+    enhanced_transcript_analyzer.py
+    enhanced_transcript_widget.py
+    gemini_utils.py
+    legal_geometry.py
+    main.py
+    metadata_verifier.py
+    pdf_generator.py
+    public_reaction.py
+    public_reaction_gui.py
+    saliency_engine.py
+    storage.py
+    substantiation_generator.py
+    technical_qc.py
+    ui_theme.py
+    user_auth.py
+    version.py
+    video_analyzer_gui.py
+    video_player.py
+    video_processor.py
+    video_storage.py
+  web/
+    dist/
+    electron/
+    public/
+    src/
+    eslint.config.js
+    index.html
+    package-lock.json
+    package.json
+    postcss.config.js
+    README.md
+    tailwind.config.js
+    tsconfig.app.json
+    tsconfig.json
+    tsconfig.node.json
+    vite.config.ts
+start_dev.bat
+temp_analysis_data.json
+temp_pdfs/
+  ai_breakdown_2488b749-c952-4872-973a-e12c8886b0e6.pdf
+templates/
+  activity-log-entry.md
+test_api.py
+test_frame_output.pdf
+test_pdf_layout.py
+tests/
+  __init__.py
+  conftest.py
+  test_ai_video_breakdown_prompt.py
+  test_audit_fixes.py
+  test_baseline.py
+  test_blink.py
+  test_bright_export.py
+  test_clearcast.py
+  test_clearcast_audio.py
+  test_clearcast_autofix.py
+  test_clearcast_classifier.py
+  test_clearcast_end_to_end.py
+  test_clearcast_fix.py
+  test_clearcast_prompt_builder.py
+  test_clearcast_response_parser.py
+  test_clearcast_rules_snapshot.py
+  test_clearcast_updater_snapshot.py
+  test_effectiveness_benchmarks.py
+  test_gaze.py
+  test_gemini_2_5.py
+  test_gemini_3_pro.py
+  test_legal_geometry.py
+  test_pdf_generator_utils.py
+  test_performance.py
+  test_polish_video.py
+  test_pulse.py
+  test_rag.py
+  test_saliency.py
+  test_setup.py
+  test_silence.py
+  test_substantiation.py
+  test_technical_qc.py
+  verify_pdf_frames.py
+  verify_timestamps.py
+verify_api.py
+version_info.txt
+video_analyses/
+  reactions/
+  thumbnails/
+  videos/
+    19f45257-77e7-4e22-9eb9-e7aae5fbee94.mp4
+    2488b749-c952-4872-973a-e12c8886b0e6.mp4
+    4c230dcd-bbd9-4918-9236-c158e2089483.mp4
+    d0dedf55-22c8-4ab9-a9de-23c2102f629f.mp4
+    e2d6d9d4-de45-43b2-bbb8-ba5fb7fda76d.mp4
+    e577ec5e-8131-4461-a156-513d1a5e4f39.mp4
+  analyses.json
+  analyses_backup.json
+video_analyzer.log

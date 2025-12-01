@@ -18,9 +18,18 @@ pyaudio>=0.2.11
 pygame>=2.5.0
 google-generativeai>=0.3.0
 openai>=2.8.0
+supabase>=2.0.0
 
 # Utilities
 reportlab==4.0.7
+PyMuPDF>=1.23.0  # PDF to image conversion for vision-based parsing
 
 # Testing / QA
 pytest>=7.4.0
+pytest-asyncio>=0.23.6
+
+# Backend API
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart>=0.0.6
+python-dotenv>=1.0.0

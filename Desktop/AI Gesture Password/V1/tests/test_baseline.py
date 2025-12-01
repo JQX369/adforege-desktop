@@ -3,7 +3,7 @@
 import logging
 logging.basicConfig(level=logging.INFO)
 
-from app.enhanced_emotion_tracker import EnhancedEmotionTracker
+from app.features.analytics.enhanced_emotion_tracker import EnhancedEmotionTracker
 
 # Test initialization
 tracker = EnhancedEmotionTracker()

@@ -1,0 +1,571 @@
+{
+  "run_id": "53d1f68b-f7a8-4549-94ab-84c59deb59dc",
+  "status": "completed",
+  "created_at": "2025-11-28T15:20:28.942099",
+  "updated_at": "2025-11-28T15:20:28.954289",
+  "brief": {
+    "objective": "Drive brand consideration",
+    "target_audience": "25-44 ABC1 adults",
+    "single_minded_proposition": "The refreshing choice",
+    "tone_of_voice": "Warm and aspirational",
+    "asset_name": "Summer Refresh Campaign",
+    "length_seconds": 30,
+    "mandatories": [],
+    "parent_id": null,
+    "creative_mode": "light_think",
+    "brand_name": "TestBrand",
+    "product_service": "",
+    "budget_range": "\u00a3100k-250k",
+    "comms_style": "",
+    "brand_colors": [],
+    "brand_context": "Brand: TestBrand",
+    "research_insights": "Target audience: 25-44 ABC1 adults",
+    "compliance_requirements": "compliance categories: none explicitly specified"
+  },
+  "retrieval": {
+    "neighbors": [
+      {
+        "id": "mock-003",
+        "title": "Real Taste Guarantee",
+        "brand": "Heinz",
+        "category": "Food & Beverage",
+        "year": 2023,
+        "description": "Slice-of-life comedy showing various people's reactions when they accidentally use a non-Heinz ketchup. Warm, relatable humor.",
+        "script_excerpt": "INT. KITCHEN - DAY. A family sits down to dinner. Dad reaches for the ketchup...",
+        "video_url": null,
+        "effectiveness_score": 7.2,
+        "awards": [],
+        "similarity_score": 0.932,
+        "tags": [
+          "comedy",
+          "food",
+          "relatable",
+          "slice-of-life",
+          "brand-loyalty"
+        ]
+      },
+      {
+        "id": "mock-012",
+        "title": "The List",
+        "brand": "IKEA",
+        "category": "Retail",
+        "year": 2023,
+        "description": "A couple arguing over a shopping list that becomes increasingly absurd. Physical comedy and witty dialogue.",
+        "script_excerpt": "INT. CAR - DAY. HE: 'Did you remember the MALM?' SHE: 'The what?' HE: (dramatic pause) 'The MALM.'",
+        "video_url": null,
+        "effectiveness_score": 7.4,
+        "awards": [
+          "Creative Circle Bronze"
+        ],
+        "similarity_score": 0.827,
+        "tags": [
+          "comedy",
+          "couples",
+          "absurd",
+          "dialogue-driven",
+          "retail"
+        ]
+      },
+      {
+        "id": "mock-001",
+        "title": "The Journey Home",
+        "brand": "John Lewis",
+        "category": "Retail",
+        "year": 2023,
+        "description": "Emotional Christmas ad following a child's journey to find the perfect gift for their parent. Features stop-motion animation and a cover of a classic song.",
+        "script_excerpt": "OPEN on a snow-covered village... A child peers through a frosted window...",
+        "video_url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "effectiveness_score": 8.5,
+        "awards": [
+          "British Arrows Gold",
+          "Creative Circle Silver"
+        ],
+        "similarity_score": 0.729,
+        "tags": [
+          "emotional",
+          "christmas",
+          "animation",
+          "family",
+          "gift-giving"
+        ]
+      },
+      {
+        "id": "mock-002",
+        "title": "Impossible is Nothing",
+        "brand": "Adidas",
+        "category": "Sports/Fitness",
+        "year": 2022,
+        "description": "High-energy sports montage featuring diverse athletes overcoming personal challenges. Features quick cuts and inspiring voiceover.",
+        "script_excerpt": "VO: They said you couldn't... QUICK CUTS of athletes training in dawn light...",
+        "video_url": null,
+        "effectiveness_score": 7.8,
+        "awards": [
+          "Cannes Bronze"
+        ],
+        "similarity_score": 0.679,
+        "tags": [
+          "inspirational",
+          "sports",
+          "montage",
+          "diversity",
+          "achievement"
+        ]
+      },
+      {
+        "id": "mock-004",
+        "title": "Connected",
+        "brand": "Vodafone",
+        "category": "Telecommunications",
+        "year": 2022,
+        "description": "Touching story of a grandmother learning to video call her grandchildren abroad. Demonstrates technology bridging distances.",
+        "script_excerpt": "CLOSE UP on weathered hands holding a smartphone. We hear a child's voice: 'Hi Nana!'",
+        "video_url": null,
+        "effectiveness_score": 8.0,
+        "awards": [
+          "D&AD Graphite Pencil"
+        ],
+        "similarity_score": 0.673,
+        "tags": [
+          "emotional",
+          "technology",
+          "family",
+          "connection",
+          "elderly"
+        ]
+      },
+      {
+        "id": "mock-010",
+        "title": "Dream Bigger",
+        "brand": "Barclays",
+        "category": "Finance",
+        "year": 2023,
+        "description": "Aspirational ad following a young entrepreneur building their business with bank support. Warm, optimistic tone.",
+        "script_excerpt": "TIMELAPSE: An empty shop transforms into a thriving bakery. VO: 'Every big dream starts somewhere small...'",
+        "video_url": null,
+        "effectiveness_score": 6.8,
+        "awards": [],
+        "similarity_score": 0.642,
+        "tags": [
+          "finance",
+          "aspirational",
+          "entrepreneurship",
+          "support",
+          "growth"
+        ]
+      },
+      {
+        "id": "mock-011",
+        "title": "Midnight Feast",
+        "brand": "Cadbury",
+        "category": "Confectionery",
+        "year": 2022,
+        "description": "Nostalgic recreation of childhood midnight snacking. Warm, cozy aesthetic with subtle humor.",
+        "script_excerpt": "INT. DARK BEDROOM - NIGHT. A child's feet pad silently down the hallway...",
+        "video_url": null,
+        "effectiveness_score": 7.7,
+        "awards": [
+          "British Arrows Silver"
+        ],
+        "similarity_score": 0.623,
+        "tags": [
+          "nostalgia",
+          "childhood",
+          "warmth",
+          "indulgence",
+          "nighttime"
+        ]
+      },
+      {
+        "id": "mock-006",
+        "title": "The Audition",
+        "brand": "Maltesers",
+        "category": "Confectionery",
+        "year": 2022,
+        "description": "Disability-inclusive comedy featuring a woman in a wheelchair auditioning for a play. Sharp, witty humor that challenges stereotypes.",
+        "script_excerpt": "INT. THEATRE - DAY. A casting director looks uncomfortable. 'So, about the wheelchair...'",
+        "video_url": null,
+        "effectiveness_score": 8.3,
+        "awards": [
+          "Channel 4 Diversity Award",
+          "Campaign Big Award"
+        ],
+        "similarity_score": 0.618,
+        "tags": [
+          "comedy",
+          "inclusive",
+          "disability",
+          "witty",
+          "progressive"
+        ]
+      }
+    ],
+    "query_embedding_id": null,
+    "retrieval_time_ms": 0.0,
+    "tags_used": [
+      "comedy",
+      "food",
+      "relatable",
+      "slice-of-life",
+      "brand-loyalty",
+      "comedy",
+      "couples",
+      "absurd",
+      "dialogue-driven",
+      "retail",
+      "emotional",
+      "christmas",
+      "animation",
+      "family",
+      "gift-giving",
+      "inspirational",
+      "sports",
+      "montage",
+      "diversity",
+      "achievement"
+    ]
+  },
+  "artifacts": {
+    "press_release": "# TestBrand Launches Award-Winning \"Summer Refresh Campaign\" Campaign\n\n**Product campaign resonates with 25-44 ABC1 adults**\n\n[PLACEHOLDER - Gemini API unavailable]\n\nThis campaign successfully communicated: \"The refreshing choice\"\n\nThe 30-second spot captured attention through its Warm and aspirational approach,\ndriving exceptional results for the brand.\n\n---\nNote: This is a placeholder. The full press release will be generated when the Gemini API is available.\n",
+    "ideas_10": [
+      {
+        "id": "139275a7",
+        "title": "The Emotional Journey - Summer Refresh Campaign",
+        "hook": "Opening with emotional storytelling to capture attention immediately",
+        "narrative": "A character-driven narrative that tugs at heartstrings. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening emotional storytelling moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This emotional storytelling approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      },
+      {
+        "id": "288666ba",
+        "title": "The Unexpected Twist - Summer Refresh Campaign",
+        "hook": "Opening with surprise and delight to capture attention immediately",
+        "narrative": "Subvert expectations with an unexpected reveal. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening surprise and delight moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This surprise and delight approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      },
+      {
+        "id": "b23a6c64",
+        "title": "The Slice of Life - Summer Refresh Campaign",
+        "hook": "Opening with relatable authenticity to capture attention immediately",
+        "narrative": "Real moments that audiences recognize from their own lives. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening relatable authenticity moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This relatable authenticity approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      },
+      {
+        "id": "5b4b0d66",
+        "title": "The Visual Spectacle - Summer Refresh Campaign",
+        "hook": "Opening with cinematic impact to capture attention immediately",
+        "narrative": "Stunning visuals that stop viewers mid-scroll. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening cinematic impact moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This cinematic impact approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      },
+      {
+        "id": "ef89bf1a",
+        "title": "The Humorous Take - Summer Refresh Campaign",
+        "hook": "Opening with comedy and wit to capture attention immediately",
+        "narrative": "Clever humor that makes the message memorable. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening comedy and wit moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This comedy and wit approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      }
+    ],
+    "viable_3": [
+      {
+        "id": "139275a7",
+        "title": "The Emotional Journey - Summer Refresh Campaign",
+        "hook": "Opening with emotional storytelling to capture attention immediately",
+        "narrative": "A character-driven narrative that tugs at heartstrings. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening emotional storytelling moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This emotional storytelling approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      },
+      {
+        "id": "288666ba",
+        "title": "The Unexpected Twist - Summer Refresh Campaign",
+        "hook": "Opening with surprise and delight to capture attention immediately",
+        "narrative": "Subvert expectations with an unexpected reveal. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening surprise and delight moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This surprise and delight approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      },
+      {
+        "id": "b23a6c64",
+        "title": "The Slice of Life - Summer Refresh Campaign",
+        "hook": "Opening with relatable authenticity to capture attention immediately",
+        "narrative": "Real moments that audiences recognize from their own lives. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "key_moments": [
+          "Opening relatable authenticity moment",
+          "Brand/product reveal",
+          "Emotional peak",
+          "Memorable closing"
+        ],
+        "cta": "Experience TestBrand today",
+        "rationale": "This relatable authenticity approach aligns with the Warm and aspirational tone and will resonate with 25-44 ABC1 adults.",
+        "inspired_by": []
+      }
+    ],
+    "polished_3": [
+      {
+        "id": "087e8572",
+        "title": "The Emotional Journey - Summer Refresh Campaign",
+        "concept_id": "139275a7",
+        "opening": "[00:00] OPEN on Opening with emotional storytelling to capture attention immediately",
+        "development": "[00:05] A character-driven narrative that tugs at heartstrings. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "climax": "[00:20] Key moment: Opening emotional storytelling moment",
+        "resolution": "[00:25] Experience TestBrand today. Logo lockup.",
+        "full_script": "# The Emotional Journey - Summer Refresh Campaign\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening with emotional storytelling to capture attention immediately\n\n### Scene 2: Development [00:05 - 00:20]\nA character-driven narrative that tugs at heartstrings. The ad focuses on The refreshing choice through a Warm and aspirational lens.\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- Opening emotional storytelling moment\n- Brand/product reveal\n- Emotional peak\n- Memorable closing\n\n### Scene 4: Resolution [00:25 - 00:30]\nExperience TestBrand today\n\nSUPER: TestBrand logo",
+        "visual_style": "Match Warm and aspirational tone with premium cinematography",
+        "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+        "talent_notes": "Cast to represent {brief.target_audience}",
+        "production_considerations": "Budget range: \u00a3100k-250k. 1-2 day shoot.",
+        "estimated_duration_seconds": 30
+      },
+      {
+        "id": "3523895c",
+        "title": "The Unexpected Twist - Summer Refresh Campaign",
+        "concept_id": "288666ba",
+        "opening": "[00:00] OPEN on Opening with surprise and delight to capture attention immediately",
+        "development": "[00:05] Subvert expectations with an unexpected reveal. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "climax": "[00:20] Key moment: Opening surprise and delight moment",
+        "resolution": "[00:25] Experience TestBrand today. Logo lockup.",
+        "full_script": "# The Unexpected Twist - Summer Refresh Campaign\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening with surprise and delight to capture attention immediately\n\n### Scene 2: Development [00:05 - 00:20]\nSubvert expectations with an unexpected reveal. The ad focuses on The refreshing choice through a Warm and aspirational lens.\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- Opening surprise and delight moment\n- Brand/product reveal\n- Emotional peak\n- Memorable closing\n\n### Scene 4: Resolution [00:25 - 00:30]\nExperience TestBrand today\n\nSUPER: TestBrand logo",
+        "visual_style": "Match Warm and aspirational tone with premium cinematography",
+        "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+        "talent_notes": "Cast to represent {brief.target_audience}",
+        "production_considerations": "Budget range: \u00a3100k-250k. 1-2 day shoot.",
+        "estimated_duration_seconds": 30
+      },
+      {
+        "id": "0b3cf416",
+        "title": "The Slice of Life - Summer Refresh Campaign",
+        "concept_id": "b23a6c64",
+        "opening": "[00:00] OPEN on Opening with relatable authenticity to capture attention immediately",
+        "development": "[00:05] Real moments that audiences recognize from their own lives. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+        "climax": "[00:20] Key moment: Opening relatable authenticity moment",
+        "resolution": "[00:25] Experience TestBrand today. Logo lockup.",
+        "full_script": "# The Slice of Life - Summer Refresh Campaign\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening with relatable authenticity to capture attention immediately\n\n### Scene 2: Development [00:05 - 00:20]\nReal moments that audiences recognize from their own lives. The ad focuses on The refreshing choice through a Warm and aspirational lens.\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- Opening relatable authenticity moment\n- Brand/product reveal\n- Emotional peak\n- Memorable closing\n\n### Scene 4: Resolution [00:25 - 00:30]\nExperience TestBrand today\n\nSUPER: TestBrand logo",
+        "visual_style": "Match Warm and aspirational tone with premium cinematography",
+        "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+        "talent_notes": "Cast to represent {brief.target_audience}",
+        "production_considerations": "Budget range: \u00a3100k-250k. 1-2 day shoot.",
+        "estimated_duration_seconds": 30
+      }
+    ],
+    "braintrust_feedback": [
+      {
+        "critic_persona": "The Craft Purist",
+        "strengths": [
+          "Gemini unavailable - manual review needed"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Strategist",
+        "strengths": [
+          "Gemini unavailable - manual review needed"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      },
+      {
+        "critic_persona": "The Disruptor",
+        "strengths": [
+          "Gemini unavailable - manual review needed"
+        ],
+        "weaknesses": [],
+        "suggestions": [],
+        "overall_rating": 5.0,
+        "would_approve": false
+      }
+    ],
+    "compliance_checks": [
+      {
+        "passed": true,
+        "risk_level": "medium",
+        "issues": [],
+        "recommendations": [
+          "Manual compliance review recommended - automated check unavailable"
+        ],
+        "categories_checked": [
+          "BCAP"
+        ],
+        "clearcast_notes": "Gemini API unavailable for automated review"
+      },
+      {
+        "passed": true,
+        "risk_level": "medium",
+        "issues": [],
+        "recommendations": [
+          "Manual compliance review recommended - automated check unavailable"
+        ],
+        "categories_checked": [
+          "BCAP"
+        ],
+        "clearcast_notes": "Gemini API unavailable for automated review"
+      },
+      {
+        "passed": true,
+        "risk_level": "medium",
+        "issues": [],
+        "recommendations": [
+          "Manual compliance review recommended - automated check unavailable"
+        ],
+        "categories_checked": [
+          "BCAP"
+        ],
+        "clearcast_notes": "Gemini API unavailable for automated review"
+      }
+    ],
+    "final_script": {
+      "id": "087e8572",
+      "title": "The Emotional Journey - Summer Refresh Campaign",
+      "concept_id": "139275a7",
+      "opening": "[00:00] OPEN on Opening with emotional storytelling to capture attention immediately",
+      "development": "[00:05] A character-driven narrative that tugs at heartstrings. The ad focuses on The refreshing choice through a Warm and aspirational lens.",
+      "climax": "[00:20] Key moment: Opening emotional storytelling moment",
+      "resolution": "[00:25] Experience TestBrand today. Logo lockup.",
+      "full_script": "# The Emotional Journey - Summer Refresh Campaign\n## 30-second TV Commercial\n\n### Scene 1: Opening [00:00 - 00:05]\nOpening with emotional storytelling to capture attention immediately\n\n### Scene 2: Development [00:05 - 00:20]\nA character-driven narrative that tugs at heartstrings. The ad focuses on The refreshing choice through a Warm and aspirational lens.\n\n### Scene 3: Climax [00:20 - 00:25]\nKey moments:\n- Opening emotional storytelling moment\n- Brand/product reveal\n- Emotional peak\n- Memorable closing\n\n### Scene 4: Resolution [00:25 - 00:30]\nExperience TestBrand today\n\nSUPER: TestBrand logo",
+      "visual_style": "Match Warm and aspirational tone with premium cinematography",
+      "audio_notes": "Original score or licensed track TBD. VO talent to be cast.",
+      "talent_notes": "Cast to represent {brief.target_audience}",
+      "production_considerations": "Budget range: \u00a3100k-250k. 1-2 day shoot.",
+      "estimated_duration_seconds": 30
+    },
+    "final_rationale": "Selected as the strongest concept based on initial evaluation.",
+    "production_notes": "Proceed with standard production workflow."
+  },
+  "scores": {
+    "tv_native": 7.0,
+    "clarity": 7.0,
+    "emotional_impact": 7.0,
+    "brand_fit": 7.0,
+    "memorability": 7.0,
+    "originality": 7.0,
+    "overall": 7.0
+  },
+  "citations": [
+    {
+      "neighbor_id": "mock-003",
+      "neighbor_title": "Real Taste Guarantee",
+      "influence_type": "reference",
+      "specific_element": "Category inspiration"
+    },
+    {
+      "neighbor_id": "mock-012",
+      "neighbor_title": "The List",
+      "influence_type": "reference",
+      "specific_element": "Category inspiration"
+    },
+    {
+      "neighbor_id": "mock-001",
+      "neighbor_title": "The Journey Home",
+      "influence_type": "reference",
+      "specific_element": "Category inspiration"
+    }
+  ],
+  "current_stage": "completed",
+  "stage_history": [
+    {
+      "stage": "starting",
+      "timestamp": "2025-11-28T15:20:28.943100",
+      "details": {}
+    },
+    {
+      "stage": "retriever",
+      "timestamp": "2025-11-28T15:20:28.944100",
+      "details": {}
+    },
+    {
+      "stage": "amazon_start",
+      "timestamp": "2025-11-28T15:20:28.945100",
+      "details": {}
+    },
+    {
+      "stage": "ideate",
+      "timestamp": "2025-11-28T15:20:28.946796",
+      "details": {}
+    },
+    {
+      "stage": "selector",
+      "timestamp": "2025-11-28T15:20:28.948102",
+      "details": {}
+    },
+    {
+      "stage": "polish",
+      "timestamp": "2025-11-28T15:20:28.949101",
+      "details": {}
+    },
+    {
+      "stage": "braintrust_loop_1",
+      "timestamp": "2025-11-28T15:20:28.951102",
+      "details": {}
+    },
+    {
+      "stage": "compliance",
+      "timestamp": "2025-11-28T15:20:28.953292",
+      "details": {}
+    },
+    {
+      "stage": "finalize",
+      "timestamp": "2025-11-28T15:20:28.954289",
+      "details": {}
+    },
+    {
+      "stage": "completed",
+      "timestamp": "2025-11-28T15:20:28.954289",
+      "details": {}
+    }
+  ],
+  "error": null
+}

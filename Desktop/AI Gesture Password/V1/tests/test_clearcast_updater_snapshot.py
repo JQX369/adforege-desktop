@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from app.clearcast_updater import ClearcastUpdater
+from app.features.clearcast.clearcast_updater import ClearcastUpdater
 
 
 def _write_snapshot(path: Path, last_checked: str = "2025-11-10T10:00:00Z"):
@@ -82,7 +82,7 @@ def test_check_for_updates_updates_snapshot_and_version(tmp_path: Path, monkeypa
         "summary": "Test update",
     }
     monkeypatch.setattr(
-        "app.clearcast_updater.ClearcastUpdater.model",
+        "app.features.clearcast.clearcast_updater.ClearcastUpdater.model",
         _FakeModel(fake_payload),
         raising=False,
     )

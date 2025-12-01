@@ -1,524 +1,302 @@
-Background and Motivation
--------------------------
-The project is a Windows-based Video Emotion Analyzer that captures and analyzes viewer reactions to videos using a modern CustomTkinter UI, OpenCV, MediaPipe, and Gemini 2.5 for select AI tasks. To support continuity and transparency, we maintain an Activity Log that records every user prompt and the resulting outcomes. This scratchpad coordinates planning and execution under the Planner/Executor workflow.  
-- 2025-11-15: Newly generated Creative Performance PDFs cannot be opened even after the application exits, suggesting file locking or corrupted document output that we must diagnose.
+# AD-Forge UI Modernization Overhaul
 
-- Ensure every prompt and outcome is captured with minimal friction.
-- Keep the log human-readable and skimmable while remaining comprehensive.
-- Avoid scope creep: changes should be minimal, contained, and production-safe.
-- Align with senior-engineer execution rules: clarify scope, pinpoint insertion points, make minimal edits, double-check, deliver clearly.
-- Diagnose why ReportLab is producing PDFs that Windows cannot open—possibilities include incomplete writes, lingering file handles after the `SimpleDocTemplate.build()` call, or OS-level locks from the PyInstaller bundle.
-- Confirm paths/imports after the repo re-root to `src/app/**`; any scripts referencing legacy `app/` paths must be updated before further debugging.
-- **Specific Issues for Local Run Fixes**:
-  - **Pip Hang on Dependencies**: Strict version pins (e.g., matplotlib==3.7.2, numba==0.58.1) cause backtracking in resolver, especially with ML stacks (TensorFlow, grpcio). Transitive deps like grpcio-status loop versions; Windows network/antivirus may exacerbate.
-  - **Venv State**: Existing venv may have partial/incompatible installs from prior failures; paths show Python 3.11 but potential DLL conflicts.
-  - **Windows-Specific Hurdles**: PyAudio needs Microsoft Visual C++ 14.0+ (often missing); TensorFlow CPU version stable but memory-heavy (4GB+ RAM needed). Webcam/mic privacy settings in Windows can block OpenCV/MediaPipe.
-  - **Configuration Gaps**: Google Generative AI requires API key in .env; absent, Clearcast features fail gracefully but log errors.
-  - **Testing/Verification**: No comprehensive setup tests; manual verification needed. Antivirus may block DLLs during runtime.
-  - **Scope Boundaries**: Minimal changes—focus on env/setup scripts, not refactoring code. Use TDD for any new setup tests. Assume no GPU; CPU-only TensorFlow.
+## Background and Motivation
+The user feels the app's aesthetics haven't fundamentally improved. The current implementation is a monolithic 7,500-line file using basic Tkinter `pack` geometry. To modernize the app, we will implement a rigorous Design System, break the monolith into a Component/View architecture, and switch to a persistent Sidebar layout.
 
-### Clearcast Analysis & Fixing — Goals & Current Context
-- Clearcast is a core promise of Custom Stories: agencies should be able to sanity-check UK TV ads against current Clearcast guidelines, understand *why* there are risks, and get practical suggestions or auto-fixes before submitting.
-- Today, Clearcast checks exist but are relatively static, with limited linkage between the latest guidelines, the script, the product/brand context, and the actual video/audio.
-- We want a more reliable, explainable, and helpful Clearcast “co-pilot” that:
-  - Stays in sync with current Clearcast guidance.
-  - Cross-references script, product, brand, and video together.
-  - Can propose or apply safe fixes (including technical TV-delivery rules like audio level, clock number, countdown).
- - Progress to date:
-   - **Tasks 1–5** (audit, snapshot schema, updater freshness/UI, prompt reasoning, classification layer) and **Task 6** (classification cross-reference + UI/PDF) are complete. Classifier outputs feed the Clearcast prompt, risk mapping, UI badges, and PDF section.
-   - **Task 7 onwards** now focus on auto-fix boundaries (copy/technical), audio normalization stubs, clock/countdown hooks, and end-to-end regression coverage.
+**Update (Web Version Focus)**: The project is now shifting/expanding to a Web Version (React/Vite). Recent tasks focus on the Web UI (`src/web`).
 
-High-level Task Breakdown
--------------------------
-### A. Clearcast Rules Ingestion & Prompt/Data Freshness
-1) **Audit existing Clearcast data and flows**
-   - Actions: Review `src/app/clearcast_checker.py`, `src/app/clearcast_updater.py`, `src/app/clearcast_updates.json`, and related tests to map how rules are stored, updated, and consumed today (including any Gemini prompts).
-   - Success: Short written summary in this scratchpad describing current data model (what fields we have per rule), update cadence, and where prompts reference Clearcast.
+**Update (Deep Clean & Refactor)**: A "Repo Deep Clean" command was issued to organize the codebase. We are moving towards a Feature-based architecture in `src/app/features` and standardizing the Web structure.
 
-2) **Design “Clearcast Rules Snapshot” data model**
-   - Actions: Propose a minimal JSON/schema that captures the pieces we actually need for AI reasoning (e.g., code, category, prohibited/conditional, age, alcohol, claims, scheduling notes, example phrasing, last-updated date).
-   - Success: Documented schema in scratchpad plus a stubbed `ClearcastRulesSnapshot` model in code or tests that can be instantiated from `clearcast_updates.json`.
+**Update (Desktop Removal - 2025-11-26)**: Desktop app (CustomTkinter GUI) has been fully archived. The project is now web-only. Key changes:
+- Moved `video_processor.py` from `desktop/` to `core/` (used by API)
+- Archived: `src/app/desktop/`, `src/app/recognizers/`, desktop icons, PyInstaller specs, 8 desktop scripts
+- Created comprehensive Clearcast documentation in `docs/clearcast/`
+- Added README.md files to `src/`, `src/app/features/`, `docs/`, `tests/` for AI navigation
+- Updated `docs/repo-structure.md` with final web-only layout
+- Cleaned up `.reports/` folder and root-level debug files
 
-3) **Improve rules updater and freshness workflow**
-   - Actions: Extend or refactor `clearcast_updater.py` so we can:
-     - Pull/ingest new Clearcast guidance (initially via manual paste or curated JSON, later via semi-automatic scripts).
-     - Stamp rules with `last_checked` timestamps and version IDs.
-     - Log when the app last refreshed rules and surface that in the UI (e.g., “Clearcast rules last updated: 2025-11-15”).
-   - Success: Tests proving that updating the source JSON updates the snapshot, and the UI can display a human-readable “last updated” line.
+**Update (Reaction Processing Reliability)**: After shipping the reaction accuracy refresh, the user reports that new recordings remain stuck in the “Processing” state. We need to diagnose why backend jobs are not completing (or not updating status) and ensure the UI reflects accurate progress.
 
-4) **Upgrade Clearcast system prompts**
-   - Actions: Refine the Gemini prompt(s) for Clearcast analysis to:
-     - Explicitly reference the structured rules snapshot rather than vague text.
-     - Ask for guideline codes, brief justification, and confidence.
-     - Keep a stable output schema used by `test_clearcast.py` / `test_clearcast_fix.py`.
-   - Success: Updated prompt text committed, tests adapted if needed, and at least one new regression test that asserts we still get well-structured outputs.
+**Update (Reaction Recorder Failsafe)**: The latest builds show two regressions: (1) the ReactionRecorder preview only shows a black box because `getUserMedia` streams are not consistently attached/played, and (2) uploads routinely fall back to inline processing because the queue worker dies, leaving jobs stuck in `processing`. This cycle must be broken so users always see their own camera feed and every reaction analysis exits with either `completed` or `failed`.
 
-5) **Add “explain your reasoning with citations” mode**
-   - Actions: Introduce a flag in the Clearcast analysis path to request a more detailed explanation (chain-of-thought style reasoning), but **only store/surface a short, user-friendly explanation and cited rules in the UI/PDF**.
-   - Success: When enabled, the system logs richer reasoning (for debugging) while the UI/PDF shows a concise explanation and rule citations; tests validate structure and redaction of any internal reasoning.
+**Update (Storyboards - 2025-11-27)**: A new feature "Storyboards" is requested for the sidebar. It allows users to turn scripts (from Ad Script Lab or uploaded) into visual storyboards using AI analysis and "Nano Banana Pro" image generation. The flow involves an intermediate clarification step where the AI asks A/B/C questions to refine the visual direction before generating images.
 
-### B. Script, Product & Brand Categorisation / Cross-Reference
-6) **Map inputs and desired labels**
-   - Actions: Define what we want to know about:
-     - Script (claims, tone, audience, sensitive topics like alcohol, finance, kids).
-     - Product (category, risk level, sector-specific rules).
-     - Brand (industry, typical tone, existing Clearcast history if any).
-   - Success: Short spec here listing the labels/tags we will infer, with examples.
+**Update (Ad Script Lab Fixes - 2025-11-27)**: Addressed user feedback regarding database errors ("column video_url does not exist"), missing navigation ("Back to Editor"), and menu ordering (Ad Script Lab below Storyboards).
 
-7) **Design multi-step analysis prompts**
-   - Actions: For Gemini, design 2–3 chained prompts or a single multi-part prompt that:
-     - First classifies script, product, and brand into structured tags.
-     - Then cross-references those tags against the Clearcast rules snapshot.
-   - Success: Draft prompts documented (either here or in comments), and a test harness that feeds sample scripts and verifies we get back the expected tags/structure.
+## Key Challenges and Analysis
+- **Refactoring Scale**: Extracting logic from the 7.5k line `VideoAnalyzerGUI` without breaking state (user session, current analysis) is high risk.
+- **State Management**: Moving to separate View classes requires passing the main `app` controller or a shared `State` object to access `storage`, `user_manager`, etc.
+- **CustomTkinter Limitations**: Real shadows and complex animations are limited; we must rely on clean spacing, borders, and color depth.
+- **Legacy Cleanup**: Identifying safe-to-delete files (like `gui.py` from the old Gesture Auth) requires verification.
+- **Import Hell**: Moving 20+ Python files to subdirectories (`src/app/features/*`) will break imports in `main.py` and `video_analyzer_gui.py`. We must automate or carefully patch these.
+- **Reaction Job Reliability**: Background uploads now sometimes stay in `processing` forever, implying the FastAPI background task may fail silently (conversion/analyzer hang) or the job status never reaches `completed`/`failed`. We need instrumentation plus guardrails so the UI and storage never see a stuck status.
+- **Webcam Stream Lifecycle**: Browser autoplay policies + stale MediaStreams cause the ReactionRecorder preview `<video>` to stay black until an explicit `.play()` occurs. We must centralize preview/recording control and clean up tracks to avoid muted/ended streams on re-entry.
+- **Queue Worker Fragility**: `job_queue.worker_running()` can return false after an exception, causing uploads to spawn fire-and-forget `asyncio.create_task` jobs that still never flip their status. We need watchdog logging, auto-restarts, and stronger storage updates to avoid indefinite `processing`.
+- **Storyboard AI Orchestration**: The storyboard flow is multi-step (Analyze -> Clarify -> Generate). We need to persist the state between these steps. The "Clarification" phase requires generating structured questions and accepting user answers before proceeding to image generation.
+- **Nano Banana Pro**: This is an external API without documented specs in the repo. I will implement a service interface for it, allowing for easy integration once the API details are provided (or using a mock for now).
 
-8) **Implement categorisation functions and models**
-   - Actions: Add a small module or functions (e.g., in `clearcast_checker.py` or a new `clearcast_classifier.py`) that:
-     - Takes script text + product/brand metadata.
-     - Returns a typed result object with the tags defined above.
-   - Success: Unit tests for these functions using mocked Gemini responses so we’re not reliant on the live API.
+### Backend Job Queue Architecture (2025-11-25)
+- **Global state & startup**: `job_queue = JobQueue(storage)` is instantiated in `src/api/main.py` alongside `_queue_worker_task` (module-level). FastAPI’s `@app.on_event("startup")` spawns `job_queue.start_worker()` via `asyncio.create_task`, registers `job_queue._on_worker_exit`, assigns both `_queue_worker_task` and `job_queue._worker_task`, sleeps 10 ms, and logs the boot. Shutdown awaits `job_queue.shutdown()` and the stored task handle.
+- **Worker lifecycle**: `JobQueue.start_worker()` builds an `asyncio.Queue`, re-queues persisted jobs via `_resume_pending_jobs()`, then loops on job IDs until it receives `None`. `worker_running()` inspects `_worker_task`, logging exceptions and clearing the reference when the task exits. `ensure_worker()` (called before every enqueue) creates a new worker task on the current loop and warns if it had to restart.
+- **Handlers & storage**: `VideoAnalysisStorage` persists queue jobs with `status`, `started_at`, `finished_at`, `error`, `retry_count`. `_process_job()` updates statuses, dispatches to the registered handler (`video_analysis`, `reaction`, or `video_transcode`), and classifies exceptions via `classify_error`.
+- **Endpoint usage**:
+  - `/analyze`: validates uploads, creates an analysis, calls `job_queue.ensure_worker()`, enqueues the `video_analysis` job, and invokes `_schedule_transcode_job()` which itself enqueues a `video_transcode` task if playback isn’t ready.
+  - `/reactions/{analysis_id}`: stores the recording, creates a reaction job, calls `job_queue.ensure_worker()`, then checks `worker_running()`. When `True`, it enqueues a `reaction` job and stores the `queue_job_id`; when `False`, it logs a fallback event, launches `_run_reaction_job_async()` via `asyncio.create_task`, and tracks it in `_fallback_reaction_tasks`.
+  - `/queue/jobs*`: surfaces the persisted queue job list/detail/retry state so the UI can poll status.
+- **Fallback tracking**: `_fallback_reaction_tasks` keeps inline tasks alive and logs any exceptions/cancellations. Structured `REACTION_LOG` events capture every stage (upload received, queued, fallback, job started/completed/failed).
+- **Current gaps**: `_queue_worker_task` and `job_queue._worker_task` can desync across reloads, there is no `/queue/worker/health` endpoint, and fallback reaction jobs never update queue job statuses (they bypass the queue entirely). These observations inform the upcoming backend tasks.
 
-9) **Cross-link categorisation with Clearcast checks**
-   - Actions: Update the Clearcast check pipeline so it:
-     - Uses the classification output to decide which rule buckets to inspect.
-     - Produces a final risk summary per area (e.g., “Alcohol content”, “Pricing / offers”, “Claims substantiation”).
-   - Success: Tests that given certain tags, the checker flags expected rule codes and risk areas, using fixtures instead of live calls.
+### Current Frontend Recording Flow (2025-11-24)
+1. **Entry from ProjectView**: The “Record Reaction” CTA in `ProjectView.tsx` (line ~1887) simply `navigate`s to `/record-reaction/:analysisId`, so all capture logic lives in `ReactionRecorder.tsx`.
+2. **Preview acquisition (`useWebcam.ts`)**: On mount (and whenever camera permission flips to `granted`), `requestPreview()` calls `startPreview()`, which requests `{ video: true, audio: false }`, stores the stream in `previewStreamRef`, attaches it to `webcamRef.current`, and attempts to `play()` the element. `autoplayBlocked` is toggled if the browser rejects playback, surfacing the “Enable preview” CTA + tap-to-resume overlay.
+3. **Start button path (`handleStartRecording`)**:
+   - Clears prior blobs/status, then calls `startRecording()` from the hook, which fetches a new `{ video: true, audio: true }` stream, assigns it to `webcamRef`, and tears down the preview stream.
+   - Immediately instantiates `MediaRecorder` against that stream, storing chunks into `chunksRef`.
+   - Starts the `MediaRecorder`, kicks off a 1s timer for the on-screen counter, and registers `onstop` to assemble a WebM blob, clear `videoRef.srcObject`, and exit fullscreen.
+4. **Fullscreen & playback sequencing**: After `MediaRecorder.start()`, the component requests fullscreen on `document.documentElement`. Once the promise resolves (or fails silently), the code waits 150 ms, then calls `.play()` on both the ad `<video>` (`videoRef`) and the webcam PIP `<video>` to recover from browsers that paused them during the transition.
+5. **Stopping**: `handleStopRecording()` stops the `MediaRecorder`, clears the interval, calls `stopRecording()` from the hook (stopping the recording stream), seeks the ad video back to 0, and re-requests the preview stream so the user immediately sees themselves again.
+6. **Upload path**: After recording, “Upload & Analyze” posts the WebM blob via `api.uploadReaction()`, stores the returned `ReactionJob`, and begins polling both the reaction job (`/reactions/{reaction_id}`) and any queue job (`/queue/jobs/{id}`) every 4s until completion/failure.
+7. **Gaps observed**: There is no handshake to ensure the ad video has reached `readyState >= 3` before entering fullscreen; requestFullscreen is run on the entire document instead of the recorder container; and the MediaRecorder + fullscreen actions are not part of an explicit state machine, making it hard to guard against race conditions.
 
-10) **Surface cross-referenced view in UI/PDF**
-    - Actions: Add a “Clearcast view” section in the app/PDF that shows:
-      - Key script/product/brand tags.
-      - Risk areas and guideline codes.
-      - A one-line explanation per risk.
-    - Success: Screens/PDFs show a clear, structured table or list tying tags → risks → codes, and regression tests assert that we render the section without breaking layout.
+## High-level Task Breakdown
+1.  **Deep Clean Plan**: Generate inventory and move maps. (Completed)
+2.  **Apply Cleanup**: Delete `video_analyzer_gui_recovered.py`, `debug/*.pdf`, and `temp_*`. Archive `gui.py`. (Completed)
+3.  **Apply Structure Moves (Python)**: Move Clearcast and Analytics files to `src/app/features/`. (Completed)
+4.  **Fix Python Imports**: Update `main.py`, `video_analyzer_gui.py`, and moved files to fix import paths (e.g., `from app.clearcast_checker` -> `from app.features.clearcast.clearcast_checker`). (Completed)
+5.  **Apply Structure Moves (Web)**: Move `services/api.ts` to `lib/` and `context` to `shared/`. (Completed)
+6.  **Fix Web Imports**: Update `App.tsx` and components to point to new paths. (Completed)
+7.  **Final Verification**: Run tests (if available) or `main.py` to verify startup. (Completed – `pytest` + `npm run build`)
+8.  **Repo Inventory & Layout Blueprint**: Capture tree/size inventory, define the target layout, and refresh the migration map for upcoming moves. (Completed)
+9.  **Backend Folder Reorg**: Move Python modules into `core/`, `features/`, and `desktop/` packages per the blueprint. (Completed)
+10. **Backend Import Fixes**: Update `main.py`, `api/main.py`, and tests after moving files into new namespaces. (Completed)
+11. **Web Folder Reorg**: Adopt the `app/`, `features/`, `shared/`, `lib/` structure in `src/web/src` (move pages/components accordingly). (Completed)
+12. **Assets & Docs Cleanup**: Migrate stray assets, temp outputs, and markdown notes into `public/` or `_archive/DATE` and refresh docs. (Completed)
+13. **Tooling & Verification**: Update lint/test configs, install optional deps (OpenCV, reportlab, pypdf, SpeechRecognition, pygame), rerun `pytest`, and run `npm run build`. (Completed)
 
-### C. Auto-Fix Tooling & Technical TV-Delivery Checks
-11) **Review current Clearcast fixing tool and tests**
-    - Actions: Read `src/app/clearcast_checker.py`, `src/app/clearcast_updater.py`, `test_clearcast.py`, and `test_clearcast_fix.py` to understand how “fixes” are proposed today (wording changes, disclaimers, etc.).
-    - Success: Brief summary here of current auto-fix behaviour and limitations (e.g., only textual suggestions, no technical delivery checks).
+## Project Status Board
+- [x] **persona-matrix**: Implemented interactive Persona Network Graph with 12 diverse personas, ad element mapping, "What If" simulator, and persona comparison modal with radar chart.
+- [x] **storyboards-backend**: Implement `StoryboardService`, `NanoBananaProClient` (placeholder), and API endpoints (`/storyboards/analyze`, `/storyboards/confirm`, `/storyboards/{id}`).
+- [x] **storyboards-frontend**: Create `StoryboardView`, `ScriptSelector` (w/ upload + history), `ClarificationModal` (A/B/C), and `StoryboardDisplay`. Add to Sidebar.
+- [x] **ad-script-lab** – New sidebar tool for UK TV ad script generation using multi-agent collaboration...
+- [x] **ad-script-lab-fixes** – Resolved `video_url` column error, added Back button, and reordered sidebar.
+- [x] **compliance-ai-hardening** – Comprehensive hardening plan for both compliance and AI analyzers...
+- [x] **clearcast-ui-improvements** – Enhanced Clearcast compliance checker UI...
+- [x] **clearcast-constants** – Centralized Clearcast supers thresholds...
+- [x] **clearcast-height** – Enforced the ≥30 HD scan-line rule...
+- [x] **clearcast-duration** – Added the 0.2s/word +2s/+3s step-change duration rule...
+- [x] **clearcast-reporting** – Surfaced the supers failure details...
+- [x] **clearcast-docs** – Documented the supers rules...
+- [x] **clearcast-regression** – Added synthetic `legal_text_check` regression...
+- [x] **upgrade-theme**: Update `ui_theme.py` with 8pt grid...
+- [x] **create-components**: Create `src/app/components/` and implement `ModernButton`...
+- [x] **implement-layout**: Refactor `VideoAnalyzerGUI` to use a `grid` layout...
+- [x] **extract-views**: Move Login, Dashboard, and Project List logic...
+- [x] **redesign-analysis**: Implement a Tab-based layout for the Analysis view...
+- [x] **web-ui-compliance**: Refactor `ProjectView.tsx`...
+- [x] **fine-tune-ui**: Apply subtle polish to Web UI...
+- [x] **list-styling-web**: Implement sunken list containers...
+- [x] **fix-issues-button**: Implement `/clearcast/polish` endpoint...
+- [x] **web-ui-refinements**: Move dropdowns to modal...
+- [x] **web-fixes**: Fix Polish button disabled state...
+- [x] **web-polish-modal**: Implement full Polish Options modal...
+- [x] **repo-cleanup**: Remove corrupt leftovers...
+- [x] **python-feature-folders**: Move Clearcast + analytics modules...
+- [x] **python-imports**: Update backend + tests...
+- [x] **web-structure**: Relocate `api.ts` to `src/web/src/lib/services/`...
+- [x] **web-build**: Fix React import paths...
+- [x] **repo-inventory-blueprint**: Wrote `.reports/repo-inventory.md`...
+- [x] **backend-folder-reorg**: Move `config`, `storage`, `video_analyzer_gui`...
+- [x] **backend-import-fix**: Update all Python imports/tests...
+- [x] **web-folder-reorg**: Adopt the `app/`, `features/`, `shared/`, `lib/` structure...
+- [x] **assets-docs-cleanup**: Relocate `assets/`, `temp_*`...
+- [x] **tooling-verification**: Refresh configs, install OpenCV...
+- [x] **web-dev-script**: Add a script in `scripts/`...
+- [x] **reaction-api-client**: Add `api.uploadReaction` helper...
+- [x] **reaction-endpoint**: Implement FastAPI `/reactions/{analysis_id}`...
+- [x] **reaction-ui**: Wire `ReactionRecorder` UI...
+- [x] **reaction-verification**: Verify the record/upload flow...
+- [x] **reaction-processing**: Add EnhancedEmotion-based processing...
+- [x] **reaction-metrics**: Surface reaction timelines...
+- [x] **reaction-qa**: Expand regression tests...
+- [x] **spec-polish-endpoint**: Add FastAPI regression...
+- [x] **backend-normalize-options**: Normalize API payload...
+- [x] **frontend-sanitize-polish**: Align web polish modal payload...
+- [x] **verify-and-doc**: Run targeted tests/build...
+- [x] **media-report-consolidator**: Fixed PDF.js worker, planned/delivered impressions extraction, top programmes, and device splits for Sky CSV, Channel 4 Excel, and ITV PDF formats.
 
-12) **Define safe auto-fix boundaries**
-    - Actions: With a safety-first mindset, specify what the tool is allowed to change automatically versus what must stay as suggestions, especially:
-      - Script wording vs. on-screen supers vs. VO changes.
-      - Adding clarifying disclaimers.
-      - Technical delivery items like audio normalisation, clock number, countdown leader.
-    - Success: Written boundary list in scratchpad and acceptance criteria that we’ll test for (e.g., “never change brand name or mandatory legal copy automatically”).
-     - ✅ **Boundaries (2025-11-15)**:
-       - *Manual-only (suggestions only)*: voiceover/script rewrites, on-screen supers/pricing, legal disclaimers & mandated warnings. These appear as guidance text in the UI and `validate_auto_fix_plan()` blocks any attempt to auto-apply them (`tests/test_clearcast_autofix.py`).
-       - *Auto-eligible technical fixes*: loudness normalization, gentle audio/video cleanup, broadcast-safe levels, resolution/FPS conversions, delivery padding/slate generation (slate still requires user metadata). All technical actions defined in `clearcast_autofix.py` with explicit categories and are the only options surfaced as checkboxes.
-       - *Acceptance criteria locked*: regression tests ensure `rewrite_voiceover`/`add_disclaimer_super` cannot be auto-applied, and the UI now renders manual sections as informational blocks without toggles.
+## Executor's Feedback or Assistance Requests
+- **Completed (2025-11-30)**: UI and Analysis Improvements Plan Implementation
+  - **Task 2: Fix OpenAI API Key Loading**
+    - Updated `_ensure_openai()` in `ad_qa_service.py` to use `get_openai_api_key()` function
+    - Added `get_openai_api_key()` and `get_google_api_key()` helper functions in `config.py`
+    - Fixed late dotenv loading issue by always checking environment fresh
+    - Updated `ai_video_breakdown.py` and `main.py` to use new getter functions
+  - **Task 6: Fix Persona Suggested Questions**
+    - Updated AI prompt to clarify questions should be phrased TO the persona, not FROM them
+    - Added examples of good vs bad question framing in the prompt
+    - Fallback templates already had correctly framed questions
+  - **Task 3: Clickable Stat Breakdowns with Info Tooltips**
+    - Added `METRIC_DEFINITIONS` object with title, description, and interpretation for each score
+    - Created `StatDetailModal` component with score display and metric explanation
+    - Added `key` field to each stat in the grid for lookup
+    - Added click handler, info icon, and "Click for details" hint on stat cards
+    - Modal shows score with rating pill, metric definition, interpretation guide, and AI analysis
+  - **Task 4: Creative Analysis Page Improvements**
+    - Removed engagement timeline chart (now in Emotional Timeline slide)
+    - Replaced with 6-panel grid: Hook, Creative Tactics, Audio Profile, Cinematography, Brand Presence, Visual Patterns
+    - Added Product Focus and Key Moments panels in bottom row
+    - Data pulled from `hero_analysis`, `brand_asset_timeline`, `audio_fingerprint`, `creative_profile`
+  - **Task 1: Brain Balance Section**
+    - Added `brain_balance` field to AI prompt with emotional_score, rational_score, dominant_mode, drivers
+    - Created `BrainBalanceChart.tsx` component with split-bar visualization
+    - Shows emotional vs rational balance with driver tags for each
+    - Added to Creative Analysis slide
+  - **Task 7: Canvas Pan/Zoom on Persona Matrix**
+    - Added pan state (x, y) and zoom state (scale) to PersonaNetworkGraph
+    - Implemented mouse wheel zoom handler
+    - Implemented mouse drag panning with proper event handling
+    - Added zoom controls (Zoom In, Zoom Out, Reset) in top-right corner
+    - Shows current zoom percentage and pan hint when zoomed
+    - Increased canvas size to 1000x800 and persona radius to 320 for more spread
+  - **Task 5: Frame Extraction Accuracy**
+    - Added `_compute_frame_hash()` for perceptual frame hashing
+    - Added `_sequential_read_to_frame()` fallback for when seeking fails
+    - Added seek position verification in both extraction functions
+    - Implemented duplicate frame detection via hash comparison
+    - Added logging warnings for seek failures and duplicate frames
+    - Summary logging shows total seek failures and duplicates at end
+- **Completed (2025-11-30)**: TellyAds Schema Alignment and Enhanced Analysis System
+  - **Phase 1: Core Data Schema Alignment**
+    - Added video technical metadata (width, height, fps, aspect_ratio) to `frame_analyzer.py`
+    - Created `generate_external_id()` for TellyAds-style IDs
+    - Expanded AI prompt with hero_analysis section (audio_profile, emotional_arc, cinematography, visual_patterns, creative_tactics)
+    - Added storyboard shot-by-shot extraction with 15+ fields per shot
+    - Added brand_asset_timeline with logo appearances, mentions, and branding metrics
+    - Added audio_fingerprint with music, voiceover, dialogue, SFX analysis
+    - Expanded content_indicators with 9 new flags (humor, animals, children, nostalgia, cultural_moment, music_with_lyrics, story_arc, regulator_sensitive, regulator_categories)
+  - **Phase 2: Enhanced Emotion System**
+    - Created `emotional_timeline.py` with 15 emotions (6 new: excitement, nostalgia, tension, relief, pride, empathy)
+    - Implemented EmotionReading, EmotionalTransition, EmotionalMetrics dataclasses
+    - Added trigger tracking (visual/audio/dialogue/music/pacing/reveal)
+    - Implemented arc shape detection (peak_early/peak_middle/peak_late/flat/roller_coaster)
+    - Updated AI prompt for granular readings every 1-2 seconds
+  - **Phase 3: UI - Enhanced Emotional Timeline**
+    - Created `EmotionalTimelineChart.tsx` with interactive SVG visualization
+    - Added emotion color coding, hover tooltips, transition markers
+    - Integrated into AIBreakdownSlideshow as new "Emotional Timeline" slide
+  - **Phase 4: GPT-5.1 Q&A Feature with RAG**
+    - Created `AdQAService` with GPT-5.1 integration and RAG context
+    - Added 4 Q&A modes: general, compare, improve, brainstorm
+    - Added `/analyze/{id}/qa` and `/analyze/{id}/qa/suggestions` API endpoints
+    - Created `AdQAPanel.tsx` chat interface with mode selection and suggestions
+    - Integrated into AIBreakdownSlideshow as new "Ad Q&A" slide
+- **Completed**: Storyboard feature implementation complete (backend + frontend).
+- **Completed**: Ad Script Lab fixes (Back button, database query fix, menu order).
+- **Completed**: Asset request flow for Storyboards - AI now asks for logos, products, brand guides, etc.
+- **Completed (2025-11-28)**: Storyboards QOL Improvements
+  - Added Previous Storyboards section to display and re-view completed storyboards (`StoryboardHistory.tsx`)
+  - Created script picker modal for campaigns with multiple scripts (`ScriptPickerModal.tsx`)
+  - Verified NanoBananaProClient returns valid placeholder images for MVP
+  - Ensured logo and product asset requests are ALWAYS included in clarification (via `_ensure_essential_assets()`)
+- **Nano Banana Pro**: Implemented as a stub client with placeholder images for MVP.
+- **Clarification**: Implemented A/B/C question flow with custom answer support.
+- **Asset Uploads**: ClarificationModal now supports file uploads for brand assets (logos, products, etc.).
+- **Frontend**: Added Storyboard view with history/upload selection, modal clarification, asset uploads, and scene grid display.
+- **Completed (2025-11-28)**: UI Metrics Expansion and Slide Restructure
+  - Expanded impact scores grid from 3 to 8 metrics (Overall Impact, Pulse Score, Echo Score, Hook Power, Brand Integration, Emotional Resonance, Clarity Score, Distinctiveness)
+  - Removed redundant expected_metrics widget (engagement_rate, conversion_potential, shareability, memorability)
+  - Removed Slide 4 "Outcome & Strategy" entirely
+  - Moved Optimization Opportunities to Slide 3 "SWOT Analysis"
+  - Updated SWOT section to use effectiveness_drivers as primary data source
+  - Wired supers_texts from OCR to AI breakdown in main.py
+  - Removed expected_metrics from backend prompt schema and defaults
+  - Fixed orphaned _ensure_response_defaults implementation
+  - All 40 tests passing
+- **Completed (2025-11-28)**: Persona Matrix Enhancement
+  - Removed compare button and PersonaCompareModal from frontend
+  - Updated AI prompt to generate detailed, location-specific named personas (UK personas for UK ads)
+  - New persona schema: full_name, occupation, background_story, interests, daily_routine, pain_points, suggested_questions
+  - Removed social_share_likelihood and watch_completion_estimate metrics
+  - Implemented missing /chat/persona API endpoint in main.py
+  - Updated persona detail panel with rich background information and suggested questions
+  - Enhanced chat_with_persona system prompt with full persona context
+  - Updated PersonaChat component to use new persona fields
+  - Graph now shows persona first names instead of archetypes
+- **Completed (2025-11-28)**: Ad Script Lab Timeout Fix
+  - Root cause: Gemini API calls in agents had no timeout enforcement, causing indefinite hangs
+  - Added `generate_with_timeout()` async wrapper in `gemini_utils.py` using `asyncio.wait_for()` + `asyncio.to_thread()`
+  - Updated all 8 agents to use timeout-wrapped calls (ideate, polish, amazon_start, selector, braintrust, compliance, finalize, brand_discovery)
+  - Parallelized polish and compliance stages with `asyncio.gather()` for 3x speedup
+  - Enhanced orchestrator logging with per-stage timing and expected timeout info
+  - All 27 Ad Script Lab tests passing
+- **Completed (2025-11-28)**: Ad Script Lab UI Match
+  - Refined `ConceptNavigator` with card-like styling, winner badges, and clearer duration indicators.
+  - Styled `ScriptEditor` for better readability with monospaced fonts and cleaner padding.
+  - Enhanced `AnalysisRail` with circular progress score, simplified feedback cards, and tabbed navigation to match the design screenshot.
+- **Completed (2025-11-28)**: Media Report Consolidator Fixes
+  - Fixed PDF.js worker error by configuring Vite to copy worker file and use correct path for v5.x
+  - Added `vite-plugin-static-copy` to copy `pdf.worker.min.mjs` to dist/assets
+  - Implemented Channel 4 Excel parsing: Target Imps (planned), Delivered Impressions, Platform Mix (device splits), Top Ten Programmes
+  - Implemented Sky CSV parsing: daily impressions sum, Top 10 Shows extraction with estimated impressions
+  - Improved ITV PDF parsing: Target/Delivered extraction, device type splits from percentages, programme extraction from "Delivery by programme" section
+  - Added `parseChannel4Excel()` and `parseSkyCSV()` helper functions for cleaner code organization
+  - Updated `SmartParser.detectTable()` to accept optional startRow parameter for targeted table detection
+  - Verified all parsers work correctly with MediaReportExamples/ sample files
+- **Completed (2025-11-28)**: Media Report Consolidator v2 Enhancement
+  - **UX Improvement**: Moved client/campaign info above supplier tabs for better hierarchy
+  - **Visual Overhaul**: Applied glass card styling with dark gradients, neon accents, and hover effects
+  - **Data Model**: Added `BuyingLine` interface and `buying_lines` array to `PlatformData`
+  - **Channel 4 LINE ITEMS**: Extract detailed buying breakdown (e.g., "DIRECT DEMO ABC1ME") with impressions/clicks
+  - **Expandable Rows**: Platform table now shows collapsible buying breakdown when LINE ITEMS exist
+  - **AI PDF Parsing**: Added backend `/parse-pdf-ai` endpoint using Gemini to extract structured data from PDFs
+  - **AI Toggle**: Frontend toggle to enable/disable AI-powered PDF extraction with fallback to basic parsing
+  - **Loading State**: Visual indicator when AI is processing PDFs (purple animation)
+- **Completed (2025-11-29)**: Media Report Consolidator v3 - Sorting, Sky Demographic Inference, Editable Names
+  - **Sortable Buying Types Table**: Added clickable sort headers to the Buying Types table with sort icons (default: desc by delivered impressions)
+  - **Sky Demographic Inference**: Added `inferDemographicFromShows()` function to infer vague demographics (e.g., "ABC1 Adults", "ABC1 Men") from show names instead of using campaign filenames
+  - **Editable Buying Type Names**: Double-click on any buying type name to edit inline; changes are saved back to platform data
+  - **Enhanced ITV PDF AI Extraction**: Added ITV-specific prompting with detailed instructions for extracting Target/Delivered impressions, device splits, top programmes, and buying lines from ITV Historical Analysis PDFs; increased text context sent to AI from 15K to 20K characters
+- **Completed (2025-11-29)**: Media Report Consolidator v4 - Inferred Data Indicators, Device Mix Sliders, PDF Export, Vision Parsing
+  - **Inferred Data Flags**: Added `is_inferred` to DeviceSplit and BuyingLine interfaces; parsers now mark data as inferred when estimated (Sky device split, inferred demographics)
+  - **Inferred UI Badges**: Added amber "Inferred" badge and pencil edit icon to buying types table and device mix chart when data is estimated
+  - **Device Mix Inline Sliders**: Click edit icon to reveal 3 sliders (Mobile/Desktop/Big Screen) with auto-normalize to 100%; saves updates to platforms
+  - **Improved PDF Export**: New multi-page structure:
+    - Cover page with client/campaign info
+    - Executive Summary with all KPIs, device mix, top 5 content, platform overview
+    - Per-supplier sections with supplier-specific metrics, device mix, buying lines, and top content
+  - **Vision-Based PDF Parsing**: New `/parse-pdf-vision` endpoint using PyMuPDF + Gemini Vision to analyze PDF page screenshots; better extraction for PDFs with charts/complex layouts
+  - **Frontend Vision Integration**: PDF processing now tries vision parsing first, falls back to text-based AI, then basic regex extraction
+- **Completed (2025-11-29)**: Media Report Consolidator v5 - Daily/Daypart Data, Improved ITV Extraction
+  - **Device Mix Edit Persistence**: Edit icon now always visible (Inferred badge remains conditional)
+  - **DailyImpression & DaypartSplit Interfaces**: New data structures for day-by-day and time-of-day breakdowns
+  - **Daily Impressions Extraction**: Sky CSV extracts dates from daily table; Channel 4 Excel looks for DAILY IMPRESSIONS section
+  - **Daypart Extraction**: Channel 4 Excel extracts from DAYPART/TIME BREAKDOWN section; API prompts updated to request daypart data
+  - **Daily Impressions Graph**: AreaChart showing day-by-day impressions with gradient fill and responsive tooltips
+  - **Daypart Distribution Chart**: Horizontal BarChart showing time-of-day breakdown (Morning, Daytime, Early Peak, Late Peak, Post Peak, Late Night)
+  - **Improved ITV Buying Type Names**: Enhanced `normalizeBuyingTypeName()` with ITV-specific patterns; handles underscore-separated names like "Tom Ford_Bois Pacifique_ITV_Masthead" -> "ITV Masthead"
+  - **API Schema Updates**: MediaReportParseResult now includes daily_impressions and daypart_split fields
 
-13) **Plan and stub audio normalisation**
-    - Actions: Design how we’d normalise audio levels for TV (e.g., peak/RMS/LUFS targets) using the existing audio pipeline or a simple library, and create a stubbed function or CLI hook (even if we don’t fully implement yet).
-    - Success: A stub implementation with tests that can be extended later, plus a log message showing what normalisation *would* do on sample audio.
-    - ✅ **Implementation (2025-11-15)**:
-      - Added `clearcast_audio.py` with `ClearcastAudioAnalyzer` and `AudioNormalizationReport`. Analyzer attempts FFmpeg loudnorm probe when available and falls back to “unknown/no-audio” states otherwise; `_evaluate_levels` is fully unit-tested via `tests/test_clearcast_audio.py`.
-      - `clearcast_checker.py` now runs the analyzer on every compliance request, attaches `audio_normalization` metadata, and injects a blue flag when loudness needs attention. UI and PDF render an “Audio Readiness” block beneath the classification snapshot, and the Polish dialog respects the new auto-fix guardrails.
-      - Regression suite (`tests/test_clearcast_audio.py` + existing prompt/response/PDF tests) locks the boundary logic.
-
-14) **Clock number and countdown support (planning)**
-    - Actions: Define how the tool should:
-      - Capture or store the Clearcast clock number.
-      - Validate presence of countdown and clock leader in the final file (or at least track them).
-    - Success: Specification documented, plus placeholder fields/hooks in the data model or UI for clock number and countdown without breaking current workflows.
-
-15) **Strengthen Clearcast “fix this ad” recommendations**
-    - Actions: Enhance the AI-driven fix suggestions to:
-      - Suggest concrete copy tweaks with Clearcast rationale.
-      - Highlight which parts of the script/visuals are problematic.
-      - Group fixes by risk area (e.g., “Alcohol”, “Pricing”, “Claims”).
-    - Success: Updated prompt+parsing logic with tests that assert we get grouped suggestions; UI/PDF shows them in a clear, actionable format.
-
-16) **Add regression tests and debug-friendly logging**
-    - Actions: Extend `test_clearcast.py` / `test_clearcast_fix.py` (or add new tests) to:
-      - Cover classification, cross-referencing, and fix suggestion flows end-to-end with fixtures.
-      - Ensure logs include enough info to debug why a specific risk or fix was triggered, without leaking any sensitive data.
-    - Success: New tests pass, and sample logs show guideline codes, tags, and a short reason for each flagged item.
-
-Project Status Board
---------------------
-- [x] Create `docs/ACTIVITY_LOG.md` with conventions and initial entries
-- [x] Add current project snapshot to the log
-- [x] Create `.cursor/scratchpad.md` with plan and tracking sections
-- [ ] Continue appending new prompts/outcomes as they occur
-- [x] Repo deep clean: Step 1 (.reports/ + `_archive` setup) — done
-- [x] Repo deep clean: Step 2 (install analysis tooling) — done
-- [x] Repo deep clean: Step 3 (run vulture dead-code scan) — done (findings logged)
-- [x] Repo deep clean: Step 4 (dependency analysis via pipdeptree/pipreqs) — done
-- [x] Repo deep clean: Step 5 (Markdown inventory + heuristics) — done
-- [x] Repo deep clean: Step 6 (moves-map for src/app layout) — done
-- [x] Repo deep clean: Step 7 (plan artifacts: tree + clean-plan + scripts) — done
-- [x] Repo deep clean: Step 8 (approval gate + apply prep) — done
-- [x] Repo deep clean: Step 9 (create target directories under src/docs) — done
-- [x] Repo deep clean: Step 10 (git mv app → src/app) — done (manual move; git mv unavailable here)
-- [x] Repo deep clean: Step 11 (update imports + sys.path for src layout) — done
-- [x] Repo deep clean: Step 12 (update setup + build/run scripts) — done
-- [x] Repo deep clean: Step 13 (organize markdown per md-actions) — done (kept activity log/template per mandate)
-- [x] Repo deep clean: Step 14 (archive build artifacts into dated folder) — done (build + original venv moved to `_archive/2025-11-15`)
-- [x] Repo deep clean: Step 15 (dependency cleanup from pipreqs/pipdeptree) — done (trimmed extras, added openai/pytest)
-- [x] Repo deep clean: Step 16 (remove dead code flagged by vulture) — done (imports cleaned, thresholds hooked to config)
-- [x] Repo deep clean: Step 17 (validate via lint/tests/import checks) — done (compileall + import smoke + pytest)
-- [x] Repo deep clean: Step 18 (final tree-after + apply-summary reports) — done
-- [ ] Reproduce PDF-open failure and capture the OS error + file metadata *(sample long-path PDF created; awaiting user confirmation)*
-- [ ] Inspect ReportLab output lifecycle (buffers, file handles, page breaks) for corruption risks
-- [ ] Implement fix + regression test ensuring generated PDFs open via PyPDF2
-- [x] Fix polish dialog widget extraction crash (2025-11-16) — snapshot polish dialog values before destroying the window to keep background threads stable.
-- [x] Clearcast upgrade — Step 1: Audit current Clearcast checker/updater flows *(done 2025-11-15)*
-- [x] Clearcast upgrade — Step 2: Define ClearcastRulesSnapshot schema/loader *(done 2025-11-15; tests: `tests/test_clearcast_rules_snapshot.py`)*
-- [x] Clearcast upgrade — Step 3: Enhance updater + UI freshness indicators *(done 2025-11-15; tests: `tests/test_clearcast_updater_snapshot.py`)*
-- [x] Clearcast upgrade — Step 4: Revise Gemini prompts + reasoning flag *(done 2025-11-15; tests: `tests/test_clearcast_prompt_builder.py`, `tests/test_clearcast_response_parser.py`)*
-- [x] Clearcast upgrade — Step 5: Define classification labels + mocked prompts *(done 2025-11-15; tests: `tests/test_clearcast_classifier.py`)*
-- [x] Clearcast upgrade — Step 6: Integrate classifications into risk analysis + UI/PDF *(done 2025-11-15; tests: `tests/test_clearcast_prompt_builder.py`, `tests/test_clearcast_response_parser.py`, `tests/test_clearcast_classifier.py`)*
-- [x] Clearcast upgrade — Step 7: Codify safe auto-fix boundaries *(done 2025-11-15; tests: `tests/test_clearcast_autofix.py` + UI wiring)*
-- [x] Clearcast upgrade — Step 8: Stub audio normalisation analysis *(done 2025-11-15; tests: `tests/test_clearcast_audio.py` + UI/PDF integration)*
-- [x] Clearcast upgrade — Step 9: Add clock/countdown metadata hooks *(done 2025-11-15; UI/PDF + storage wiring)*
-- [x] Clearcast upgrade — Step 10: Add end-to-end regression coverage/logging *(done 2025-11-15; tests/test_clearcast_end_to_end.py)*
-
-Current Status / Progress Tracking
----------------------------------
-As of 2025-08-09:
-- Activity Log initialized and seeded with entries for "Do we have an activity log?" and "Draft one including current status."
-- Snapshot derived from repository docs reflects:
-  - Single API call for demographics; 5-second baseline calibration for emotion tracking
-  - Clearcast compliance checker with guideline references and risk assessment
-  - Interactive transcript with word-level emotion coloring and tooltips
-  - UI updates: removed Continue button and preview-after-upload; prepared AI review sections
-  - Performance fixes and error hardening; verified common issues resolved
-- Main entry point: `app/main.py` bootstraps `VideoAnalyzerGUI`.
-- **2025-11-14**: Creative Performance PDF refreshed with AI disclaimers, tighter spacing constants, richer persona cards, updated benchmark copy, and modular keep-together logic (see `app/pdf_generator.py`, `app/effectiveness_benchmarks.py`). All related tests (`test_pdf_generator_utils.py`, `test_effectiveness_benchmarks.py`) pass.
-- **2025-11-15**: Repo deep clean plan approved; executor completed Steps 1-17 (through full validation—compileall/import smoke/pytest=49 passed). Now generating final reports (`tree-after.txt`, `apply-summary.md`).
-- **2025-11-15**: Reproduced PDF-open issue by saving `CustomStories_Report_A_collection_of_Christmas_ornaments_...pdf` beneath `long_path_test/Customstories/Clients/Creative/March Muses/Finished Versions/` (path length 326 chars, size ≈8.3 KB). Adobe-style “Access denied” errors are consistent with Windows’ 260-char path cap on machines without long-path support.
-- **2025-11-15 — Clearcast Task 1 (audit)**:
-  - `clearcast_checker.py` uses a static text summary (`clearcast_summary`) instead of structured rule data; prompts embed large JSON specification but never touch `clearcast_updates.json`.
-  - `clearcast_updater.py` polls Gemini “flash” weekly, storing only metadata (`last_check`, `updates` list, `current_version`, `auto_check_enabled`) inside `clearcast_updates.json`; no rule fields or snapshots are captured.
-  - Tests `tests/test_clearcast.py` and `tests/test_clearcast_fix.py` are manual/interactive smoke scripts with prints or console prompts—no assertions, fixtures, or Golden data to lock behaviour.
-  - There is no connection between the updater and checker beyond shared paths; guideline PDFs are not parsed, and rule references in prompts rely on free-form model reasoning, making outputs brittle.
-- **2025-11-15 — Clearcast Task 2 (snapshot schema)**:
-  - Added `app/clearcast_rules.py` with typed `ClearcastRule` + `ClearcastRulesSnapshot` models, input validation, and helpers to load the bundled JSON.
-  - Expanded `src/app/clearcast_updates.json` to include a `snapshot` payload (version ID, timestamps, and three representative rules) aligned with the schema.
-  - Added regression coverage via `tests/test_clearcast_rules_snapshot.py` to ensure loaders validate required fields and surface meaningful errors when data is missing.
-- **2025-11-15 — Clearcast Task 3 (updater + UI freshness)**:
-  - `clearcast_updater.py` now supports dependency injection for `clearcast_updates.json`, guarantees a structured `snapshot` block, bumps semantic versions, and exposes helpers to load typed snapshots and human-readable timestamps.
-  - Added `tests/test_clearcast_updater_snapshot.py` to verify version increments and timestamp propagation whenever `check_for_updates()` runs.
-  - `video_analyzer_gui.py` now surfaces “Clearcast rules last updated …” under every compliance header via a `StringVar` bound to the updater, and refreshes automatically when background checks fire.
-- **2025-11-15 — Clearcast Task 4 (prompts + reasoning)**:
-  - Introduced `app/clearcast_prompt_builder.py` with a typed `PromptContext`, snapshot summariser, and consistent JSON contract; builder is covered by `tests/test_clearcast_prompt_builder.py`.
-  - `clearcast_checker.py` now loads the structured snapshot, builds prompts via the new helper, accepts optional script/product/brand metadata, and supports a `verbose_reasoning` flag.
-  - Parsing logic normalises new `risks`/`technical_checks`/`internal_reasoning` fields back into the legacy flag lists; regression captured in `tests/test_clearcast_response_parser.py`.
-- **2025-11-15 — Clearcast Task 5 (classification labels + mocked prompts)**:
-  - Created `app/clearcast_classifier.py` with dataclasses for script, product, brand, focus areas, and disclaimers plus helpers to build prompts and parse responses.
-  - Classification prompt enumerates required labels (claims, tone, audience, sensitive topics, inherent risk, regulatory flags, focus areas, disclaimers) and is covered by `tests/test_clearcast_classifier.py`.
-  - `classify_clearcast_context()` now accepts optional metadata, uses `create_gemini_model('flash')`, and normalises mocked Gemini JSON into stable dataclasses ready for downstream cross-referencing.
-- **2025-11-15 — Clearcast Task 6 (cross-reference + UI/PDF)**:
-  - `clearcast_checker.py` now runs the classifier before compliance analysis, feeds the tags into the structured prompt, stores classification output + focus summaries + disclaimers, and records rule snapshot metadata.
-  - `_display_clearcast_results()` renders a new “Classification Snapshot” section (script/product/brand tags, focus areas, required disclaimers) and the PDF mirrors the same via `_add_classification_section()`.
-  - Added heuristic linking between priority focus areas and flagged guidelines so UI/PDF show which classifications map to red/yellow flags; regression covered via `tests/test_clearcast_response_parser.py`.
-- **2025-11-15 — Clearcast Task 7 (auto-fix boundaries)**
-  - Added `clearcast_autofix.py` + UI wiring so only technical fixes appear as toggles; voiceover/disclaimer edits remain suggestion-only. `validate_auto_fix_plan()` guards the pipeline; regression tests live in `tests/test_clearcast_autofix.py`.
-- **2025-11-15 — Clearcast Task 8 (audio normalization stub)**
-  - Added `clearcast_audio.py` with FFmpeg-backed loudness checks and fallback states; results feed `audio_normalization` metadata, a new blue flag, and the UI/PDF “Audio Readiness” block. Regression in `tests/test_clearcast_audio.py` and existing PDF tests.
-- **2025-11-15 — Clearcast Task 9 (clock & countdown hooks)**
-  - Video polish workflow now builds/stores `delivery_metadata` (clock number, client/agency/product/title, padding/countdown flags, readiness) per analysis via `VideoAnalysisStorage`.
-  - Clearcast UI and PDF display a “Clock & Countdown Readiness” block under the classification snapshot, surfacing the stored metadata and readiness state even before running fixes.
-  - Guardrails ensure only auto-approved technical actions remain selectable, while manual slate/disclaimer actions are informational only; regression covered implicitly through `tests/test_pdf_generator_utils.py` and the updated polish dialog wiring.
-- **2025-11-15 — Clearcast Task 10 (end-to-end regression + logging)**
-  - Added `tests/test_clearcast_end_to_end.py` to stub Gemini/classifier/audio and assert that classification tags, focus areas, audio flags, rules snapshots, and blue flags all flow through `check_video_compliance`.
-  - Improved `clearcast_checker.py` logging/robustness: focus-area labels tolerate dicts, classification/rule snapshots now overwrite defaults (instead of `setdefault`), and audio normalization status is logged for observability.
-  - Suite now covers 24 tests (~2.0s) across audio, autofix, prompts, parser, classifier, PDF, and the new e2e path.
-- **2025-11-15 — [ui-audit] Clearcast layout review**
-  - `video_analyzer_gui.py::_display_clearcast_results()` stacks every component inside a single `results_frame` with `pack()` and narrow `wraplength` values (350–500px). This forces long paragraphs (summary, prediction, classification cards, all flag lists) into one column, producing cramped headers at page bottoms and large blank zones between sections when cards expand.
-  - Flag cards only show `issue`, optional `guideline_reference`, and `required_action`; there is no slot for transcript evidence or the frame image/timestamp beyond a plain `[00:00-00:00]` label, so UI cannot display proof for “unsubstantiated superlative claim” allegations.
-  - Fonts vary between “SF Pro Text” and “Arial”, and titles like “RED FLAGS”/“YELLOW FLAGS” use identical padding regardless of content height, so the visual hierarchy looks inconsistent compared to the rest of the app header/footer.
-- **2025-11-15 — [flag-audit] Prompt + parser review**
-  - `clearcast_prompt_builder.py` defines JSON outputs with `issue`, `risk_level`, `timestamp`, etc., but never requests a transcript quote/evidence field; Requirements only mention citing rule codes, so the model can hallucinate issues without proof.
-  - `_merge_structured_sections()` in `clearcast_checker.py` drops `description` into `issue` when `issue` is missing and emits `guideline_code/guideline_title` only—UI expects `guideline_reference`, so helpful citations are often blank. No parser field persists transcript excerpts, so downstream UI/PDF cannot render evidence even if Gemini returned it.
-- **2025-11-15 — [ui-layout] Clearcast UI refresh (WIP)**
-  - `_display_clearcast_results()` now builds a two-column layout: overview + classification cards on the left and stacked risk/technical cards on the right, each rendered as `COLORS['card']` containers with consistent padding, so headers never dangle at the bottom of the viewport.
-  - Added `_render_clearcast_overview`, `_render_flag_section`, and `_render_compliant_section` helpers to keep typography consistent (“Arial” 13/12) and ensure flag cards include timestamps, guideline references, and call-to-action text with uniform spacing. The Polish button anchors beneath the new grid to avoid overlapping content.
-- **2025-11-15 — [ui-evidence] Evidence slot in flags**
-  - `_render_flag_section()` now surfaces an italicized quote drawn from `flag['evidence_text']` (falling back to `description`), so once the parser supplies transcript snippets every risk card will show the actual line cited alongside the timestamp/guideline metadata.
-- **2025-11-15 — [prompt-update] Evidence-required prompt**
-  - `build_clearcast_prompt()` teaches Gemini to return `evidence_text` + `evidence_source` for every risk/technical issue, with explicit instructions about quoting transcript lines or frame descriptions. Updated prompt schema is covered by `tests/test_clearcast_prompt_builder.py`.
-- **2025-11-15 — [parser-update] Evidence plumbing**
-  - `_merge_structured_sections()` now captures `guideline_reference`, `evidence_text`, and `evidence_source` for both risk and technical items (fallbacks pull from `description`). Tests in `tests/test_clearcast_response_parser.py` assert the new metadata, and `tests/test_clearcast_end_to_end.py` confirms the end-to-end flow remains stable.
-- **2025-11-15 — [pdf-layout-clearcast] Section flow improvements**
-  - Clearcast PDF overview (status + summary + prediction) is wrapped in a `KeepTogether`, preventing lone headers at page bottoms.
-  - Red/yellow/blue flag sections now inject their headers inside the first card and feed the combined blocks through `_ensure_keep_together`, so headers travel with their first card without forcing huge white gaps between sections.
-- **2025-11-15 — [pdf-flags] Evidence surfaces in PDF**
-  - Each Clearcast flag card now prints an italicized “Evidence” line assembled from `evidence_text` and `evidence_source`, matching the UI quote/timestamp and reinforcing the requirement for proof in the PDF handoff.
-- **2025-11-15 — [cta-trim] CTA suggestions moved to improvements only**
-  - Removed the “Suggested CTA” line from both the AI Breakdown UI and PDF content breakdown sections; when Gemini provides a CTA fix, it now appears as the first entry in the “Areas for Improvement” list (UI + PDF), optionally prefixed with the CTA clarity critique for context.
-- **2025-11-15 — [audience-schema] Demographic-rich personas**
-  - `ai_video_breakdown._create_analysis_prompt()` now requires each `audience_reactions` item to return gender, age_range, race_ethnicity, and location fields; `_ensure_response_defaults()` normalises incoming data so both the legacy `profile` label and the new demographic keys are always populated. Tests (`tests/test_ai_video_breakdown_prompt.py`) cover the prompt schema and sanitisation.
-- **2025-11-15 — [audience-render] UI/PDF persona layout**
-  - Audience cards in `video_analyzer_gui.py` now show persona name, demographic chips (gender/age/race), location pin, engagement level, reaction quote, likely action, and key concerns.
-  - The AI Breakdown PDF mirrors the richer persona structure—each table now includes demographics, location, and key concerns, matching the new schema while keeping headers tied to the first card via the existing keep-together utility.
-- **2025-11-15 — [pdf-spacing-ai] Effectiveness block keep-together**
-  - Wrapped the “Effectiveness Score” cluster (score label, progress bar, tier summary, benchmark table) in a single `KeepTogether` so the header never dangles above a page break, removing the awkward gap between “Effectiveness Score:” and “Effectiveness Score Benchmarks.”
-- **2025-11-16 — Polish dialog stability**
-  - Added `_extract_polish_values()` to snapshot every CustomTkinter entry/StringVar/BooleanVar before the options dialog is destroyed, eliminating the `invalid command name "...ctkentry"` crash when the background processing thread dereferenced dead widgets.
-  - `_build_delivery_metadata()` now consumes the snapshot dict (plain strings/booleans) instead of widget references, so delivery readiness metadata is populated even after the dialog closes.
-- **2025-11-16 — Test coverage note**
-  - `tests/test_polish_video.py` now uses `pytest.importorskip("cv2")` so environments without OpenCV skip the heavy integration script gracefully.
-  - Verified unaffected parts of the suite via `pytest tests/test_effectiveness_benchmarks.py` (28 passed).
-- **2025-11-16 — Ad Analyzer script/supers context**
-  - `_collect_script_and_supers()` funnels transcript text (`analysis['transcription']`) plus any stored supers into `AIVideoBreakdown.analyze_video()`, and `_create_analysis_prompt()` now embeds SCRIPT/ON-SCREEN SUPER sections so Gemini cites real evidence.
-  - Prompt/prompt tests updated to require `evidence_text` + demographic-rich `audience_reactions`; `_normalize_audience_reactions()` enforces one HIGH-fit advocate, one LOW-fit skeptic, and two varied personas with realistic gender/age/race/location data. PDF/UI render the expanded persona details without clipping.
-- **2025-11-16 — OCR fallback for supers + highlight evidence**
-  - `AIVideoBreakdown` now attempts lightweight OCR (pytesseract) on sampled frames when no supers are supplied, feeding that copy into the prompt and surfacing the lines under `results['debug']['ocr_supers']`.
-  - Creative highlights/improvements/soft-risks now require `evidence_text`; the AI Breakdown UI and PDF show those quotes/visual refs directly under each card, mirroring the Clearcast evidence experience.
-- **2025-11-16 — Audience QA taps**
-  - Raw Gemini personas are preserved under `results['debug']['audience_reactions_raw']` before normalization so we can audit what was generated vs. the enforced HIGH/LOW/neutral mix.
-- **2025-11-16 — Script summarizer guardrail**
-  - `_summarize_script()` now trims long transcripts to ~1.6k chars before prompting, appending a truncated-note so we keep context without blowing the token budget.
-- **2025-11-16 — PDF persona grid**
-  - Audience reaction cards now capture gender/age/race/location text and auto-flow into a two-column grid when more than two personas exist, keeping spacing tight while avoiding clipped paragraphs.
-- **2025-11-17 — [regen-control] Creative view refresh**
-  - Added `_ai_regen_inflight` tracking plus a “Regenerate Analysis” CTA on each AI breakdown card. Button disables while regeneration threads run, and `_analyze_video_breakdown()` now supports a `regenerate` flag so we can re-run Gemini without re-uploading footage.
-- **2025-11-17 — [audience-context] Airing market input**
-  - Each Creative Performance card now exposes an “Airing Country” combo box (type-any with popular presets) that's persisted via `VideoAnalysisStorage.set_ai_airing_country()`. The selection flows into the Gemini prompt (`PRIMARY AIRING MARKET: …`), travels with results (`audience_context.airing_country`), and is displayed above simulated audience reactions plus in PDFs later.
-- **2025-11-17 — [pdf-layout-fixes] Audience grid + benchmarks**
-  - AI Breakdown PDFs now mention the primary airing market, keep persona cards inside a KeepTogether grid (two columns auto-applied when >2 personas), and lock the Effectiveness Score + benchmark table into a single block so headings never orphan and whitespace gaps vanish.
-- **2025-11-17 — [improvement-dedupe] CTA uniqueness**
-  - `_dedupe_highlights()` now collapses duplicate Areas for Improvement at parse-time (plus UI/PDF guards), so Gemini can't surface two CTA cards. Regression test added to `tests/test_ai_video_breakdown_prompt.py`.
-- **2025-11-17 — [pdf-title/audience-fix]**
-  - Report heading now renders as `Custom Stories Report — <Brand> — <Date>` using the stored `analyzed_at` timestamp, and persona cards are rendered sequentially (one per row) to prevent column overlap.
-
-Executor's Feedback or Assistance Requests
-------------------------------------------
-- Latest executor cycle focused on refining Custom Stories PDF output (title format, wrapping, spacing, and section layout) in `app/pdf_generator.py` and adding `docs/guides/custom_stories_pdf_layout.md`. All related tests are passing; awaiting user visual QA for further tweaks.
-- Follow-up changes added AI disclaimers, reduced whitespace, refreshed benchmark copy, and expanded simulated audience personas; smoke/regression tests re-run successfully.
-- Repo deep clean applied end-to-end (see `.reports/apply-summary.md`); pytest (49) now passing with PYTHONPATH=src.
-- Repo deep clean involves large-scale moves; planner requested “Push to GIT” before starting—please confirm latest main branch is backed up (cannot verify push from here).
-- PDF-open failure likely tied to extremely long filenames ( >260 chars when ad titles are lengthy). Captured metadata for representative sample; awaiting user confirmation before moving to lifecycle analysis.
-- Clearcast Tasks 6-10 delivered (classification, auto-fix guardrails, audio readiness, clock hooks, e2e regression). Ready to tackle any follow-up QA or new planner directives.
-- Video polish regression script skips when OpenCV is absent; install `opencv-python` locally to run `tests/test_polish_video.py` instead of the skip path.
-
-Lessons
--------
-- Include info useful for debugging in program output when applicable.
-- Read the file before editing.
-- Always ask before using force operations in version control.
-- Keep changes minimal and aligned with existing patterns.
-- For ReportLab PDFs, use `Paragraph` cells (not raw strings) inside tables when HTML-like tags are present, so markup is rendered instead of printed literally.
-- When running PowerShell commands, quote workspace paths (spaces!) or directories get created in the wrong location.
-- `pipreqs` lacks a `__main__`; invoke `venv\\Scripts\\pipreqs.exe` instead of `python -m pipreqs`.
-- `git mv` isn't usable here (repo root doesn't track this subfolder); fall back to `Move-Item` + document the limitation.
-- Snapshot CustomTkinter widget values before destroying dialogs; background threads must never touch widgets after their Tcl commands disappear.
-
-## Planner Update — Effectiveness Score Benchmark System
-
-### Background/Goal
-Currently, effectiveness scores (0-100%) are displayed without context or benchmarks, making them meaningless. Users need clear tier definitions, performance expectations, and consistent application across all metrics (effectiveness, engagement, conversion, memorability).
-
-### Requirements
-1. **5-Tier Benchmark System** (0-20, 20-40, 40-60, 60-80, 80-100)
-   - Tier names: Poor / Below Average / Average / Good / Excellent
-   - Each tier needs:
-     - Overall effectiveness definition
-     - Engagement rate estimate
-     - Conversion potential estimate
-     - Memorability estimate
-
-2. **Display Requirements**
-   - Tier label next to score (e.g., "75% — Good")
-   - Always-visible definitions below score
-   - Tooltips/hover for detailed breakdowns
-   - Visual indicators (colors aligned with tiers)
-   - Benchmark reference table in PDFs
-
-3. **Consistency**
-   - Apply to: Overall effectiveness score, Engagement rate, Conversion potential, Memorability
-   - Same tier structure and definitions across all metrics
-
-### Tier Definitions (Proposed)
-
-**0-20: Poor**
-- Overall: Minimal impact expected; significant improvements needed across multiple areas
-- Engagement: Very Low (<5% expected engagement)
-- Conversion: Minimal (<1% conversion rate)
-- Memorability: Poor (unlikely to be remembered)
-
-**20-40: Below Average**
-- Overall: Limited effectiveness; multiple areas need attention before launch
-- Engagement: Low (5-15% expected engagement)
-- Conversion: Low (1-3% conversion rate)
-- Memorability: Weak (low recall after 24 hours)
-
-**40-60: Average**
-- Overall: Moderate impact; some strengths but room for improvement
-- Engagement: Moderate (15-30% expected engagement)
-- Conversion: Moderate (3-7% conversion rate)
-- Memorability: Fair (moderate recall, may need reinforcement)
-
-**60-80: Good**
-- Overall: Strong performance; minor optimizations could enhance results
-- Engagement: High (30-50% expected engagement)
-- Conversion: Good (7-12% conversion rate)
-- Memorability: Strong (good recall, brand association forming)
-
-**80-100: Excellent**
-- Overall: Exceptional effectiveness; best-in-class performance
-- Engagement: Very High (>50% expected engagement)
-- Conversion: Excellent (>12% conversion rate)
-- Memorability: Excellent (high recall, strong brand association)
-
-### Key Challenges and Analysis
-- **Centralization**: Need single source of truth for benchmark definitions
-- **UI Integration**: Tooltips/hover require careful event handling in CustomTkinter
-- **PDF Layout**: Benchmark table needs to fit without cluttering report
-- **Metric Mapping**: Some metrics may be text-based ("High"/"Low") vs numeric; need conversion logic
-- **Color Consistency**: Align existing color scheme (green/yellow/red) with 5-tier system
-
-### High-level Task Breakdown
-
-1. **Create Benchmark Utility Module**
-   - Actions: Create `app/effectiveness_benchmarks.py` with:
-     - `get_tier(score: float) -> str` - Returns tier name for score
-     - `get_tier_range(score: float) -> Tuple[int, int]` - Returns min/max for tier
-     - `get_tier_definition(tier: str) -> Dict` - Returns full definition dict
-     - `get_tier_color(tier: str) -> str` - Returns hex color for tier
-     - `get_metric_estimate(metric: str, tier: str) -> str` - Returns estimate for metric
-     - Constants: `TIER_DEFINITIONS` dict with all tier data
-   - Success Criteria: Module provides all tier lookups; unit tests pass
-
-2. **Update UI Score Display**
-   - Actions: Modify `_display_ai_breakdown_results()` in `video_analyzer_gui.py`:
-     - Import benchmark utility
-     - Show tier label next to score (e.g., "75% — Good")
-     - Display always-visible tier definition below score
-     - Add tooltip/hover showing detailed breakdown
-     - Update progress bar color to use tier color
-   - Success Criteria: Score shows tier label; definition visible; tooltip works; colors match tiers
-
-3. **Add Benchmark Reference to PDF**
-   - Actions: Modify `AIBreakdownPDFGenerator.generate_pdf()` in `pdf_generator.py`:
-     - Add benchmark reference table after effectiveness score section
-     - Table shows all 5 tiers with definitions
-     - Include metric estimates (engagement, conversion, memorability)
-   - Success Criteria: PDF includes benchmark table; table is readable and well-formatted
-
-4. **Apply Benchmarks to All Metrics**
-   - Actions: Update UI/PDF to show tier labels for:
-     - Engagement rate (if numeric or convert text to numeric)
-     - Conversion potential (if numeric or convert text to numeric)
-     - Memorability (if numeric or convert text to numeric)
-   - Success Criteria: All metrics show tier labels consistently
-
-5. **Add Tooltip/Hover Functionality**
-   - Actions: Create helper method `_create_score_tooltip()` in `video_analyzer_gui.py`:
-     - Shows tier name, definition, and metric estimates
-     - Uses CustomTkinter tooltip or custom hover frame
-   - Success Criteria: Hovering over score shows detailed breakdown
-
-6. **Update Color Scheme**
-   - Actions: Align existing color logic with 5-tier system:
-     - Poor: Red (#E74C3C)
-     - Below Average: Orange (#F39C12)
-     - Average: Yellow (#F1C40F)
-     - Good: Light Green (#2ECC71)
-     - Excellent: Dark Green (#27AE60)
-   - Success Criteria: Colors match tier definitions consistently
-
-### Exact Insertion Points
-- **New File**: `app/effectiveness_benchmarks.py` - Central benchmark definitions
-- **Update**: `app/video_analyzer_gui.py` - Lines ~6193-6211 (effectiveness score display)
-- **Update**: `app/pdf_generator.py` - Lines ~620-637 (effectiveness score in PDF)
-- **Update**: `app/video_analyzer_gui.py` - Add tooltip helper method
-- **Update**: `app/pdf_generator.py` - Add benchmark reference table
-
-### Success Criteria
-- Effectiveness scores show tier labels (e.g., "75% — Good")
-- Tier definitions are always visible below scores
-- Tooltips show detailed breakdown on hover
-- PDF includes benchmark reference table
-- All metrics (engagement, conversion, memorability) show tier labels consistently
-- Colors align with 5-tier system
-- Unit tests verify tier lookups work correctly
-
-### Project Status Board — Benchmark System
-- [x] Create `app/effectiveness_benchmarks.py` with tier definitions and lookup functions
-- [x] Write unit tests for benchmark utility
-- [x] Update UI effectiveness score display with tier label and definition
-- [x] Add tooltip/hover functionality for detailed breakdown
-- [x] Update PDF to include benchmark reference table
-- [x] Apply benchmarks to engagement/conversion/memorability metrics
-- [x] Update color scheme to align with 5-tier system
-- [x] Test consistency across UI and PDF displays
-
-### Current Status / Progress Tracking — Benchmark System
-- **2025-11-14**: Implementation complete! All benchmark system features implemented:
-  - Created `app/effectiveness_benchmarks.py` with 5-tier system (Poor, Below Average, Average, Good, Excellent)
-  - All 28 unit tests passing
-  - UI now displays tier labels (e.g., "75% — Good") with always-visible definitions and hover tooltips
-  - PDF includes comprehensive benchmark reference table with all tiers and metric estimates
-  - Color scheme aligned with 5-tier system (red → orange → yellow → light green → dark green)
-  - Expected metrics in PDF now show tier labels for text-based values
-  - Consistent application across effectiveness score, engagement, conversion, and memorability metrics
-
-### Executor's Feedback or Assistance Requests — Benchmark System
-- ✅ All implementation tasks completed successfully
-- ✅ No linter errors
-- ✅ All unit tests passing
-- Ready for user testing and feedback
-
-## Planner Update — Quota Error Handling Improvement
-
-### Background/Goal
-The app was hitting Gemini API free tier rate limits (2 requests/minute) and immediately failing without retrying. The API provides retry delay information in error messages that should be respected.
-
-### Issue
-- Quota errors (429) were detected but immediately returned as errors
-- No retry logic respecting the API's suggested retry delay
-- User saw generic error messages without context about free tier limits
-
-### Solution Implemented
-- **Retry Logic**: Added `_extract_retry_delay()` to parse retry delay from API error messages
-- **Smart Retries**: Quota errors now retry up to 3 times, waiting for the API-suggested delay (typically 45-60 seconds)
-- **Better Error Messages**: Added `_format_quota_error()` to provide user-friendly messages explaining free tier limits and upgrade options
-- **Response Validation**: Added check for None response after retries to prevent crashes
-
-### Files Modified
-- `app/ai_video_breakdown.py`: Enhanced quota error handling with retry logic and better error messages
-
-### Current Status / Progress Tracking — Quota Handling
-- **2025-11-14**: Improved quota error handling:
-  - Retry delay extraction working correctly (tested with actual API error format)
-  - Free tier limit detection and user-friendly messaging
-  - Automatic retries with API-suggested delays
-  - Prevents immediate failure on temporary quota limits
-
-## Planner Update — PDF Open Failure Diagnosis (2025-11-15)
-
-### Background/Goal
-Creative Performance PDFs generated after the recent layout refactor (now in `src/app/pdf_generator.py`) look correct in logs but cannot be opened in Windows even after the program is closed. We must determine whether the issue stems from ReportLab formatting, file corruption, or filesystem locks.
-
-### Requirements
-1. Reproduce the failure on a fresh build and capture the exact OS/PDF viewer error message plus file metadata (size, timestamp, hash).
-2. Verify whether the PDF bytes are complete/correct by attempting to parse them via `PyPDF2` or ReportLab's `PdfFileReader` utilities in an automated test.
-3. Inspect the generation pipeline (including `SimpleDocTemplate`, file handles, and page break helpers) to ensure the file is closed/flushed before the app releases control.
-4. Deliver a fix (code or process) plus regression test(s) so future PDFs open reliably.
-
-### Key Challenges and Analysis
-- **File locking vs corruption**: Need to distinguish between OS-level locks (e.g., viewer still running, antivirus, PyInstaller runtime) and genuinely invalid PDF bytes.
-- **Large story buffers**: With `KeepTogether` and complex tables, ReportLab may throw hidden exceptions that leave partial files—must check logs for silent errors.
-- **Path changes**: Now that sources live in `src/app`, any hard-coded paths in scripts (e.g., `run_video_analyzer.bat`, `GuerillaScope.spec`) must still point to the right module when rebuilding.
-- **Testing coverage**: Existing smoke tests only assert file creation; we should add a structural validation (opening the bytes) to catch unreadable files automatically.
-
-### High-level Task Breakdown
-1. **Capture Repro Evidence**
-   - Actions: Run the app (or CLI harness) to generate the problematic PDF, try opening it via default viewer, note the OS error, and collect file metadata (`dir`, file size, checksum).
-   - Success Criteria: Have at least one sample failing PDF with documented error text and metadata for reference.
-2. **Automated PDF Integrity Check**
-   - Actions: Write a focused pytest in `tests/test_pdf_generator_utils.py` that builds a PDF to an in-memory buffer and attempts to read it via `PyPDF2` (or ReportLab `PdfFileReader`), failing if parsing errors occur.
-   - Success Criteria: New test fails under current behaviour (if bytes invalid) and will pass once a fix is in place; ensures future regressions are caught.
-3. **Inspect Generation Pipeline**
-   - Actions: Review `src/app/pdf_generator.py` build path, ensuring we close file handles, avoid nested `PageBreak`s after `SimpleDocTemplate.build`, and log/report exceptions. Validate whether writing to `BytesIO` first (then atomic write) would eliminate partial files.
-   - Success Criteria: Clear explanation of root cause (e.g., lingering handles, partial writes) and a concrete mitigation approach.
-4. **Implement Fix & Verify**
-   - Actions: Apply the decided fix (e.g., write to `BytesIO` then atomically to disk, wrap `doc.build` in try/finally, add `_doc.canv` closing), rerun new integrity test + existing suite, and confirm sample PDFs are openable.
-   - Success Criteria: Tests green, manual sample opens successfully, and scratchpad/activity log updated.
-
-### Success Criteria
-- Reproduction details captured with evidence for future debugging.
-- Automated PDF integrity test fails before the fix and passes after.
-- Root cause documented (locking vs corruption) with minimal, contained code changes.
-- Post-fix PDF opens in Windows viewer without errors.
+## Lessons
+- **Neuron Propagation Explosion**: In simulation loops (like `NeuralBrain`), exponential branching (connections * probability > 1) guarantees a crash. Always dampen propagation probability inversely to the active queue size or use a strict global cap on active agents.
+- **OpenCV Seeking Reliability**: `cv2.set(CV2.CAP_PROP_POS_FRAMES)` is unreliable on some backends/files. Always verify the position using `CAP_PROP_POS_MSEC` after reading. If precise seeking is critical, use a robust library like `ffmpeg` (via command line or bindings) or implement a fallback to sequential reads (skip-reading) for critical frames.
+- **Gemini Model Names**: Do not hallucinate future model versions like `gemini-3-pro`. Stick to the official release names (`gemini-1.5-pro`, `gemini-1.5-flash`) to avoid silent fallbacks to legacy models or API errors.
+- **Queue workers that spin up asynchronously need a staging buffer**; persist job IDs until the underlying asyncio queue exists so early enqueues aren’t dropped.
+- **Queue worker task management**: The CALLER must store the task reference in `queue._worker_task` and register the exit callback.
+- **Webcam PIP during fullscreen**: The `<video>` element with `autoPlay` JSX attribute doesn't guarantee playback when the stream is attached programmatically. Always call `videoElement.play()` explicitly.
+- **Legal text bbox units**: Gemini returns bbox coordinates on a 0–1000 scale, so convert to HD scan lines via `(ymax - ymin)/1000 * 1080` and allow a tiny tolerance.
+- **Reaction fallback UX**: When the worker is offline, set reaction jobs to `processing_fallback`/`processing_mode="fallback"` up front.
+- **Video cache busting**: Whenever a backend generates new binary content (like a playback MP4), append a monotonically increasing query param to `<video src>`.
+- **Subjective compliance flags**: Health claims and wording issues that depend on Clearcast discretion should be classified as warnings (amber_flags), not critical (red_flags).
+- **Shared module extraction**: When multiple analyzers share similar logic (frame extraction, flag structures), extract to `core/` modules.
+- **Semantic search for RAG**: For regulatory knowledge bases like Clearcast guidelines, semantic search with embeddings significantly improves retrieval quality.
+- **Industry-specific profiles**: Pre-defined rule profiles for common ad categories (alcohol, gambling, finance, etc.) enable faster compliance checks.
+- **Modular RAG client design**: When building features that require external databases (like Supabase), create an abstract base class with stub implementation first.
+- **Supabase + pgvector pattern**: For semantic search, use OpenAI's `text-embedding-3-large` with `dimensions=1536` to match the vector column schema.
+- **Emotion tracker fallback detection**: When `EnhancedEmotionTracker` fails (empty timeline) it silently falls back to the primitive analyzer.
+- **Recharts chart click events**: The onClick callback receives `data.activePayload[0].payload` for clicked point data, not `data.activeLabel`.
+- **Native dropdown styling**: Browser `<option>` elements ignore CSS styling on most platforms. Replace native `<select>` with custom dropdown components.
+- **Database schema mismatch**: When querying external databases (like Supabase), always verify the actual column values exist.
+- **OpenCV frame extraction for large files**: Sequential `cap.read()` in a loop reads EVERY frame from the start, which is extremely slow for large MOV/ProRes files. Use seek-based extraction with `cap.set(cv2.CAP_PROP_POS_FRAMES, position)`.
+- **API endpoint and frontend client sync**: When frontend code calls an API endpoint that doesn't exist, the feature silently fails. Always verify both ends are implemented before shipping.
+- **Gemini SDK timeout enforcement**: The `model.generate_content()` call is synchronous and has no built-in timeout. Wrap in `asyncio.wait_for(asyncio.to_thread(...), timeout=N)` to prevent indefinite hangs. Define timeouts in config but ensure they're actually applied in code.
+- **PDF.js worker with Vite**: pdfjs-dist v5.x uses ESM modules with different file paths (`.mjs` instead of `.js`). Use `vite-plugin-static-copy` to copy the worker file to dist/assets, and configure the worker path dynamically based on `import.meta.env.DEV` for dev vs production builds.

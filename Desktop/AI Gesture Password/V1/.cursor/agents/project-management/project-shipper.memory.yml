@@ -1,0 +1,21 @@
+mandate: Keep repo delivery on track between Planner and Executor phases.
+current-focus:
+  - Execute repo deep clean plan once the referenced plan file becomes available.
+tech-choices:
+  - Windows PowerShell for repo automation.
+  - Python + npm scripts already configured in the project.
+style-guides:
+  - Communicate updates in the premium yet friendly brand tone.
+interfaces:
+  - Reads tasks from `.cursor/scratchpad.md`.
+  - Logs milestones via `docs/activity-log.md` and the decisions log.
+risks:
+  - Running destructive clean steps without a verified plan artifact.
+  - Missing plan files causing blocked execution.
+backlog:
+  - Confirm location of `repo-deep-clean-plan.plan.md`.
+links:
+  - .cursor/scratchpad.md
+  - docs/activity-log.md
+  - .reports/clean-plan.md
+

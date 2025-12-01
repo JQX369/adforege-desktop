@@ -1,6 +1,9 @@
 mandate: Keep backend architecture clean, modular, and production-safe
 current-focus:
   - enforce repo layouts and dependency hygiene for Custom Stories
+  - drive repo deep clean (feature folders + import hygiene) for backend/frontend
+  - complete web folder reorg + verification so docs match the new blueprint
+  - keep optional ML deps guarded so pytest runs on lean environments
 tech-choices:
   - python 3.11 desktop app with CustomTkinter UI and ReportLab PDFs
 style-guides:
@@ -12,6 +15,7 @@ risks:
   - large refactors can break imports; mitigate via staged moves and tests
 backlog:
   - document repo topology whenever restructuring
+  - track Vite chunk-size warning follow-up (code-splitting/manual chunks)
 links:
   - docs/activity-log.md
 

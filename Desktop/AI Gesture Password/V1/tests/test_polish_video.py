@@ -13,7 +13,7 @@ SRC_PATH = ROOT_DIR / "src"
 if SRC_PATH.exists():
     sys.path.insert(0, str(SRC_PATH))
 
-from app.video_processor import ClearcastVideoProcessor
+from app.core.video_processor import ClearcastVideoProcessor
 import logging
 
 # Set up logging
@@ -71,8 +71,8 @@ def test_clearcast_updater():
     print("\n=== Testing Clearcast Updater ===")
     
     try:
-        from app.clearcast_updater import ClearcastUpdater
-        from app.config import GOOGLE_API_KEY
+        from app.features.clearcast.clearcast_updater import ClearcastUpdater
+        from app.core.config import GOOGLE_API_KEY
         
         updater = ClearcastUpdater(GOOGLE_API_KEY)
         

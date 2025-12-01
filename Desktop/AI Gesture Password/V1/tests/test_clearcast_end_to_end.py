@@ -2,15 +2,15 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
-from app.clearcast_checker import ClearcastChecker
-from app.clearcast_classifier import (
+from app.features.clearcast.clearcast_checker import ClearcastChecker
+from app.features.clearcast.clearcast_classifier import (
     BrandProfile,
     ClearcastClassificationResult,
     FocusArea,
     ProductProfile,
     ScriptProfile,
 )
-from app.clearcast_audio import AudioNormalizationReport
+from app.features.clearcast.clearcast_audio import AudioNormalizationReport
 
 
 class _FakeModel:
@@ -86,11 +86,11 @@ def test_clearcast_checker_end_to_end(tmp_path, monkeypatch):
         lambda *args, **kwargs: _FakeModel(_fake_response()),
     )
     monkeypatch.setattr(
-        "app.clearcast_checker.classify_clearcast_context",
+        "app.features.clearcast.clearcast_checker.classify_clearcast_context",
         lambda *args, **kwargs: _fake_classification(),
     )
     monkeypatch.setattr(
-        "app.clearcast_checker.ClearcastAudioAnalyzer.analyze",
+        "app.features.clearcast.clearcast_checker.ClearcastAudioAnalyzer.analyze",
         lambda self, path: AudioNormalizationReport(
             status="needs_normalization",
             recommendation="Normalize to -23 LUFS.",

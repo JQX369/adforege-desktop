@@ -1,7 +1,7 @@
 import json
 import pytest
 
-from app.clearcast_classifier import (
+from app.features.clearcast.clearcast_classifier import (
     ClearcastClassificationResult,
     build_classification_prompt,
     classify_clearcast_context,

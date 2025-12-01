@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from app.pdf_generator import (
+from app.features.reporting.pdf_generator import (
     resolve_ad_name,
     resolve_brand_name,
     format_report_title,

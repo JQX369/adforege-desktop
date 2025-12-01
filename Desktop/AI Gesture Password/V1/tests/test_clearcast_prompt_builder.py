@@ -3,8 +3,8 @@ from pathlib import Path
 
 import pytest
 
-from app.clearcast_rules import ClearcastRulesSnapshot
-from app.clearcast_prompt_builder import PromptContext, build_clearcast_prompt
+from app.features.clearcast.clearcast_rules import ClearcastRulesSnapshot
+from app.features.clearcast.clearcast_prompt_builder import PromptContext, build_clearcast_prompt
 
 
 def _snapshot():
