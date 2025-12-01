@@ -67,6 +67,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include new v1 API routers (SaaS endpoints)
+try:
+    from api.routers import api_v1_router
+    app.include_router(api_v1_router)
+    logger.info("API v1 routers loaded successfully")
+except ImportError as e:
+    logger.warning(f"Could not load API v1 routers: {e}")
+
 # Global instances - Use project root for storage to avoid cwd issues
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 STORAGE_DIR = PROJECT_ROOT / "video_analyses"

@@ -1,27 +1,391 @@
-# AD-Forge UI Modernization Overhaul
+# AD-Forge SaaS Migration Plan
 
-## Background and Motivation
-The user feels the app's aesthetics haven't fundamentally improved. The current implementation is a monolithic 7,500-line file using basic Tkinter `pack` geometry. To modernize the app, we will implement a rigorous Design System, break the monolith into a Component/View architecture, and switch to a persistent Sidebar layout.
+## 🎯 Vision
+Transform Ad-Forge from a local web app into a hosted SaaS platform with:
+- **Multi-tenant architecture** with proper data isolation
+- **Subscription billing** via Stripe (3 tiers)
+- **Supabase Auth** for authentication
+- **Vercel + Railway** hosting
+- **PostgreSQL** replacing JSON file storage
 
-**Update (Web Version Focus)**: The project is now shifting/expanding to a Web Version (React/Vite). Recent tasks focus on the Web UI (`src/web`).
+---
 
-**Update (Deep Clean & Refactor)**: A "Repo Deep Clean" command was issued to organize the codebase. We are moving towards a Feature-based architecture in `src/app/features` and standardizing the Web structure.
+## 📊 Current State Analysis (2025-12-01)
 
-**Update (Desktop Removal - 2025-11-26)**: Desktop app (CustomTkinter GUI) has been fully archived. The project is now web-only. Key changes:
-- Moved `video_processor.py` from `desktop/` to `core/` (used by API)
-- Archived: `src/app/desktop/`, `src/app/recognizers/`, desktop icons, PyInstaller specs, 8 desktop scripts
-- Created comprehensive Clearcast documentation in `docs/clearcast/`
-- Added README.md files to `src/`, `src/app/features/`, `docs/`, `tests/` for AI navigation
-- Updated `docs/repo-structure.md` with final web-only layout
-- Cleaned up `.reports/` folder and root-level debug files
+### Architecture Audit
+| Component | Current State | Issue |
+|-----------|---------------|-------|
+| **API** | Single `main.py` (~2700 lines, 46+ endpoints) | Monolithic, unmaintainable |
+| **Storage** | JSON file (`analyses.json`) | No multi-tenancy, won't scale |
+| **Auth** | None | Anyone can access all data |
+| **Billing** | None | No subscription enforcement |
+| **Frontend** | Electron + Web hybrid | Unnecessary complexity for SaaS |
+| **Hosting** | Local development | No production infrastructure |
 
-**Update (Reaction Processing Reliability)**: After shipping the reaction accuracy refresh, the user reports that new recordings remain stuck in the “Processing” state. We need to diagnose why backend jobs are not completing (or not updating status) and ensure the UI reflects accurate progress.
+### Endpoint Inventory (46+ routes)
+- **System**: `/`, `/health`, `/settings` (3)
+- **Projects**: `/projects`, `/analyze`, `/results/{id}`, `/videos/{id}` (5)
+- **Reactions**: `/reactions/*`, `/analysis/{id}/reactions` (4)
+- **Queue**: `/queue/jobs/*`, `/queue/worker/health` (4)
+- **Admin**: `/admin/*` (4)
+- **Clearcast**: `/clearcast/check`, `/polish`, `/quick-check`, `/pure-check` (4)
+- **AI Analysis**: `/analyze/breakdown`, `/similar-ads`, `/chat/persona`, `/qa` (5)
+- **Ad Script Lab**: `/ad-script/*` (12)
+- **Media Reports**: `/parse-pdf-ai`, `/parse-pdf-vision` (2)
+- **PDFs**: `/pdf/breakdown/{id}`, `/pdf/clearcast/{id}` (2)
 
-**Update (Reaction Recorder Failsafe)**: The latest builds show two regressions: (1) the ReactionRecorder preview only shows a black box because `getUserMedia` streams are not consistently attached/played, and (2) uploads routinely fall back to inline processing because the queue worker dies, leaving jobs stuck in `processing`. This cycle must be broken so users always see their own camera feed and every reaction analysis exits with either `completed` or `failed`.
+### External Dependencies
+- ✅ Supabase (already used for RAG) → expand for auth + main DB
+- ✅ Google Gemini API (video analysis)
+- ✅ OpenAI API (embeddings)
+- ❌ Stripe (not integrated)
+- ❌ Vercel/Railway (not configured)
 
-**Update (Storyboards - 2025-11-27)**: A new feature "Storyboards" is requested for the sidebar. It allows users to turn scripts (from Ad Script Lab or uploaded) into visual storyboards using AI analysis and "Nano Banana Pro" image generation. The flow involves an intermediate clarification step where the AI asks A/B/C questions to refine the visual direction before generating images.
+---
 
-**Update (Ad Script Lab Fixes - 2025-11-27)**: Addressed user feedback regarding database errors ("column video_url does not exist"), missing navigation ("Back to Editor"), and menu ordering (Ad Script Lab below Storyboards).
+## 🏗️ Target Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        VERCEL                                │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              React 19 / Vite Frontend               │    │
+│  │  (Removed Electron, Static SPA, Edge Functions)     │    │
+│  └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                        RAILWAY                               │
+│  ┌─────────────────────────────────────────────────────┐    │
+│  │              FastAPI Backend                         │    │
+│  │  ├── /api/v1/auth/*     (Supabase Auth wrapper)     │    │
+│  │  ├── /api/v1/projects/* (CRUD + analysis)           │    │
+│  │  ├── /api/v1/clearcast/* (compliance)               │    │
+│  │  ├── /api/v1/scripts/*  (Ad Script Lab)             │    │
+│  │  ├── /api/v1/billing/*  (Stripe webhooks)           │    │
+│  │  └── /api/v1/admin/*    (platform admin)            │    │
+│  └─────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────┘
+                              │
+          ┌───────────────────┼───────────────────┐
+          ▼                   ▼                   ▼
+┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
+│   SUPABASE      │ │    STRIPE       │ │   SUPABASE      │
+│   PostgreSQL    │ │    Billing      │ │   Storage       │
+│   + Auth        │ │                 │ │   (Videos/PDFs) │
+└─────────────────┘ └─────────────────┘ └─────────────────┘
+```
+
+---
+
+## 💾 Database Schema (Supabase PostgreSQL)
+
+### Core Tables
+
+```sql
+-- Organizations (workspaces/teams)
+CREATE TABLE organizations (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
+    stripe_customer_id TEXT,
+    subscription_tier TEXT DEFAULT 'free' CHECK (subscription_tier IN ('free', 'pro', 'enterprise')),
+    subscription_status TEXT DEFAULT 'active',
+    monthly_analysis_limit INT DEFAULT 5,
+    monthly_analyses_used INT DEFAULT 0,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Users (linked to Supabase Auth)
+CREATE TABLE users (
+    id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+    email TEXT NOT NULL,
+    full_name TEXT,
+    avatar_url TEXT,
+    organization_id UUID REFERENCES organizations(id) ON DELETE SET NULL,
+    role TEXT DEFAULT 'member' CHECK (role IN ('owner', 'admin', 'member', 'viewer')),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Video Analyses (main data)
+CREATE TABLE analyses (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    created_by UUID REFERENCES users(id),
+    video_name TEXT NOT NULL,
+    video_url TEXT, -- Supabase Storage URL
+    thumbnail_url TEXT,
+    status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'processing', 'completed', 'failed')),
+
+    -- Analysis results (JSONB for flexibility)
+    ai_breakdown JSONB,
+    clearcast_check JSONB,
+    emotion_summary JSONB,
+    emotion_timeline JSONB,
+
+    -- Scores
+    avg_engagement FLOAT DEFAULT 0,
+    ai_effectiveness FLOAT,
+
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Reactions (viewer recordings)
+CREATE TABLE reactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    analysis_id UUID NOT NULL REFERENCES analyses(id) ON DELETE CASCADE,
+    organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    video_url TEXT,
+    status TEXT DEFAULT 'pending',
+    emotion_data JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Ad Scripts (from Ad Script Lab)
+CREATE TABLE ad_scripts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    created_by UUID REFERENCES users(id),
+    briefing JSONB NOT NULL,
+    scripts JSONB, -- Array of generated scripts
+    winner_id TEXT,
+    status TEXT DEFAULT 'pending',
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Storyboards
+CREATE TABLE storyboards (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    script_id UUID REFERENCES ad_scripts(id),
+    scenes JSONB,
+    status TEXT DEFAULT 'pending',
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Background Jobs
+CREATE TABLE jobs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    organization_id UUID NOT NULL REFERENCES organizations(id) ON DELETE CASCADE,
+    job_type TEXT NOT NULL,
+    payload JSONB,
+    status TEXT DEFAULT 'pending',
+    error TEXT,
+    started_at TIMESTAMPTZ,
+    finished_at TIMESTAMPTZ,
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Indexes for performance
+CREATE INDEX idx_analyses_org ON analyses(organization_id);
+CREATE INDEX idx_analyses_status ON analyses(status);
+CREATE INDEX idx_reactions_analysis ON reactions(analysis_id);
+CREATE INDEX idx_jobs_status ON jobs(status, created_at);
+```
+
+### Row Level Security (RLS)
+
+```sql
+-- Enable RLS on all tables
+ALTER TABLE organizations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE analyses ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reactions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE ad_scripts ENABLE ROW LEVEL SECURITY;
+
+-- Users can only see their org's data
+CREATE POLICY "Users see own org data" ON analyses
+    FOR ALL USING (
+        organization_id IN (
+            SELECT organization_id FROM users WHERE id = auth.uid()
+        )
+    );
+
+-- Similar policies for other tables...
+```
+
+---
+
+## 💳 Subscription Tiers
+
+| Feature | Free | Pro (£49/mo) | Enterprise (£199/mo) |
+|---------|------|--------------|----------------------|
+| Video analyses/month | 5 | 50 | Unlimited |
+| Ad Script Lab | ❌ | ✅ | ✅ |
+| Storyboards | ❌ | ✅ | ✅ |
+| Clearcast checks | 5 | Unlimited | Unlimited |
+| Media report parsing | ❌ | 10/mo | Unlimited |
+| Team members | 1 | 5 | Unlimited |
+| API access | ❌ | ❌ | ✅ |
+| Priority support | ❌ | Email | Dedicated |
+| Data retention | 30 days | 1 year | Unlimited |
+
+---
+
+## 📁 New Directory Structure
+
+```
+src/
+├── api/
+│   ├── main.py                    # FastAPI app setup only
+│   ├── deps.py                    # Dependency injection (auth, db)
+│   └── routers/
+│       ├── __init__.py
+│       ├── auth.py                # /api/v1/auth/*
+│       ├── projects.py            # /api/v1/projects/*
+│       ├── analyses.py            # /api/v1/analyses/*
+│       ├── reactions.py           # /api/v1/reactions/*
+│       ├── clearcast.py           # /api/v1/clearcast/*
+│       ├── scripts.py             # /api/v1/scripts/*
+│       ├── storyboards.py         # /api/v1/storyboards/*
+│       ├── billing.py             # /api/v1/billing/* (Stripe webhooks)
+│       ├── media_reports.py       # /api/v1/media-reports/*
+│       └── admin.py               # /api/v1/admin/*
+├── app/
+│   ├── core/
+│   │   ├── config.py              # Settings (Pydantic BaseSettings)
+│   │   ├── database.py            # Supabase client singleton
+│   │   ├── auth.py                # Auth middleware & helpers
+│   │   ├── billing.py             # Stripe integration
+│   │   └── storage.py             # Supabase Storage helpers
+│   └── features/                  # (existing, largely unchanged)
+│       ├── clearcast/
+│       ├── ai_breakdown/
+│       ├── analytics/
+│       └── ...
+└── web/                           # React frontend
+    ├── src/
+    │   ├── lib/
+    │   │   ├── supabase.ts        # Supabase client
+    │   │   ├── stripe.ts          # Stripe.js
+    │   │   └── api.ts             # API client (updated)
+    │   ├── features/
+    │   │   ├── auth/              # Login, Register, Profile
+    │   │   ├── billing/           # Subscription management
+    │   │   └── ...                # (existing features)
+    │   └── ...
+    └── package.json               # Remove electron dependencies
+```
+
+---
+
+## 🚀 Implementation Phases
+
+### Phase 1: Foundation (Week 1-2)
+**Goal**: Set up infrastructure without breaking existing functionality
+
+- [ ] **1.1** Create Supabase project & configure Auth
+- [ ] **1.2** Design and create database schema (migrations)
+- [ ] **1.3** Set up Railway project for backend
+- [ ] **1.4** Set up Vercel project for frontend
+- [x] **1.5** Configure environment variables across environments ✅ `.env.example` updated
+- [x] **1.6** Remove Electron from frontend (web-only build) ✅ `package.json` cleaned
+
+### Phase 2: API Restructure (Week 2-3)
+**Goal**: Split monolithic main.py into routers
+
+- [x] **2.1** Create `src/api/routers/` structure ✅ `__init__.py` created
+- [ ] **2.2** Extract auth router + Supabase Auth integration
+- [ ] **2.3** Extract projects router (CRUD operations)
+- [ ] **2.4** Extract analyses router (upload, results)
+- [ ] **2.5** Extract reactions router
+- [ ] **2.6** Extract clearcast router
+- [ ] **2.7** Extract scripts router (Ad Script Lab)
+- [ ] **2.8** Extract admin router
+- [x] **2.9** Create `deps.py` for dependency injection ✅ Full auth/org/tier deps
+- [ ] **2.10** Add API versioning (`/api/v1/`)
+
+### Phase 3: Database Migration (Week 3-4)
+**Goal**: Replace JSON storage with PostgreSQL
+
+- [x] **3.1** Create database client (`app/core/database.py`) ✅ Main + RAG clients
+- [ ] **3.2** Migrate `VideoAnalysisStorage` → Supabase
+- [ ] **3.3** Migrate job queue to database-backed queue
+- [ ] **3.4** Update all service classes to use new storage
+- [ ] **3.5** Data migration script for existing analyses
+- [ ] **3.6** Set up Supabase Storage for videos/PDFs
+- [ ] **3.7** Implement file upload to Supabase Storage
+
+### Phase 4: Authentication (Week 4-5)
+**Goal**: Secure all endpoints with user auth
+
+- [x] **4.1** Frontend: Add Supabase Auth UI components ✅ `lib/supabase.ts`
+- [x] **4.2** Frontend: Protected routes & auth context ✅ `AuthContext.tsx`
+- [x] **4.3** Backend: Auth middleware for all routes ✅ `app/core/auth.py`
+- [x] **4.4** Backend: User → Organization linking ✅ In auth.py
+- [ ] **4.5** Implement Row Level Security policies
+- [ ] **4.6** Add organization/team management UI
+
+### Phase 5: Billing Integration (Week 5-6)
+**Goal**: Implement Stripe subscription billing
+
+- [ ] **5.1** Create Stripe products & prices (3 tiers)
+- [x] **5.2** Backend: Stripe webhook handler ✅ `app/core/billing.py`
+- [x] **5.3** Backend: Subscription status checks ✅ In billing.py
+- [x] **5.4** Backend: Usage metering & limits ✅ In deps.py
+- [ ] **5.5** Frontend: Pricing page
+- [ ] **5.6** Frontend: Checkout flow
+- [ ] **5.7** Frontend: Subscription management (upgrade/cancel)
+- [ ] **5.8** Usage limit enforcement on AI features
+
+### Phase 6: Production Hardening (Week 6-7)
+**Goal**: Production-ready deployment
+
+- [ ] **6.1** Error handling & logging (Sentry)
+- [ ] **6.2** Rate limiting per tier
+- [ ] **6.3** CORS configuration for production domains
+- [ ] **6.4** SSL/TLS verification
+- [ ] **6.5** Database backups configuration
+- [ ] **6.6** Health checks & monitoring
+- [ ] **6.7** CI/CD pipeline (GitHub Actions)
+- [ ] **6.8** Staging environment setup
+
+### Phase 7: Launch Prep (Week 7-8)
+**Goal**: Go-live readiness
+
+- [ ] **7.1** Landing page with pricing
+- [ ] **7.2** Documentation / Help center
+- [ ] **7.3** Terms of Service & Privacy Policy
+- [ ] **7.4** GDPR compliance (data export/delete)
+- [ ] **7.5** Load testing
+- [ ] **7.6** Beta user onboarding
+- [ ] **7.7** Production deployment
+- [ ] **7.8** DNS & domain configuration
+
+---
+
+## ⚠️ Key Risks & Mitigations
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Data loss during migration | High | Run parallel systems, incremental migration |
+| Breaking existing functionality | High | Feature flags, comprehensive tests |
+| Stripe webhook reliability | Medium | Idempotent handlers, retry logic |
+| AI API costs exceeding revenue | Medium | Strict usage limits per tier |
+| Multi-tenant data leaks | Critical | RLS policies, audit logging |
+
+---
+
+## 📋 Success Criteria
+
+- [ ] All existing features work in hosted version
+- [ ] Users can sign up, log in, manage subscription
+- [ ] Data is isolated per organization
+- [ ] Usage limits are enforced per tier
+- [ ] Videos upload to Supabase Storage (not local)
+- [ ] Backend runs on Railway without local dependencies
+- [ ] Frontend deploys to Vercel
+- [ ] < 2s page load time
+- [ ] 99.9% uptime target
+
+---
+
+## Previous Context (Archived)
 
 ## Key Challenges and Analysis
 - **Refactoring Scale**: Extracting logic from the 7.5k line `VideoAnalyzerGUI` without breaking state (user session, current analysis) is high risk.

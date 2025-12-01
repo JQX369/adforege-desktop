@@ -1,13 +1,14 @@
-# Core
+# ===========================================
+# AD-FORGE SAAS REQUIREMENTS
+# ===========================================
+
+# Core Processing
 opencv-python>=4.8.0
 numpy>=1.24.0
 Pillow>=10.0.0
 mediapipe>=0.10.7
 
-# GUI
-customtkinter>=5.2.0
-
-# AI + analysis
+# AI + Analysis
 deepface>=0.0.79
 fer>=22.5.0
 mtcnn==0.1.1
@@ -18,7 +19,19 @@ pyaudio>=0.2.11
 pygame>=2.5.0
 google-generativeai>=0.3.0
 openai>=2.8.0
+
+# Backend API
+fastapi>=0.100.0
+uvicorn>=0.23.0
+python-multipart>=0.0.6
+python-dotenv>=1.0.0
+httpx>=0.27.0  # Async HTTP client
+
+# Database & Auth
 supabase>=2.0.0
+
+# Billing
+stripe>=10.0.0
 
 # Utilities
 reportlab==4.0.7
@@ -28,8 +41,5 @@ PyMuPDF>=1.23.0  # PDF to image conversion for vision-based parsing
 pytest>=7.4.0
 pytest-asyncio>=0.23.6
 
-# Backend API
-fastapi>=0.100.0
-uvicorn>=0.23.0
-python-multipart>=0.0.6
-python-dotenv>=1.0.0
+# Production
+sentry-sdk[fastapi]>=2.0.0  # Error tracking (optional)
